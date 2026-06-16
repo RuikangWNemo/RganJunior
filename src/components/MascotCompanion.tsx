@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import mascotImg from '@/assets/mascot-full.png';
+import { BRAND, pickLocalized } from '@/lib/brand';
 
 export default function MascotCompanion() {
   const [visible, setVisible] = useState(false);
@@ -7,6 +9,8 @@ export default function MascotCompanion() {
   const [tilt, setTilt] = useState(0);
   const lastScrollY = useRef(0);
   const tiltTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const { lang } = useLanguage();
+  const mascotAlt = pickLocalized(BRAND.mascotAlt, lang);
 
   useEffect(() => {
     const onScroll = () => {
@@ -40,11 +44,11 @@ export default function MascotCompanion() {
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
       }`}
       onClick={handleClick}
-      title="🍊"
+      title={mascotAlt}
     >
       <img
         src={mascotImg}
-        alt="阿柑 mascot"
+        alt={mascotAlt}
         className={`w-16 h-16 md:w-20 md:h-20 drop-shadow-lg transition-transform duration-400 ${
           bounce ? 'animate-mascot-bounce' : ''
         }`}

@@ -8,19 +8,19 @@ export default function Voices() {
   return (
     <div className="pt-20">
       <section className="section-breathing">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <h1 className="font-serif text-4xl md:text-5xl text-foreground mb-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h1 data-page-motion="title" className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
             {t('伙伴之声', 'Youth Voices')}
           </h1>
           <div className="w-12 h-px bg-primary mb-8" />
-          <p className="text-muted-foreground max-w-2xl mb-16">
+          <p data-page-motion="lead" className="text-muted-foreground max-w-2xl mb-16">
             {t(
               '来自田野的第一视角感悟与反思',
               'First-person reflections and insights from the field'
             )}
           </p>
 
-          <div className="space-y-12">
+          <div data-page-motion="actions" className="space-y-12">
             {placeholderVoices.map((i) => (
               <blockquote
                 key={i}

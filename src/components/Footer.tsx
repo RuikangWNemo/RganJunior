@@ -1,21 +1,25 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import mascotWide from '@/assets/mascot-wide.png';
+import { BRAND, pickLocalized } from '@/lib/brand';
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
+  const brandName = pickLocalized(BRAND.name, lang);
+  const brandTagline = pickLocalized(BRAND.tagline, lang);
+  const mascotAlt = pickLocalized(BRAND.mascotAlt, lang);
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="container mx-auto px-6 py-12 md:py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           <div className="flex items-center gap-3">
-            <img src={mascotWide} alt="阿柑" className="h-8 opacity-60" />
+            <img src={mascotWide} alt={mascotAlt} className="h-8 opacity-60" />
             <div>
               <h3 className="font-serif text-lg font-semibold text-foreground mb-1">
-                {t('阿柑少年', "R'gan Junior")}
+                {brandName}
               </h3>
               <p className="text-sm text-muted-foreground">
-                {t('在真实世界中，长成自己', 'Growing into Ourselves in the Real World')}
+                {brandTagline}
               </p>
             </div>
           </div>
@@ -25,7 +29,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-10 pt-6 border-t border-border text-xs text-muted-foreground text-center">
-          © {new Date().getFullYear()} {t('阿柑少年', "R'gan Junior")} · {t('在真实世界中，长成自己', 'Growing into Ourselves in the Real World')}
+          © {new Date().getFullYear()} {brandName} · {brandTagline}
         </div>
       </div>
     </footer>

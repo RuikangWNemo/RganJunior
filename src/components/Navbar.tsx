@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import mascotWide from '@/assets/mascot-wide.png';
+import { BRAND, pickLocalized } from '@/lib/brand';
 
 const navItems = [
   { path: '/', zh: '首页', en: 'Home' },
   { path: '/about', zh: '关于', en: 'About' },
-  { path: '/journey', zh: '历程', en: 'Journey' },
-  { path: '/field-research', zh: '田野活动', en: 'Field Research' },
-  { path: '/actions', zh: '行动记录', en: 'Actions' },
-  { path: '/voices', zh: '伙伴之声', en: 'Voices' },
+  { path: '/actions', zh: '行动', en: 'Action' },
   { path: '/join', zh: '加入我们', en: 'Join Us' },
 ];
 
@@ -20,18 +19,31 @@ interface NavbarProps {
 
 export default function Navbar({ hideLogo = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [logoVisible, setLogoVisible] = useState(!hideLogo);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
+  const navigationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { lang, setLang, t } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
+  const brandName = pickLocalized(BRAND.name, lang);
+  const mascotAlt = pickLocalized(BRAND.mascotAlt, lang);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      setLogoVisible(!hideLogo || y > 240);
+    };
+
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [hideLogo]);
 
   useEffect(() => {
     setMenuOpen(false);
+    setPendingPath(null);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -39,7 +51,35 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const showLogo = !hideLogo || scrolled;
+  useEffect(() => {
+    return () => {
+      if (navigationTimeoutRef.current) {
+        clearTimeout(navigationTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const showLogo = logoVisible;
+
+  const handleMobileNavigate = (path: string) => {
+    if (navigationTimeoutRef.current) {
+      clearTimeout(navigationTimeoutRef.current);
+    }
+
+    if (path === location.pathname) {
+      setPendingPath(null);
+      setMenuOpen(false);
+      return;
+    }
+
+    setPendingPath(path);
+    setMenuOpen(false);
+
+    navigationTimeoutRef.current = setTimeout(() => {
+      navigate(path);
+      navigationTimeoutRef.current = null;
+    }, 90);
+  };
 
   return (
     <>
@@ -50,42 +90,51 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
             : 'bg-transparent'
         }`}
       >
-        <div className="container mx-auto flex items-center justify-between h-16 md:h-20 px-6">
+        <div className="container mx-auto flex items-center justify-between h-16 md:h-20 px-4 sm:px-6 lg:px-8">
           {/* Logo with mascot */}
           <Link
             to="/"
+            aria-label={brandName}
             className={`flex items-center gap-2 group transition-all duration-500 ease-out ${
               showLogo ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'
             }`}
           >
             <img
               src={mascotWide}
-              alt="阿柑"
+              alt={mascotAlt}
               className="h-8 md:h-10 transition-transform duration-500 ease-out group-hover:rotate-6 group-hover:scale-110"
             />
             <span className="font-serif text-lg md:text-xl font-semibold text-foreground transition-organic group-hover:text-primary">
-              {t('阿柑少年', "R'gan Junior")}
+              {brandName}
             </span>
           </Link>
 
           {/* Desktop nav */}
+          <LayoutGroup>
           <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
+              const label = lang === 'zh' ? item.zh : item.en;
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   className="relative px-3 py-2 text-sm transition-organic hover:text-primary group"
                 >
-                  <span className={`transition-organic ${isActive ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
-                    {lang === 'zh' ? item.zh : item.en}
+                  <span className={`relative inline-flex pb-1 transition-organic ${isActive ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+                    {label}
+                    {isActive ? (
+                      <motion.span
+                        layoutId="desktop-nav-active"
+                        className="absolute inset-x-0 -bottom-0.5 mx-auto h-0.5 w-full rounded-full bg-primary"
+                        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    ) : (
+                      <span
+                        className="absolute inset-x-0 -bottom-0.5 mx-auto h-0.5 w-0 rounded-full bg-primary opacity-0 transition-all duration-400 ease-out group-hover:w-full group-hover:opacity-50"
+                      />
+                    )}
                   </span>
-                  <span
-                    className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary rounded-full transition-all duration-400 ease-out ${
-                      isActive ? 'w-4/5 opacity-100' : 'w-0 opacity-0 group-hover:w-1/2 group-hover:opacity-50'
-                    }`}
-                  />
                 </Link>
               );
             })}
@@ -99,6 +148,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
               </span>
             </button>
           </div>
+          </LayoutGroup>
 
           {/* Mobile controls */}
           <div className="flex md:hidden items-center gap-3">
@@ -122,34 +172,62 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
       </nav>
 
       {/* Mobile menu overlay */}
-      <div
-        className={`fixed inset-0 z-40 bg-background/98 backdrop-blur-sm flex flex-col items-center justify-center gap-6 transition-all duration-500 ease-out ${
-          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-      >
-        {navItems.map((item, i) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`relative font-serif text-2xl transition-all duration-500 ease-out hover:text-primary ${
-                isActive ? 'text-primary' : 'text-foreground'
-              }`}
-              style={{
-                transitionDelay: menuOpen ? `${i * 60}ms` : '0ms',
-                transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
-                opacity: menuOpen ? 1 : 0,
-              }}
-            >
-              {lang === 'zh' ? item.zh : item.en}
-              {isActive && (
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full" />
-              )}
-            </Link>
-          );
-        })}
-      </div>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.18, ease: [0.4, 0, 1, 1] } }}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-background/98 backdrop-blur-lg md:hidden"
+          >
+            {navItems.map((item, i) => {
+              const isActive = location.pathname === item.path;
+              const isPending = pendingPath === item.path;
+              const label = lang === 'zh' ? item.zh : item.en;
+
+              return (
+                <motion.button
+                  key={item.path}
+                  type="button"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      delay: 0.06 + i * 0.05,
+                      duration: 0.32,
+                      ease: [0.22, 1, 0.36, 1],
+                    },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    y: 8,
+                    transition: {
+                      duration: 0.16,
+                      ease: [0.4, 0, 1, 1],
+                    },
+                  }}
+                  onClick={() => handleMobileNavigate(item.path)}
+                  className={`font-serif text-3xl transition-all duration-300 ease-out hover:text-primary touch-target-apple ${
+                    isActive || isPending ? 'text-primary' : 'text-foreground'
+                  }`}
+                >
+                  <span className="relative inline-flex pb-1">
+                    {label}
+                    {(isActive || isPending) && (
+                      <motion.span
+                        layoutId="mobile-nav-active"
+                        className="absolute inset-x-0 -bottom-0.5 mx-auto h-0.5 w-full rounded-full bg-primary"
+                        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    )}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

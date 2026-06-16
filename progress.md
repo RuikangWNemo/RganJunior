@@ -1,43 +1,32 @@
 # Progress
 
-## 2026-04-14
+## 2026-05-12
+- New request: make the homepage, especially the photo section, feel premium, minimal, and top-tier.
+- Captured current homepage screenshots and confirmed the hero has excessive empty space with an abrupt transition into a heavy dark-green photo section.
+- Built a local photo contact sheet and selected stronger field/photo candidates for an editorial redesign.
+- Read the active `brainstorming` skill and confirmed code edits require design approval first.
+- Read the active `planning-with-files` skill and refreshed the root planning files for this homepage optimization task.
+- Inspected the homepage implementation in `src/pages/Index.tsx` and hero copy in `src/components/home/HeroCopy.tsx`.
+- Confirmed the requested deletion targets are present on the homepage.
+- Reviewed `src/pages/Actions.tsx` for reusable current-project content and imagery.
+- Added the bilingual elevator pitch to `src/components/home/HeroCopy.tsx`.
+- Reworked `src/pages/Index.tsx` around whole-person growth, interdisciplinary field learning, community power, and Current Projects.
+- Removed the old homepage "How We Learn & Act" phase section and the complex youth/parent join copy.
+- Rebuilt `src/components/home/HomePhotoScroll.tsx` as a minimal editorial photo section with one featured field image, four supporting images, and restrained captions.
+- Tuned the homepage hero spacing, mascot scale, typography rhythm, and transition into the photo section.
+- Added horizontal overflow protection and mobile wrapping fixes after screenshot review.
 
-### Phase 1: Requirements & Discovery
-- **Status:** in_progress
-- **Started:** 2026-04-14
-- Actions taken:
-  - Read the homepage implementation in `src/pages/Index.tsx`
-  - Read mascot-related components in `src/components/Navbar.tsx` and `src/components/MascotCompanion.tsx`
-  - Read global style definitions in `src/index.css`
-  - Confirmed the current mascot is implemented as a fixed viewport overlay with hardcoded scroll interpolation
-  - Rewrote planning files from a previous unrelated task to the current mascot redesign task
-- Files created/modified:
-  - `task_plan.md` (rewritten)
-  - `findings.md` (rewritten)
-  - `progress.md` (rewritten)
+## Verification Log
+- `npx tsc --noEmit` passed.
+- `npm run build` passed. Vite reported non-blocking Browserslist and chunk-size warnings.
+- `npm test` passed: 3 tests across 2 files.
+- Local dev server started at `http://127.0.0.1:5175/`.
+- `curl -I http://127.0.0.1:5175/` returned 200 OK.
+- Local dev server for this visual refresh is running at `http://localhost:5173/`.
+- Desktop screenshot check passed for the revised hero and editorial photo section.
+- Chrome DevTools mobile viewport check passed with `innerWidth`, `clientWidth`, `scrollWidth`, and `bodyScrollWidth` all equal to 390.
 
-### Phase 2: Concept Direction
-- **Status:** pending
-- Actions taken:
-  -
-- Files created/modified:
-  -
-
-## Test Results
-| Test | Input | Expected | Actual | Status |
-|------|-------|----------|--------|--------|
-| File inspection | Homepage and mascot source files | Enough context to explain current issues | Confirmed layout/motion causes of the mascot problem | pass |
-
-## Error Log
-| Timestamp | Error | Attempt | Resolution |
-|-----------|-------|---------|------------|
-| 2026-04-14 | `git status` failed because the directory is not a git repo | 1 | Continued with direct file inspection |
-
-## 5-Question Reboot Check
-| Question | Answer |
-|----------|--------|
-| Where am I? | Phase 1 |
-| Where am I going? | Toward concept selection, then a design plan and implementation plan |
-| What's the goal? | Redesign homepage mascot behavior so it feels integrated, premium, and non-intrusive |
-| What have I learned? | The mascot is currently a fixed overlay using brittle viewport interpolation and separate floating behaviors |
-| What have I done? | Inspected the relevant files and rewrote the planning files for this task |
+## Errors Encountered
+| Error | Attempt | Resolution |
+|-------|---------|------------|
+| None | N/A | N/A |

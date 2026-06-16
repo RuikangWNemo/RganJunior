@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { BRAND, pickLocalized } from '@/lib/brand';
 
 const sections = [
   {
@@ -20,18 +21,19 @@ const sections = [
 ];
 
 export default function FieldResearch() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
+  const brandName = pickLocalized(BRAND.name, lang);
 
   return (
     <div className="pt-20">
       {/* Intro */}
       <section className="section-breathing">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <h1 className="font-serif text-4xl md:text-5xl text-foreground mb-6">
-            {t('阿柑少年在田野', 'Field Research')}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h1 data-page-motion="title" className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6">
+            {lang === 'zh' ? `${brandName}在田野` : `${brandName} in the Field`}
           </h1>
           <div className="w-12 h-px bg-primary mb-8" />
-          <p className="text-muted-foreground max-w-2xl">
+          <p data-page-motion="lead" className="text-muted-foreground max-w-2xl">
             {t(
               '从城市到乡村，再到荒野——在纵深体验中寻找自然与人的对话',
               'From city to countryside to wilderness — finding the dialogue between nature and humanity through immersive experiences'
@@ -58,7 +60,7 @@ function HorizontalSection({ section, t }: { section: typeof sections[0]; t: (zh
   };
 
   return (
-    <section className="pb-24 md:pb-32">
+    <section data-page-motion="actions" className="pb-24 md:pb-32">
       <div className="container mx-auto px-6 mb-8">
         <div className="flex items-center justify-between">
           <h2 className="font-serif text-2xl md:text-3xl text-foreground">
