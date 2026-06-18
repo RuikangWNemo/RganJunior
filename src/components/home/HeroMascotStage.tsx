@@ -11,7 +11,7 @@ interface HeroMascotStageProps {
 }
 
 const splashStorageKey = 'hasSeenSplashAnimation';
-const splashVersion = 'brand-film-v2';
+const splashVersion = 'brand-film-v3';
 
 function readSplashVersion() {
   try {

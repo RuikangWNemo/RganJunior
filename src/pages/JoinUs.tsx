@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDownRight, Mic2, PlayCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { BRAND, type LocalizedText, pickLocalized } from '@/lib/brand';
+import { BRAND, CONTACT_EMAIL, type LocalizedText, pickLocalized } from '@/lib/brand';
 
 type IdentityId = 'join-youth' | 'join-parents' | 'join-partners';
 
@@ -138,12 +138,19 @@ const identities: IdentityContent[] = [
   },
 ];
 
-const contactLedger: LocalizedText[] = [
-  { zh: '邮箱', en: 'Email' },
-  { zh: '微信', en: 'WeChat' },
-  { zh: '电话', en: 'Phone' },
-  { zh: '地址', en: 'Address' },
-  { zh: '社交平台', en: 'Social Channels' },
+interface ContactLedgerItem {
+  label: LocalizedText;
+  status?: LocalizedText;
+  value?: string;
+  href?: string;
+}
+
+const contactLedger: ContactLedgerItem[] = [
+  { label: { zh: '邮箱', en: 'Email' }, value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { label: { zh: '微信', en: 'WeChat' }, status: { zh: '整理中', en: 'Coming Soon' } },
+  { label: { zh: '电话', en: 'Phone' }, status: { zh: '整理中', en: 'Coming Soon' } },
+  { label: { zh: '地址', en: 'Address' }, status: { zh: '整理中', en: 'Coming Soon' } },
+  { label: { zh: '社交平台', en: 'Social Channels' }, status: { zh: '整理中', en: 'Coming Soon' } },
 ];
 
 const voiceEpisodes = [
@@ -417,8 +424,8 @@ export default function JoinUs() {
             </h2>
             <p className="join-motion join-contact-intro mt-8 max-w-2xl text-base leading-8 text-muted-foreground">
               {t(
-                '正式联系方式整理中，将统一更新于此。',
-                'Formal contact details are being prepared and will be updated here as one shared set.'
+                '可通过下方邮箱联系我们，其他联系方式将陆续更新于此。',
+                'Reach us by email below. Other contact channels will be added here as they become available.'
               )}
             </p>
           </div>
@@ -426,15 +433,24 @@ export default function JoinUs() {
           <div className="mt-12 border-t border-border/80">
             {contactLedger.map((item) => (
               <div
-                key={pickLocalized(item, lang)}
+                key={pickLocalized(item.label, lang)}
                 className="join-contact-row grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-border/80 py-5"
               >
                 <p className="join-contact-label font-serif text-xl text-foreground">
-                  {pickLocalized(item, lang)}
+                  {pickLocalized(item.label, lang)}
                 </p>
-                <p className="join-contact-status text-sm text-muted-foreground">
-                  {t('整理中', 'Coming Soon')}
-                </p>
+                {item.href && item.value ? (
+                  <a
+                    href={item.href}
+                    className="join-contact-status text-sm text-foreground transition-colors hover:text-primary"
+                  >
+                    {item.value}
+                  </a>
+                ) : (
+                  <p className="join-contact-status text-sm text-muted-foreground">
+                    {pickLocalized(item.status!, lang)}
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -442,7 +458,7 @@ export default function JoinUs() {
           <p className="mt-6 text-sm leading-7 text-muted-foreground">
             {t(
               '面向青少年、家长与合作伙伴的正式联络入口，将统一发布在这一处。',
-              'The formal entry point for youth, parents, and partners will be published here as one shared contact set.'
+              'The formal entry point for youth, parents, and partners is published here as one shared contact set.'
             )}
           </p>
         </div>

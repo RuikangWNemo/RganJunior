@@ -21,6 +21,8 @@ export const BRAND = {
   },
 } as const satisfies Record<string, LocalizedText>;
 
+export const CONTACT_EMAIL = "contact@rganjunior.org";
+
 export const ROUTE_TITLES: Record<string, LocalizedText> = {
   "/": {
     zh: "阿柑少年",

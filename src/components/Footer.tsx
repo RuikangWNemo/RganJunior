@@ -1,6 +1,6 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import mascotWide from '@/assets/mascot-wide.png';
-import { BRAND, pickLocalized } from '@/lib/brand';
+import { BRAND, CONTACT_EMAIL, pickLocalized } from '@/lib/brand';
 
 export default function Footer() {
   const { lang, t } = useLanguage();
@@ -25,7 +25,12 @@ export default function Footer() {
           </div>
           <div className="text-sm text-muted-foreground">
             <p>{t('联系我们', 'Contact Us')}</p>
-            <p className="mt-1 text-foreground">{t('（邮箱待补充）', '(Email TBD)')}</p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="mt-1 block text-foreground transition-colors hover:text-primary"
+            >
+              {CONTACT_EMAIL}
+            </a>
           </div>
         </div>
         <div className="mt-10 pt-6 border-t border-border text-xs text-muted-foreground text-center">

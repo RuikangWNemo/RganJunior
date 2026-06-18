@@ -8,7 +8,7 @@ interface SplashAnimationProps {
   onComplete: () => void;
 }
 
-const splashDuration = 8000;
+const splashDuration = 5500;
 
 const naturalMotes = [
   { left: '28%', top: '33%', size: 3, delay: 4.55, drift: -26, duration: 2.8 },
@@ -88,7 +88,7 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[#17100d] text-white"
+        className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[#241a15] text-white"
         initial={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.72, ease: [0.4, 0, 0.2, 1] }}
@@ -96,12 +96,12 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
         <motion.div
           aria-hidden="true"
           className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: prefersReducedMotion ? 0.7 : [0.18, 0.72, 0.82] }}
-          transition={{ delay: 0.18, duration: prefersReducedMotion ? 0.01 : 2.8, ease: 'easeOut' }}
+          initial={{ opacity: 0.42 }}
+          animate={{ opacity: prefersReducedMotion ? 0.82 : [0.42, 0.78, 0.88] }}
+          transition={{ delay: 0.08, duration: prefersReducedMotion ? 0.01 : 2.2, ease: 'easeOut' }}
           style={{
             background:
-              'radial-gradient(circle at 50% 44%, rgba(244,126,45,0.13), transparent 30%), radial-gradient(circle at 50% 78%, rgba(28,93,68,0.24), transparent 34%), linear-gradient(180deg, #120d0b 0%, #1a120e 48%, #15120e 100%)',
+              'radial-gradient(circle at 50% 44%, rgba(244,126,45,0.22), transparent 34%), radial-gradient(circle at 50% 78%, rgba(28,93,68,0.28), transparent 38%), linear-gradient(180deg, #1f1713 0%, #2a1f18 48%, #221a15 100%)',
           }}
         />
 
@@ -119,15 +119,15 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
             <motion.div
               aria-hidden="true"
               className="absolute h-[42%] w-[42%] rounded-full bg-[#f27b2d]"
-              initial={{ opacity: 0, scale: 0.96, filter: 'blur(14px)' }}
+              initial={{ opacity: 0.35, scale: 0.96, filter: 'blur(10px)' }}
               animate={{
-                opacity: prefersReducedMotion ? 0.9 : [0, 0.92, 0.9, 0.78],
+                opacity: prefersReducedMotion ? 0.9 : [0.35, 0.92, 0.9, 0.82],
                 scale: prefersReducedMotion ? 1 : [0.96, 1, 1.018, 0.98],
-                filter: prefersReducedMotion ? 'blur(0px)' : ['blur(14px)', 'blur(0px)', 'blur(0px)', 'blur(2px)'],
+                filter: prefersReducedMotion ? 'blur(0px)' : ['blur(10px)', 'blur(0px)', 'blur(0px)', 'blur(2px)'],
               }}
               transition={{
-                delay: prefersReducedMotion ? 0 : 1.2,
-                duration: prefersReducedMotion ? 0.01 : 2.2,
+                delay: prefersReducedMotion ? 0 : 0.35,
+                duration: prefersReducedMotion ? 0.01 : 1.8,
                 times: [0, 0.46, 0.78, 1],
                 ease: [0.22, 1, 0.36, 1],
               }}
@@ -146,23 +146,18 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
 
             <motion.div
               className="absolute h-[82%] w-[82%]"
-              initial={{ opacity: 0, scale: 0.985, y: 10, filter: 'blur(18px) brightness(0.18) saturate(0.5)' }}
+              initial={{ opacity: 0, scale: 0.985, y: 8, filter: 'blur(10px)' }}
               animate={{
-                opacity: prefersReducedMotion ? 1 : [0, 0.42, 0.88, 1],
+                opacity: prefersReducedMotion ? 1 : [0, 0.72, 0.94, 1],
                 scale: prefersReducedMotion ? 1 : [0.985, 1.012, 1.018, 1],
-                y: prefersReducedMotion ? 0 : [10, 2, -2, 0],
+                y: prefersReducedMotion ? 0 : [8, 2, -2, 0],
                 filter: prefersReducedMotion
-                  ? 'blur(0px) brightness(1) saturate(0.96)'
-                  : [
-                      'blur(18px) brightness(0.18) saturate(0.5)',
-                      'blur(8px) brightness(0.32) saturate(0.72)',
-                      'blur(1px) brightness(0.86) saturate(0.92)',
-                      'blur(0px) brightness(1) saturate(0.96)',
-                    ],
+                  ? 'blur(0px)'
+                  : ['blur(10px)', 'blur(3px)', 'blur(0px)', 'blur(0px)'],
               }}
               transition={{
-                delay: prefersReducedMotion ? 0 : 2.2,
-                duration: prefersReducedMotion ? 0.01 : 2.2,
+                delay: prefersReducedMotion ? 0 : 0.9,
+                duration: prefersReducedMotion ? 0.01 : 1.6,
                 times: [0, 0.35, 0.72, 1],
                 ease: [0.22, 1, 0.36, 1],
               }}
@@ -194,21 +189,21 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
               className="absolute left-[28%] top-[17%] h-10 w-6 rounded-[60%_40%_70%_30%] border border-[#f9b26c]/45 bg-[#f27b2d]/20"
               initial={{ opacity: 0, scale: 0.55, rotate: -18 }}
               animate={{ opacity: prefersReducedMotion ? 0.55 : [0, 0.62, 0.42], scale: [0.55, 1.04, 1], rotate: [-18, -9, -12] }}
-              transition={{ delay: 2.22, duration: 1.18, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.1, duration: 1.18, ease: [0.22, 1, 0.36, 1] }}
             />
             <motion.div
               aria-hidden="true"
               className="absolute right-[24%] top-[18%] h-12 w-8 rounded-[45%_55%_40%_70%] border border-[#f9b26c]/40 bg-[#f27b2d]/16"
               initial={{ opacity: 0, scale: 0.6, rotate: 14 }}
               animate={{ opacity: prefersReducedMotion ? 0.5 : [0, 0.56, 0.36], scale: [0.6, 1.08, 1], rotate: [14, 4, 8] }}
-              transition={{ delay: 2.48, duration: 1.08, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.28, duration: 1.08, ease: [0.22, 1, 0.36, 1] }}
             />
             <motion.div
               aria-hidden="true"
               className="absolute bottom-[23%] right-[16%] h-3 w-16 rounded-full bg-[#f27b2d]/24 blur-[1px]"
               initial={{ opacity: 0, scaleX: 0.25, rotate: 4, transformOrigin: 'left center' }}
               animate={{ opacity: prefersReducedMotion ? 0.38 : [0, 0.45, 0.3], scaleX: [0.25, 1.06, 1], rotate: [4, -6, 2] }}
-              transition={{ delay: 2.82, duration: 1.12, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 1.45, duration: 1.12, ease: [0.22, 1, 0.36, 1] }}
             />
 
             {!prefersReducedMotion && (
@@ -292,21 +287,21 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
             <motion.p
               className="font-serif text-3xl font-medium tracking-[0.16em] text-white sm:text-4xl md:text-5xl"
               variants={textLineVariants}
-              custom={prefersReducedMotion ? 0.2 : 5.5}
+              custom={prefersReducedMotion ? 0.2 : 3.6}
             >
               {brandName}
             </motion.p>
             <motion.p
               className="mt-4 text-base font-light tracking-[0.18em] text-white/76 sm:text-lg"
               variants={textLineVariants}
-              custom={prefersReducedMotion ? 0.34 : 5.92}
+              custom={prefersReducedMotion ? 0.34 : 4.0}
             >
               {subtitle}
             </motion.p>
             <motion.p
               className="mt-3 text-xs tracking-[0.22em] text-white/46 sm:text-sm"
               variants={textLineVariants}
-              custom={prefersReducedMotion ? 0.48 : 6.34}
+              custom={prefersReducedMotion ? 0.48 : 4.35}
             >
               {quietLine}
             </motion.p>
