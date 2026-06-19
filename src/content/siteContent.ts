@@ -306,8 +306,8 @@ export const joinAudiences: JoinAudienceContent[] = [
       },
     ],
     closing: {
-      zh: '查看联系方式，进入小规模深度探索。',
-      en: 'View contact details to enter the small-scale deep exploration stage.',
+      zh: '填写表单，进入小规模深度探索。',
+      en: 'Submit the form to enter the small-scale deep exploration stage.',
     },
   },
   {
@@ -342,8 +342,8 @@ export const joinAudiences: JoinAudienceContent[] = [
       },
     ],
     closing: {
-      zh: '查看联系方式，预约进一步沟通。',
-      en: 'View contact details to arrange a deeper conversation.',
+      zh: '填写表单，预约进一步沟通。',
+      en: 'Submit the form to arrange a deeper conversation.',
     },
   },
   {
@@ -371,8 +371,8 @@ export const joinAudiences: JoinAudienceContent[] = [
       },
     ],
     closing: {
-      zh: '查看联系方式，发起合作沟通。',
-      en: 'View contact details to start a collaboration conversation.',
+      zh: '填写表单，发起合作沟通。',
+      en: 'Submit the form to start a collaboration conversation.',
     },
   },
 ];

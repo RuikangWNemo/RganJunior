@@ -98,6 +98,16 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Learn how youth, parents, and partners can join R'gan Junior and view the current shared contact details.",
     },
   },
+  "/join/apply": {
+    title: {
+      zh: "填写加入表单",
+      en: "Apply to R'gan Junior",
+    },
+    description: {
+      zh: "填写阿柑少年加入表单，提交青少年、家长或合作伙伴的加入意向。",
+      en: "Submit the R'gan Junior application form for youth, parents, or partners.",
+    },
+  },
 };
 
 export const ROUTE_TITLES: Record<string, LocalizedText> = Object.fromEntries(

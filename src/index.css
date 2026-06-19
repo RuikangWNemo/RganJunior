@@ -1354,6 +1354,137 @@
     }
   }
 
+  .home-scroll-video {
+    --home-video-progress: 0;
+    --home-video-veil-opacity: 1;
+    position: relative;
+    min-height: 260svh;
+    margin-top: -1px;
+    overflow: hidden;
+    overflow: clip;
+    background: hsl(var(--background));
+    isolation: isolate;
+  }
+
+  .home-scroll-video__sticky {
+    position: sticky;
+    top: 0;
+    display: grid;
+    height: 100svh;
+    min-height: 620px;
+    place-items: center;
+    overflow: hidden;
+    background: hsl(var(--background));
+  }
+
+  .home-scroll-video__media,
+  .home-scroll-video__texture,
+  .home-scroll-video__edge-mask,
+  .home-scroll-video__veil {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .home-scroll-video__media {
+    z-index: 0;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.94) contrast(1.03);
+    transform: scale(calc(1.018 - (var(--home-video-progress) * 0.018)));
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  .home-scroll-video[data-ready="false"] .home-scroll-video__media {
+    opacity: 0;
+  }
+
+  .home-scroll-video__texture {
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    opacity: 0.18;
+  }
+
+  .home-scroll-video__edge-mask {
+    z-index: 2;
+    background:
+      linear-gradient(
+        180deg,
+        hsl(var(--background)) 0%,
+        hsl(var(--background) / 0.96) 4%,
+        hsl(var(--background) / 0.56) 12%,
+        transparent 27%,
+        transparent 73%,
+        hsl(var(--background) / 0.54) 88%,
+        hsl(var(--background) / 0.96) 96%,
+        hsl(var(--background)) 100%
+      ),
+      linear-gradient(
+        90deg,
+        hsl(var(--background) / 0.78) 0%,
+        transparent 17%,
+        transparent 83%,
+        hsl(var(--background) / 0.78) 100%
+      );
+  }
+
+  .home-scroll-video__veil {
+    z-index: 3;
+    background: hsl(var(--background));
+    opacity: var(--home-video-veil-opacity);
+    transition: opacity 90ms linear;
+    will-change: opacity;
+  }
+
+  @media (max-width: 640px) {
+    .home-scroll-video {
+      min-height: 230svh;
+    }
+
+    .home-scroll-video__sticky {
+      min-height: 100svh;
+    }
+
+    .home-scroll-video__edge-mask {
+      background:
+        linear-gradient(
+          180deg,
+          hsl(var(--background)) 0%,
+          hsl(var(--background) / 0.94) 7%,
+          hsl(var(--background) / 0.44) 18%,
+          transparent 34%,
+          transparent 66%,
+          hsl(var(--background) / 0.44) 82%,
+          hsl(var(--background) / 0.94) 93%,
+          hsl(var(--background)) 100%
+        );
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-scroll-video {
+      min-height: 115svh;
+    }
+
+    .home-scroll-video__sticky {
+      position: relative;
+      min-height: min(92svh, 760px);
+    }
+
+    .home-scroll-video__media {
+      transform: none;
+    }
+
+    .home-scroll-video__veil {
+      opacity: 0.08 !important;
+      transition: none;
+    }
+  }
+
   .tieniu-regeneration {
     color-scheme: light;
   }

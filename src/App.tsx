@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Actions from "./pages/Actions";
 import JoinUs from "./pages/JoinUs";
+import JoinApply from "./pages/JoinApply";
 import Voices from "./pages/Voices";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/actions" element={<Actions />} />
               <Route path="/voices" element={<Voices />} />
               <Route path="/join" element={<JoinUs />} />
+              <Route path="/join/apply" element={<JoinApply />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

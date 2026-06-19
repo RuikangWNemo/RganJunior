@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import ActionLayerStory from '@/components/home/ActionLayerStory';
 import HeroCopy from '@/components/home/HeroCopy';
 import HomeHeroFlow from '@/components/home/HomeHeroFlow';
+import HomeScrollVideo from '@/components/home/HomeScrollVideo';
 import HeroMascotStage from '@/components/home/HeroMascotStage';
 import SeedCommunity from '@/components/home/SeedCommunity';
 import { siteBeliefs } from '@/content/siteContent';
@@ -30,6 +31,8 @@ export default function Index() {
           <HeroCopy onJoin={() => { window.location.href = '/join'; }} />
         </div>
       </section>
+
+      <HomeScrollVideo />
 
       <section className="section-breathing bg-background">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

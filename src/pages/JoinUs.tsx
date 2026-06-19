@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowDownRight, ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { joinAudiences, type JoinAudienceId } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, CONTACT_EMAIL, type LocalizedText, pickLocalized } from '@/lib/brand';
@@ -15,7 +16,7 @@ interface ContactLedgerItem {
 
 const contactLedger: ContactLedgerItem[] = [
   { label: { zh: '邮箱', en: 'Email' }, value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { label: { zh: '微信 / 表单', en: 'WeChat / Form' }, status: { zh: '待发布', en: 'To be published' } },
+  { label: { zh: '表单', en: 'Form' }, status: { zh: '已开放', en: 'Open' } },
   { label: { zh: '当前阶段', en: 'Current Stage' }, status: { zh: '小规模深度探索', en: 'Small-scale deep exploration' } },
 ];
 
@@ -170,13 +171,15 @@ export default function JoinUs() {
               ))}
             </dl>
 
-            <a
-              href="#contact-ledger"
-              className="cursor-target join-motion join-motion-link mt-8 inline-flex items-center gap-2 text-sm text-foreground transition-organic hover:text-primary"
+            <Button
+              asChild
+              className="cursor-target join-motion join-motion-link mt-8 h-auto min-h-11 w-full whitespace-normal py-3 text-center sm:w-auto"
             >
-              <span>{pickLocalized(activeContent.closing, lang)}</span>
-              <ArrowDownRight className="h-4 w-4" />
-            </a>
+              <Link to={`/join/apply?audience=${activeId}`}>
+                <span className="min-w-0 break-words">{pickLocalized(activeContent.closing, lang)}</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -188,48 +191,79 @@ export default function JoinUs() {
               {t('Contact', 'Contact')}
             </p>
             <h2 className="join-motion join-contact-title mt-5 font-serif text-3xl text-foreground md:text-4xl">
-              {t('统一联系方式', 'Shared Contact')}
+              {t('表单与联系方式', 'Form & Contact')}
             </h2>
             <p className="join-motion join-contact-intro mt-8 max-w-2xl text-base leading-8 text-muted-foreground">
               {t(
-                '当前统一通过邮箱联系。微信、表单与更多公开渠道整理完成后，会更新在这一处。',
-                'For now, contact is unified through email. WeChat, forms, and additional public channels will be added here when ready.'
+                '先选择适合你的加入身份，再进入独立表单填写信息。信息会进入统一统计表，用于后续联系与小规模深度沟通。',
+                'Choose the identity that fits you first, then continue to the dedicated form. Submissions enter one shared response record for follow-up and small-scale deeper conversations.'
               )}
             </p>
           </div>
 
-          <div className="mt-12 border-t border-border/80">
-            {contactLedger.map((item) => (
-              <div
-                key={pickLocalized(item.label, lang)}
-                className="join-contact-row grid gap-3 border-b border-border/80 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-4"
-              >
-                <p className="join-contact-label font-serif text-xl text-foreground">
-                  {pickLocalized(item.label, lang)}
-                </p>
-                {item.href && item.value ? (
-                  <a
-                    href={item.href}
-                    className="cursor-target join-contact-status inline-flex min-w-0 items-center gap-2 break-all text-sm text-foreground transition-colors hover:text-primary"
-                  >
-                    <Mail className="h-4 w-4 text-primary" />
-                    {item.value}
-                  </a>
-                ) : (
-                  <p className="join-contact-status text-sm text-muted-foreground">
-                    {pickLocalized(item.status!, lang)}
-                  </p>
+          <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] lg:items-start">
+            <div className="min-w-0 border-y border-border/80 py-8">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary/70">
+                {t('Selected Identity', 'Selected Identity')}
+              </p>
+              <h3 className="mt-4 font-serif text-2xl text-foreground">
+                {pickLocalized(activeContent.heading, lang)}
+              </h3>
+              <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">
+                {t(
+                  '确认身份后进入填写页。表单会自动带入当前选择，你也可以在填写页重新切换。',
+                  'Continue to the form after confirming your identity. The form carries this choice forward, and you can still switch it there.'
                 )}
-              </div>
-            ))}
-          </div>
+              </p>
+              <Button
+                asChild
+                className="cursor-target mt-7 h-auto min-h-11 w-full whitespace-normal py-3 text-center sm:w-auto"
+              >
+                <Link to={`/join/apply?audience=${activeId}`}>
+                  <span className="min-w-0 break-words">{pickLocalized(activeContent.closing, lang)}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
 
-          <p className="mt-6 text-sm leading-7 text-muted-foreground">
-            {t(
-              '面向青少年、家长与合作伙伴的正式联络入口，将统一发布在这一处。',
-              'The formal contact entry for youth, parents, and partners will be kept here as one shared source.'
-            )}
-          </p>
+            <div className="min-w-0 border-y border-border/80 py-8">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary/70">
+                {t('Shared Channel', 'Shared Channel')}
+              </p>
+              <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                {t(
+                  '表单会进入统一记录；如果你更适合直接沟通，也可以发送邮件。',
+                  'The form enters one shared record; if direct communication fits better, email is still open.'
+                )}
+              </p>
+
+              <div className="mt-8 border-t border-border/80">
+                {contactLedger.map((item) => (
+                  <div
+                    key={pickLocalized(item.label, lang)}
+                    className="join-contact-row grid gap-3 border-b border-border/80 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-4 lg:grid-cols-1"
+                  >
+                    <p className="join-contact-label font-serif text-xl text-foreground">
+                      {pickLocalized(item.label, lang)}
+                    </p>
+                    {item.href && item.value ? (
+                      <a
+                        href={item.href}
+                        className="cursor-target join-contact-status inline-flex min-w-0 items-center gap-2 break-all text-sm text-foreground transition-colors hover:text-primary"
+                      >
+                        <Mail className="h-4 w-4 shrink-0 text-primary" />
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="join-contact-status text-sm text-muted-foreground">
+                        {pickLocalized(item.status!, lang)}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

@@ -5,6 +5,7 @@ import BrandHead from './BrandHead';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import MascotCompanion from './MascotCompanion';
+import SmoothScrollDamping from './SmoothScrollDamping';
 import TargetCursor from './ui/TargetCursor';
 
 const routeShellVariants = {
@@ -33,6 +34,10 @@ const routeShellVariants = {
   }),
 };
 
+function syncSmoothScrollDamping() {
+  window.dispatchEvent(new Event('rgan:smooth-scroll-sync'));
+}
+
 export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -41,6 +46,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!location.hash) {
       window.scrollTo({ top: 0, left: 0 });
+      syncSmoothScrollDamping();
       return;
     }
 
@@ -48,12 +54,14 @@ export default function Layout({ children }: { children: ReactNode }) {
     if (target) {
       window.setTimeout(() => {
         target.scrollIntoView({ block: 'start' });
+        syncSmoothScrollDamping();
       }, 80);
     }
   }, [location.pathname, location.hash]);
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SmoothScrollDamping />
       <BrandHead />
       <Navbar hideLogo={isHome} />
       <div className="route-stage flex-1">
