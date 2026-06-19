@@ -1,268 +1,310 @@
-import { ClipboardList, Megaphone, Mountain, type LucideIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ClipboardList, Megaphone, Mountain, type LucideIcon } from 'lucide-react';
+import {
+  actionLayers,
+  impactProof,
+  type ActionLayerContent,
+  type ActionLayerId,
+} from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { BRAND, type LocalizedText, pickLocalized } from '@/lib/brand';
+import { BRAND, pickLocalized } from '@/lib/brand';
 
-type ActionLayer = {
-  id: string;
-  category: LocalizedText;
-  level: LocalizedText;
-  title: LocalizedText;
-  subtitle: LocalizedText;
-  description: LocalizedText;
-  image: {
-    src: string;
-    alt: LocalizedText;
-    position?: string;
-  };
-  icon: LucideIcon;
-  details: LocalizedText[];
+const layerIcons: Record<ActionLayerId, LucideIcon> = {
+  mountain: Mountain,
+  field: ClipboardList,
+  'urban-rural': Megaphone,
 };
 
-const actionLayers: ActionLayer[] = [
-  {
-    id: 'nature-healing',
-    category: { zh: '行动类 1', en: 'Action 1' },
-    level: { zh: '基础层', en: 'Foundation Layer' },
-    title: { zh: '山野探索', en: 'Mountain & Forest Exploration' },
-    subtitle: {
-      zh: '暑期大自然探索与身心疗愈营',
-      en: 'Nature Healing Program',
-    },
-    description: {
-      zh: '带领陷入内卷与焦虑的同龄人回归山林，重新找回内在的生长动力。',
-      en: 'Guiding peers caught in pressure and anxiety back into mountains and forests, so they can recover their inner drive to grow.',
-    },
-    image: {
-      src: '/archive/elements/photos/program-activities/s21-tieniu-youth-rural-practice-camp-group.jpg',
-      alt: {
-        zh: '铁牛青年乡建实践营合影',
-        en: 'Tieniu youth rural practice camp group photo',
-      },
-      position: 'center 45%',
-    },
-    icon: Mountain,
-    details: [
-      { zh: '老峨山与铁牛村山野路线', en: 'Mount Emei and Tieniu Village nature routes' },
-      { zh: '泥土、树木、身体感知与安静书写', en: 'Soil, trees, body awareness, and quiet writing' },
-      { zh: '以自然经验回应悬崖上那棵树般的生命处境', en: 'Using nature experience to respond to cliff-tree moments in youth life' },
-    ],
-  },
-  {
-    id: 'field-study',
-    category: { zh: '行动类 2', en: 'Action 2' },
-    level: { zh: '中间层', en: 'Middle Layer' },
-    title: { zh: '田野调查', en: 'Field Study' },
-    subtitle: {
-      zh: '生态消费者的行为经济学调研',
-      en: 'Behavioral Economics Field Study',
-    },
-    description: {
-      zh: '我们正在访谈 15 个城乡家庭，研究价格弹性与信任机制如何影响人们对生态农产品的购买决策。',
-      en: 'We are interviewing 15 urban and rural families to study how price elasticity and trust mechanisms affect decisions to buy ecological agricultural products.',
-    },
-    image: {
-      src: '/archive/elements/graphics/branding/s25-campus-csa-eco-box-illustration.png',
-      alt: {
-        zh: '校园 CSA 生态盲盒视觉',
-        en: 'Campus CSA eco-box visual',
-      },
-      position: 'center',
-    },
-    icon: ClipboardList,
-    details: [
-      { zh: '15 个城乡家庭深度访谈', en: 'In-depth interviews with 15 urban and rural families' },
-      { zh: '价格弹性、信任机制与生态消费意愿', en: 'Price elasticity, trust mechanisms, and ecological purchase intent' },
-      { zh: '把问卷、访谈与真实购买场景放在同一张研究地图里', en: 'Mapping questionnaires, interviews, and real purchasing scenes together' },
-    ],
-  },
-  {
-    id: 'youth-advocacy',
-    category: { zh: '行动类 3', en: 'Action 3' },
-    level: { zh: '应用层', en: 'Application Layer' },
-    title: { zh: '城乡行动与山野互动', en: 'Urban-Rural Action & Nature Interaction' },
-    subtitle: {
-      zh: '乡村生态转型与青少年发声',
-      en: 'Youth Advocacy',
-    },
-    description: {
-      zh: '以阿柑少年 CSA 社群发展计划为核心，把校园、家庭、乡村和山野经验连接起来，让青少年成为乡村生态转型的研究者、传播者和行动者。',
-      en: 'Centered on the R’gan Junior CSA community plan, this layer connects campus, family, village, and nature experiences so young people become researchers, communicators, and actors in rural ecological transition.',
-    },
-    image: {
-      src: '/archive/elements/photos/academic-forum/s16-ctb-forum-team-booth.jpg',
-      alt: {
-        zh: 'CTB 论坛团队展位',
-        en: 'CTB forum team booth',
-      },
-      position: 'center 42%',
-    },
-    icon: Megaphone,
-    details: [
-      { zh: '阿柑少年 CSA 社群发展计划', en: 'R’gan Junior CSA community development plan' },
-      { zh: '城市消费、乡村生产与青少年公共表达', en: 'Urban consumption, rural production, and youth public expression' },
-      { zh: '保留 CTB 成果作为学术与社会影响力背书', en: 'Keeping CTB outcomes as academic and social-impact endorsement' },
-    ],
-  },
-];
+const actionVerbs: Record<ActionLayerId, { zh: string; en: string }> = {
+  mountain: { zh: '感知', en: 'Sense' },
+  field: { zh: '研究', en: 'Study' },
+  'urban-rural': { zh: '转化', en: 'Act' },
+};
 
-const impactProof = [
-  {
-    value: 'Top 3.6%',
-    label: {
-      zh: 'CTB 全球青年研究创新论坛',
-      en: 'CTB Global Youth Research Forum',
-    },
-  },
-  {
-    value: 'Harvard',
-    label: {
-      zh: '全球英文论坛展示',
-      en: 'Global English forum presentation',
-    },
-  },
-  {
-    value: 'YSA Journal',
-    label: {
-      zh: '研究成果发表',
-      en: 'Research publication',
-    },
-  },
-  {
-    value: 'Claremont',
-    label: {
-      zh: '生态文明国际论坛发声',
-      en: 'International eco-civilization forum voice',
-    },
-  },
-];
+const actionAxes: Record<ActionLayerId, { zh: string; en: string }> = {
+  mountain: { zh: '身体 / 自然', en: 'Body / Nature' },
+  field: { zh: '问题 / 社区', en: 'Questions / Community' },
+  'urban-rural': { zh: '社群 / 公共', en: 'Community / Public' },
+};
 
-export default function Actions() {
+function ActionTrack({ layer, index }: { layer: ActionLayerContent; index: number }) {
+  const { lang } = useLanguage();
+  const Icon = layerIcons[layer.id];
+
+  return (
+    <article
+      className={`group relative flex min-h-full min-w-0 flex-col border-border/80 py-10 sm:py-12 lg:px-7 lg:py-0 xl:px-8 ${
+        index > 0 ? 'border-t lg:border-l lg:border-t-0' : ''
+      }`}
+    >
+      <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-5 lg:min-h-[132px] lg:pt-8">
+        <div className="min-w-0">
+            <p className="max-w-full break-words text-xs uppercase tracking-[0.24em] text-primary/70">
+            {layer.order} / {pickLocalized(actionAxes[layer.id], lang)}
+          </p>
+          <div className="mt-5 flex items-center gap-4">
+            <span className="inline-flex h-10 w-10 items-center justify-center border border-primary/25 text-primary">
+              <Icon className="h-4 w-4" />
+            </span>
+            <p className="max-w-full break-words font-serif text-4xl leading-none text-foreground md:text-5xl">
+              {pickLocalized(actionVerbs[layer.id], lang)}
+            </p>
+          </div>
+        </div>
+        <p className="max-w-[7rem] text-xs leading-5 text-muted-foreground sm:text-right">
+          {pickLocalized(layer.level, lang)}
+        </p>
+      </div>
+
+      <figure className="mt-9 lg:mt-0">
+        <div className="relative aspect-[5/4] overflow-hidden border-y border-border/80 bg-secondary/35 lg:aspect-[4/5]">
+          <img
+            src={layer.image.src}
+            alt={pickLocalized(layer.image.alt, lang)}
+            className={`h-full w-full transition duration-700 ease-out group-hover:scale-[1.025] group-hover:grayscale-0 group-hover:saturate-100 ${
+              layer.image.contain
+                ? 'object-contain p-6 md:p-8'
+                : 'object-cover grayscale-[18%] saturate-[0.82] contrast-[0.96]'
+            }`}
+            style={{ objectPosition: layer.image.position }}
+            loading="lazy"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background/90 to-transparent" />
+          <div className="absolute left-5 top-5 h-14 w-px bg-primary/45" />
+        </div>
+        <figcaption className="mt-3 text-xs leading-6 text-muted-foreground">
+          {pickLocalized(layer.homeLine, lang)}
+        </figcaption>
+      </figure>
+
+      <div className="mt-9 flex flex-1 flex-col">
+        <div className="h-px w-10 bg-primary/55" />
+        <h2 className="mt-6 max-w-full break-words font-serif text-2xl leading-tight text-foreground sm:text-3xl md:text-4xl">
+          {pickLocalized(layer.title, lang)}
+        </h2>
+        <p className="mt-4 text-base font-medium leading-8 text-primary">
+          {pickLocalized(layer.subtitle, lang)}
+        </p>
+        <p className="mt-6 text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
+          {pickLocalized(layer.description, lang)}
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-x-3 gap-y-2 text-xs uppercase tracking-[0.18em] text-foreground/65">
+          {layer.signals.map((signal, signalIndex) => (
+            <span key={signal.en} className="inline-flex items-center gap-3">
+              {signalIndex > 0 && <span className="h-px w-5 bg-border" />}
+              {pickLocalized(signal, lang)}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-9 border-t border-border/80">
+          {layer.details.map((detail, detailIndex) => (
+            <div
+              key={detail.en}
+              className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-4 border-b border-border/80 py-4"
+            >
+              <span className="font-serif text-sm text-primary/70">
+                {String(detailIndex + 1).padStart(2, '0')}
+              </span>
+              <p className="min-w-0 break-words text-sm leading-7 text-foreground/84">
+                {pickLocalized(detail, lang)}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ActionHero() {
   const { lang, t } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
 
   return (
-    <div className="pt-20">
-      <section className="section-breathing">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p data-page-motion="title" className="text-xs uppercase tracking-[0.22em] text-primary/70">
-              {t('Action', 'Action')}
+    <section className="section-breathing">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.46fr)] lg:items-end">
+          <div className="min-w-0 max-w-4xl">
+            <p data-page-motion="title" className="text-xs uppercase tracking-[0.24em] text-primary/70">
+              {t('Action System', 'Action System')}
             </p>
-            <h1 data-page-motion="title" className="mt-5 font-serif text-4xl text-foreground md:text-5xl lg:text-6xl">
-              {t('行动', 'Action')}
+            <h1
+              data-page-motion="title"
+              className="mt-6 max-w-full break-words font-serif text-3xl leading-tight text-foreground sm:max-w-4xl sm:text-4xl md:text-6xl lg:text-7xl"
+            >
+              {t('三条行动线，通向真实世界的成长。', 'Three lines of action, one path into the real world.')}
             </h1>
-            <div className="mt-6 h-px w-12 bg-primary" />
             <p data-page-motion="lead" className="mt-8 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
               {lang === 'zh'
-                ? `${brandName}把田野活动与行动记录合并为一条清晰路径：先回到山野疗愈自己，再进入家庭消费研究，最后把研究转化为城乡行动与青少年发声。`
-                : `${brandName} now gathers field activities and action records into one clear path: returning to nature for healing, studying family consumption, and turning research into urban-rural action and youth advocacy.`}
+                ? `${brandName}把山野、田野与城乡行动放在同一个系统里：感知、研究、转化同时发生，青少年因此在真实关系中长出判断力。`
+                : `${brandName} holds mountain, field, and urban-rural action inside one system: sensing, research, and transformation happen together, helping young people grow judgment in real relationships.`}
             </p>
           </div>
+
+          <aside data-page-motion="lead" className="min-w-0 border-y border-border/80">
+            {actionLayers.map((layer) => (
+              <div
+                key={layer.id}
+                className="grid grid-cols-[3.25rem_minmax(0,1fr)_auto] items-center gap-4 border-b border-border/80 py-4 last:border-b-0"
+              >
+                <span className="font-serif text-lg text-primary">
+                  {layer.order}
+                </span>
+                <span className="min-w-0 text-sm text-foreground">
+                  {pickLocalized(layer.shortTitle, lang)}
+                </span>
+                <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  {pickLocalized(actionVerbs[layer.id], lang)}
+                </span>
+              </div>
+            ))}
+          </aside>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      <section className="pb-20 md:pb-28">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div data-page-motion="actions" className="space-y-12">
-            {actionLayers.map((layer, index) => {
-              const Icon = layer.icon;
+function ParallelField() {
+  const { lang, t } = useLanguage();
 
-              return (
-                <article
-                  key={layer.id}
-                  className="grid gap-8 border-t border-border pt-10 md:grid-cols-[minmax(0,0.86fr)_minmax(320px,0.64fr)] md:items-start md:gap-12"
-                >
-                  <div className="min-w-0">
-                    <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-primary">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <span className="text-xs uppercase tracking-[0.2em] text-primary/70">
-                        {pickLocalized(layer.category, lang)}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {pickLocalized(layer.level, lang)}
-                      </span>
-                    </div>
+  return (
+    <section className="pb-20 md:pb-28">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 grid min-w-0 gap-6 border-t border-border/80 pt-8 lg:grid-cols-[minmax(0,0.58fr)_minmax(0,1fr)] lg:gap-14">
+          <div className="min-w-0">
+            <p className="text-xs uppercase tracking-[0.24em] text-primary/70">
+              {t('Parallel Field', 'Parallel Field')}
+            </p>
+            <h2 className="mt-4 max-w-full break-words font-serif text-2xl leading-tight text-foreground sm:text-3xl md:text-4xl">
+              {t('不是三段陈列，而是三条同时推进的能力。', 'Not three exhibits, but three capacities moving in parallel.')}
+            </h2>
+          </div>
+          <p className="min-w-0 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base md:leading-8 lg:justify-self-end">
+            {t(
+              '山野打开身体，田野训练理解，城乡让理解进入公共关系。三条线互相支撑，形成阿柑少年行动的完整场域。',
+              'Mountain work opens the body, field work trains understanding, and urban-rural action carries that understanding into public relationships. The three lines support one another as a complete field of action.'
+            )}
+          </p>
+        </div>
 
-                    <h2 className="font-serif text-3xl leading-tight text-foreground md:text-4xl">
-                      {pickLocalized(layer.title, lang)}
-                    </h2>
-                    <p className="mt-3 text-base font-medium text-primary md:text-lg">
-                      {pickLocalized(layer.subtitle, lang)}
-                    </p>
-                    <p className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground">
-                      {pickLocalized(layer.description, lang)}
-                    </p>
-
-                    <div className="mt-8 border-t border-border">
-                      {layer.details.map((detail) => (
-                        <p
-                          key={detail.zh}
-                          className="border-b border-border py-4 text-sm leading-7 text-foreground/88"
-                        >
-                          {pickLocalized(detail, lang)}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-
-                  <figure className={index === 1 ? 'md:pt-8' : ''}>
-                    <div className="overflow-hidden rounded-lg border border-border bg-secondary/35">
-                      <div className="aspect-[4/3]">
-                        <img
-                          src={layer.image.src}
-                          alt={pickLocalized(layer.image.alt, lang)}
-                          className={`h-full w-full ${layer.id === 'field-study' ? 'object-contain p-6 md:p-8' : 'object-cover'}`}
-                          style={{ objectPosition: layer.image.position }}
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                    <figcaption className="mt-3 text-xs leading-6 text-muted-foreground">
-                      {pickLocalized(layer.image.alt, lang)}
-                    </figcaption>
-                  </figure>
-                </article>
-              );
-            })}
+        <div data-page-motion="actions" className="min-w-0 border-y border-border/80 lg:border-x lg:border-border/80">
+          <div className="hidden border-b border-border/80 lg:grid lg:grid-cols-3">
+            {actionLayers.map((layer) => (
+              <div
+                key={layer.id}
+                className="px-7 py-4 text-xs uppercase tracking-[0.2em] text-muted-foreground xl:px-8"
+              >
+                {layer.order} / {pickLocalized(layer.shortTitle, lang)}
+              </div>
+            ))}
+          </div>
+          <div className="grid lg:grid-cols-3">
+            {actionLayers.map((layer, index) => (
+              <ActionTrack key={layer.id} layer={layer} index={index} />
+            ))}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      <section className="border-t border-border py-16 md:py-20">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 md:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] md:items-start">
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70">
-                {t('Impact Proof', 'Impact Proof')}
-              </p>
-              <h2 className="mt-5 font-serif text-3xl text-foreground md:text-4xl">
-                {t('学术与社会影响力背书', 'Academic and Social Impact')}
-              </h2>
-              <p className="mt-6 text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
-                {t(
-                  '第三层行动不是重新开始，而是在既有 CTB 研究成果、国际论坛表达与校园 CSA 实验基础上继续生长。',
-                  'The third layer is not a restart; it grows from existing CTB research outcomes, international forum sharing, and the campus CSA experiment.'
-                )}
-              </p>
+function Convergence() {
+  const { t } = useLanguage();
+
+  return (
+    <section className="pb-20 md:pb-28">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="hidden grid-cols-3 lg:grid">
+          {actionLayers.map((layer) => (
+            <div key={layer.id} className="relative h-16">
+              <div className="absolute left-1/2 top-0 h-full w-px bg-border" />
             </div>
+          ))}
+        </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {impactProof.map((item) => (
-                <article key={item.value} className="rounded-lg border border-border bg-background p-5">
-                  <p className="font-serif text-2xl text-primary md:text-3xl">
-                    {item.value}
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+        <div className="border-y border-border/80 py-12 text-center md:py-16">
+          <p className="text-xs uppercase tracking-[0.24em] text-primary/70">
+            {t('Convergence', 'Convergence')}
+          </p>
+          <h2 className="mx-auto mt-5 max-w-full break-words font-serif text-2xl leading-tight text-foreground sm:max-w-4xl sm:text-3xl md:text-5xl">
+            {t(
+              '在山野恢复感知，在田野理解问题，在城乡形成行动。',
+              'Restore the senses in the mountains, understand problems in the field, and form action across urban and rural life.'
+            )}
+          </h2>
+          <div className="mx-auto mt-8 h-px w-16 bg-primary/60" />
+          <Link
+            to="/join"
+            className="cursor-target mt-8 inline-flex items-center text-sm font-medium text-primary transition-organic hover:text-foreground"
+          >
+            {t('进入行动网络', 'Enter the action network')}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EvidenceLedger() {
+  const { lang, t } = useLanguage();
+
+  return (
+    <section className="border-t border-border py-16 md:py-20">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-start">
+          <div>
+            <p className="text-xs uppercase tracking-[0.24em] text-primary/70">
+              {t('Impact Proof', 'Impact Proof')}
+            </p>
+            <h2 className="mt-5 font-serif text-3xl text-foreground md:text-4xl">
+              {t('真实行动的证据', 'Proof of Real Action')}
+            </h2>
+            <p className="mt-6 max-w-md text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
+              {t(
+                '三层行动不是概念包装，而是在既有研究、论坛表达、校园 CSA 与真实社区实践基础上继续生长。',
+                'The three-layer action logic is not packaging; it grows from existing research, forum presentations, campus CSA, and real community practice.'
+              )}
+            </p>
+          </div>
+
+          <div className="border-y border-border/80">
+            {impactProof.map((item, index) => (
+              <article
+                key={item.value}
+                className="grid gap-4 border-b border-border/80 py-5 last:border-b-0 sm:grid-cols-[minmax(8rem,0.34fr)_minmax(0,1fr)] sm:items-baseline"
+              >
+                <p className="min-w-0 break-words font-serif text-2xl text-primary md:text-3xl">
+                  {item.value}
+                </p>
+                <div className="grid gap-2 sm:grid-cols-[2.5rem_minmax(0,1fr)]">
+                  <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <p className="min-w-0 break-words text-sm leading-6 text-muted-foreground md:text-base md:leading-7">
                     {pickLocalized(item.label, lang)}
                   </p>
-                </article>
-              ))}
-            </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
+
+export default function Actions() {
+  return (
+    <div className="pt-20">
+      <ActionHero />
+      <ParallelField />
+      <Convergence />
+      <EvidenceLedger />
     </div>
   );
 }

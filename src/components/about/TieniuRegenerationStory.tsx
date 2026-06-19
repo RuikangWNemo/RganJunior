@@ -212,7 +212,7 @@ export default function TieniuRegenerationStory() {
   return (
     <section
       ref={storyRef}
-      className="land-memory relative left-1/2 my-28 h-[560vh] w-screen -translate-x-1/2 bg-[#10120d]"
+      className="land-memory relative my-28 h-[560vh] w-screen bg-[#10120d]"
       style={storyStyle}
       data-active-scene={activeScene.id}
     >

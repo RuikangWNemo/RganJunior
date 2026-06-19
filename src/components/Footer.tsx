@@ -27,7 +27,7 @@ export default function Footer() {
             <p>{t('联系我们', 'Contact Us')}</p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="mt-1 block text-foreground transition-colors hover:text-primary"
+              className="cursor-target mt-1 block text-foreground transition-colors hover:text-primary"
             >
               {CONTACT_EMAIL}
             </a>

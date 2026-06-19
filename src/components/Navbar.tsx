@@ -95,7 +95,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
           <Link
             to="/"
             aria-label={brandName}
-            className={`flex items-center gap-2 group transition-all duration-500 ease-out ${
+            className={`cursor-target flex items-center gap-2 group transition-all duration-500 ease-out ${
               showLogo ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'
             }`}
           >
@@ -115,11 +115,12 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               const label = lang === 'zh' ? item.zh : item.en;
+
               return (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className="relative px-3 py-2 text-sm transition-organic hover:text-primary group"
+                  className="cursor-target relative px-3 py-2 text-sm transition-organic hover:text-primary group"
                 >
                   <span className={`relative inline-flex pb-1 transition-organic ${isActive ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
                     {label}
@@ -141,7 +142,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
             
             <button
               onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
-              className="relative ml-4 text-xs border border-border rounded-full px-4 py-1.5 text-muted-foreground transition-organic hover:text-foreground hover:border-foreground overflow-hidden"
+              className="cursor-target relative ml-4 overflow-hidden rounded-full border border-border px-4 py-1.5 text-xs text-muted-foreground transition-organic hover:border-foreground hover:text-foreground"
             >
               <span className="inline-block transition-all duration-400 ease-out">
                 {lang === 'zh' ? 'EN' : '中文'}
@@ -154,13 +155,13 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
           <div className="flex md:hidden items-center gap-3">
             <button
               onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
-              className="text-xs border border-border rounded-full px-2.5 py-0.5 text-muted-foreground transition-organic"
+              className="rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground transition-organic"
             >
               {lang === 'zh' ? 'EN' : '中文'}
             </button>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="text-foreground p-1"
+              className="p-1 text-foreground"
               aria-label="Toggle menu"
             >
               <span className={`block transition-all duration-300 ${menuOpen ? 'rotate-90 scale-110' : ''}`}>

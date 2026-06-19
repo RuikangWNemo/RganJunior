@@ -119,18 +119,18 @@ export default function HomePhotoScroll() {
               </span>
               <h2 className="max-w-full text-balance font-serif text-3xl leading-[1.08] text-foreground sm:text-4xl md:text-5xl lg:text-[4.35rem]">
                 {lang === 'zh' ? (
-                  '现场不是背景'
+                  '铁牛村的几段日常'
                 ) : (
                   <>
-                    The field is
-                    <br className="sm:hidden" /> not a backdrop
+                    Ordinary days
+                    <br className="sm:hidden" /> in the field
                   </>
                 )}
               </h2>
               <p className="mt-7 max-w-md break-words text-base leading-8 text-muted-foreground md:text-lg">
                 {t(
-                  '照片不只是记录活动，而是呈现阿柑少年如何把身体、知识与土地重新放回同一个现场。',
-                  "These images are not activity snapshots; they show how R'gan Junior brings body, knowledge, and land back into one living field."
+                  '这些照片来自果园、山谷和村落。它们记录的是青少年如何在真实地方停留、观察、提问和行动。',
+                  "These images come from orchards, valleys, and villages. They show young people staying with real places: observing, asking, and acting."
                 )}
               </p>
             </ScrollProgressReveal>

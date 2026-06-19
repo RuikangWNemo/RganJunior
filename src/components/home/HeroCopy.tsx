@@ -22,16 +22,18 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
         className="animate-fade-in-up-apple mt-5 max-w-3xl text-balance font-serif text-2xl leading-tight text-foreground/78 sm:text-3xl lg:text-[2.25rem]"
         style={{ animationDelay: '0.08s' }}
       >
-        {t('当代青少年的生命觉醒之路', 'A Path of Awakening for a New Generation')}
+        {t('在真实社区中探索、研究、行动', 'Exploring, researching, and acting in real communities')}
       </p>
 
       <p
         className="animate-fade-in-up-apple mt-6 max-w-full whitespace-normal break-words text-xs font-semibold uppercase leading-6 tracking-[0.14em] text-primary sm:text-base sm:tracking-[0.22em]"
         style={{ animationDelay: '0.16s' }}
       >
-        <span className="block sm:inline">{t('对内疗愈人心', 'Healing People Within')}</span>
+        <span className="block sm:inline">{t('山野', 'Mountain')}</span>
         <span className="mx-2 hidden sm:inline">·</span>
-        <span className="block sm:inline">{t('对外修复土壤', 'Regenerating Land Without')}</span>
+        <span className="block sm:inline">{t('田野', 'Field')}</span>
+        <span className="mx-2 hidden sm:inline">·</span>
+        <span className="block sm:inline">{t('城乡', 'Urban-Rural')}</span>
       </p>
 
       <p
@@ -39,28 +41,18 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
         style={{ animationDelay: '0.2s' }}
       >
         {t(
-          '阿柑少年是一个扎根铁牛村的青年田野实验室与行动网络，致力于行为经济学研究与生态社区共建。',
-          "R'gan Youth is a youth-led field lab and action network based in Tieniu Village, dedicated to behavioral economics research and ecological community building."
-        )}
-      </p>
-
-      <p
-        className="animate-fade-in-up-apple mt-6 max-w-2xl break-words text-base leading-8 text-muted-foreground sm:text-lg"
-        style={{ animationDelay: '0.28s' }}
-      >
-        {t(
-          '在一个高度焦虑、不确定的时代，我们选择让青少年回到自然、走进社区，在真实世界中重新认识自己与社会。',
-          'In an age of anxiety and uncertainty, we invite young people to return to nature, enter real communities, and rediscover themselves through real-world action.'
+          '从铁牛村出发，让青少年回到自然、走进社区，在真实关系中重新认识自己、土地与社会。',
+          'Starting from Tieniu Village, young people return to nature and enter communities, rediscovering themselves, land, and society through real relationships.'
         )}
       </p>
 
       <div
         className="animate-fade-in-up-apple mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
-        style={{ animationDelay: '0.36s' }}
+        style={{ animationDelay: '0.28s' }}
       >
         <Button
           onClick={onJoin}
-          className="btn-apple w-full max-w-[17rem] sm:w-auto"
+          className="btn-apple cursor-target w-full max-w-[17rem] sm:w-auto"
         >
           {t('加入我们', 'Join Us')}
           <ArrowRight className="ml-2" size={18} />
@@ -69,7 +61,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
         <Link to="/actions" className="w-full max-w-[17rem] sm:w-auto">
           <Button
             variant="outline"
-            className="btn-apple w-full border-primary/15 bg-background/70 hover:border-primary/30 sm:w-auto"
+            className="btn-apple cursor-target w-full border-primary/15 bg-background/70 hover:border-primary/30 sm:w-auto"
           >
             {t('了解我们的行动', 'Explore Our Action')}
           </Button>

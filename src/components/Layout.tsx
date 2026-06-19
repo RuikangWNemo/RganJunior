@@ -5,6 +5,7 @@ import BrandHead from './BrandHead';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import MascotCompanion from './MascotCompanion';
+import TargetCursor from './ui/TargetCursor';
 
 const routeShellVariants = {
   initial: (isHome: boolean) => ({
@@ -35,6 +36,7 @@ const routeShellVariants = {
 export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const showMascotCompanion = !isHome && location.pathname !== '/about';
 
   useEffect(() => {
     if (!location.hash) {
@@ -54,7 +56,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex flex-col">
       <BrandHead />
       <Navbar hideLogo={isHome} />
-      <div className="route-stage flex-1 overflow-x-clip">
+      <div className="route-stage flex-1">
         <AnimatePresence initial={false} mode="popLayout">
           <motion.main
             key={location.pathname}
@@ -70,7 +72,8 @@ export default function Layout({ children }: { children: ReactNode }) {
         </AnimatePresence>
       </div>
       <Footer />
-      {!isHome && <MascotCompanion />}
+      {showMascotCompanion && <MascotCompanion />}
+      <TargetCursor spinDuration={2.6} hideDefaultCursor={false} parallaxOn />
     </div>
   );
 }
