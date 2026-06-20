@@ -1,70 +1,57 @@
-import { ClipboardList, Megaphone, Mountain, type LucideIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { actionLayers, type ActionLayerContent, type ActionLayerId } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
 
-const layerIcons: Record<ActionLayerId, LucideIcon> = {
-  mountain: Mountain,
-  field: ClipboardList,
-  'urban-rural': Megaphone,
+const actionVerbs: Record<ActionLayerId, { zh: string; en: string }> = {
+  mountain: { zh: '感知', en: 'Sense' },
+  field: { zh: '研究', en: 'Study' },
+  'urban-rural': { zh: '行动', en: 'Act' },
 };
 
-function LayerArticle({ layer }: { layer: ActionLayerContent }) {
+function LineItem({ layer }: { layer: ActionLayerContent }) {
   const { lang } = useLanguage();
-  const Icon = layerIcons[layer.id];
 
   return (
-    <article className="grid gap-6 border-t border-border py-10 md:grid-cols-[minmax(0,0.9fr)_minmax(280px,0.72fr)] md:gap-10 md:py-14">
-      <div className="min-w-0">
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-background text-primary">
-            <Icon className="h-5 w-5" />
-          </span>
-          <span className="text-xs uppercase tracking-[0.22em] text-primary/70">
-            {layer.order}
-          </span>
-          <span className="text-xs text-muted-foreground">
-            {pickLocalized(layer.level, lang)}
-          </span>
-        </div>
-
-        <h3 className="font-serif text-3xl leading-tight text-foreground md:text-4xl">
-          {pickLocalized(layer.title, lang)}
-        </h3>
-        <p className="mt-4 max-w-xl text-base font-medium leading-8 text-primary md:text-lg">
-          {pickLocalized(layer.subtitle, lang)}
+    <Link
+      to={`/actions#${layer.id}`}
+      aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
+      className="group grid min-w-0 gap-5 border-t border-border py-6 outline-none transition-[background-color,border-color,transform] duration-500 hover:border-primary/30 hover:bg-secondary/35 focus-visible:bg-secondary/35 focus-visible:ring-2 focus-visible:ring-primary/25 sm:grid-cols-[8rem_minmax(0,1fr)] sm:items-start sm:px-4 md:py-7"
+    >
+      <div className="flex min-w-0 items-baseline gap-4 sm:block">
+        <p className="font-serif text-xl text-primary">
+          {layer.order}
         </p>
-        <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
-          {pickLocalized(layer.description, lang)}
+        <p className="mt-0 text-xs uppercase tracking-[0.22em] text-muted-foreground sm:mt-3">
+          {pickLocalized(layer.shortTitle, lang)}
         </p>
-
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {layer.signals.map((signal) => (
-            <div key={signal.en} className="border-t border-border pt-3">
-              <p className="font-serif text-lg text-foreground">
-                {pickLocalized(signal, lang)}
-              </p>
-            </div>
-          ))}
-        </div>
       </div>
 
-      <figure className="min-w-0">
-        <div className="aspect-[4/3] overflow-hidden rounded-md bg-secondary/40">
+      <div className="grid min-w-0 gap-5 md:grid-cols-[minmax(0,0.86fr)_12rem] md:items-center">
+        <div className="min-w-0">
+          <h3 className="max-w-full break-words font-serif text-3xl leading-none text-foreground md:text-4xl">
+            {pickLocalized(actionVerbs[layer.id], lang)}
+          </h3>
+          <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
+            {pickLocalized(layer.homeLine, lang)}
+          </p>
+          <ArrowRight className="mt-5 h-4 w-4 text-primary opacity-70 transition duration-500 group-hover:translate-x-2 group-hover:opacity-100 group-focus-visible:translate-x-2 group-focus-visible:opacity-100" aria-hidden="true" />
+        </div>
+
+        <figure className="hidden min-w-0 overflow-hidden rounded-md border border-border bg-[radial-gradient(circle_at_36%_20%,rgba(255,255,255,0.92),rgba(244,238,218,0.44)_34%,rgba(220,231,204,0.52)_100%)] md:block">
           <img
             src={layer.image.src}
             alt={pickLocalized(layer.image.alt, lang)}
-            className={`h-full w-full ${layer.image.contain ? 'object-contain p-6' : 'object-cover'}`}
+            className="aspect-[4/3] h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.055] group-focus-visible:scale-[1.055]"
             style={{ objectPosition: layer.image.position }}
             loading="lazy"
+            decoding="async"
           />
-        </div>
-        <figcaption className="mt-3 text-xs leading-6 text-muted-foreground">
-          {pickLocalized(layer.homeLine, lang)}
-        </figcaption>
-      </figure>
-    </article>
+        </figure>
+      </div>
+    </Link>
   );
 }
 
@@ -74,26 +61,33 @@ export default function ActionLayerStory() {
   return (
     <section id="action-layers" className="section-breathing border-y border-border bg-background">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[minmax(220px,0.56fr)_minmax(0,1fr)] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[minmax(220px,0.52fr)_minmax(0,1fr)] lg:gap-20">
           <ScrollProgressReveal direction="up" distance={50} className="lg:sticky lg:top-28 lg:self-start">
             <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
-              {t('三层行动逻辑', 'Three-Layer Action Logic')}
+              {t('三条行动线', 'Three Lines')}
             </p>
             <h2 className="mt-5 max-w-xl font-serif text-4xl leading-tight text-foreground md:text-5xl">
-              {t('从山野、田野，到城乡行动', 'From mountains and fields to community action')}
+              {t('从山野，到田野，再到城乡。', 'From mountain, to field, to community.')}
             </h2>
-            <p className="mt-7 max-w-md text-base leading-8 text-muted-foreground">
+            <p className="mt-7 max-w-md text-base leading-8 text-muted-foreground md:text-lg">
               {t(
-                '我们把一次次活动整理成三个入口：先回到山野，再进入田野，最后把理解带回城乡之间的真实行动。',
-                'We organize the work through three entry points: returning to the wild, entering the field, and bringing understanding back into real community action.'
+                '从山野恢复感知，到田野理解问题，再到城乡形成行动。',
+                'Restore the senses in the mountain, understand real problems in the field, and form action across communities.'
               )}
             </p>
+            <Link
+              to="/actions"
+              className="cursor-target mt-8 inline-flex items-center text-sm font-medium text-primary transition-organic hover:text-foreground"
+            >
+              {t('查看行动现场', 'View the action field')}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </ScrollProgressReveal>
 
-          <div>
+          <div className="border-b border-border">
             {actionLayers.map((layer) => (
               <ScrollProgressReveal key={layer.id} direction="up" distance={44} scale={false} blur={false}>
-                <LayerArticle layer={layer} />
+                <LineItem layer={layer} />
               </ScrollProgressReveal>
             ))}
           </div>

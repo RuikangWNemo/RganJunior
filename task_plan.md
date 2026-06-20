@@ -4,10 +4,133 @@
 Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
 
 ## Current Request
-Redesign the homepage opening motion background as a cleaner "fine-line flow" treatment: remove the rejected large gradient/wave background, use reference-informed thin life/path lines, and keep the hero premium, restrained, and readable.
+Optimize the Join page identity section with compressed mascot imagery, a hanging-card interaction inspired by React Bits Lanyard, and smooth magical gas transitions between youth, parent, and partner identities.
 
 ## Current Phase
-Home hero magic background complete
+Join identity implementation and verification
+
+## 2026-06-20 Join Identity Hanging Card
+### Phase 1: Discovery And Design
+- [x] Read active brainstorming and planning instructions
+- [x] Inspect current Join page, tests, CSS, content model, package setup, Vite config, and provided React Bits Lanyard instructions
+- [x] Inspect provided youth/parent/partner background and card images
+- [x] Present implementation approaches and get user approval for the full React Bits Lanyard option
+- [x] Write approved design note
+- **Status:** in_progress
+
+### Phase 2: Implementation
+- [x] Add compressed responsive Join identity image assets
+- [x] Rebuild the Join identity section with a suspended card, identity selector, background art, and magical transition effect
+- [x] Move the identity imagery out of the selector and into the full-width illustration stage
+- [x] Move the hanging card to a fixed page-level layer, restyle the Lanyard elements for the 阿柑 mascot cards, and restore the identity selector to a three-parallel layout
+- [x] Preserve `/join/apply?audience=...` links and bilingual content
+- [x] Update tests for the new visual surface
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run type/test/lint/build checks
+- [x] Start local dev server and browser-check desktop/mobile animation, fixed positioning, identity switching, no Vite overlay, and no overflow
+- **Status:** complete
+
+## 2026-06-19 Scroll Damping
+### Phase 1: Design
+- [x] Inspect current scroll behavior and app shell
+- [x] Present damping approaches and get approval for desktop-only lightweight damping
+- [x] Write approved design note
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Add global scroll damping provider
+- [x] Mount it in the app shell
+- [x] Preserve mobile, reduced-motion, form, and nested-scroll behavior
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run type/test/lint/build checks
+- [x] Start local dev server and browser-check desktop/mobile/form behavior
+- **Status:** complete
+
+## 2026-06-19 Google Form Creation And Connection
+### Phase 1: Setup
+- [x] Confirm user approval to create a Google Form in the currently logged-in Chrome Google account
+- [x] Review current `/api/join` Google Form mapping and frontend fields
+- [x] Create or identify the target Google Form
+- **Status:** complete
+
+### Phase 2: Mapping
+- [x] Extract the form action URL and `entry.*` field IDs
+- [x] Store non-secret local configuration for testing without committing private values
+- [x] Update templates/docs if field names differ from the actual form
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run a local API submission smoke test against the Google Form
+- [ ] Verify the website form reports success when configured locally
+- [x] Run TypeScript/tests/build as needed
+- **Status:** in_progress
+
+## 2026-06-19 Dedicated Join Apply Page
+### Phase 1: Discovery And Design
+- [x] Read active brainstorming and planning instructions
+- [x] Inspect current Join page, route setup, tests, and existing form/API implementation
+- [x] Present `/join` -> `/join/apply?audience=...` design and get user approval
+- [x] Write approved design note
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Extract the form from `/join` into a reusable component
+- [x] Add `/join/apply` page and route
+- [x] Convert `/join` into identity selection plus apply buttons
+- [x] Update route metadata and tests
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run TypeScript, tests, lint, and production build
+- [x] Browser-check `/join` and `/join/apply`
+- **Status:** complete
+
+## 2026-06-19 Join Form To Google Form
+### Phase 1: Discovery And Design
+- [x] Read active brainstorming, planning, Vercel Functions, and Vercel env-var instructions
+- [x] Inspect existing Join page, content model, tests, Vercel config, and package setup
+- [x] Confirm user approval for Vercel -> Google Form flow
+- [x] Write approved design note
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Add a Vercel API route that validates submissions and posts to Google Form
+- [x] Add a bilingual application form to the Join page
+- [x] Add environment-variable template documentation
+- [x] Update tests for the new form surface
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run TypeScript, lint, tests, and production build
+- [x] Start local dev server and visually verify the Join page
+- **Status:** complete
+
+## 2026-06-19 Splash Opening Upgrade
+### Phase 1: Discovery And Design
+- [x] Read active brainstorming and planning instructions
+- [x] Recover current planning context and recent relevant homepage/splash work
+- [x] Inspect splash component, mascot animation, app mount flow, and visual tokens
+- [x] Capture current splash in browser and identify visual defects
+- [x] Present 2-3 redesign approaches with a recommendation
+- [x] Get user approval before code edits
+- [x] Write approved design note
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Upgrade splash background and visual hierarchy
+- [x] Fix citrus smiling animation so it feels natural and premium
+- [x] Add post-awakening text lines
+- [x] Preserve reduced-motion and fast-loading behavior
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run type/build/test checks
+- [x] Start local dev server and visually verify desktop/mobile splash
+- **Status:** complete
 
 ## 2026-06-19 Home Hero Fine-Line Flow Background
 ### Phase 1: Discovery And Design

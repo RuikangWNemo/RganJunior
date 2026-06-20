@@ -27,6 +27,7 @@ export type ActionLayerContent = {
 export type BeliefContent = {
   title: LocalizedText;
   description: LocalizedText;
+  image: ContentImage;
 };
 
 export type JoinAudienceContent = {
@@ -51,6 +52,14 @@ export const siteBeliefs: BeliefContent[] = [
       zh: '在自然中重新打开观察、感受与敬畏，找回身体里被城市生活遮蔽的安静力量。',
       en: 'In nature, young people reopen observation, feeling, and reverence, recovering the quiet strength that city life can cover over.',
     },
+    image: {
+      src: '/images/home/belief-nature-teacher.webp',
+      alt: {
+        zh: '阿柑在山林溪流边观察自然',
+        en: "R'gan observing nature beside a mountain stream",
+      },
+      position: 'center 48%',
+    },
   },
   {
     title: {
@@ -61,6 +70,14 @@ export const siteBeliefs: BeliefContent[] = [
       zh: '知识不只停留在书本里，而要回到土地、家庭、消费、社区和真实问题中被验证。',
       en: 'Knowledge should not remain on the page; it must be tested in land, families, consumption, community, and real problems.',
     },
+    image: {
+      src: '/images/home/belief-real-world-classroom.webp',
+      alt: {
+        zh: '阿柑在乡村与城市之间记录真实世界',
+        en: "R'gan taking notes between village and city landscapes",
+      },
+      position: 'center 50%',
+    },
   },
   {
     title: {
@@ -70,6 +87,14 @@ export const siteBeliefs: BeliefContent[] = [
     description: {
       zh: '他们可以从观察者成为研究者、表达者和行动者，在当下参与社会与生态的修复。',
       en: 'They can move from observers to researchers, storytellers, and actors, joining social and ecological repair now.',
+    },
+    image: {
+      src: '/images/home/belief-young-people-now.webp',
+      alt: {
+        zh: '一群阿柑一起种植、记录和发声',
+        en: "A group of R'gans planting, documenting, and speaking up",
+      },
+      position: 'center 46%',
     },
   },
 ];
@@ -83,8 +108,8 @@ export const actionLayers: ActionLayerContent[] = [
       en: 'Foundation Layer',
     },
     title: {
-      zh: '山野探索',
-      en: 'Mountain & Forest Exploration',
+      zh: '山野感知',
+      en: 'Mountain Sensing',
     },
     shortTitle: {
       zh: '山野',
@@ -103,12 +128,13 @@ export const actionLayers: ActionLayerContent[] = [
       en: 'First return to the wild, and hear the body and nature again.',
     },
     image: {
-      src: '/archive/elements/photos/program-activities/s20-regenerative-design-eco-camp-group.jpg',
+      src: '/images/actions/mountain-sensing.webp',
       alt: {
-        zh: '青少年在山谷里的再生设计营地合影',
-        en: 'Youth group at a regenerative design camp in the valley',
+        zh: '阿柑在山野溪流边感知自然',
+        en: "R'gan sensing nature beside a mountain stream",
       },
-      position: 'center 52%',
+      position: 'center 50%',
+      contain: true,
     },
     details: [
       {
@@ -138,8 +164,8 @@ export const actionLayers: ActionLayerContent[] = [
       en: 'Middle Layer',
     },
     title: {
-      zh: '田野调查',
-      en: 'Field Investigation',
+      zh: '田野研究',
+      en: 'Field Research',
     },
     shortTitle: {
       zh: '田野',
@@ -158,12 +184,13 @@ export const actionLayers: ActionLayerContent[] = [
       en: 'Then enter the field, and turn feeling into the ability to understand real life.',
     },
     image: {
-      src: '/archive/elements/photos/program-activities/s11-orchard-field-practice.jpg',
+      src: '/images/actions/field-research.webp',
       alt: {
-        zh: '青少年在果园中进行田野实践',
-        en: 'Young people doing field practice in an orchard',
+        zh: '阿柑在田野里记录与研究真实问题',
+        en: "R'gan documenting and studying real questions in the field",
       },
-      position: 'center 42%',
+      position: 'center 50%',
+      contain: true,
     },
     details: [
       {
@@ -193,8 +220,8 @@ export const actionLayers: ActionLayerContent[] = [
       en: 'Application Layer',
     },
     title: {
-      zh: '城乡行动与山野互动',
-      en: 'Urban-Rural Action & Nature Interaction',
+      zh: '城乡行动',
+      en: 'Urban-Rural Action',
     },
     shortTitle: {
       zh: '城乡',
@@ -213,12 +240,13 @@ export const actionLayers: ActionLayerContent[] = [
       en: 'Finally return to urban-rural action, where growth enters real social relationships.',
     },
     image: {
-      src: '/archive/elements/photos/academic-forum/s16-ctb-forum-team-booth.jpg',
+      src: '/images/actions/urban-rural-action.webp',
       alt: {
-        zh: '阿柑少年团队在青年研究论坛展示行动成果',
-        en: "R'gan Junior team presenting action outcomes at a youth research forum",
+        zh: '阿柑在城乡之间连接社群与行动',
+        en: "R'gan connecting community and action across urban and rural settings",
       },
-      position: 'center 42%',
+      position: 'center 50%',
+      contain: true,
     },
     details: [
       {

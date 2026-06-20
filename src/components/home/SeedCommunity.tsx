@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { joinAudiences } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { pickLocalized } from '@/lib/brand';
 import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
-import Strands from '@/components/ui/Strands';
 
 export default function SeedCommunity() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <section id="seed-community" className="section-breathing relative isolate overflow-hidden bg-secondary/30">
@@ -23,45 +20,15 @@ export default function SeedCommunity() {
             <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
               {t('种子社群', 'Seed Community')}
             </p>
-            <h2 className="mt-5 font-serif text-4xl leading-tight text-foreground md:text-5xl">
-              {t('成为阿柑少年 / 家长 / 伙伴', 'For Youth, Parents, and Partners')}
+            <h2 className="seed-community-label isolate mt-7 inline-flex max-w-full items-center justify-center rounded-full border border-primary/20 bg-background/75 px-7 py-4 text-center font-serif text-2xl leading-tight text-foreground shadow-[0_24px_70px_hsl(var(--primary)/0.12)] backdrop-blur-md sm:px-10 sm:py-5 sm:text-3xl md:px-12 md:text-4xl">
+              <span>{t('成为阿柑少年 / 家长 / 伙伴', 'Youth / Parents / Partners')}</span>
             </h2>
-            <div className="pointer-events-none mx-auto mt-3 h-24 w-[min(820px,92vw)] motion-reduce:hidden" aria-hidden="true">
-              <Strands
-                colors={['#F97316', '#005A43', '#95A6A9']}
-                count={4}
-                speed={0.2}
-                amplitude={0.86}
-                waviness={0.86}
-                thickness={0.5}
-                glow={2.2}
-                taper={4.8}
-                spread={1.08}
-                hueShift={0.03}
-                intensity={0.46}
-                saturation={1.12}
-                opacity={0.56}
-                scale={1.12}
-              />
-            </div>
           </div>
         </ScrollProgressReveal>
 
-        <ScrollProgressReveal direction="up" distance={40} className="mt-4">
+        <ScrollProgressReveal direction="up" distance={40} className="mt-10 md:mt-12">
           <div className="relative mx-auto max-w-4xl">
-            <div className="grid gap-3 sm:grid-cols-3">
-              {joinAudiences.map((audience, index) => (
-                <div
-                  key={audience.id}
-                  className="seed-community-label rounded-full border border-primary/20 bg-background/60 px-5 py-3 text-center text-sm font-medium text-foreground shadow-[0_18px_60px_hsl(var(--primary)/0.08)] backdrop-blur-md"
-                  style={{ animationDelay: `${index * 0.85}s` }}
-                >
-                  {pickLocalized(audience.trigger, lang)}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-9 flex justify-center md:mt-12">
+            <div className="flex justify-center">
               <div className="seed-community-entry relative inline-flex items-center justify-center">
                 <span className="seed-community-entry-field" aria-hidden="true" />
                 <Link

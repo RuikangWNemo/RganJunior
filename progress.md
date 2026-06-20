@@ -1,5 +1,89 @@
 # Progress
 
+## 2026-06-20
+- New request: optimize the Join page identity section with the provided 阿柑少年/家长/合作伙伴 images, compressed assets, a default hanging youth card, and a smooth magical gas transition when switching identities.
+- Read the active `brainstorming` and `planning-with-files` skills.
+- Recovered current planning context and confirmed the worktree already contains unrelated prior Join/homepage planning changes.
+- Read the user-provided React Bits Lanyard attachment and confirmed the full component requires Three/Rapier/meshline dependencies plus `card.glb` and `lanyard.png` assets.
+- Inspected `JoinUs.tsx`, `JoinUs.test.tsx`, `src/index.css`, `siteContent`, package dependencies, Vite config, and the six provided local PNG assets.
+- Confirmed the existing Join page can be upgraded in-place around the identity selector without changing the dedicated `/join/apply` form route.
+- User replied `2`, selecting the full React Bits Lanyard path instead of the lightweight imitation.
+- Added the approved design note at `docs/plans/2026-06-20-join-lanyard-identity-design.md`.
+- Downloaded official React Bits lanyard assets into `src/assets/lanyard/card.glb` and `src/assets/lanyard/lanyard.png`.
+- Installed React 18-compatible Lanyard dependencies after the latest package line failed against React 18.
+- Compressed the provided youth, parent, and partner background/card PNGs into WebP assets under `public/images/join`.
+- Added the local `Lanyard` component, GLB typing/Vite asset support, and the redesigned Join identity stage with Lanyard, magic burst, background art, static reduced-motion/test fallback, and updated Join tests.
+- Follow-up: user clarified that the Lanyard animation should feel attached to the whole page, the selector should not contain images, no Vite overlay/default elements should appear, and duplicated visual elements should be fixed.
+- Moved the Join identity artwork below the selector into a full-width hanging illustration stage and removed selector thumbnail images/styles so the identity list is text-only.
+- Added a WebGL capability guard so browsers or verification environments that cannot create a WebGL context fall back to the designed static hanging card instead of blanking the page.
+- Follow-up correction: moved the Lanyard into a fixed page-level hanging layer, converted the three identity choices back into a parallel selector, turned the identity illustrations into semi-transparent animated section backdrops, and removed the visible original React Bits black strap/hardware styling from the Join usage.
+- Follow-up correction after live-page comparison request: redrew the Lanyard card texture so React Bits' original card markings are no longer used, added identity labels directly onto the hanging card, switched the Join Lanyard to a vertical non-draggable layout so the strap connects from above and cannot be pulled out of bounds, enlarged the hanging card, and reduced/repositioned the section backdrop illustrations.
+
+## 2026-06-19
+- New request: add damping/weight to site scrolling so the website feels more premium.
+- Inspected current scroll-related code and confirmed the site is not using a smooth-scroll dependency.
+- Presented three approaches and user approved approach A: lightweight desktop-only damping.
+- Added `docs/plans/2026-06-19-scroll-damping-design.md`.
+- Added `src/components/SmoothScrollDamping.tsx` for desktop-only wheel damping with reduced-motion, mobile, interactive target, and nested-scroll safeguards.
+- Mounted `SmoothScrollDamping` from `src/components/Layout.tsx` and synchronized it after route/hash scroll resets.
+
+## 2026-06-19
+- Follow-up request: "把提交表单路径打通" and then "请你来着手做这个表单".
+- User confirmed permission to use the currently logged-in Chrome Google account to create a Google Form.
+- Read the Chrome control skill, planning skill, current `/api/join`, `.env.example`, and form component.
+- Added a new planning section for Google Form creation and connection.
+- Created and published the Google Form "阿柑少年加入申请 / R'gan Junior Application" in the confirmed Google account.
+- Added the 11 mapped questions matching the website payload and confirmed the public form metadata exposes the expected `entry.*` IDs.
+- Wrote the live Google Form URL and entry mappings to ignored `.env.local`; updated `.env.example` with safer configuration guidance.
+- Ran a real local API smoke test. A no-interest submission succeeded, while a with-interest submission exposed Google Forms' checkbox behavior.
+- Fixed `api/join.js` so checkbox interest selections are sent as repeated `entry.*` values instead of one comma-joined string.
+- Re-ran the with-interest smoke test successfully; Google Forms editor reports 2 total test responses.
+
+## 2026-06-19
+- Follow-up request: move the Join form to a separate page. The Join page should let users choose an identity, then click into the form and submit from there.
+- Re-read the active `brainstorming` and `planning-with-files` instructions.
+- Inspected current `JoinUs.tsx`, `App.tsx`, current Join tests, planning files, and current dirty worktree.
+- Presented and received approval for `/join` as identity selection and `/join/apply?audience=...` as the dedicated form route.
+- Added `docs/plans/2026-06-19-join-apply-page-design.md`.
+- Extracted the application form into `src/components/join/JoinApplicationForm.tsx`.
+- Added `src/pages/JoinApply.tsx` and routed `/join/apply` from `src/App.tsx`.
+- Updated `/join` to remove the embedded form and use identity-specific apply links.
+- Added `/join/apply` route metadata in `src/lib/brand.ts`.
+- Updated Join tests and added `JoinApply.test.tsx`.
+- Fixed 390px mobile overflow on `/join` by allowing long CTA text to wrap and adding `min-w-0` to the two contact/action columns.
+
+## 2026-06-19
+- New request: add a Join page form so visitors can fill it directly on the site, with submissions automatically uploaded by Vercel to Google Forms and sent to `contact@rganjunior.org`.
+- User approved the Vercel -> Google Form -> Google Sheets/email-notification direction.
+- Read the active `brainstorming`, `planning-with-files`, `vercel-functions`, and `env-vars` skills.
+- Recovered current planning files and confirmed existing unrelated splash work is dirty in the working tree; this task will not revert it.
+- Inspected `JoinUs.tsx`, shared join content, current Join tests, Vercel config, TypeScript config, env ignore rules, and form UI primitives.
+- Wrote `docs/plans/2026-06-19-join-form-google-form-design.md`.
+- Added `api/join.js` to validate form submissions and forward them to Google Form via Vercel environment-variable mappings.
+- Added `.env.example` with Google Form action, field mapping, and optional notification webhook variables.
+- Updated `vercel.json` SPA fallback destination from `/` to `/index.html`, matching Vercel's Vite SPA documentation.
+- Rebuilt the Join contact section into a bilingual application form plus shared channel ledger.
+- Updated join closing copy from "view contact details" to "submit the form".
+- Updated Join page tests and added a `ResizeObserver` test mock for Radix checkbox support.
+
+## 2026-06-19
+- New request: upgrade the 阿柑少年 opening splash because the content background color is unattractive and the citrus smiling animation feels strange.
+- Read the active `brainstorming` skill; it requires design approval before code edits.
+- Read the active `planning-with-files` skill and recovered existing planning context.
+- Updated root planning files with the splash upgrade phases before continuing discovery.
+- Inspected `SplashAnimation.tsx`, `Layout.tsx`, global CSS tokens, Tailwind palette, and splash routing references.
+- Identified likely causes: a muddy dark radial background and independent white arc facial overlays that do not belong to the mascot artwork.
+- Captured the current splash in the in-app browser at `/private/tmp/rgan-splash-current-localhost.png`.
+- Verified no error overlay; found the splash still renders three facial arc overlays and the navbar remains visible above the splash due equal `z-50` stacking.
+- User approved direction A with the extra requirement that several lines of text appear after the mascot wakes.
+- Added `docs/plans/2026-06-19-splash-paper-awakening-design.md`.
+- Rebuilt `src/components/SplashAnimation.tsx` around the approved paper-awakening direction.
+- Removed the extra facial arc overlays and kept the mascot artwork's original smile.
+- Added post-awakening text lines, subtle fine-line background paths, softer paper/citrus/green color treatment, and a `data-splash-screen` marker for verification.
+- Moved the splash overlay through a React portal so it is attached to `document.body` and can cover the navbar despite route transition stacking contexts.
+- Bumped the homepage splash version to `brand-film-v8-paper-awakening` so the corrected intro appears once for returning browsers.
+- Verified desktop and 390px mobile splash behavior in the browser: no error overlay, no old face arcs, nav not on top, text visible and fitting.
+
 ## 2026-06-19
 - New request: make the homepage opening screen more magical with flowing background motion and subtle interaction.
 - First implementation used a large flowing gradient/wave `HomeHeroFlow` background; user rejected it as ugly.
@@ -86,6 +170,36 @@
 - Added horizontal overflow protection and mobile wrapping fixes after screenshot review.
 
 ## Verification Log
+- 2026-06-20 Join Lanyard identity section: `tsc --noEmit`, `vitest run`, `eslint .`, and `vite build` passed. Lint still reports the existing 8 Fast Refresh warnings; build still reports Browserslist and chunk-size warnings.
+- 2026-06-20 Join Lanyard identity section: browser CDP verification passed on desktop and 390px mobile with Chinese content, no Vite overlay, no console errors, one WebGL Lanyard canvas when WebGL is available, static fallback when WebGL is unavailable, fixed hanging-card position preserved after scrolling, zero selector images, three parallel identity choices, 0.22-opacity section backdrop image, successful switch to the parent identity, magic burst present, and no horizontal overflow.
+- 2026-06-20 Join Lanyard follow-up: `tsc --noEmit`, `vitest run`, `eslint .`, and `vite build` passed after the strap/card/background corrections. Browser CDP verification passed on desktop and 390px mobile for the partner identity with one WebGL canvas, fixed hanging position after scrolling, no selector images, `/join/apply?audience=join-partners`, partner backdrop image, partner text present, magic burst present, no console errors, and no horizontal overflow.
+- 2026-06-19 Scroll damping: `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build` passed. Lint still reports the existing 8 Fast Refresh warnings; build still reports existing Browserslist/chunk-size warnings.
+- 2026-06-19 Scroll damping: local Vite ran at `http://127.0.0.1:5177/`; browser verification on `/actions` found no error overlay, no console errors, and `data-scroll-damping="active"` at desktop width.
+- 2026-06-19 Scroll damping: desktop wheel sampling showed scroll continuing from 182px to 699px after one wheel input, confirming damped movement.
+- 2026-06-19 Scroll damping: 390px mobile viewport had no `data-scroll-damping` flag and remained scrollable with native page scrolling.
+- 2026-06-19 Scroll damping: `/join/apply?audience=join-youth` rendered the application form with damping active on desktop, accepted input in `#join-name`, and showed no console errors.
+- 2026-06-19 Google Form connection: local handler smoke test initially failed in sandbox DNS, then succeeded with network access against the real Google Form.
+- 2026-06-19 Google Form connection: a with-interest smoke test caught a Google checkbox mapping bug; after fixing array field submission, the handler returned `{ ok: true }` for a test payload with two interests.
+- 2026-06-19 Google Form connection: Google Forms editor showed `Responses 2`, confirming successful test submissions reached the real form.
+- 2026-06-19 Google Form connection: `node --check api/join.js`, `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build` all passed. Lint still reports the existing 8 Fast Refresh warnings; build still reports existing Browserslist/chunk-size warnings.
+- 2026-06-19 dedicated Join apply page: `npx tsc --noEmit` passed.
+- 2026-06-19 dedicated Join apply page: `npm test` passed: 4 tests across 3 files. React Router future-flag warnings remain non-blocking.
+- 2026-06-19 dedicated Join apply page: `npm run lint` passed with 0 errors and the existing 8 Fast Refresh warnings.
+- 2026-06-19 dedicated Join apply page: `npm run build` passed. Vite reported existing Browserslist age and chunk-size warnings.
+- 2026-06-19 dedicated Join apply page: browser checks passed for `/join` and `/join/apply?audience=join-parents` on desktop; `/join` had no form input and `/join/apply` had the selected parent identity and form fields.
+- 2026-06-19 dedicated Join apply page: browser checks passed at 390px mobile for `/join` and `/join/apply`, with no error overlay, no console errors, and no horizontal overflow after CTA wrapping fix.
+- 2026-06-19 Join form integration: `npx tsc --noEmit` passed.
+- 2026-06-19 Join form integration: `npm test` passed: 3 tests across 2 files. React Router future-flag warnings remain non-blocking.
+- 2026-06-19 Join form integration: `npm run lint` passed with 0 errors and the existing 8 Fast Refresh warnings.
+- 2026-06-19 Join form integration: `npm run build` passed. Vite reported existing Browserslist age and chunk-size warnings.
+- 2026-06-19 Join form integration: `node --check api/join.js` passed.
+- 2026-06-19 Join form integration: local handler smoke test returned 400 for invalid data and 500 with `MISSING_GOOGLE_FORM_CONFIG` for valid data when env vars are absent.
+- 2026-06-19 Join form integration: dev server started at `http://127.0.0.1:5175/`; browser DOM/viewport checks passed for `/join` on desktop and 390px mobile with no console errors and no horizontal overflow.
+- 2026-06-19 splash opening upgrade: `tsc --noEmit` passed using bundled Node.
+- 2026-06-19 splash opening upgrade: Vitest passed via `node node_modules/vitest/vitest.mjs run`: 3 tests across 2 files.
+- 2026-06-19 splash opening upgrade: lint passed via `node node_modules/eslint/bin/eslint.js .` with 0 errors and the existing 8 Fast Refresh warnings.
+- 2026-06-19 splash opening upgrade: `vite build` passed via bundled Node. Vite reported existing Browserslist age and chunk-size warnings.
+- 2026-06-19 splash opening upgrade: local Vite ran at `http://127.0.0.1:5173/`; browser verification passed on desktop and 390px mobile.
 - 2026-06-19 home hero fine-line flow: `tsc --noEmit` passed.
 - 2026-06-19 home hero fine-line flow: `npm run lint` passed with 0 errors and 8 existing Fast Refresh warnings.
 - 2026-06-19 home hero fine-line flow: `npm test` passed: 3 tests across 2 files.
@@ -133,3 +247,4 @@
 | Chrome headless screenshots of `#seed-community` returned an empty SPA shell | Tried Chrome CLI and a CDP script after the in-app screenshot became inconsistent | Relied on in-app browser DOM/console verification and a successful earlier viewport screenshot of the section |
 | In-app browser viewport setter unavailable for cursor verification | Tried `tab.playwright.setViewportSize` | Verified at the available desktop viewport and relied on the shared reduced-motion/mobile gating hook plus build/type checks |
 | Chrome CLI narrow screenshot appeared horizontally clipped | Captured `/actions` with `--window-size=390,2600` | Used CDP device metrics and screenshot instead; CDP reported `scrollWidth === viewportWidth` and the Chinese mobile screenshot rendered correctly |
+| In-app browser screenshot timed out for Join form verification | Tried full-page and viewport screenshots after DOM checks passed | Treated as a tool limitation; DOM, console, and viewport metrics passed on desktop and mobile |

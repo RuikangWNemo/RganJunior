@@ -1,5 +1,78 @@
 # Findings
 
+## 2026-06-20 Join Identity Hanging Card
+- The current `/join` page is already an identity-selection surface: it renders three tabs from `joinAudiences`, one active narrative panel, and a button linking to `/join/apply?audience=...`.
+- The existing Join tests currently assert that the page has no `img` elements, so they need to be updated when adding the requested mascot artwork.
+- The provided React Bits `Lanyard` source depends on `three`, `meshline`, `@react-three/fiber`, `@react-three/drei`, and `@react-three/rapier`, plus `card.glb` and `lanyard.png`.
+- `package.json` does not currently include those Lanyard dependencies, and no `card.glb` / lanyard texture assets were found in the project.
+- Provided background images are 1448x1086 PNG RGB files: `Rganjunior.png`, `Rganjunior_parents.png`, and `Rganjunior_friends.png`.
+- Provided card images are 1080x1080 PNG RGBA files: `Rganjunior_card.png`, `Rganjunior_parents_card.png`, and `Rganjunior_friends_card.png`.
+- The visual content maps cleanly to the identities: hiking mascot for youth, parent/child mascot for parents, and three cooperative mascots for partners.
+- A lightweight CSS/Framer suspended-card implementation can deliver the requested default youth card, magical "poof" switch, compressed assets, and smooth motion without adding heavy 3D physics dependencies.
+- User chose the full React Bits Lanyard option, accepting the heavier dependency and asset requirements.
+- The live React Bits Lanyard chunk references official assets at `https://www.reactbits.dev/assets/card-BP4TWJmK.glb` and `https://www.reactbits.dev/assets/lanyard-BQfo1yFS.png`.
+- Installed React 18-compatible package versions instead of latest `@react-three/fiber@9`: `@react-three/fiber@8.18.0`, `@react-three/drei@9.122.0`, `@react-three/rapier@1.5.0`, `meshline@3.3.1`, and `three@0.184.0`.
+- Compressed the six provided Join images to WebP in `public/images/join`; the outputs are 38-66KB each while preserving transparent card art.
+
+## 2026-06-19 Scroll Damping
+- The site currently uses native document scrolling plus targeted `scrollTo` / `scrollIntoView` calls and several scroll-driven visual effects.
+- No smooth-scroll library is installed, so a small in-house provider is lower risk than adding a dependency.
+- The damping should be desktop-only and skip `prefers-reduced-motion`, form fields, overlays, and nested scroll containers so it does not damage usability.
+- Final implementation adds `SmoothScrollDamping`, mounted globally in `Layout`, with a custom sync event after route and hash scroll resets.
+- Browser verification confirmed the effect is active on desktop, inactive at 390px width, and the Join application form remains usable.
+
+## 2026-06-19 Google Form Creation And Connection
+- User approved using the current Chrome Google account to create a real Google Form named "阿柑少年加入申请 / R'gan Junior Application".
+- Current website/API fields already map to the needed Google Form structure: audience, name, contact, age/grade/role, organization, city, interests, message, language, page, and submittedAt.
+- The current API requires `JOIN_GOOGLE_FORM_ACTION_URL`, `JOIN_GOOGLE_FORM_ENTRY_AUDIENCE`, `JOIN_GOOGLE_FORM_ENTRY_NAME`, `JOIN_GOOGLE_FORM_ENTRY_CONTACT`, `JOIN_GOOGLE_FORM_ENTRY_MESSAGE`, and `JOIN_GOOGLE_FORM_ENTRY_SUBMITTED_AT` to accept a real submission. Optional fields are appended when configured.
+- Created and published the target Google Form in the confirmed Chrome Google account. Public form data confirms 11 questions and the expected required fields: audience, name, contact, and message.
+- Extracted the published `/viewform` URL and all `entry.*` IDs from the form's public metadata. Live values are stored in ignored `.env.local`; committed docs/examples keep placeholders only.
+- Local API smoke testing first exposed a real Google Forms checkbox issue: Google rejects checkbox submissions if multiple selections are joined into one comma-separated string. `api/join.js` now appends one `entry.*` value per selected interest.
+- After the checkbox fix, the local API handler successfully posted a test submission with interest selections to Google Form; the form editor shows 2 total test responses.
+- A full browser-to-API local submit needs a Vercel dev/deployment server because plain Vite does not serve `/api/join`. This machine does not currently have the Vercel CLI installed.
+
+## 2026-06-19 Dedicated Join Apply Page
+- The user wants the form as a separate page: choose identity first, click a button, then fill and submit.
+- Current `JoinUs.tsx` contains both the identity tab content and the full application form. The cleanest implementation is to extract the form into a shared component and mount it from a new `JoinApply` route.
+- `src/App.tsx` currently only routes `/join` to `JoinUs`, so `/join/apply` needs a new route before the catch-all.
+- Route metadata in `src/lib/brand.ts` should include `/join/apply` so document title and descriptions do not fall back to generic brand values.
+- Existing Vercel API and Google Form mapping can stay unchanged.
+- Final implementation moves the form into `src/components/join/JoinApplicationForm.tsx`, keeps `/join` as the identity-selection/orientation page, and adds `src/pages/JoinApply.tsx` at `/join/apply`.
+- `/join/apply?audience=join-parents` correctly preselects the parent identity while still allowing users to change identity in the form.
+- Browser verification found `/join` no longer contains `#join-name`, `/join/apply` contains the form and selected identity, and both pages have no error overlay or console errors.
+- A mobile overflow issue on `/join` came from long English CTA text inheriting `whitespace-nowrap` from the Button component. The fix allows wrapping and adds `min-w-0`; 390px verification then reported `scrollWidth === clientWidth`.
+
+## 2026-06-19 Join Form To Google Form
+- The current Join page already has the right conversion surface: `src/pages/JoinUs.tsx` contains identity tabs for youth, parents, and partners, plus a contact ledger with "微信 / 表单" still marked as "待发布".
+- The project is a Vite + React SPA deployed on Vercel. Vercel documentation confirms non-Next projects can add root `api/` functions using `export default function handler(request, response)`.
+- `vercel.json` currently uses a catch-all SPA rewrite. Vercel's Vite SPA documentation shows the destination as `/index.html`; updating the destination improves clarity.
+- The frontend TypeScript config includes only `src`, so a root `api/join.js` function avoids adding Node globals to the browser lint/type setup.
+- Google Forms can receive server-side submissions through the form's `formResponse` URL and `entry.*` field IDs. Those IDs should stay in Vercel environment variables because they are deployment configuration, not frontend code.
+- Google Form response notification can be configured to email `contact@rganjunior.org`; if stronger control is needed, the API can also call an optional notification webhook.
+- Final implementation uses `api/join.js`, with server-side required-field validation, a honeypot, no-store JSON responses, Google Form URL normalization from `/viewform` to `/formResponse`, human-readable interest labels, and optional `JOIN_NOTIFICATION_WEBHOOK_URL` support.
+- The Join page now has a bilingual form in the contact section with audience, name, contact, age/grade/role, school/organization, city, interests, message, consent, loading/success/error states, and direct email fallback.
+- Browser DOM/viewport verification at `http://127.0.0.1:5175/join` passed on desktop and 390px mobile: no error overlay, no console errors, all form fields present, and no horizontal overflow. The browser screenshot command timed out twice, so verification relied on DOM, console, and layout metrics.
+
+## 2026-06-19 Splash Opening Upgrade
+- The user reports the current opening splash content background color feels ugly and the citrus smiling animation feels strange.
+- Prior work has repeatedly pushed the homepage toward a premium, restrained, real-place visual language; the splash should align with that instead of using loud color fields or gimmicky expression motion.
+- Existing planning context says rejected large gradient/wave backgrounds should be avoided; successful direction uses fine, restrained movement and clear readability.
+- `src/components/SplashAnimation.tsx` uses a very dark brown/black full-screen base with orange/green radial gradients. This likely reads muddy against the warmer brand palette.
+- The strange smiling effect is created by overlaying white border arcs for two eyes and one mouth on top of `mascot-full.png`, after the image has already appeared. Because those arcs are independent from the mascot artwork, the expression can feel pasted-on and unnatural.
+- The splash currently appears through `HeroMascotStage` only on the homepage when `localStorage.hasSeenSplashAnimation` does not match `brand-film-v3`.
+- `HeroMascotStage` owns splash visibility and then hands off to the normal homepage mascot. The likely code boundary is therefore the splash component plus, if needed, a splash version bump so returning visitors see the upgraded intro once.
+- The original splash plan asked for a dark/cool opening and an added expression moment, but the current brand direction has since moved toward quieter real-world/paper/field warmth. The upgrade should favor that newer direction.
+- Browser capture at `http://localhost:5173/` showed the current splash rendering with no Vite error overlay and `arcOverlayCount: 3`, confirming the extra expression arcs are mounted during the visible opening.
+- The screenshot shows the navbar above the splash because both navbar and splash use `z-50`; source order lets the navbar sit on top. The splash should use a higher z-index or the nav should be suppressed while the splash is active.
+- Current screenshot path for reference: `/private/tmp/rgan-splash-current-localhost.png`.
+- User approved direction A and added that several lines of text should appear after the mascot wakes.
+- Approved implementation note created at `docs/plans/2026-06-19-splash-paper-awakening-design.md`.
+- Final implementation uses a paper-like morning background, subtle linework, and the original mascot expression without extra facial arc overlays.
+- The splash now renders through a React portal into `document.body`, with `z-index: 1000`, so it covers the navbar and is not trapped by the route transition stacking context.
+- Post-awakening text includes the brand, subtitle, and four short bilingual lines.
+- Browser verification on desktop found the splash parent is `BODY`, old facial arc count is 0, no error overlay appears, nav is not on top, and all four lines are visible.
+- Browser verification at 390px found all text fits the viewport, `scrollWidth` equals `390`, nav is not on top, old facial arc count is 0, and no error overlay appears.
+
 ## 2026-06-19 Home Hero Fine-Line Flow Background
 - The first large flowing gradient/wave version of `HomeHeroFlow` was visually rejected by the user as too ugly. It has been removed from the implementation: no `.home-hero-flow__wash`, `.home-hero-flow__river`, `.home-hero-flow__threads`, `.home-hero-flow__veil`, or `.home-hero-flow__grain` elements remain.
 - Web reference review shifted the direction toward cleaner design, soft motion, and relationship/thread metaphors rather than large color fields or tech/game-like effects.

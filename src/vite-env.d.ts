@@ -8,3 +8,15 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module '*.glb' {
+  const src: string;
+  export default src;
+}
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    meshLineGeometry: Record<string, unknown>;
+    meshLineMaterial: Record<string, unknown>;
+  }
+}

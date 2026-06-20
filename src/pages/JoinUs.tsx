@@ -1,43 +1,152 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { joinAudiences, type JoinAudienceId } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { BRAND, CONTACT_EMAIL, type LocalizedText, pickLocalized } from '@/lib/brand';
+import { BRAND, type LocalizedText, pickLocalized } from '@/lib/brand';
 
-interface ContactLedgerItem {
-  label: LocalizedText;
-  status?: LocalizedText;
-  value?: string;
-  href?: string;
+const Lanyard = lazy(() => import('@/components/ui/lanyard/Lanyard'));
+
+interface JoinIdentityVisual {
+  eyebrow: LocalizedText;
+  card: string;
+  cardAlt: LocalizedText;
 }
-
-const contactLedger: ContactLedgerItem[] = [
-  { label: { zh: '邮箱', en: 'Email' }, value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { label: { zh: '表单', en: 'Form' }, status: { zh: '已开放', en: 'Open' } },
-  { label: { zh: '当前阶段', en: 'Current Stage' }, status: { zh: '小规模深度探索', en: 'Small-scale deep exploration' } },
-];
 
 const contentById = new Map(joinAudiences.map((item) => [item.id, item]));
 
+const identityVisuals: Record<JoinAudienceId, JoinIdentityVisual> = {
+  'join-youth': {
+    eyebrow: { zh: '山野与田野', en: 'Mountain & Field' },
+    card: '/images/join/youth-card.webp',
+    cardAlt: { zh: '成为阿柑少年的悬挂卡片插图', en: "Hanging card illustration for R'gan Junior youth" },
+  },
+  'join-parents': {
+    eyebrow: { zh: '陪伴与边界', en: 'Care & Boundaries' },
+    card: '/images/join/parents-card.webp',
+    cardAlt: { zh: '成为阿柑家长的悬挂卡片插图', en: "Hanging card illustration for R'gan Junior parents" },
+  },
+  'join-partners': {
+    eyebrow: { zh: '共创与行动', en: 'Co-creation & Action' },
+    card: '/images/join/partners-card.webp',
+    cardAlt: { zh: '成为合作伙伴的悬挂卡片插图', en: 'Hanging card illustration for partners' },
+  },
+};
+
 const panelTransition = {
-  initial: { opacity: 0, y: 10 },
+  initial: { opacity: 0, y: 12 },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.28,
+      duration: 0.32,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
 };
 
+const burstParticles = Array.from({ length: 12 }, (_, index) => index);
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setPrefersReducedMotion(query.matches);
+
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+function canCreateWebGLContext() {
+  if (typeof document === 'undefined') return false;
+
+  try {
+    const canvas = document.createElement('canvas');
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext('webgl2') ||
+          canvas.getContext('webgl') ||
+          canvas.getContext('experimental-webgl'))
+    );
+  } catch {
+    return false;
+  }
+}
+
+function useWebGLAvailable() {
+  const [webGLAvailable, setWebGLAvailable] = useState(false);
+
+  useEffect(() => {
+    setWebGLAvailable(canCreateWebGLContext());
+  }, []);
+
+  return webGLAvailable;
+}
+
+function StaticJoinCard({
+  visual,
+  title,
+  subtitle,
+  lang,
+}: {
+  visual: JoinIdentityVisual;
+  title: string;
+  subtitle: string;
+  lang: 'zh' | 'en';
+}) {
+  return (
+    <div className="join-static-lanyard">
+      <span className="join-static-lanyard__pin" aria-hidden="true" />
+      <span className="join-static-lanyard__cord" aria-hidden="true" />
+      <div className="join-static-lanyard__card">
+        <img src={visual.card} alt={pickLocalized(visual.cardAlt, lang)} />
+        <span className="join-static-lanyard__identity">{title}</span>
+        <span className="join-static-lanyard__eyebrow">{subtitle}</span>
+      </div>
+    </div>
+  );
+}
+
+function MagicBurst({ burstKey }: { burstKey: number }) {
+  return (
+    <motion.div
+      key={burstKey}
+      className="join-magic-burst"
+      aria-hidden="true"
+      initial={{ opacity: 0, scale: 0.66 }}
+      animate={{ opacity: [0, 1, 0], scale: [0.7, 1.05, 1.32] }}
+      transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {burstParticles.map((index) => (
+        <span
+          key={index}
+          style={
+            {
+              '--angle': `${index * 30}deg`,
+              '--distance': `${36 + (index % 4) * 13}px`,
+              '--delay': `${index * 24}ms`,
+            } as CSSProperties
+          }
+        />
+      ))}
+    </motion.div>
+  );
+}
+
 export default function JoinUs() {
   const { lang, t } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const webGLAvailable = useWebGLAvailable();
   const [activeId, setActiveId] = useState<JoinAudienceId>('join-youth');
+  const [burstKey, setBurstKey] = useState(0);
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
@@ -50,10 +159,54 @@ export default function JoinUs() {
     () => contentById.get(activeId) ?? joinAudiences[0],
     [activeId]
   );
+  const activeVisual = identityVisuals[activeId];
+  const activeTitle = pickLocalized(activeContent.trigger, lang);
+  const activeEyebrow = pickLocalized(activeVisual.eyebrow, lang);
+  const shouldRenderLanyard = webGLAvailable && !prefersReducedMotion && import.meta.env.MODE !== 'test';
+
+  const handleIdentitySelect = (nextId: JoinAudienceId) => {
+    if (nextId === activeId) return;
+    setActiveId(nextId);
+    if (!prefersReducedMotion) {
+      setBurstKey((value) => value + 1);
+    }
+  };
 
   return (
-    <div className="pt-20">
-      <section className="pt-20 pb-12 sm:pt-32 sm:pb-16 md:pt-40 md:pb-20 lg:pt-48">
+    <div className="join-page pt-20">
+      <div className="join-floating-lanyard-layer" aria-hidden={false}>
+        {burstKey > 0 && !prefersReducedMotion && <MagicBurst burstKey={burstKey} />}
+        <div className="join-floating-lanyard-card">
+          <p className="sr-only">{pickLocalized(activeVisual.cardAlt, lang)}</p>
+          {shouldRenderLanyard ? (
+            <Suspense fallback={<StaticJoinCard visual={activeVisual} title={activeTitle} subtitle={activeEyebrow} lang={lang} />}>
+              <Lanyard
+                key={activeId}
+                position={[0, 0, 18]}
+                gravity={[0, -32, 0]}
+                fov={17}
+                frontImage={activeVisual.card}
+                backImage={activeVisual.card}
+                imageFit="contain"
+                imageZoom={1}
+                cardTitle={activeTitle}
+                cardSubtitle={activeEyebrow}
+                cardScale={2.85}
+                bandColor="#9a633e"
+                lanyardWidth={0.24}
+                showHardware={false}
+                draggable
+                layout="vertical"
+                className="join-lanyard"
+              />
+            </Suspense>
+          ) : (
+            <StaticJoinCard visual={activeVisual} title={activeTitle} subtitle={activeEyebrow} lang={lang} />
+          )}
+        </div>
+      </div>
+
+      <section className="pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 lg:pt-48 lg:pb-28">
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p data-page-motion="title" className="text-xs uppercase tracking-[0.22em] text-primary/70">
@@ -73,7 +226,7 @@ export default function JoinUs() {
         </div>
       </section>
 
-      <section id="voices" className="join-voices-section border-y border-border/70 py-16 md:py-20">
+      <section id="voices" className="join-voices-section border-y border-border/70 py-10 md:py-12">
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="max-w-2xl min-w-0">
@@ -101,13 +254,14 @@ export default function JoinUs() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section id="join-identities" className="join-identity-section py-10 md:py-12">
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div data-page-motion="actions" className="border-b border-border/80">
+          <div data-page-motion="actions" className="join-identity-stage">
+            <h2 className="sr-only">{t('选择你的加入身份', 'Choose your way in')}</h2>
             <div
               role="tablist"
               aria-label={t('加入身份选择', 'Join identity selector')}
-              className="flex flex-wrap gap-6 md:gap-10"
+              className="join-minimal-tabs"
             >
               {joinAudiences.map((identity) => {
                 const isActive = activeId === identity.id;
@@ -121,148 +275,61 @@ export default function JoinUs() {
                     aria-selected={isActive}
                     data-active={isActive}
                     aria-controls={`join-panel-${identity.id}`}
-                    onClick={() => setActiveId(identity.id)}
-                    className={`cursor-target join-identity-tab -mb-px border-b pb-4 text-left font-serif text-lg transition-organic md:text-xl ${
-                      isActive
-                        ? 'border-primary text-foreground'
-                        : 'border-transparent text-muted-foreground hover:text-foreground'
-                    }`}
+                    onClick={() => handleIdentitySelect(identity.id)}
+                    className="cursor-target join-minimal-tab"
                   >
                     {pickLocalized(identity.trigger, lang)}
                   </button>
                 );
               })}
             </div>
-          </div>
 
-          <motion.div
-            key={activeId}
-            id={`join-panel-${activeId}`}
-            role="tabpanel"
-            aria-labelledby={activeId}
-            variants={panelTransition}
-            initial="initial"
-            animate="animate"
-            className="join-panel mt-14 max-w-3xl"
-          >
-            <p className="join-motion join-motion-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
-              {t('Identity', 'Identity')}
-            </p>
-            <h2 className="join-motion join-motion-title mt-5 font-serif text-3xl text-foreground md:text-4xl">
-              {pickLocalized(activeContent.heading, lang)}
-            </h2>
-            <p className="join-motion join-motion-intro mt-8 max-w-xl text-base leading-8 text-muted-foreground">
-              {pickLocalized(activeContent.intro, lang)}
-            </p>
-
-            <dl className="join-motion join-motion-rows mt-10 border-t border-border/80">
-              {activeContent.rows.map((row) => (
-                <div
-                  key={pickLocalized(row.label, lang)}
-                  className="join-detail-row grid gap-2 border-b border-border/80 py-5 md:grid-cols-[120px_minmax(0,1fr)] md:gap-8"
-                >
-                  <dt className="join-detail-label text-xs uppercase tracking-[0.18em] text-primary/70">
-                    {pickLocalized(row.label, lang)}
-                  </dt>
-                  <dd className="join-detail-value text-sm leading-7 text-foreground/88">
-                    {pickLocalized(row.value, lang)}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <Button
-              asChild
-              className="cursor-target join-motion join-motion-link mt-8 h-auto min-h-11 w-full whitespace-normal py-3 text-center sm:w-auto"
+            <motion.div
+              key={activeId}
+              id={`join-panel-${activeId}`}
+              role="tabpanel"
+              aria-labelledby={activeId}
+              variants={panelTransition}
+              initial="initial"
+              animate="animate"
+              className="join-minimal-panel"
             >
-              <Link to={`/join/apply?audience=${activeId}`}>
-                <span className="min-w-0 break-words">{pickLocalized(activeContent.closing, lang)}</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="contact-ledger" className="border-t border-border/80 py-20 md:py-24">
-        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="join-motion join-contact-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
-              {t('Contact', 'Contact')}
-            </p>
-            <h2 className="join-motion join-contact-title mt-5 font-serif text-3xl text-foreground md:text-4xl">
-              {t('表单与联系方式', 'Form & Contact')}
-            </h2>
-            <p className="join-motion join-contact-intro mt-8 max-w-2xl text-base leading-8 text-muted-foreground">
-              {t(
-                '先选择适合你的加入身份，再进入独立表单填写信息。信息会进入统一统计表，用于后续联系与小规模深度沟通。',
-                'Choose the identity that fits you first, then continue to the dedicated form. Submissions enter one shared response record for follow-up and small-scale deeper conversations.'
-              )}
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.75fr)] lg:items-start">
-            <div className="min-w-0 border-y border-border/80 py-8">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70">
-                {t('Selected Identity', 'Selected Identity')}
+              <p className="join-motion join-motion-kicker text-xs uppercase tracking-[0.3em] text-primary/70">
+                {t('Identity', 'Identity')}
               </p>
-              <h3 className="mt-4 font-serif text-2xl text-foreground">
+              <h3 className="join-motion join-motion-title mt-5 font-serif text-3xl leading-tight text-foreground md:text-4xl">
                 {pickLocalized(activeContent.heading, lang)}
               </h3>
-              <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">
-                {t(
-                  '确认身份后进入填写页。表单会自动带入当前选择，你也可以在填写页重新切换。',
-                  'Continue to the form after confirming your identity. The form carries this choice forward, and you can still switch it there.'
-                )}
+              <p className="join-motion join-motion-intro mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
+                {pickLocalized(activeContent.intro, lang)}
               </p>
+
+              <dl className="join-motion join-motion-rows join-minimal-rows">
+                {activeContent.rows.map((row) => (
+                  <div
+                    key={pickLocalized(row.label, lang)}
+                    className="join-minimal-row"
+                  >
+                    <dt className="join-minimal-label">
+                      {pickLocalized(row.label, lang)}
+                    </dt>
+                    <dd className="join-minimal-value">
+                      {pickLocalized(row.value, lang)}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
               <Button
                 asChild
-                className="cursor-target mt-7 h-auto min-h-11 w-full whitespace-normal py-3 text-center sm:w-auto"
+                className="cursor-target join-motion join-motion-link join-minimal-cta"
               >
                 <Link to={`/join/apply?audience=${activeId}`}>
                   <span className="min-w-0 break-words">{pickLocalized(activeContent.closing, lang)}</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-5 w-5 shrink-0" />
                 </Link>
               </Button>
-            </div>
-
-            <div className="min-w-0 border-y border-border/80 py-8">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70">
-                {t('Shared Channel', 'Shared Channel')}
-              </p>
-              <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                {t(
-                  '表单会进入统一记录；如果你更适合直接沟通，也可以发送邮件。',
-                  'The form enters one shared record; if direct communication fits better, email is still open.'
-                )}
-              </p>
-
-              <div className="mt-8 border-t border-border/80">
-                {contactLedger.map((item) => (
-                  <div
-                    key={pickLocalized(item.label, lang)}
-                    className="join-contact-row grid gap-3 border-b border-border/80 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-4 lg:grid-cols-1"
-                  >
-                    <p className="join-contact-label font-serif text-xl text-foreground">
-                      {pickLocalized(item.label, lang)}
-                    </p>
-                    {item.href && item.value ? (
-                      <a
-                        href={item.href}
-                        className="cursor-target join-contact-status inline-flex min-w-0 items-center gap-2 break-all text-sm text-foreground transition-colors hover:text-primary"
-                      >
-                        <Mail className="h-4 w-4 shrink-0 text-primary" />
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="join-contact-status text-sm text-muted-foreground">
-                        {pickLocalized(item.status!, lang)}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

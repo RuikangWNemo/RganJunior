@@ -57,14 +57,30 @@ export default function Index() {
                 blur={false}
                 delay={index * 0.04}
               >
-                <article className="border-t border-border pt-6">
-                  <p className="mb-4 text-xs uppercase tracking-[0.2em] text-primary/70">
+                <article className="relative overflow-hidden border-t border-border pb-8 pt-6 md:pb-10">
+                  <img
+                    src={belief.image.src}
+                    alt=""
+                    aria-hidden="true"
+                    width={560}
+                    height={420}
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(min-width: 768px) 260px, 240px"
+                    className="pointer-events-none absolute left-1/2 top-4 z-0 w-[76%] max-w-[260px] -translate-x-1/2 select-none opacity-[0.24] saturate-[0.86] mix-blend-multiply md:top-5"
+                    style={{
+                      objectPosition: belief.image.position,
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgb(0 0 0 / 0.76) 28%, rgb(0 0 0 / 0.28) 62%, transparent 100%)',
+                      maskImage: 'linear-gradient(to bottom, black 0%, rgb(0 0 0 / 0.76) 28%, rgb(0 0 0 / 0.28) 62%, transparent 100%)',
+                    }}
+                  />
+                  <p className="relative z-10 mb-4 text-xs uppercase tracking-[0.2em] text-primary/70">
                     {String(index + 1).padStart(2, '0')}
                   </p>
-                  <h3 className="font-serif text-2xl leading-snug text-foreground">
+                  <h3 className="relative z-10 font-serif text-2xl leading-snug text-foreground">
                     {pickLocalized(belief.title, lang)}
                   </h3>
-                  <p className="mt-5 text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
+                  <p className="relative z-10 mt-5 text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
                     {pickLocalized(belief.description, lang)}
                   </p>
                 </article>
