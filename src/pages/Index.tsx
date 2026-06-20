@@ -11,6 +11,31 @@ import { pickLocalized } from '@/lib/brand';
 import BlobCursor from '@/components/ui/BlobCursor';
 import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
 
+function MobileFieldNote() {
+  const { t } = useLanguage();
+
+  return (
+    <div className="home-mobile-field-note order-3 -mt-1 md:hidden">
+      <figure className="overflow-hidden rounded-md border border-border/70 bg-secondary/40 shadow-[0_18px_52px_hsl(var(--foreground)/0.08)]">
+        <img
+          src="/archive/elements/photos/program-activities/s11-orchard-field-practice.jpg"
+          alt={t('少年在果园中进行田野实践', 'A young person doing field practice in an orchard')}
+          className="aspect-[16/9] w-full object-cover"
+          style={{ objectPosition: 'center 50%' }}
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+      <div className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-3 border-t border-border/80 pt-3">
+        <p className="font-serif text-lg leading-none text-primary">01</p>
+        <p className="text-xs font-medium uppercase leading-5 tracking-[0.16em] text-foreground/72">
+          {t('真实田野中的学习现场', 'A real field for learning')}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
   const heroRef = useRef<HTMLElement>(null);
   const { lang, t } = useLanguage();
@@ -26,9 +51,10 @@ export default function Index() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[hsl(42_28%_96%)]"
           aria-hidden="true"
         />
-        <div className="container relative z-10 mx-auto grid min-h-[min(760px,84svh)] items-center gap-10 px-4 pb-16 pt-24 sm:px-6 sm:pt-28 lg:grid-cols-[minmax(200px,0.42fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:pb-20 lg:pt-28 xl:min-h-[min(820px,84svh)]">
+        <div className="container relative z-10 mx-auto grid min-h-[min(760px,84svh)] items-center gap-7 px-4 pb-10 pt-20 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:grid-cols-[minmax(200px,0.42fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:pb-20 lg:pt-28 xl:min-h-[min(820px,84svh)]">
           <HeroMascotStage sectionRef={heroRef} />
           <HeroCopy onJoin={() => { window.location.href = '/join'; }} />
+          <MobileFieldNote />
         </div>
       </section>
 

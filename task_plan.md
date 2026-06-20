@@ -4,10 +4,33 @@
 Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
 
 ## Current Request
-Optimize the Join page identity section with compressed mascot imagery, a hanging-card interaction inspired by React Bits Lanyard, and smooth magical gas transitions between youth, parent, and partner identities.
+Systematically upgrade the website's mobile visual quality, with priority on stronger first-screen impact, clearer section hierarchy, premium spacing, image treatment, motion restraint, and no horizontal overflow.
 
 ## Current Phase
-Join identity implementation and verification
+Mobile visual upgrade discovery and design approval
+
+## 2026-06-20 Mobile Visual System Upgrade
+### Phase 1: Discovery And Design
+- [x] Read active brainstorming and planning instructions
+- [x] Recover existing planning context and current worktree status
+- [x] Inspect mobile-critical page/component/CSS structure
+- [x] Capture current mobile screenshots and identify visual defects
+- [x] Propose 2-3 upgrade approaches with recommendation
+- [x] Get user approval before code edits
+- [x] Write approved design note
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Apply approved mobile visual system changes
+- [x] Keep desktop behavior stable and preserve existing content/routes
+- [x] Update tests if UI surface changes require it
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run type/test/lint/build checks
+- [x] Browser-check mobile viewports for visual polish and obvious overlay/overflow issues
+- [ ] Complete CDP DOM overflow probe when local approval/usage limit allows it
+- **Status:** complete with noted limitation
 
 ## 2026-06-20 Join Identity Hanging Card
 ### Phase 1: Discovery And Design

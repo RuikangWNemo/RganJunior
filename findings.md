@@ -1,5 +1,27 @@
 # Findings
 
+## 2026-06-20 Mobile Visual System Upgrade
+- New request: the current mobile version feels visually weak and needs a systematic upgrade.
+- Active constraints from project history: avoid loud one-note gradients, avoid the previously rejected large wave/gradient treatment, keep the brand in a premium real-place/paper/field visual language, and preserve mobile readability/no horizontal overflow.
+- Existing planning files show recent major surfaces touched: homepage hero/splash/photo/story sections, Actions three-track theatre, Join identity/lanyard, global scroll damping, and cursor effects.
+- The repository is a Vite + React + TypeScript + Tailwind site with route pages under `src/pages`, shared homepage components under `src/components/home`, and global styling in `src/index.css`.
+- Mobile screenshots captured at `/private/tmp/rgan-mobile-home-before.png`, `/private/tmp/rgan-mobile-actions-before.png`, and `/private/tmp/rgan-mobile-join-before.png`.
+- 390px mobile probe found `scrollWidth === viewportWidth` for `/`, `/actions`, `/join`, and `/about`, so the browser is clipping overflow rather than creating a full horizontal-scroll page.
+- The homepage first screen reads weak on mobile because it is mostly enlarged mascot plus text on paper; the scroll video begins below a large blank-looking area, and the paragraph is visually clipped in the screenshot even though global `scrollWidth` is 0.
+- The homepage first viewport offenders are mostly decorative SVG paths and the scroll video media extending slightly past the viewport while clipped.
+- `/actions` has stronger imagery on mobile, but the overview cards feel like desktop theatrical cards compressed into a narrow column; large absolute mascot artwork extends beyond the card and is clipped.
+- `/join` is the weakest mobile surface: the fixed hanging lanyard sits off the right edge, the intro copy is visually cut by that layer, and the tab row shows offscreen options without enough mobile affordance.
+- `/about` mobile does not show page-level overflow, but land-memory images intentionally extend slightly beyond the viewport; this is lower priority than homepage and Join.
+- Recommended design direction: treat mobile as its own editorial system, not just scaled desktop. Prioritize a redesigned mobile home hero, mobile-specific section rhythm, visible real-image anchors, and a simplified mobile Join identity surface.
+- Final implementation kept desktop routes/data intact and focused on mobile-only or responsive presentation changes.
+- The homepage now adds a mobile field-note image inside the hero and reveals the scroll-video image sooner on compact viewports instead of starting with a fully blank veil.
+- The homepage action-line rows now show thumbnails on mobile, restoring image rhythm in a section that previously became mostly text and borders.
+- The Actions hero now uses a real field photo, and mobile overview cards reduce oversized contained artwork, card height, chip density, and display scale.
+- Join mobile now hides the fixed page-level lanyard layer and replaces it with an inline decorative identity card plus a stacked tab selector, preventing the hanging card from cutting into text.
+- The mobile identity card is `aria-hidden` because the same identity text and image meaning are already represented by tabs, panel copy, and the desktop/static lanyard image; this also avoids duplicate image names in tests.
+- Visual screenshots after implementation: `/private/tmp/rgan-mobile-home-after2.png`, `/private/tmp/rgan-mobile-actions-after.png`, and `/private/tmp/rgan-mobile-join-after2.png`.
+- The final CDP DOM overflow probe could not be rerun because the approval system rejected the local 9222 probe due usage limits. Earlier before/after screenshots showed the main mobile clipping problems corrected; full type/test/lint/build checks passed.
+
 ## 2026-06-20 Join Identity Hanging Card
 - The current `/join` page is already an identity-selection surface: it renders three tabs from `joinAudiences`, one active narrative panel, and a button linking to `/join/apply?audience=...`.
 - The existing Join tests currently assert that the page has no `img` elements, so they need to be updated when adding the requested mascot artwork.

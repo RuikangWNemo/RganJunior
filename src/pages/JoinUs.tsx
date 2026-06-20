@@ -114,6 +114,37 @@ function StaticJoinCard({
   );
 }
 
+function MobileJoinIdentityCard({
+  visual,
+  title,
+  subtitle,
+  lang,
+}: {
+  visual: JoinIdentityVisual;
+  title: string;
+  subtitle: string;
+  lang: 'zh' | 'en';
+}) {
+  return (
+    <motion.div
+      key={`${title}-${subtitle}`}
+      className="join-mobile-card"
+      aria-hidden="true"
+      initial={{ opacity: 0, y: 10, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="join-mobile-card__image">
+        <img src={visual.card} alt="" />
+      </div>
+      <div className="min-w-0">
+        <p className="join-mobile-card__eyebrow">{subtitle}</p>
+        <p className="join-mobile-card__title">{title}</p>
+      </div>
+    </motion.div>
+  );
+}
+
 function MagicBurst({ burstKey }: { burstKey: number }) {
   return (
     <motion.div
@@ -216,7 +247,7 @@ export default function JoinUs() {
               {t('加入阿柑少年', `Join ${brandName}`)}
             </h1>
             <div className="mt-6 h-px w-12 bg-primary" />
-            <p data-page-motion="lead" className="mt-8 max-w-2xl break-words text-base leading-8 text-muted-foreground md:text-lg">
+            <p data-page-motion="lead" className="mt-8 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl md:text-lg">
               {t(
                 '选择适合你的加入方式。当前阶段保持小规模深度探索，通过官方渠道统一沟通；真实伙伴故事会在整理完成后单独发布。',
                 `Choose how you want to join ${brandName}. We are currently in a small-scale deep exploration stage and communicate through official channels; real partner stories will be published separately once they are ready.`
@@ -236,7 +267,7 @@ export default function JoinUs() {
               <h2 className="join-motion join-stage-title mt-5 font-serif text-3xl text-foreground md:text-4xl">
                 {t('伙伴之声', 'Partner Voices')}
               </h2>
-              <p className="join-motion join-stage-intro mt-6 break-words text-base leading-8 text-muted-foreground">
+              <p className="join-motion join-stage-intro mt-6 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl">
                 {t(
                   '这里先保留为一个安静入口。访谈文字、真实音频、播客片段或短片整理完成后，会放在独立页面中逐步更新。',
                   'This stays as a quiet entry point for now. Interview notes, real audio, podcast clips, or short films will move into a dedicated page as they become ready.'
@@ -283,6 +314,13 @@ export default function JoinUs() {
                 );
               })}
             </div>
+
+            <MobileJoinIdentityCard
+              visual={activeVisual}
+              title={activeTitle}
+              subtitle={activeEyebrow}
+              lang={lang}
+            />
 
             <motion.div
               key={activeId}

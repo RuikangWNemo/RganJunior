@@ -40,11 +40,11 @@ function LineItem({ layer }: { layer: ActionLayerContent }) {
           <ArrowRight className="mt-5 h-4 w-4 text-primary opacity-70 transition duration-500 group-hover:translate-x-2 group-hover:opacity-100 group-focus-visible:translate-x-2 group-focus-visible:opacity-100" aria-hidden="true" />
         </div>
 
-        <figure className="hidden min-w-0 overflow-hidden rounded-md border border-border bg-[radial-gradient(circle_at_36%_20%,rgba(255,255,255,0.92),rgba(244,238,218,0.44)_34%,rgba(220,231,204,0.52)_100%)] md:block">
+        <figure className="min-w-0 overflow-hidden rounded-md border border-border bg-[radial-gradient(circle_at_36%_20%,rgba(255,255,255,0.92),rgba(244,238,218,0.44)_34%,rgba(220,231,204,0.52)_100%)]">
           <img
             src={layer.image.src}
             alt={pickLocalized(layer.image.alt, lang)}
-            className="aspect-[4/3] h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.055] group-focus-visible:scale-[1.055]"
+            className="aspect-[16/9] h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.055] group-focus-visible:scale-[1.055] md:aspect-[4/3]"
             style={{ objectPosition: layer.image.position }}
             loading="lazy"
             decoding="async"

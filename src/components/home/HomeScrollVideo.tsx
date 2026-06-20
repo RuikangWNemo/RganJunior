@@ -28,11 +28,16 @@ export default function HomeScrollVideo() {
       typeof window.matchMedia === 'function'
         ? window.matchMedia('(prefers-reduced-motion: reduce)')
         : { matches: false };
+    const compactViewport =
+      typeof window.matchMedia === 'function'
+        ? window.matchMedia('(max-width: 640px)')
+        : { matches: false };
     let scrollFrame = 0;
     let videoFrame = 0;
 
     const writeProgressVars = (progress: number) => {
-      const introReveal = clamp(progress / 0.18, 0, 1);
+      const mobileIntroOffset = compactViewport.matches ? 0.15 : 0;
+      const introReveal = clamp((progress + mobileIntroOffset) / 0.18, 0, 1);
       const outroCover = clamp((progress - 0.82) / 0.18, 0, 1);
       const veilOpacity = Math.max(1 - introReveal, outroCover, readyRef.current ? 0 : 1);
 

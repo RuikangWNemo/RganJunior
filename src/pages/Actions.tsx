@@ -140,14 +140,15 @@ function ActionHero() {
   const { lang, t } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
   const heroLayer = actionLayers[0];
+  const heroImage = sceneImages[heroLayer.id];
 
   return (
     <section className="relative isolate min-h-[min(820px,calc(100svh-5rem))] overflow-hidden border-b border-border bg-background">
       <img
-        src={heroLayer.image.src}
-        alt={pickLocalized(heroLayer.image.alt, lang)}
+        src={heroImage.src}
+        alt={pickLocalized(heroImage.alt, lang)}
         className="absolute inset-0 -z-20 h-full w-full object-cover opacity-[0.45] saturate-[0.86]"
-        style={{ objectPosition: heroLayer.image.position }}
+        style={{ objectPosition: heroImage.position }}
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/82 to-background/30" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-background to-transparent" />
@@ -201,8 +202,8 @@ function LineOverview() {
               const Icon = layerIcons[layer.id];
               const meta = lineMeta[layer.id];
               const imageShiftClass = layer.id === 'urban-rural'
-                ? 'left-[57%] h-[92%] md:left-[59%] md:h-[101%]'
-                : 'left-1/2 h-[86%] md:h-[94%]';
+                ? 'left-[58%] h-[66%] opacity-85 sm:h-[92%] sm:opacity-100 md:left-[59%] md:h-[101%]'
+                : 'left-1/2 h-[66%] opacity-85 sm:h-[86%] sm:opacity-100 md:h-[94%]';
               const imageClass = layer.image.contain
                 ? `absolute bottom-0 w-auto max-w-none -translate-x-1/2 object-contain transition duration-700 ease-out group-hover/card:-translate-y-3 group-hover/card:scale-[1.08] group-focus-visible/card:-translate-y-3 group-focus-visible/card:scale-[1.08] ${imageShiftClass}`
                 : 'h-full w-full object-cover transition duration-700 ease-out group-hover/card:scale-[1.04] group-focus-visible/card:scale-[1.04]';
@@ -212,7 +213,7 @@ function LineOverview() {
                   key={layer.id}
                   href={`#${layer.id}`}
                   aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
-                  className="group/card relative flex min-h-[27rem] w-full min-w-0 overflow-hidden rounded-md border border-border bg-secondary/35 p-5 outline-none transition-[transform,border-color,box-shadow,background-color] duration-500 ease-out hover:-translate-y-1 hover:border-primary/35 hover:bg-secondary/45 hover:shadow-[0_24px_70px_rgba(36,52,32,0.16)] focus-visible:-translate-y-1 focus-visible:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/25 md:min-h-[31rem]"
+                  className="group/card relative flex min-h-[23.5rem] w-full min-w-0 overflow-hidden rounded-md border border-border bg-secondary/35 p-4 outline-none transition-[transform,border-color,box-shadow,background-color] duration-500 ease-out hover:-translate-y-1 hover:border-primary/35 hover:bg-secondary/45 hover:shadow-[0_24px_70px_rgba(36,52,32,0.16)] focus-visible:-translate-y-1 focus-visible:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/25 sm:min-h-[27rem] sm:p-5 md:min-h-[31rem]"
                 >
                   <div className="absolute inset-0">
                     <img
@@ -241,17 +242,17 @@ function LineOverview() {
                       </div>
                     </div>
 
-                    <div className="mt-auto min-w-0 rounded-sm border border-background/60 bg-background/76 p-4 shadow-sm backdrop-blur-[3px] transition duration-500 group-hover/card:bg-background/84 group-focus-visible/card:bg-background/84">
+                    <div className="mt-auto min-w-0 rounded-sm border border-background/60 bg-background/80 p-3.5 shadow-sm backdrop-blur-[3px] transition duration-500 group-hover/card:bg-background/84 group-focus-visible/card:bg-background/84 sm:p-4">
                       <p className="text-xs uppercase tracking-[0.2em] text-primary/75">
                         {pickLocalized(meta.axis, lang)}
                       </p>
-                      <h3 className="mt-4 font-serif text-5xl leading-none text-foreground md:text-6xl">
+                      <h3 className="mt-3 font-serif text-4xl leading-none text-foreground sm:mt-4 sm:text-5xl md:text-6xl">
                         {pickLocalized(meta.verb, lang)}
                       </h3>
-                      <p className="mt-5 max-w-sm break-words text-sm leading-7 text-foreground/72 md:text-base md:leading-8">
+                      <p className="mt-4 max-w-sm break-words text-sm leading-7 text-foreground/72 sm:mt-5 md:text-base md:leading-8">
                         {pickLocalized(layer.homeLine, lang)}
                       </p>
-                      <div className="mt-6 grid min-w-0 grid-cols-2 gap-2 transition-all duration-500 sm:flex sm:flex-wrap md:max-h-0 md:overflow-hidden md:opacity-0 md:group-hover/card:max-h-28 md:group-hover/card:opacity-100 md:group-focus-visible/card:max-h-28 md:group-focus-visible/card:opacity-100">
+                      <div className="mt-5 grid min-w-0 grid-cols-1 gap-2 transition-all duration-500 sm:mt-6 sm:flex sm:flex-wrap md:max-h-0 md:overflow-hidden md:opacity-0 md:group-hover/card:max-h-28 md:group-hover/card:opacity-100 md:group-focus-visible/card:max-h-28 md:group-focus-visible/card:opacity-100">
                         {meta.activities.map((activity) => (
                           <span
                             key={activity.en}

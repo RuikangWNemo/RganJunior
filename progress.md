@@ -1,6 +1,28 @@
 # Progress
 
 ## 2026-06-20
+- New request: systematically upgrade the mobile visual quality because the current mobile version feels weak.
+- Read the active `brainstorming` and `planning-with-files` skills. `brainstorming` requires project discovery, proposed design, and user approval before product code edits.
+- Recovered existing planning context and confirmed the worktree is currently clean.
+- Added a new planning section for the mobile visual system upgrade and will inspect mobile-critical code/screens before proposing the implementation direction.
+- Inspected homepage, Actions, Join, About, Layout, Navbar, and global CSS/mobile media rules.
+- Started Vite locally at `http://127.0.0.1:5175/`.
+- Captured 390px mobile screenshots for `/`, `/actions`, and `/join` using headless Chrome.
+- Ran a Chrome DevTools mobile layout probe for `/`, `/actions`, `/join`, and `/about`; no full-page horizontal scroll was found, but decorative/fixed layers overflow and are clipped at the phone edges.
+- Key diagnosis: mobile visual weakness comes from desktop-first hierarchy, insufficient real-image anchors on the homepage, over-compressed Actions cards, and a Join lanyard layer that competes with/cuts into mobile text.
+- User approved direction A: mobile-specific editorial system upgrade.
+- Added approved design note at `docs/plans/2026-06-20-mobile-visual-system-design.md`.
+- Implemented the approved mobile visual system upgrade across homepage, Actions, Join, and global mobile CSS.
+- Homepage changes: added a mobile field-note image, tightened mobile hero typography/spacing, removed harsh body-copy word breaking, showed thumbnails in the mobile action-line rows, and made the scroll video reveal imagery sooner on compact viewports.
+- Actions changes: swapped the hero image to a real field photo, reduced mobile theatre card height, toned down oversized contained artwork, and changed activity chips to a single-column mobile layout.
+- Join changes: hid the fixed lanyard layer on mobile, added an inline decorative identity card, converted mobile identity tabs into a stacked selector, and tightened mobile body-copy widths.
+- First test run failed because the mobile identity card duplicated the accessible image name from the static lanyard in jsdom; fixed by marking the mobile card decorative with `aria-hidden` and an empty image alt.
+- Verification passed: `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build`.
+- Lint still reports the existing 8 Fast Refresh warnings. Build still reports the existing Browserslist age and large chunk warnings.
+- Browser verification used headless Chrome screenshots because `agent-browser` is not installed in this environment. Screenshots passed visual review for `/`, `/actions`, and `/join`.
+- Attempted final CDP DOM overflow probe, but escalation was rejected by the approval/usage system. No workaround was attempted; visual screenshots and engineering checks were used for final confidence.
+
+## 2026-06-20
 - New request: optimize the Join page identity section with the provided 阿柑少年/家长/合作伙伴 images, compressed assets, a default hanging youth card, and a smooth magical gas transition when switching identities.
 - Read the active `brainstorming` and `planning-with-files` skills.
 - Recovered current planning context and confirmed the worktree already contains unrelated prior Join/homepage planning changes.
