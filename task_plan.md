@@ -4,10 +4,32 @@
 Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
 
 ## Current Request
-Systematically upgrade the website's mobile visual quality, with priority on stronger first-screen impact, clearer section hierarchy, premium spacing, image treatment, motion restraint, and no horizontal overflow.
+Add the user's new homepage copy about anxiety, uncertainty, whole-life growth, and the four movements of exploration, healing, learning, and action. The homepage should feel designed and clever, not like a plain text block.
 
 ## Current Phase
-Mobile visual upgrade discovery and design approval
+Homepage whole-life growth section complete
+
+## 2026-06-20 Homepage Whole-Life Growth Section
+### Phase 1: Discovery And Design
+- [x] Read active brainstorming and planning instructions
+- [x] Recover existing planning context and current worktree status
+- [x] Inspect homepage structure, shared content, and global homepage CSS
+- [x] Identify the best location and design approach for the supplied copy
+- [x] Present 2-3 approaches and get user approval before code edits
+- [x] Write approved design note
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Add the approved homepage section/component
+- [x] Preserve existing hero, scroll video, action links, language behavior, and responsive layout
+- [x] Add/tune CSS for desktop and mobile polish
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run type/test/lint/build checks
+- [x] Start local dev server and confirm homepage responds locally
+- [ ] Browser-check homepage desktop/mobile if agent-browser or Chrome verification is available
+- **Status:** complete with noted limitation
 
 ## 2026-06-20 Mobile Visual System Upgrade
 ### Phase 1: Discovery And Design

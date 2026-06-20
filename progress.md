@@ -1,6 +1,21 @@
 # Progress
 
 ## 2026-06-20
+- New request: add a designed homepage treatment for the user's supplied copy about whole-life growth in an anxious, uncertain era.
+- Read the active `brainstorming` and `planning-with-files` skills. `brainstorming` requires design approval before page-code edits.
+- Recovered existing planning context, confirmed the project is Vite/React/Tailwind, and inspected the homepage structure, home components, shared content, and global homepage CSS.
+- Identified the best placement as a new homepage section after the scroll video and before the beliefs section, rather than overloading the hero.
+- Recommended design direction: a "life-growth compass / terrain map" section that turns exploration, healing, learning, and action into four connected movements around the whole-life growth thesis.
+- User approved direction A: the life-growth compass.
+- Added approved design note at `docs/plans/2026-06-20-homepage-whole-life-growth-design.md`.
+- User interrupted after the first implementation direction and clarified the section should be extremely minimal, using only two paragraphs of text.
+- Replaced the complex compass/map component with a minimal text-only section and updated the related design note.
+- Removed the unused compass/map CSS block after confirming the rendered section no longer uses it.
+- Verification passed after simplification: `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build`.
+- Lint still reports the existing 8 Fast Refresh warnings. Build still reports the existing Browserslist age and large chunk warnings.
+- Local Vite server returned 200 for the homepage. `agent-browser` is not installed in this environment; the interrupted Chrome debug process had already exited, so no new visual screenshot was captured.
+
+## 2026-06-20
 - New request: systematically upgrade the mobile visual quality because the current mobile version feels weak.
 - Read the active `brainstorming` and `planning-with-files` skills. `brainstorming` requires project discovery, proposed design, and user approval before product code edits.
 - Recovered existing planning context and confirmed the worktree is currently clean.

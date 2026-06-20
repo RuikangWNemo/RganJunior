@@ -5,6 +5,7 @@ import HomeHeroFlow from '@/components/home/HomeHeroFlow';
 import HomeScrollVideo from '@/components/home/HomeScrollVideo';
 import HeroMascotStage from '@/components/home/HeroMascotStage';
 import SeedCommunity from '@/components/home/SeedCommunity';
+import WholeLifeGrowth from '@/components/home/WholeLifeGrowth';
 import { siteBeliefs } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
@@ -59,6 +60,8 @@ export default function Index() {
       </section>
 
       <HomeScrollVideo />
+
+      <WholeLifeGrowth />
 
       <section className="section-breathing bg-background">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

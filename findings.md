@@ -1,5 +1,14 @@
 # Findings
 
+## 2026-06-20 Homepage Whole-Life Growth Section
+- New request: the homepage should include the supplied Chinese copy about an anxious and uncertain era, returning to nature and community, whole-life growth, and the four movements of exploration, healing, learning, and action. The page should have design sense and cleverness.
+- The repo is a Vite + React + TypeScript + Tailwind site. The homepage is `src/pages/Index.tsx`, with hero copy in `src/components/home/HeroCopy.tsx`, scroll video in `HomeScrollVideo`, action-line story in `ActionLayerStory`, and global homepage styling in `src/index.css`.
+- The current homepage already has a mascot hero, scroll-driven video, belief cards, three action lines, and seed community CTA. The new copy should not be forced entirely into the hero because that would overload the first viewport.
+- Best fit: add a new homepage section after `HomeScrollVideo` and before the existing beliefs/action sections. This gives the copy a deliberate editorial moment and lets it bridge cinematic place imagery into the program philosophy.
+- The user clarified that this section should be extremely minimal text only, using just two paragraphs. The earlier compass/map concept was superseded.
+- The implementation can stay local to a new `src/components/home/WholeLifeGrowth.tsx` component plus CSS in `src/index.css`, preserving existing shared content models and routes.
+- Final section is text-only: two bilingual paragraphs, light horizontal dividers, centered serif typography on desktop, and left-aligned readable text on mobile.
+
 ## 2026-06-20 Mobile Visual System Upgrade
 - New request: the current mobile version feels visually weak and needs a systematic upgrade.
 - Active constraints from project history: avoid loud one-note gradients, avoid the previously rejected large wave/gradient treatment, keep the brand in a premium real-place/paper/field visual language, and preserve mobile readability/no horizontal overflow.
