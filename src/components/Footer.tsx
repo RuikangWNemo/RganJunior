@@ -1,12 +1,15 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useLocation } from 'react-router-dom';
 import mascotWide from '@/assets/mascot-wide.png';
 import { BRAND, CONTACT_EMAIL, pickLocalized } from '@/lib/brand';
 
 export default function Footer() {
   const { lang, t } = useLanguage();
+  const location = useLocation();
   const brandName = pickLocalized(BRAND.name, lang);
   const brandTagline = pickLocalized(BRAND.tagline, lang);
   const mascotAlt = pickLocalized(BRAND.mascotAlt, lang);
+  const isJoinRoute = location.pathname === '/join' || location.pathname.startsWith('/join/');
 
   return (
     <footer className="border-t border-border bg-background">
@@ -23,7 +26,7 @@ export default function Footer() {
               </p>
             </div>
           </div>
-          <div className="text-sm text-muted-foreground">
+          <div className={`text-sm text-muted-foreground ${isJoinRoute ? '' : 'hidden md:block'}`}>
             <p>{t('联系我们', 'Contact Us')}</p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
