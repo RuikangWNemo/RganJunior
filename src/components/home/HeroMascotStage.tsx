@@ -104,10 +104,10 @@ export default function HeroMascotStage({ sectionRef }: HeroMascotStageProps) {
 
       {/* 正常的吉祥物展示 */}
       {splashComplete && (
-        <div className="relative order-1 flex justify-center lg:order-1 lg:justify-start">
+        <div className="home-hero-mascot-wrap relative order-1 flex justify-center lg:order-1 lg:justify-start">
           <div
             ref={stageRef}
-            className="relative w-full max-w-[13.5rem] transition-transform duration-500 ease-out sm:max-w-[16rem] lg:max-w-[18.5rem] xl:max-w-[19.5rem]"
+            className="home-hero-mascot-stage relative w-full max-w-[13.5rem] transition-transform duration-500 ease-out sm:max-w-[16rem] lg:max-w-[18.5rem] xl:max-w-[19.5rem]"
             style={wrapperStyle}
             onMouseMove={handlePointerMove}
             onMouseLeave={handlePointerLeave}

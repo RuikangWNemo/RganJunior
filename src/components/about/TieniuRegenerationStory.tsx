@@ -1,4 +1,5 @@
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, useMemo, useRef, useState } from 'react';
+import { useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized, type LocalizedText } from '@/lib/brand';
 import { cn } from '@/lib/utils';
@@ -8,6 +9,10 @@ type SceneId = 'memory' | 'monoculture' | 'soil' | 'response' | 'departure';
 interface Scene {
   id: SceneId;
   image: string;
+  mapPosition: {
+    x: number;
+    y: number;
+  };
   evidence?: {
     src: string;
     title: LocalizedText;
@@ -27,10 +32,11 @@ const scenes: Scene[] = [
   {
     id: 'memory',
     image: `${imageBase}/s02-pine-forest-transition.jpg`,
+    mapPosition: { x: 33, y: 34 },
     eyebrow: { zh: '土地的记忆', en: 'Land Memory' },
     title: {
       zh: '在阿柑少年现在生长的土地上，曾经有一片马尾松林。',
-      en: 'Where R’gan Junior now grows, a pine forest once stood.',
+      en: 'Where R\'gan\u00a0Junior now grows, a pine forest once stood.',
     },
     lines: [
       {
@@ -43,6 +49,7 @@ const scenes: Scene[] = [
   {
     id: 'monoculture',
     image: `${imageBase}/s02-orchard-spraying-scene.jpg`,
+    mapPosition: { x: 57, y: 42 },
     evidence: {
       src: `${infographicBase}/s06-traditional-linpan-land-use-poster.jpg`,
       title: { zh: '传统林盘用地结构', en: 'Traditional Linpan land-use structure' },
@@ -68,6 +75,7 @@ const scenes: Scene[] = [
   {
     id: 'soil',
     image: `${imageBase}/s04-soil-root-damage.jpg`,
+    mapPosition: { x: 46, y: 66 },
     evidence: {
       src: `${imageBase}/s04-soil-root-damage.jpg`,
       title: { zh: '板结与根系损伤', en: 'Compaction and root damage' },
@@ -97,6 +105,7 @@ const scenes: Scene[] = [
   {
     id: 'response',
     image: `${imageBase}/s09-earthworm-soil-recovery.jpg`,
+    mapPosition: { x: 63, y: 62 },
     evidence: {
       src: `${infographicBase}/s05-linpan-biodiversity-restoration-diagram.png`,
       title: { zh: '林盘生物多样性修复图', en: 'Linpan biodiversity restoration diagram' },
@@ -122,6 +131,7 @@ const scenes: Scene[] = [
   {
     id: 'departure',
     image: `${imageBase}/s06-linpan-aerial-overview.jpg`,
+    mapPosition: { x: 76, y: 30 },
     evidence: {
       src: `${infographicBase}/s07-ecological-agri-product-solution-board.png`,
       title: { zh: '生态农产品解决方案', en: 'Ecological agri-product solution' },
@@ -134,7 +144,7 @@ const scenes: Scene[] = [
     eyebrow: { zh: '从林盘到少年', en: 'From Linpan to Youth' },
     title: {
       zh: '阿柑少年，是从这片土地的修复中长出来的。',
-      en: 'R’gan Junior grew out of the repair of this land.',
+      en: 'R\'gan\u00a0Junior grew out of the repair of this land.',
     },
     lines: [
       {
@@ -160,41 +170,82 @@ function getLocalProgress(globalProgress: number, index: number) {
   return clamp((globalProgress - sceneStart) / Math.max(0.001, sceneEnd - sceneStart));
 }
 
+function StoryMapPanel({
+  scene,
+  activeIndex,
+  sceneProgress,
+  lang,
+  compact = false,
+}: {
+  scene: Scene;
+  activeIndex: number;
+  sceneProgress: number;
+  lang: 'zh' | 'en';
+  compact?: boolean;
+}) {
+  return (
+    <aside
+      className={cn('land-memory-map-card', compact && 'is-compact')}
+      aria-label={lang === 'zh' ? '土地修复故事地图' : 'Land repair story map'}
+    >
+      <div className="land-memory-map-header">
+        <span>{lang === 'zh' ? '土地修复地图' : 'Land repair map'}</span>
+        <span>{String(activeIndex + 1).padStart(2, '0')} / {String(scenes.length).padStart(2, '0')}</span>
+      </div>
+      <div className="land-memory-map-surface">
+        <div className="land-memory-map-field" />
+        <div className="land-memory-map-route" />
+        {scenes.map((item, index) => (
+          <span
+            key={item.id}
+            className={cn(
+              'land-memory-map-dot',
+              index <= activeIndex && 'is-past',
+              index === activeIndex && 'is-active',
+            )}
+            style={
+              {
+                '--dot-x': `${item.mapPosition.x}%`,
+                '--dot-y': `${item.mapPosition.y}%`,
+              } as CSSProperties
+            }
+          />
+        ))}
+        <span
+          className="land-memory-map-focus"
+          style={
+            {
+              '--dot-x': `${scene.mapPosition.x}%`,
+              '--dot-y': `${scene.mapPosition.y}%`,
+            } as CSSProperties
+          }
+        />
+      </div>
+      <div className="land-memory-map-caption">
+        <span>{pickLocalized(scene.eyebrow, lang)}</span>
+        <strong>{pickLocalized(scene.annotation ?? scene.title, lang)}</strong>
+      </div>
+      <div className="land-memory-map-progress" aria-hidden="true">
+        <span style={{ transform: `scaleX(${(activeIndex + sceneProgress) / scenes.length})` }} />
+      </div>
+    </aside>
+  );
+}
+
 export default function TieniuRegenerationStory() {
   const { lang } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
   const storyRef = useRef<HTMLElement>(null);
-  const rafRef = useRef<number>();
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: storyRef,
+    offset: ['start center', 'end center'],
+  });
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    const update = () => {
-      const story = storyRef.current;
-      if (!story) return;
-
-      const rect = story.getBoundingClientRect();
-      const scrollable = Math.max(1, rect.height - window.innerHeight);
-      setProgress(clamp((window.innerHeight * 0.5 - rect.top) / scrollable));
-    };
-
-    const onScroll = () => {
-      if (rafRef.current) return;
-      rafRef.current = window.requestAnimationFrame(() => {
-        rafRef.current = undefined;
-        update();
-      });
-    };
-
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    setProgress(clamp(latest));
+  });
 
   const activeIndex = Math.min(scenes.length - 1, Math.floor(progress * scenes.length));
   const activeScene = scenes[activeIndex];
@@ -216,7 +267,37 @@ export default function TieniuRegenerationStory() {
       style={storyStyle}
       data-active-scene={activeScene.id}
     >
-      <div className="sticky top-0 min-h-screen overflow-hidden">
+      <div className="land-memory-mobile-list">
+        {scenes.map((scene, index) => (
+          <article key={scene.id} className="land-memory-mobile-scene">
+            <StoryMapPanel scene={scene} activeIndex={index} sceneProgress={1} lang={lang} compact />
+            <div className="land-memory-mobile-copy">
+              <p className="land-memory-scene-count">
+                {String(index + 1).padStart(2, '0')} / {pickLocalized(scene.eyebrow, lang)}
+              </p>
+              <h2>{pickLocalized(scene.title, lang)}</h2>
+              <div className="land-memory-mobile-body">
+                {scene.lines.map((line) => (
+                  <p key={line.zh}>{pickLocalized(line, lang)}</p>
+                ))}
+              </div>
+              {scene.evidence && (
+                <figure className={cn('land-memory-mobile-evidence', `is-${scene.evidence.variant}`)}>
+                  <div>
+                    <img src={scene.evidence.src} alt={pickLocalized(scene.evidence.title, lang)} loading="lazy" />
+                  </div>
+                  <figcaption>
+                    <span>{pickLocalized(scene.evidence.title, lang)}</span>
+                    <small>{pickLocalized(scene.evidence.caption, lang)}</small>
+                  </figcaption>
+                </figure>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="land-memory-scroll-stage sticky top-0 min-h-[100dvh] overflow-hidden">
         <div className="land-memory-visual" aria-hidden="true">
           {scenes.map((scene, index) => {
             const distance = Math.abs(index - activeIndex);
@@ -229,7 +310,7 @@ export default function TieniuRegenerationStory() {
                 className="land-memory-image"
                 style={{
                   opacity,
-                  transform: `scale(${1.04 + progress * 0.045 + index * 0.002})`,
+                  transform: prefersReducedMotion ? undefined : `scale(${1.04 + progress * 0.045 + index * 0.002})`,
                 }}
                 loading={index === 0 ? 'eager' : 'lazy'}
               />
@@ -247,29 +328,14 @@ export default function TieniuRegenerationStory() {
           <div className="land-memory-worm" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-24 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(360px,0.72fr)] lg:items-center">
-            <div className="land-memory-index hidden lg:block">
-              <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-[#f4ead8]/72">
-                {lang === 'zh' ? '铁牛村发展故事' : 'Tieniu regeneration story'}
-              </p>
-              <div className="space-y-3">
-                {scenes.map((scene, index) => (
-                  <div
-                    key={scene.id}
-                    className={cn('land-memory-index-row', index === activeIndex && 'is-active')}
-                  >
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <span>{pickLocalized(scene.eyebrow, lang)}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl flex-col justify-center px-4 py-24 sm:px-6 lg:px-8">
+          <div className="land-memory-grid grid gap-8 lg:grid-cols-[minmax(280px,0.68fr)_minmax(360px,0.82fr)] lg:items-center">
+            <StoryMapPanel scene={activeScene} activeIndex={activeIndex} sceneProgress={sceneProgress} lang={lang} />
 
             <article className="land-memory-copy-shell">
               <div className={cn('land-memory-copy', copyVisible && 'is-visible')}>
-                <p className="mb-5 text-xs font-medium uppercase tracking-[0.28em] text-[#f2c37a]">
-                  {pickLocalized(activeScene.eyebrow, lang)}
+                <p className="land-memory-scene-count mb-5 text-xs font-medium text-[#f2c37a]">
+                  {String(activeIndex + 1).padStart(2, '0')} / {pickLocalized(activeScene.eyebrow, lang)}
                 </p>
                 <h2 className="font-serif text-3xl leading-tight text-[#fff8ea] sm:text-4xl lg:text-5xl">
                   {pickLocalized(activeScene.title, lang)}
@@ -334,7 +400,7 @@ export default function TieniuRegenerationStory() {
             <p>
               {lang === 'zh'
                 ? `${brandName}不是来到铁牛村做活动，而是从这片土地的修复中长出来。`
-                : `${brandName} did not simply come to Tieniu for activities. It grew out of this land’s repair.`}
+                : `${brandName} did not simply come to Tieniu for activities. It grew out of this land's repair.`}
             </p>
           </div>
         </div>

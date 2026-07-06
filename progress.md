@@ -1,5 +1,50 @@
 # Progress
 
+## 2026-07-06
+- Follow-up request: About page scroll/map/story display needs to be bound and cleaned up; Join mobile should be simplified; Join Apply should become premium minimal with excess information removed.
+- Read UI routing, brainstorming, baseline UI, design-taste frontend, and planning-with-files instructions for this pass. Design read: targeted evolution, preserve existing brand/routes/desktop and simplify mobile surfaces.
+- `npx ui-skills categories` hung again and was interrupted. Planning catchup returned no unsynced output. `.codegraph/` is still absent.
+- Inspected `TieniuRegenerationStory`, unused `TieniuStoryMap`, Join mobile identity surface, Join Apply, Join application form, related CSS, and tests.
+- Implemented About story binding: desktop/tablet now uses one active scene for map, progress, copy, evidence, and background; phone view now renders stacked scene cards that bind map, story, and evidence together without sticky blank states.
+- Simplified Join mobile: shorter hero copy, hidden mobile voices section, no mobile identity illustration card, no mobile detail rows, shorter identity intro, and a compact apply CTA.
+- Simplified Join Apply: visible form fields reduced to identity, name, contact, message, consent, and submit. The shared-channel aside is hidden on mobile.
+- Verified with `npx tsc --noEmit`, `npm test`, `npm run lint`, `npm run build`, `git diff --check`, mobile screenshots, and 390px DOM overflow/clipped-text probe. Desktop screenshot attempt for About story was rejected by the approval system due usage limit.
+- User asked to first use the relevant skill to plan a mobile design optimization because the mobile experience is messy and not premium.
+- Read `ui-skills-root`, `brainstorming`, and the full `design-taste-frontend` skill. `brainstorming` requires design approval before product-code edits.
+- Attempted `npx ui-skills categories`; it hung with no output and was interrupted, so the local skill instructions became the fallback UI context.
+- Read `planning-with-files`; attempted the session catchup script, but it was killed with exit code 137. Continued by reading the existing root planning files directly.
+- Confirmed the repo has no `.codegraph/` directory.
+- Reviewed existing mobile design notes, recent commits, homepage, Actions, Join, Layout, Navbar, and relevant global CSS.
+- Verified the local Vite server still responds at `http://localhost:5173/`.
+- Captured current mobile screenshots with headless Chrome: `/private/tmp/rgan-mobile-home.png`, `/private/tmp/rgan-mobile-actions.png`, and `/private/tmp/rgan-mobile-join.png`.
+- Current diagnosis: homepage is serviceable but not premium enough; `/actions` and `/join` show visible right-edge clipping and desktop-first card/heading mechanics on 390px mobile.
+- Updated `task_plan.md`, `findings.md`, and `progress.md` with the mobile planning phase and audit findings.
+- User clarified the redesign boundary: preserve unity with the desktop visual language, but make mobile rhythm and presentation phone-native instead of stacked.
+- Presented three approaches and recommended option 2: mobile editorial reflow.
+- User confirmed the recommendation.
+- Added `docs/plans/2026-07-06-mobile-design-optimization-design.md`.
+- Added `docs/plans/2026-07-06-mobile-design-optimization-implementation-plan.md` as the fallback implementation plan because no writing-plans skill is available in this session.
+- Implemented the approved mobile editorial reflow across homepage, Actions, Join, and global mobile CSS.
+- Homepage changes: added mobile-specific hero class hooks, tightened mobile spacing/typography, adjusted the mascot stage for safer framing, improved CTA stacking, and made the first real field-note image part of the mobile hero rhythm.
+- Actions changes: added dedicated mobile action records with real images and wrapped copy while preserving the previous desktop theatre cards behind `md:flex`.
+- Join changes: added safe wrapping guards for long English copy, tightened mobile hero spacing, redesigned the mobile identity selector into separated choices, and reduced the mobile identity card density.
+- Verified with `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build`. All passed; existing Fast Refresh, React Router future-flag, Browserslist, and chunk-size warnings remain.
+- Ran CDP mobile emulation at 390px for `/`, `/actions`, and `/join`; all three pages reported document/body width equal to viewport width and no clipped visible text.
+- Reviewed post-implementation mobile screenshots at `/private/tmp/rgan-cdp-home-20260706.png`, `/private/tmp/rgan-cdp-actions-20260706.png`, and `/private/tmp/rgan-cdp-join-20260706.png`.
+- Follow-up homepage correction: removed the mobile-only orchard field-note block from the homepage hero, including the "01 / A real field for learning" caption.
+- Reworked homepage mobile rhythm toward a centered editorial cover: hero mascot, title, subtitle, keywords, body copy, and CTAs now align around the center line with more breathing room.
+- Reduced homepage mobile text density by centering the whole-life section, beliefs, action-line rows, and seed-community entry, adding wider section spacing and narrower readable text columns.
+- Final follow-up verification passed: `npx tsc --noEmit`, `npm test`, `npm run lint`, `npm run build`, and CDP mobile overflow probing at 390px.
+- Follow-up request: apply the same mobile centering and polish to other pages because they still look bad.
+- Read UI routing, brainstorming, baseline UI, design-taste frontend, and planning-with-files instructions for this cross-page mobile pass.
+- `npx ui-skills categories` timed out again with no output; planning catchup was killed again with exit code 137. Continued with the local skill instructions and existing planning files.
+- Inspected About, Actions, Join, Join Apply, and shared CSS. Chosen direction: preserve desktop and routes, but introduce a shared centered mobile editorial rhythm for page heroes, intro copy, CTAs, records, cards, and form surroundings.
+- Implemented cross-page mobile centering/polish for About, Actions, Join, Join Apply, and Voices using page-specific class hooks plus mobile CSS. Form fields remain left-aligned, but the form column and surrounding copy are centered and calmer.
+- Removed awkward mobile English breaks by normalizing affected curly apostrophes in About and the land-regeneration story copy.
+- Rebuilt production after fixing a Tailwind `.container` selector interaction that produced CSS minification syntax warnings. Final build no longer reports that CSS warning.
+- Final verification passed: `npx tsc --noEmit`, `npm test`, `npm run lint`, `npm run build`, 390px mobile screenshots, and a 390px CDP overflow/clipped-text probe for `/`, `/about`, `/actions`, `/join`, `/join/apply`, and `/voices`.
+- Existing non-blocking warnings remain: 8 Fast Refresh lint warnings, React Router future-flag warnings in tests, Browserslist age warning, and Vite chunk-size warning. Local dev server still responds at `http://localhost:5173/`.
+
 ## 2026-06-20
 - New request: add a designed homepage treatment for the user's supplied copy about whole-life growth in an anxious, uncertain era.
 - Read the active `brainstorming` and `planning-with-files` skills. `brainstorming` requires design approval before page-code edits.
@@ -207,6 +252,9 @@
 - Added horizontal overflow protection and mobile wrapping fixes after screenshot review.
 
 ## Verification Log
+- 2026-07-06 mobile design optimization: `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build` passed. Lint still reports the existing 8 Fast Refresh warnings; tests still report React Router future-flag warnings; build still reports existing Browserslist age and chunk-size warnings.
+- 2026-07-06 mobile design optimization: CDP mobile emulation passed at 390px for `/`, `/actions`, and `/join` with no page-level horizontal overflow and no clipped visible text. The only Join clipped-text report is an intentionally hidden `sr-only` heading.
+- 2026-07-06 homepage mobile density follow-up: `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build` passed. CDP screenshots reviewed for the homepage top, beliefs, action rows, and seed-community sections.
 - 2026-06-20 Join Lanyard identity section: `tsc --noEmit`, `vitest run`, `eslint .`, and `vite build` passed. Lint still reports the existing 8 Fast Refresh warnings; build still reports Browserslist and chunk-size warnings.
 - 2026-06-20 Join Lanyard identity section: browser CDP verification passed on desktop and 390px mobile with Chinese content, no Vite overlay, no console errors, one WebGL Lanyard canvas when WebGL is available, static fallback when WebGL is unavailable, fixed hanging-card position preserved after scrolling, zero selector images, three parallel identity choices, 0.22-opacity section backdrop image, successful switch to the parent identity, magic burst present, and no horizontal overflow.
 - 2026-06-20 Join Lanyard follow-up: `tsc --noEmit`, `vitest run`, `eslint .`, and `vite build` passed after the strap/card/background corrections. Browser CDP verification passed on desktop and 390px mobile for the partner identity with one WebGL canvas, fixed hanging position after scrolling, no selector images, `/join/apply?audience=join-partners`, partner backdrop image, partner text present, magic burst present, no console errors, and no horizontal overflow.

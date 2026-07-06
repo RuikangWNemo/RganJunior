@@ -24,26 +24,26 @@ export default function Voices() {
   const { lang, t } = useLanguage();
 
   return (
-    <div className="pt-20">
-      <section className="pt-20 pb-12 sm:pt-32 sm:pb-16 md:pt-40 md:pb-20 lg:pt-48">
-        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div className="voices-page pt-20">
+      <section className="voices-hero pt-20 pb-12 sm:pt-32 sm:pb-16 md:pt-40 md:pb-20 lg:pt-48">
+        <div className="voices-hero-shell container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <Link
             to="/join"
             data-page-motion="title"
-            className="cursor-target inline-flex items-center gap-2 text-sm text-muted-foreground transition-organic hover:text-primary"
+            className="voices-back cursor-target inline-flex items-center gap-2 text-sm text-muted-foreground transition-organic hover:text-primary"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>{t('返回加入页面', 'Back to Join')}</span>
           </Link>
 
-          <div className="mt-10 max-w-3xl min-w-0">
-            <p data-page-motion="title" className="text-xs uppercase tracking-[0.22em] text-primary/70">
+          <div className="voices-hero-copy mt-10 max-w-3xl min-w-0">
+            <p data-page-motion="title" className="voices-mobile-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
               {t('Voices', 'Voices')}
             </p>
             <h1 data-page-motion="title" className="mt-5 font-serif text-4xl text-foreground md:text-5xl lg:text-6xl">
               {t('伙伴之声', 'Partner Voices')}
             </h1>
-            <div className="mt-6 h-px w-12 bg-primary" />
+            <div className="voices-mobile-rule mt-6 h-px w-12 bg-primary" />
             <p data-page-motion="lead" className="mt-8 max-w-2xl break-words text-base leading-8 text-muted-foreground md:text-lg">
               {t(
                 '这里将只放经过整理的真实声音。当前先保持留白，避免用零散材料填满页面。',
@@ -54,11 +54,11 @@ export default function Voices() {
         </div>
       </section>
 
-      <section className="border-y border-border/70 bg-card/35 py-16 md:py-20">
+      <section className="voices-archive border-y border-border/70 bg-card/35 py-16 md:py-20">
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div data-page-motion="actions" className="grid gap-8 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-start">
-            <div className="min-w-0">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary/70">
+            <div className="voices-archive-heading min-w-0">
+              <p className="voices-mobile-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
                 {t('Archive', 'Archive')}
               </p>
               <h2 className="mt-5 font-serif text-3xl text-foreground md:text-4xl">
@@ -73,14 +73,14 @@ export default function Voices() {
             </p>
           </div>
 
-          <div className="mt-12 border-t border-border/80">
+          <div className="voices-format-list mt-12 border-t border-border/80">
             {futureFormats.map((format) => {
               const Icon = format.icon;
 
               return (
                 <div
                   key={format.label.en}
-                  className="grid gap-4 border-b border-border/80 py-5 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
+                  className="voices-format-row grid gap-4 border-b border-border/80 py-5 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center"
                 >
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/70 bg-background/70 text-primary">
                     <Icon className="h-4 w-4" />

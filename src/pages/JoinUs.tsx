@@ -35,6 +35,21 @@ const identityVisuals: Record<JoinAudienceId, JoinIdentityVisual> = {
   },
 };
 
+const mobileIntroById: Record<JoinAudienceId, LocalizedText> = {
+  'join-youth': {
+    zh: '适合想进入山野、田野和行动现场的少年。',
+    en: 'For youth ready to enter mountain, field, and action.',
+  },
+  'join-parents': {
+    zh: '适合希望了解边界、陪伴方式和后续沟通的家庭。',
+    en: 'For families who want clear boundaries, care, and follow-up.',
+  },
+  'join-partners': {
+    zh: '适合希望一起共创课程、研究或社区行动的伙伴。',
+    en: 'For partners interested in courses, research, or community action.',
+  },
+};
+
 const panelTransition = {
   initial: { opacity: 0, y: 12 },
   animate: {
@@ -193,6 +208,7 @@ export default function JoinUs() {
   const activeVisual = identityVisuals[activeId];
   const activeTitle = pickLocalized(activeContent.trigger, lang);
   const activeEyebrow = pickLocalized(activeVisual.eyebrow, lang);
+  const activeMobileIntro = pickLocalized(mobileIntroById[activeId], lang);
   const shouldRenderLanyard = webGLAvailable && !prefersReducedMotion && import.meta.env.MODE !== 'test';
 
   const handleIdentitySelect = (nextId: JoinAudienceId) => {
@@ -237,21 +253,26 @@ export default function JoinUs() {
         </div>
       </div>
 
-      <section className="pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 lg:pt-48 lg:pb-28">
-        <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p data-page-motion="title" className="text-xs uppercase tracking-[0.22em] text-primary/70">
+      <section className="join-hero pb-14 pt-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 lg:pt-48 lg:pb-28">
+        <div className="join-hero-shell container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="join-hero-copy max-w-3xl">
+            <p data-page-motion="title" className="join-mobile-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
               {t('Join', 'Join')}
             </p>
-            <h1 data-page-motion="title" className="mt-5 font-serif text-4xl text-foreground md:text-5xl lg:text-6xl">
+            <h1 data-page-motion="title" className="join-copy-safe mt-5 font-serif text-4xl leading-tight text-foreground md:text-5xl lg:text-6xl">
               {t('加入阿柑少年', `Join ${brandName}`)}
             </h1>
-            <div className="mt-6 h-px w-12 bg-primary" />
-            <p data-page-motion="lead" className="mt-8 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl md:text-lg">
-              {t(
-                '选择适合你的加入方式。当前阶段保持小规模深度探索，通过官方渠道统一沟通；真实伙伴故事会在整理完成后单独发布。',
-                `Choose how you want to join ${brandName}. We are currently in a small-scale deep exploration stage and communicate through official channels; real partner stories will be published separately once they are ready.`
-              )}
+            <div className="join-mobile-rule mt-6 h-px w-12 bg-primary" />
+            <p data-page-motion="lead" className="join-copy-safe mt-8 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl md:text-lg">
+              <span className="md:hidden">
+                {t('选择身份，留下联系方式，我们会继续沟通。', 'Choose a role, leave your contact, and we will follow up.')}
+              </span>
+              <span className="hidden md:inline">
+                {t(
+                  '选择适合你的加入方式。当前阶段保持小规模深度探索，通过官方渠道统一沟通；真实伙伴故事会在整理完成后单独发布。',
+                  `Choose how you want to join ${brandName}. We are currently in a small-scale deep exploration stage and communicate through official channels; real partner stories will be published separately once they are ready.`
+                )}
+              </span>
             </p>
           </div>
         </div>
@@ -260,14 +281,14 @@ export default function JoinUs() {
       <section id="voices" className="join-voices-section border-y border-border/70 py-10 md:py-12">
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-            <div className="max-w-2xl min-w-0">
-              <p className="join-motion join-stage-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
+            <div className="join-voices-copy max-w-2xl min-w-0">
+              <p className="join-motion join-stage-kicker join-mobile-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
                 {t('Voices', 'Voices')}
               </p>
-              <h2 className="join-motion join-stage-title mt-5 font-serif text-3xl text-foreground md:text-4xl">
+              <h2 className="join-copy-safe join-motion join-stage-title mt-5 font-serif text-3xl leading-tight text-foreground md:text-4xl">
                 {t('伙伴之声', 'Partner Voices')}
               </h2>
-              <p className="join-motion join-stage-intro mt-6 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl">
+              <p className="join-copy-safe join-motion join-stage-intro mt-6 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl">
                 {t(
                   '这里先保留为一个安静入口。访谈文字、真实音频、播客片段或短片整理完成后，会放在独立页面中逐步更新。',
                   'This stays as a quiet entry point for now. Interview notes, real audio, podcast clips, or short films will move into a dedicated page as they become ready.'
@@ -276,7 +297,7 @@ export default function JoinUs() {
             </div>
             <Link
               to="/voices"
-              className="cursor-target join-motion join-motion-link inline-flex items-center gap-2 text-sm text-foreground transition-organic hover:text-primary md:justify-self-end"
+              className="cursor-target join-motion join-motion-link join-voices-link inline-flex items-center gap-2 text-sm text-foreground transition-organic hover:text-primary md:justify-self-end"
             >
               <span>{t('打开展开页', 'Open the full page')}</span>
               <ArrowRight className="h-4 w-4" />
@@ -335,11 +356,12 @@ export default function JoinUs() {
               <p className="join-motion join-motion-kicker text-xs uppercase tracking-[0.3em] text-primary/70">
                 {t('Identity', 'Identity')}
               </p>
-              <h3 className="join-motion join-motion-title mt-5 font-serif text-3xl leading-tight text-foreground md:text-4xl">
+              <h3 className="join-copy-safe join-motion join-motion-title mt-5 font-serif text-3xl leading-tight text-foreground md:text-4xl">
                 {pickLocalized(activeContent.heading, lang)}
               </h3>
-              <p className="join-motion join-motion-intro mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
-                {pickLocalized(activeContent.intro, lang)}
+              <p className="join-copy-safe join-motion join-motion-intro mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
+                <span className="md:hidden">{activeMobileIntro}</span>
+                <span className="hidden md:inline">{pickLocalized(activeContent.intro, lang)}</span>
               </p>
 
               <dl className="join-motion join-motion-rows join-minimal-rows">
@@ -362,8 +384,9 @@ export default function JoinUs() {
                 asChild
                 className="cursor-target join-motion join-motion-link join-minimal-cta"
               >
-                <Link to={`/join/apply?audience=${activeId}`}>
-                  <span className="min-w-0 break-words">{pickLocalized(activeContent.closing, lang)}</span>
+                <Link to={`/join/apply?audience=${activeId}`} aria-label={pickLocalized(activeContent.closing, lang)}>
+                  <span className="min-w-0 break-words md:hidden">{t('填写表单', 'Apply')}</span>
+                  <span className="hidden min-w-0 break-words md:inline">{pickLocalized(activeContent.closing, lang)}</span>
                   <ArrowRight className="h-5 w-5 shrink-0" />
                 </Link>
               </Button>

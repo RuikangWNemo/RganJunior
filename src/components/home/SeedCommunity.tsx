@@ -17,7 +17,7 @@ export default function SeedCommunity() {
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollProgressReveal direction="up" distance={48}>
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
+            <p className="seed-community-kicker text-xs uppercase tracking-[0.28em] text-primary/70">
               {t('种子社群', 'Seed Community')}
             </p>
             <h2 className="seed-community-label isolate mt-7 inline-flex max-w-full items-center justify-center rounded-full border border-primary/20 bg-background/75 px-7 py-4 text-center font-serif text-2xl leading-tight text-foreground shadow-[0_24px_70px_hsl(var(--primary)/0.12)] backdrop-blur-md sm:px-10 sm:py-5 sm:text-3xl md:px-12 md:text-4xl">

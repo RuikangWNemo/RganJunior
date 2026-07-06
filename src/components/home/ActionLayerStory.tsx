@@ -18,7 +18,7 @@ function LineItem({ layer }: { layer: ActionLayerContent }) {
     <Link
       to={`/actions#${layer.id}`}
       aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
-      className="group grid min-w-0 gap-5 border-t border-border py-6 outline-none transition-[background-color,border-color,transform] duration-500 hover:border-primary/30 hover:bg-secondary/35 focus-visible:bg-secondary/35 focus-visible:ring-2 focus-visible:ring-primary/25 sm:grid-cols-[8rem_minmax(0,1fr)] sm:items-start sm:px-4 md:py-7"
+      className="home-action-row group grid min-w-0 gap-5 border-t border-border py-6 outline-none transition-[background-color,border-color,transform] duration-500 hover:border-primary/30 hover:bg-secondary/35 focus-visible:bg-secondary/35 focus-visible:ring-2 focus-visible:ring-primary/25 sm:grid-cols-[8rem_minmax(0,1fr)] sm:items-start sm:px-4 md:py-7"
     >
       <div className="flex min-w-0 items-baseline gap-4 sm:block">
         <p className="font-serif text-xl text-primary">
@@ -59,10 +59,10 @@ export default function ActionLayerStory() {
   const { t } = useLanguage();
 
   return (
-    <section id="action-layers" className="section-breathing border-y border-border bg-background">
+    <section id="action-layers" className="home-action-layers section-breathing border-y border-border bg-background">
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[minmax(220px,0.52fr)_minmax(0,1fr)] lg:gap-20">
-          <ScrollProgressReveal direction="up" distance={50} className="lg:sticky lg:top-28 lg:self-start">
+          <ScrollProgressReveal direction="up" distance={50} className="home-action-intro lg:sticky lg:top-28 lg:self-start">
             <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
               {t('三条行动线', 'Three Lines')}
             </p>
@@ -84,7 +84,7 @@ export default function ActionLayerStory() {
             </Link>
           </ScrollProgressReveal>
 
-          <div className="border-b border-border">
+          <div className="home-action-list border-b border-border">
             {actionLayers.map((layer) => (
               <ScrollProgressReveal key={layer.id} direction="up" distance={44} scale={false} blur={false}>
                 <LineItem layer={layer} />

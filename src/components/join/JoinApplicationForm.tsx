@@ -14,7 +14,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { joinAudiences, type JoinAudienceId } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { CONTACT_EMAIL, type LocalizedText, pickLocalized } from '@/lib/brand';
+import { CONTACT_EMAIL, pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
 
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -36,13 +36,6 @@ type JoinApplicationFormProps = {
   initialAudience?: JoinAudienceId;
   className?: string;
 };
-
-const joinFormInterests: Array<{ id: string; label: LocalizedText }> = [
-  { id: 'mountain', label: { zh: '山野探索', en: 'Mountain exploration' } },
-  { id: 'field', label: { zh: '田野调查', en: 'Field research' } },
-  { id: 'urban-rural', label: { zh: '城乡行动', en: 'Urban-rural action' } },
-  { id: 'collaboration', label: { zh: '课程 / 合作', en: 'Course / partnership' } },
-];
 
 function createInitialFormData(audience: JoinAudienceId): JoinFormData {
   return {
@@ -81,17 +74,6 @@ export default function JoinApplicationForm({
 
   const updateFormField = <Key extends keyof JoinFormData>(field: Key, value: JoinFormData[Key]) => {
     setFormData((current) => ({ ...current, [field]: value }));
-    resetSubmitState();
-  };
-
-  const toggleInterest = (interestId: string, checked: boolean) => {
-    setFormData((current) => {
-      const interests = checked
-        ? Array.from(new Set([...current.interests, interestId]))
-        : current.interests.filter((item) => item !== interestId);
-
-      return { ...current, interests };
-    });
     resetSubmitState();
   };
 
@@ -153,9 +135,9 @@ export default function JoinApplicationForm({
   };
 
   return (
-    <form className={cn('join-application-form border-y border-border/80 py-8', className)} onSubmit={handleSubmit}>
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div className="sm:col-span-2">
+    <form className={cn('join-application-form join-application-form-minimal border-y border-border/80 py-8', className)} onSubmit={handleSubmit}>
+      <div className="join-form-grid grid gap-5 sm:grid-cols-2">
+        <div className="join-form-field sm:col-span-2">
           <Label htmlFor="join-audience" className="text-foreground">
             {t('加入身份', 'Joining as')}
           </Label>
@@ -176,7 +158,7 @@ export default function JoinApplicationForm({
           </Select>
         </div>
 
-        <div>
+        <div className="join-form-field">
           <Label htmlFor="join-name" className="text-foreground">
             {t('姓名', 'Name')}
           </Label>
@@ -191,7 +173,7 @@ export default function JoinApplicationForm({
           />
         </div>
 
-        <div>
+        <div className="join-form-field">
           <Label htmlFor="join-contact" className="text-foreground">
             {t('联系方式', 'Contact')}
           </Label>
@@ -207,76 +189,7 @@ export default function JoinApplicationForm({
           />
         </div>
 
-        <div>
-          <Label htmlFor="join-age-grade" className="text-foreground">
-            {t('年龄 / 年级 / 身份', 'Age / grade / role')}
-          </Label>
-          <Input
-            id="join-age-grade"
-            value={formData.ageGrade}
-            onChange={(event) => updateFormField('ageGrade', event.target.value)}
-            maxLength={120}
-            className="mt-2 bg-background/80"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="join-organization" className="text-foreground">
-            {t('学校 / 机构', 'School / organization')}
-          </Label>
-          <Input
-            id="join-organization"
-            value={formData.organization}
-            onChange={(event) => updateFormField('organization', event.target.value)}
-            maxLength={160}
-            className="mt-2 bg-background/80"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="join-city" className="text-foreground">
-            {t('所在城市', 'City')}
-          </Label>
-          <Input
-            id="join-city"
-            value={formData.city}
-            onChange={(event) => updateFormField('city', event.target.value)}
-            maxLength={120}
-            className="mt-2 bg-background/80"
-          />
-        </div>
-
-        <div className="sm:col-span-2">
-          <p className="text-sm font-medium leading-none text-foreground">
-            {t('感兴趣方向', 'Interests')}
-          </p>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {joinFormInterests.map((interest) => {
-              const isChecked = formData.interests.includes(interest.id);
-
-              return (
-                <div
-                  key={interest.id}
-                  className="flex min-h-11 items-center gap-3 border border-border/70 px-3 py-2 text-sm text-foreground/85 transition-colors hover:border-primary/50"
-                >
-                  <Checkbox
-                    id={`join-interest-${interest.id}`}
-                    checked={isChecked}
-                    onCheckedChange={(checked) => toggleInterest(interest.id, checked === true)}
-                  />
-                  <Label
-                    htmlFor={`join-interest-${interest.id}`}
-                    className="min-w-0 flex-1 cursor-pointer text-sm font-normal leading-6 text-foreground/85"
-                  >
-                    {pickLocalized(interest.label, lang)}
-                  </Label>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="sm:col-span-2">
+        <div className="join-form-field sm:col-span-2">
           <Label htmlFor="join-message" className="text-foreground">
             {t('想加入或合作的原因', 'Why you want to join or collaborate')}
           </Label>
@@ -301,7 +214,7 @@ export default function JoinApplicationForm({
           aria-hidden="true"
         />
 
-        <div className="sm:col-span-2">
+        <div className="join-form-consent sm:col-span-2">
           <div className="flex items-start gap-3">
             <Checkbox
               id="join-consent"
@@ -314,8 +227,8 @@ export default function JoinApplicationForm({
               className="min-w-0 flex-1 cursor-pointer text-sm font-normal leading-6 text-muted-foreground"
             >
               {t(
-                '我同意阿柑少年为后续联系与项目沟通保存这些信息。',
-                "I agree that R'gan Junior may keep this information for follow-up and program communication."
+                '同意阿柑少年为后续联系保存这些信息。',
+                "I agree that R'gan Junior may keep this information for follow-up."
               )}
             </Label>
           </div>
@@ -337,7 +250,7 @@ export default function JoinApplicationForm({
       <Button
         type="submit"
         disabled={submitStatus === 'submitting'}
-        className="cursor-target mt-7 min-h-11 w-full sm:w-auto"
+        className="cursor-target join-form-submit mt-7 min-h-11 w-full sm:w-auto"
       >
         {submitStatus === 'submitting' ? (
           <Loader2 className="h-4 w-4 animate-spin" />

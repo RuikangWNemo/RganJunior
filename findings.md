@@ -1,5 +1,67 @@
 # Findings
 
+## 2026-07-06 About Story And Join Simplification
+- New request: About page scroll, map, and story display do not feel bound together and have layout issues; Join mobile should be simplified; Join Apply should feel premium and minimal with excess information removed.
+- Design read: targeted evolution of an existing education/editorial site for youth, parents, and partners. Preserve brand, route structure, desktop rhythm, and form submission behavior; remove mobile clutter and bind scroll storytelling visually.
+- UI Skills CLI hung again with no output and was interrupted. Planning catchup returned no unsynced output.
+- No `.codegraph/` directory exists, so direct file reads and `rg` were used.
+- About page currently mounts `TieniuRegenerationStory`; the older `TieniuStoryMap` component exists but is not mounted on the About page.
+- `TieniuRegenerationStory` currently drives its active scene through a window scroll listener and separates background imagery, copy shell, metrics, evidence, and footer. This makes mobile feel like the visual/map layer and story layer are adjacent rather than locked.
+- Join mobile currently still shows a voices section, an identity illustration card, an identity label, a descriptive panel, multiple detail rows, and a CTA. This is too much for the mobile decision task.
+- Join Apply form currently exposes identity, name, contact, age/grade/role, school/organization, city, interests, message, consent, submit, plus shared-channel aside. Tests only require identity selection, name, contact, message, and submit.
+- Final About approach: desktop/tablet keeps a scroll-driven land-memory story, now with a shared map card, scene progress, evidence, and copy bound to one active scene. Phone view switches to stacked scene cards so each scroll stop contains the map, story, and evidence together without sticky blank space.
+- Final Join mobile approach: hide the voices section on mobile, remove the mobile identity illustration card, hide the detail rows, shorten hero/panel copy, and make the apply CTA a small centered pill while preserving desktop content.
+- Final Join Apply approach: visible form is reduced to audience, name, contact, message, consent, and submit. Removed visible age/grade/role, school/organization, city, and interests fields while keeping empty values in the submitted data shape.
+- Verification passed: `npx tsc --noEmit`, `npm test`, `npm run lint`, `npm run build`, `git diff --check`, mobile screenshots for About story/Join/Join Apply, and 390px DOM overflow/clipped-text probe across `/`, `/about`, `/actions`, `/join`, `/join/apply`, and `/voices`.
+- Chrome desktop screenshot verification for the About story was attempted but rejected by the approval system due usage limit, so desktop visual confidence is from code inspection, type checks, tests, and production build rather than a new desktop screenshot.
+
+## 2026-07-06 Mobile Design Optimization Planning
+- New request: use the appropriate skill first to plan a mobile design optimization. The mobile experience currently feels messy and not premium enough.
+- Skills used: `ui-skills-root` for UI skill routing, `brainstorming` for approval-gated design planning, `design-taste-frontend` for redesign/audit heuristics, and `planning-with-files` for persistent planning.
+- `npx ui-skills categories` produced no output after roughly one minute and was interrupted, likely due package/network resolution in the restricted environment. Local skill context was used instead.
+- No `.codegraph/` directory exists at the repo root, so CodeGraph is not available for code lookup.
+- Existing design history matters: `docs/plans/2026-06-20-mobile-visual-system-design.md` already called for a mobile-specific editorial upgrade, preserving routes/content, avoiding new dependencies, avoiding loud gradients, and verifying no horizontal overflow.
+- Current 390px screenshots:
+  - Homepage: `/private/tmp/rgan-mobile-home.png`
+  - Actions: `/private/tmp/rgan-mobile-actions.png`
+  - Join: `/private/tmp/rgan-mobile-join.png`
+- Homepage mobile is not broken, but it still reads like a desktop hero stacked vertically: large mascot, big English headline, separated keyword stack, large pill buttons, then a field-note image. It feels friendly, but not yet as curated or premium as the desktop direction.
+- `/actions` is the clearest layout failure. The current mobile overview cards preserve desktop theatre-card mechanics: large minimum heights, absolute artwork, inner panels, and activity chips. At 390px, English body text is visibly clipped on the right, and the card composition feels compressed rather than intentionally mobile.
+- `/join` has the same mobile overflow symptom. The identity heading `Become R'gan Junior Youth` is cut at the right edge in the screenshot. The stacked selector and inline identity card are understandable, but the page still lacks strong mobile width/line-length guards for English labels and headings.
+- Global CSS has many mobile-specific rules inside a very long `src/index.css`. This makes mobile behavior hard to reason about and increases the risk of page-specific fixes fighting each other.
+- Likely root causes: desktop-first typography scales, `max-w` values that cap sections without enforcing mobile wrapping, long English strings without consistent `overflow-wrap`/`min-w-0`, desktop cards reused on mobile, and too much decorative/layered media inside narrow cards.
+- Design-taste read: this should be treated as a targeted mobile redesign/evolution, not a full brand rewrite. Preserve the paper/forest/citrus identity and routes, but rebuild mobile hierarchy and card mechanics where they fail.
+- User clarified the desired boundary: mobile should stay visually unified with desktop, but the rhythm and display should be designed for phone screens rather than stacked desktop modules.
+- Implementation implication: preserve brand tokens, imagery, copy voice, routes, and desktop layouts; add or refactor mobile-specific composition rules for hero rhythm, action tracks, identity selector, typography line length, and card/media behavior.
+- User approved the recommended option: mobile editorial reflow. The approved design is documented in `docs/plans/2026-07-06-mobile-design-optimization-design.md`.
+- Because no dedicated writing-plans skill is available in this session, the implementation plan was written directly at `docs/plans/2026-07-06-mobile-design-optimization-implementation-plan.md` using the planning-with-files workflow.
+- Final implementation keeps the desktop visual system intact and uses mobile-specific class hooks and media rules for the changed surfaces.
+- Homepage mobile now has a tighter first-screen sequence: safer mascot scale/framing, constrained title/body line lengths, vertically comfortable CTA rhythm, and a real field-note image before the scroll-video story begins.
+- Actions mobile now uses dedicated editorial action records with real scene imagery, numbered axes, action verbs, readable wrapping copy, and simplified activity lists. The previous theatrical card composition remains for desktop/tablet at `md` and above.
+- Join mobile now has stronger width and wrap guards for long English text, a less crowded selector rhythm, smaller identity surfaces, and page-level overflow protection.
+- Verification after implementation passed: `npx tsc --noEmit`, `npm test`, `npm run lint`, and `npm run build`.
+- Existing non-blocking warnings remain unchanged: 8 React Fast Refresh lint warnings in shared UI/context files, React Router future-flag test warnings, Browserslist age warning, and Vite large chunk warnings.
+- CDP mobile emulation at 390px passed on `/`, `/actions`, and `/join`: each page reported `docWidth === bodyWidth === 390`, no overlay, and no clipped visible text. `/join` only reports the expected `sr-only` heading as clipped because it is intentionally visually hidden.
+- The homepage CDP probe still lists decorative SVG paths and the scroll video media slightly outside the viewport, but the page document width remains 390px and visible text is not clipped.
+- Post-implementation mobile screenshots are available at `/private/tmp/rgan-cdp-home-20260706.png`, `/private/tmp/rgan-cdp-actions-20260706.png`, and `/private/tmp/rgan-cdp-join-20260706.png`.
+- Follow-up request: the mobile centering/premium rhythm should extend to the other pages because the remaining mobile pages still feel poor.
+- Design read: targeted cross-page mobile redesign for youth/parent/partner audiences, preserving the existing paper/forest/citrus brand and desktop layout while adding a shared centered editorial mobile rhythm.
+- UI Skills CLI timed out again with no output. Planning catchup also failed again with exit code 137, so existing planning files are the source of continuity.
+- No `.codegraph/` directory exists, so code lookup continues through direct file reads.
+- Pages needing the strongest pass: `/about`, `/actions`, `/join`, and `/join/apply`. The earlier homepage correction already established the target center-line rhythm.
+- About mobile still has a desktop-like left flow: hero, founder profile, evidence rows, team cards, and development timeline need narrower centered text columns and more generous spacing.
+- Actions mobile improved for action records, but the hero, overview header, metadata, and proof/convergence sections need the same centered rhythm so the page no longer shifts between left editorial and centered cards.
+- Join mobile has some wrap guards, but hero, voices entry, identity panel, CTA, and stage copy still need shared centered mobile alignment.
+- Join Apply mobile is especially utilitarian: the back button, apply hero, form column, and shared-channel aside should be centered and given calmer spacing without changing form fields or submission behavior.
+- Voices is also a live supporting page from `/join`, so it received the same centered mobile hero/archive treatment rather than staying as a left-heavy placeholder.
+- Final cross-page implementation added page-specific hooks plus shared mobile CSS for About, Actions, Join, Join Apply, and Voices. Desktop layouts and routes were preserved.
+- About now uses centered, narrower mobile columns for the founder, evidence, team background, development timeline, and land-regeneration story sections. Curly apostrophes in English brand/possessive copy were normalized where they caused awkward mobile breaks.
+- Actions now has a centered mobile hero, cleaner three-line metadata, centered overview/action/proof sections, and simplified mobile action records.
+- Join and Join Apply now have centered mobile heroes, voices/identity/application surroundings with calmer spacing, and form shells centered while field labels remain left-aligned for usability.
+- Final verification passed: `npx tsc --noEmit`, `npm test`, `npm run lint`, `npm run build`, 390px CDP screenshots, and a 390px DOM overflow/clipped-text probe across `/`, `/about`, `/actions`, `/join`, `/join/apply`, and `/voices`.
+- A transient CSS minification warning was traced to custom selectors targeting Tailwind's `.container` class; it was fixed by adding page-specific hero shell classes. The final production build no longer reports the CSS syntax warning.
+- Remaining warnings are non-blocking and pre-existing or dependency-level: 8 Fast Refresh lint warnings, React Router future-flag test warnings, Browserslist age warning, and Vite chunk-size warning.
+
 ## 2026-06-20 Homepage Whole-Life Growth Section
 - New request: the homepage should include the supplied Chinese copy about an anxious and uncertain era, returning to nature and community, whole-life growth, and the four movements of exploration, healing, learning, and action. The page should have design sense and cleverness.
 - The repo is a Vite + React + TypeScript + Tailwind site. The homepage is `src/pages/Index.tsx`, with hero copy in `src/components/home/HeroCopy.tsx`, scroll video in `HomeScrollVideo`, action-line story in `ActionLayerStory`, and global homepage styling in `src/index.css`.

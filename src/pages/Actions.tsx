@@ -120,7 +120,7 @@ function HeroLine({ layer }: { layer: ActionLayerContent }) {
   const meta = lineMeta[layer.id];
 
   return (
-    <div className="min-w-0 border-t border-border/70 py-4">
+    <div className="actions-hero-line min-w-0 border-t border-border/70 py-4">
       <div className="flex min-w-0 items-baseline justify-between gap-4">
         <p className="font-serif text-lg text-primary">
           {layer.order}
@@ -143,7 +143,7 @@ function ActionHero() {
   const heroImage = sceneImages[heroLayer.id];
 
   return (
-    <section className="relative isolate min-h-[min(820px,calc(100svh-5rem))] overflow-hidden border-b border-border bg-background">
+    <section className="actions-hero relative isolate min-h-[min(820px,calc(100svh-5rem))] overflow-hidden border-b border-border bg-background">
       <img
         src={heroImage.src}
         alt={pickLocalized(heroImage.alt, lang)}
@@ -153,9 +153,9 @@ function ActionHero() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/82 to-background/30" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-background to-transparent" />
 
-      <div className="container mx-auto grid min-h-[min(820px,calc(100svh-5rem))] max-w-7xl gap-12 px-4 py-20 sm:px-6 md:py-24 lg:grid-cols-[minmax(0,0.86fr)_minmax(260px,0.34fr)] lg:items-end lg:px-8">
-        <div className="w-full min-w-0 max-w-[22rem] self-center sm:max-w-4xl">
-          <p data-page-motion="title" className="text-xs uppercase tracking-[0.26em] text-primary/75">
+      <div className="actions-hero-grid container mx-auto grid min-h-[min(820px,calc(100svh-5rem))] max-w-7xl gap-12 px-4 py-20 sm:px-6 md:py-24 lg:grid-cols-[minmax(0,0.86fr)_minmax(260px,0.34fr)] lg:items-end lg:px-8">
+        <div className="actions-hero-copy w-full min-w-0 max-w-[22rem] self-center sm:max-w-4xl">
+          <p data-page-motion="title" className="actions-kicker text-xs uppercase tracking-[0.26em] text-primary/75">
             {t('行动现场', 'Action Field')}
           </p>
           <h1
@@ -171,7 +171,7 @@ function ActionHero() {
           </p>
         </div>
 
-        <aside data-page-motion="lead" className="min-w-0 bg-background/65 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-0">
+        <aside data-page-motion="lead" className="actions-hero-lines min-w-0 bg-background/65 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-0">
           {actionLayers.map((layer) => (
             <HeroLine key={layer.id} layer={layer} />
           ))}
@@ -185,11 +185,11 @@ function LineOverview() {
   const { lang, t } = useLanguage();
 
   return (
-    <section id="action-lines" className="scroll-mt-24 py-16 md:py-24">
+    <section id="action-lines" className="actions-line-overview scroll-mt-24 py-16 md:py-24">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 border-t border-border pt-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-16">
-          <div className="w-full min-w-0 max-w-[22rem] sm:max-w-none">
-            <p className="text-xs uppercase tracking-[0.26em] text-primary/70">
+          <div className="actions-line-header w-full min-w-0 max-w-[22rem] sm:max-w-none">
+            <p className="actions-kicker text-xs uppercase tracking-[0.26em] text-primary/70">
               {t('三条行动线', 'Three Lines')}
             </p>
             <h2 className="mt-5 max-w-[21rem] break-words font-serif text-2xl leading-tight text-foreground sm:max-w-xl sm:text-3xl md:text-5xl">
@@ -201,6 +201,7 @@ function LineOverview() {
             {actionLayers.map((layer) => {
               const Icon = layerIcons[layer.id];
               const meta = lineMeta[layer.id];
+              const sceneImage = sceneImages[layer.id];
               const imageShiftClass = layer.id === 'urban-rural'
                 ? 'left-[58%] h-[66%] opacity-85 sm:h-[92%] sm:opacity-100 md:left-[59%] md:h-[101%]'
                 : 'left-1/2 h-[66%] opacity-85 sm:h-[86%] sm:opacity-100 md:h-[94%]';
@@ -209,65 +210,109 @@ function LineOverview() {
                 : 'h-full w-full object-cover transition duration-700 ease-out group-hover/card:scale-[1.04] group-focus-visible/card:scale-[1.04]';
 
               return (
-                <a
-                  key={layer.id}
-                  href={`#${layer.id}`}
-                  aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
-                  className="group/card relative flex min-h-[23.5rem] w-full min-w-0 overflow-hidden rounded-md border border-border bg-secondary/35 p-4 outline-none transition-[transform,border-color,box-shadow,background-color] duration-500 ease-out hover:-translate-y-1 hover:border-primary/35 hover:bg-secondary/45 hover:shadow-[0_24px_70px_rgba(36,52,32,0.16)] focus-visible:-translate-y-1 focus-visible:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/25 sm:min-h-[27rem] sm:p-5 md:min-h-[31rem]"
-                >
-                  <div className="absolute inset-0">
-                    <img
-                      src={layer.image.src}
-                      alt={pickLocalized(layer.image.alt, lang)}
-                      className={imageClass}
-                      style={{ objectPosition: layer.image.position }}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/10 to-background/94 transition duration-500 group-hover/card:via-background/0 group-hover/card:to-background/88 group-focus-visible/card:via-background/0 group-focus-visible/card:to-background/88" />
-                  </div>
-
-                  <div className="relative z-10 flex w-full flex-col">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="font-serif text-xl text-primary">
-                          {layer.order}
+                <div key={layer.id} className="min-w-0">
+                  <a
+                    href={`#${layer.id}`}
+                    aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
+                    className="action-mobile-record group/action block min-w-0 border-t border-border py-6 outline-none transition-colors duration-500 first:border-t-0 focus-visible:ring-2 focus-visible:ring-primary/25 md:hidden"
+                  >
+                    <figure className="overflow-hidden rounded-md border border-border/75 bg-secondary/30">
+                      <img
+                        src={sceneImage.src}
+                        alt={pickLocalized(sceneImage.alt, lang)}
+                        className="aspect-[4/3] w-full object-cover transition duration-700 ease-out group-hover/action:scale-[1.035] group-focus-visible/action:scale-[1.035]"
+                        style={{ objectPosition: sceneImage.position }}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
+                    <div className="mt-4 grid min-w-0 grid-cols-[3.1rem_minmax(0,1fr)] gap-4">
+                      <p className="font-serif text-xl leading-none text-primary">
+                        {layer.order}
+                      </p>
+                      <div className="min-w-0">
+                        <p className="break-words text-xs uppercase leading-5 tracking-[0.18em] text-primary/75">
+                          {pickLocalized(meta.axis, lang)}
                         </p>
-                        <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                          {pickLocalized(layer.shortTitle, lang)}
+                        <h3 className="mt-2 break-words font-serif text-[2.35rem] leading-none text-foreground">
+                          {pickLocalized(meta.verb, lang)}
+                        </h3>
+                        <p className="action-mobile-record__copy mt-4 break-words text-sm leading-7 text-foreground/76">
+                          {pickLocalized(layer.homeLine, lang)}
                         </p>
-                      </div>
-                      <div className="flex h-11 w-11 items-center justify-center border border-background/70 bg-background/78 text-primary backdrop-blur-sm transition duration-500 group-hover/card:-translate-y-1 group-hover/card:bg-background/92 group-focus-visible/card:-translate-y-1 group-focus-visible/card:bg-background/92">
-                        <Icon className="h-5 w-5" />
+                        <div className="mt-5 grid gap-2 border-t border-border/75 pt-4">
+                          {meta.activities.map((activity) => (
+                            <span
+                              key={activity.en}
+                              className="block min-w-0 break-words text-sm leading-6 text-muted-foreground"
+                            >
+                              {pickLocalized(activity, lang)}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
+                  </a>
 
-                    <div className="mt-auto min-w-0 rounded-sm border border-background/60 bg-background/80 p-3.5 shadow-sm backdrop-blur-[3px] transition duration-500 group-hover/card:bg-background/84 group-focus-visible/card:bg-background/84 sm:p-4">
-                      <p className="text-xs uppercase tracking-[0.2em] text-primary/75">
-                        {pickLocalized(meta.axis, lang)}
-                      </p>
-                      <h3 className="mt-3 font-serif text-4xl leading-none text-foreground sm:mt-4 sm:text-5xl md:text-6xl">
-                        {pickLocalized(meta.verb, lang)}
-                      </h3>
-                      <p className="mt-4 max-w-sm break-words text-sm leading-7 text-foreground/72 sm:mt-5 md:text-base md:leading-8">
-                        {pickLocalized(layer.homeLine, lang)}
-                      </p>
-                      <div className="mt-5 grid min-w-0 grid-cols-1 gap-2 transition-all duration-500 sm:mt-6 sm:flex sm:flex-wrap md:max-h-0 md:overflow-hidden md:opacity-0 md:group-hover/card:max-h-28 md:group-hover/card:opacity-100 md:group-focus-visible/card:max-h-28 md:group-focus-visible/card:opacity-100">
-                        {meta.activities.map((activity) => (
-                          <span
-                            key={activity.en}
-                            className="w-full max-w-full whitespace-normal break-words border border-border/80 bg-background/70 px-2.5 py-1 text-center text-xs text-muted-foreground backdrop-blur-sm sm:w-auto sm:px-3 sm:text-left"
-                          >
-                            {pickLocalized(activity, lang)}
-                          </span>
-                        ))}
+                  <a
+                    href={`#${layer.id}`}
+                    aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
+                    className="group/card relative hidden min-h-[23.5rem] w-full min-w-0 overflow-hidden rounded-md border border-border bg-secondary/35 p-4 outline-none transition-[transform,border-color,box-shadow,background-color] duration-500 ease-out hover:-translate-y-1 hover:border-primary/35 hover:bg-secondary/45 hover:shadow-[0_24px_70px_rgba(36,52,32,0.16)] focus-visible:-translate-y-1 focus-visible:border-primary/45 focus-visible:ring-2 focus-visible:ring-primary/25 sm:min-h-[27rem] sm:p-5 md:flex md:min-h-[31rem]"
+                  >
+                    <div className="absolute inset-0">
+                      <img
+                        src={layer.image.src}
+                        alt={pickLocalized(layer.image.alt, lang)}
+                        className={imageClass}
+                        style={{ objectPosition: layer.image.position }}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/10 to-background/94 transition duration-500 group-hover/card:via-background/0 group-hover/card:to-background/88 group-focus-visible/card:via-background/0 group-focus-visible/card:to-background/88" />
+                    </div>
+
+                    <div className="relative z-10 flex w-full flex-col">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="font-serif text-xl text-primary">
+                            {layer.order}
+                          </p>
+                          <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                            {pickLocalized(layer.shortTitle, lang)}
+                          </p>
+                        </div>
+                        <div className="flex h-11 w-11 items-center justify-center border border-background/70 bg-background/78 text-primary backdrop-blur-sm transition duration-500 group-hover/card:-translate-y-1 group-hover/card:bg-background/92 group-focus-visible/card:-translate-y-1 group-focus-visible/card:bg-background/92">
+                          <Icon className="h-5 w-5" />
+                        </div>
                       </div>
-                      <div className="mt-7 h-px w-full bg-border/80">
-                        <div className="h-px w-12 bg-primary transition-all duration-500 group-hover/card:w-24 group-focus-visible/card:w-24" />
+
+                      <div className="mt-auto min-w-0 rounded-sm border border-background/60 bg-background/80 p-3.5 shadow-sm backdrop-blur-[3px] transition duration-500 group-hover/card:bg-background/84 group-focus-visible/card:bg-background/84 sm:p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-primary/75">
+                          {pickLocalized(meta.axis, lang)}
+                        </p>
+                        <h3 className="mt-3 font-serif text-4xl leading-none text-foreground sm:mt-4 sm:text-5xl md:text-6xl">
+                          {pickLocalized(meta.verb, lang)}
+                        </h3>
+                        <p className="mt-4 max-w-sm break-words text-sm leading-7 text-foreground/72 sm:mt-5 md:text-base md:leading-8">
+                          {pickLocalized(layer.homeLine, lang)}
+                        </p>
+                        <div className="mt-5 grid min-w-0 grid-cols-1 gap-2 transition-all duration-500 sm:mt-6 sm:flex sm:flex-wrap md:max-h-0 md:overflow-hidden md:opacity-0 md:group-hover/card:max-h-28 md:group-hover/card:opacity-100 md:group-focus-visible/card:max-h-28 md:group-focus-visible/card:opacity-100">
+                          {meta.activities.map((activity) => (
+                            <span
+                              key={activity.en}
+                              className="w-full max-w-full whitespace-normal break-words border border-border/80 bg-background/70 px-2.5 py-1 text-center text-xs text-muted-foreground backdrop-blur-sm sm:w-auto sm:px-3 sm:text-left"
+                            >
+                              {pickLocalized(activity, lang)}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="mt-7 h-px w-full bg-border/80">
+                          <div className="h-px w-12 bg-primary transition-all duration-500 group-hover/card:w-24 group-focus-visible/card:w-24" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
               );
             })}
           </div>
@@ -285,9 +330,9 @@ function ActionScene({ layer, index }: { layer: ActionLayerContent; index: numbe
   const isReversed = index % 2 === 1;
 
   return (
-    <section id={layer.id} className="scroll-mt-24 border-t border-border py-16 md:py-24">
+    <section id={layer.id} className="action-scene scroll-mt-24 border-t border-border py-16 md:py-24">
       <div className="container mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-16 lg:px-8">
-        <figure className={`min-w-0 lg:col-span-7 ${isReversed ? 'lg:order-2' : ''}`}>
+        <figure className={`action-scene-figure min-w-0 lg:col-span-7 ${isReversed ? 'lg:order-2' : ''}`}>
           <div className="group/scene relative aspect-[16/11] overflow-hidden rounded-md border border-border bg-[radial-gradient(circle_at_35%_18%,rgba(255,255,255,0.9),rgba(244,238,218,0.42)_34%,rgba(220,231,204,0.52)_100%)]">
             <img
               src={sceneImage.src}
@@ -310,8 +355,8 @@ function ActionScene({ layer, index }: { layer: ActionLayerContent; index: numbe
           </figcaption>
         </figure>
 
-        <div className="min-w-0 lg:col-span-5">
-          <p className="text-xs uppercase tracking-[0.24em] text-primary/70">
+        <div className="action-scene-copy min-w-0 lg:col-span-5">
+          <p className="actions-kicker text-xs uppercase tracking-[0.24em] text-primary/70">
             {layer.order} / {pickLocalized(layer.shortTitle, lang)}
           </p>
           <h2 className="mt-5 max-w-full break-words font-serif text-3xl leading-tight text-foreground md:text-5xl">
@@ -324,7 +369,7 @@ function ActionScene({ layer, index }: { layer: ActionLayerContent; index: numbe
             {pickLocalized(meta.scene, lang)}
           </p>
 
-          <div className="mt-10 border-y border-border">
+          <div className="action-activities mt-10 border-y border-border">
             <p className="py-4 text-xs uppercase tracking-[0.22em] text-muted-foreground">
               {t('活动', 'Activities')}
             </p>
@@ -361,11 +406,11 @@ function EvidenceField() {
   const { lang, t } = useLanguage();
 
   return (
-    <section className="border-t border-border py-16 md:py-24">
+    <section className="actions-evidence border-t border-border py-16 md:py-24">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] lg:gap-16">
-          <div className="min-w-0">
-            <p className="text-xs uppercase tracking-[0.26em] text-primary/70">
+          <div className="actions-evidence-header min-w-0">
+            <p className="actions-kicker text-xs uppercase tracking-[0.26em] text-primary/70">
               {t('行动痕迹', 'Traces')}
             </p>
             <h2 className="mt-5 max-w-md font-serif text-3xl leading-tight text-foreground md:text-5xl">
@@ -379,7 +424,7 @@ function EvidenceField() {
             </p>
           </div>
 
-          <div className="grid min-w-0 border-y border-border sm:grid-cols-2">
+          <div className="actions-proof-grid grid min-w-0 border-y border-border sm:grid-cols-2">
             {impactProof.map((item, index) => (
               <article
                 key={item.value}
@@ -414,7 +459,7 @@ function EvidenceField() {
 
 export default function Actions() {
   return (
-    <div className="overflow-x-hidden pt-20">
+    <div className="actions-page overflow-x-hidden pt-20">
       <ActionHero />
       <LineOverview />
       <ActionScenes />

@@ -12,38 +12,13 @@ import { pickLocalized } from '@/lib/brand';
 import BlobCursor from '@/components/ui/BlobCursor';
 import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
 
-function MobileFieldNote() {
-  const { t } = useLanguage();
-
-  return (
-    <div className="home-mobile-field-note order-3 -mt-1 md:hidden">
-      <figure className="overflow-hidden rounded-md border border-border/70 bg-secondary/40 shadow-[0_18px_52px_hsl(var(--foreground)/0.08)]">
-        <img
-          src="/archive/elements/photos/program-activities/s11-orchard-field-practice.jpg"
-          alt={t('少年在果园中进行田野实践', 'A young person doing field practice in an orchard')}
-          className="aspect-[16/9] w-full object-cover"
-          style={{ objectPosition: 'center 50%' }}
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
-      <div className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-3 border-t border-border/80 pt-3">
-        <p className="font-serif text-lg leading-none text-primary">01</p>
-        <p className="text-xs font-medium uppercase leading-5 tracking-[0.16em] text-foreground/72">
-          {t('真实田野中的学习现场', 'A real field for learning')}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export default function Index() {
   const heroRef = useRef<HTMLElement>(null);
   const { lang, t } = useLanguage();
 
   return (
     <>
-      <section ref={heroRef} className="relative isolate overflow-hidden bg-background">
+      <section ref={heroRef} className="home-hero-section relative isolate overflow-hidden bg-background">
         <HomeHeroFlow />
         <div className="pointer-events-none absolute inset-0 z-[1] hidden lg:block" aria-hidden="true">
           <BlobCursor />
@@ -52,10 +27,9 @@ export default function Index() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[hsl(42_28%_96%)]"
           aria-hidden="true"
         />
-        <div className="container relative z-10 mx-auto grid min-h-[min(760px,84svh)] items-center gap-7 px-4 pb-10 pt-20 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:grid-cols-[minmax(200px,0.42fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:pb-20 lg:pt-28 xl:min-h-[min(820px,84svh)]">
+        <div className="home-hero-grid container relative z-10 mx-auto grid min-h-[min(760px,84svh)] items-center gap-7 px-4 pb-10 pt-20 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:grid-cols-[minmax(200px,0.42fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:pb-20 lg:pt-28 xl:min-h-[min(820px,84svh)]">
           <HeroMascotStage sectionRef={heroRef} />
           <HeroCopy onJoin={() => { window.location.href = '/join'; }} />
-          <MobileFieldNote />
         </div>
       </section>
 
@@ -63,9 +37,9 @@ export default function Index() {
 
       <WholeLifeGrowth />
 
-      <section className="section-breathing bg-background">
+      <section className="home-beliefs-section section-breathing bg-background">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 max-w-3xl">
+          <div className="home-beliefs-header mb-12 max-w-3xl">
             <ScrollProgressReveal direction="up" distance={48} scale={false} blur={false}>
               <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
                 {t('我们相信什么', 'What We Believe')}
@@ -86,7 +60,7 @@ export default function Index() {
                 blur={false}
                 delay={index * 0.04}
               >
-                <article className="relative overflow-hidden border-t border-border pb-8 pt-6 md:pb-10">
+                <article className="home-belief-card relative overflow-hidden border-t border-border pb-8 pt-6 md:pb-10">
                   <img
                     src={belief.image.src}
                     alt=""

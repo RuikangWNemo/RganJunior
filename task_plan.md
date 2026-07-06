@@ -4,10 +4,75 @@
 Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
 
 ## Current Request
-Add the user's new homepage copy about anxiety, uncertainty, whole-life growth, and the four movements of exploration, healing, learning, and action. The homepage should feel designed and clever, not like a plain text block.
+Optimize the About page's scroll/map/story presentation so the narrative and visual state feel bound together, and simplify the mobile Join/Apply path into a premium minimal flow with fewer visible details.
 
 ## Current Phase
-Homepage whole-life growth section complete
+About story binding and mobile Join/Apply simplification in progress
+
+## 2026-07-06 About Story And Join Simplification
+### Phase 1: Discovery
+- [x] Read UI, brainstorming, baseline-ui, design-taste, and planning-with-files skill instructions
+- [x] Attempt UI Skills CLI category inspection; CLI hung again and was interrupted
+- [x] Attempt planning session catchup; no unsynced output was returned
+- [x] Confirm no `.codegraph/` index exists
+- [x] Inspect About story components, Join mobile surface, Join Apply page, application form, related CSS, and tests
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Bind About land-memory story, map/progress state, evidence, and copy into one coherent scroll composition
+- [x] Simplify Join mobile by hiding nonessential mobile-only narrative layers and shortening the mobile decision path
+- [x] Simplify Join Apply form into a premium minimal visible field set while preserving submission behavior
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run type/test/lint/build
+- [x] Run mobile screenshots/probes for `/about`, `/join`, and `/join/apply`
+- [x] Note desktop screenshot limitation after Chrome debugging approval was rejected due usage limit
+- **Status:** complete
+
+## 2026-07-06 Mobile Design Optimization Planning
+### Phase 1: Skill-Guided Discovery
+- [x] Read `ui-skills-root`, `brainstorming`, `design-taste-frontend`, and `planning-with-files` instructions
+- [x] Attempt UI Skills CLI category inspection; CLI hung with no output and was interrupted
+- [x] Confirm no `.codegraph/` index exists
+- [x] Review existing mobile plan, recent commits, homepage, Actions, Join, layout, nav, and global CSS
+- [x] Capture current 390px mobile screenshots for `/`, `/actions`, and `/join`
+- [x] Record current findings in planning files
+- **Status:** complete
+
+### Phase 2: Design Direction
+- [x] Ask one clarifying question about whether this should preserve the current brand language or push into a stronger visual reset
+- [x] Clarified direction: keep visual unity with desktop, but rebuild mobile rhythm and presentation so sections are phone-native rather than stacked desktop modules
+- [x] Propose 2-3 mobile optimization approaches with trade-offs
+- [x] Recommend one direction and define page-by-page scope
+- [x] Get user approval before product-code edits
+- **Status:** complete
+
+### Phase 3: Approved Design Note
+- [x] Write approved design to `docs/plans/2026-07-06-mobile-design-optimization-design.md`
+- [x] Create implementation plan at `docs/plans/2026-07-06-mobile-design-optimization-implementation-plan.md`
+- [x] Implement approved mobile editorial reflow
+- [x] Verify type/test/lint/build and mobile screenshots
+- **Status:** complete
+
+### Phase 4: Implementation Summary
+- [x] Reflow homepage hero for mobile with tighter typography, phone-native CTA rhythm, safer mascot framing, and an earlier real-field image anchor
+- [x] Replace compressed mobile Actions theatre cards with mobile-only editorial action records while keeping the desktop theatre intact from `md` upward
+- [x] Tighten Join mobile hierarchy with wrapped heading/copy safeguards, stacked identity selector cards, and smaller mobile identity surfaces
+- [x] Add mobile text and overflow guards for long English copy on `/actions` and `/join`
+- [x] Run CDP mobile emulation at 390px for `/`, `/actions`, and `/join`; all pages reported `docWidth === bodyWidth === 390` with no clipped visible text
+- **Status:** complete
+
+### Phase 5: Cross-Page Mobile Centering
+- [x] User requested the other mobile pages also be centered and optimized because they still look bad
+- [x] Read UI, brainstorming, baseline, design-taste, and planning-with-files skill instructions
+- [x] Attempt UI Skills CLI category inspection; CLI timed out again with no output
+- [x] Attempt planning session catchup; script was killed with exit code 137 again
+- [x] Confirm no `.codegraph/` index exists
+- [x] Inspect About, Actions, Join, Join Apply, and shared mobile CSS
+- [x] Apply centered mobile rhythm to About, Actions, Join, Join Apply, and Voices page heroes, intro copy, CTAs, records, forms, and repeated sections
+- [x] Verify type/test/lint/build and 390px mobile screenshots/probes
+- **Status:** complete
 
 ## 2026-06-20 Homepage Whole-Life Growth Section
 ### Phase 1: Discovery And Design
