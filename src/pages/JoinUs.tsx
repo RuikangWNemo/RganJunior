@@ -269,8 +269,8 @@ export default function JoinUs() {
               </span>
               <span className="hidden md:inline">
                 {t(
-                  '选择适合你的加入方式。当前阶段保持小规模深度探索，通过官方渠道统一沟通；真实伙伴故事会在整理完成后单独发布。',
-                  `Choose how you want to join ${brandName}. We are currently in a small-scale deep exploration stage and communicate through official channels; real partner stories will be published separately once they are ready.`
+                  '选择适合你的加入方式。当前阶段保持小规模深度探索，通过官方渠道统一沟通；也可以先从伙伴们的真实故事认识我们。',
+                  `Choose how you want to join ${brandName}. We are currently exploring at a small scale through official channels, and you can begin with stories from our community.`
                 )}
               </span>
             </p>
@@ -290,8 +290,8 @@ export default function JoinUs() {
               </h2>
               <p className="join-copy-safe join-motion join-stage-intro mt-6 max-w-[22rem] text-base leading-8 text-muted-foreground sm:max-w-2xl">
                 {t(
-                  '这里先保留为一个安静入口。访谈文字、真实音频、播客片段或短片整理完成后，会放在独立页面中逐步更新。',
-                  'This stays as a quiet entry point for now. Interview notes, real audio, podcast clips, or short films will move into a dedicated page as they become ready.'
+                  '从土地、茶、厨房与科技出发，读一读发起人与伙伴们如何走进真实生活，也如何一起长成阿柑少年。',
+                  'Read how initiators and partners found their way into real life through land, tea, cooking, and technology.'
                 )}
               </p>
             </div>
@@ -299,7 +299,7 @@ export default function JoinUs() {
               to="/voices"
               className="cursor-target join-motion join-motion-link join-voices-link inline-flex items-center gap-2 text-sm text-foreground transition-organic hover:text-primary md:justify-self-end"
             >
-              <span>{t('打开展开页', 'Open the full page')}</span>
+              <span>{t('阅读伙伴故事', 'Read partner stories')}</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

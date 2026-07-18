@@ -41,7 +41,8 @@ function syncSmoothScrollDamping() {
 export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const showMascotCompanion = !isHome && location.pathname !== '/about';
+  const isEditorialRoute = location.pathname === '/about' || location.pathname.startsWith('/voices');
+  const showMascotCompanion = !isHome && !isEditorialRoute;
 
   useEffect(() => {
     if (!location.hash) {

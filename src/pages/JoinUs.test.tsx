@@ -26,7 +26,7 @@ describe('JoinUs', () => {
     expect(screen.getByRole('heading', { name: '加入阿柑少年' })).toBeInTheDocument();
     const voicesHeading = screen.getByRole('heading', { name: '伙伴之声' });
     const youthTab = screen.getByRole('tab', { name: /成为阿柑少年/ });
-    const voicesLink = screen.getByRole('link', { name: '打开展开页' });
+    const voicesLink = screen.getByRole('link', { name: '阅读伙伴故事' });
     const applyLinks = screen.getAllByRole('link', { name: '填写表单，进入小规模深度探索。' });
 
     expect(youthTab).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('JoinUs', () => {
     expect(voicesHeading).toBeInTheDocument();
     expect(voicesHeading.compareDocumentPosition(youthTab) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(voicesLink).toHaveAttribute('href', '/voices');
-    expect(screen.getByText('这里先保留为一个安静入口。访谈文字、真实音频、播客片段或短片整理完成后，会放在独立页面中逐步更新。')).toBeInTheDocument();
+    expect(screen.getByText('从土地、茶、厨房与科技出发，读一读发起人与伙伴们如何走进真实生活，也如何一起长成阿柑少年。')).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: '表单与联系方式' })).not.toBeInTheDocument();
     expect(applyLinks).toHaveLength(1);
     expect(applyLinks[0]).toHaveAttribute('href', '/join/apply?audience=join-youth');

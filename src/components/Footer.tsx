@@ -1,22 +1,25 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocation } from 'react-router-dom';
-import mascotWide from '@/assets/mascot-wide.png';
-import { BRAND, CONTACT_EMAIL, pickLocalized } from '@/lib/brand';
+import { BRAND, CONTACT_EMAIL, OFFICIAL_LOGO_PATH, pickLocalized } from '@/lib/brand';
 
 export default function Footer() {
   const { lang, t } = useLanguage();
   const location = useLocation();
   const brandName = pickLocalized(BRAND.name, lang);
   const brandTagline = pickLocalized(BRAND.tagline, lang);
-  const mascotAlt = pickLocalized(BRAND.mascotAlt, lang);
+  const officialLogoAlt = pickLocalized(BRAND.logoAlt, lang);
   const isJoinRoute = location.pathname === '/join' || location.pathname.startsWith('/join/');
 
   return (
     <footer className="border-t border-border bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-          <div className="flex items-center gap-3">
-            <img src={mascotWide} alt={mascotAlt} className="h-8 opacity-60" />
+          <div className="flex items-center gap-4">
+            <img
+              src={OFFICIAL_LOGO_PATH}
+              alt={officialLogoAlt}
+              className="h-16 w-16 shrink-0 object-contain md:h-20 md:w-20"
+            />
             <div>
               <h3 className="font-serif text-lg font-semibold text-foreground mb-1">
                 {brandName}

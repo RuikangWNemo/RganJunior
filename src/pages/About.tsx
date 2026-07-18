@@ -3,76 +3,73 @@ import { BRAND, pickLocalized } from '@/lib/brand';
 import nateFounderPhoto from '@/assets/nate-founder.jpg';
 import TieniuStoryMap from '@/components/about/TieniuStoryMap';
 import TieniuRegenerationStory from '@/components/about/TieniuRegenerationStory';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const founderEvidenceRows = [
+const teamMembers = [
   {
-    scope: {
-      zh: '研究',
-      en: 'Research',
+    key: 'nate',
+    role: {
+      zh: '阿柑少年计划发起人',
+      en: "Founder of R'gan Junior",
     },
-    title: {
-      zh: '学术研究与乡村实地实验',
-      en: 'Academic Research & Rural Field Experiments',
+    name: {
+      zh: 'Nate',
+      en: 'Nate',
     },
-    markers: {
-      zh: ['Top 3.6%', '哈佛交流', 'YSA Journal', '校园 CSA'],
-      en: ['Top 3.6%', 'Harvard exchange', 'YSA Journal', 'Campus CSA'],
+    focus: {
+      zh: ['乡村在地的行为经济学', '青年探索者、国际对话者'],
+      en: ['Rural-grounded behavioral economics', 'Young explorer, international dialogue builder'],
     },
     body: {
-      zh: '主导“青少年参与可持续农业”研究，从全球 2000+ 项目中入选前 72 名，并发起“天立国高 × 阿柑少年”校园 CSA 实验室。',
-      en: 'Led research on youth participation in sustainable agriculture, selected among the top 72 from 2,000+ global projects, and initiated the Tianli × R\'gan\u00a0Junior Campus CSA Lab.',
+      zh: '生长于四川成都铁牛村，Nate 拥有从土地中自然生长出的生命视角。作为阿柑少年计划发起人，他致力于构建青年力量与乡村可持续转型的深度链接。',
+      en: "Raised in Tieniu Village, Chengdu, Nate carries a perspective shaped by the land. As the founder of R'gan Junior, he connects youth action with sustainable rural transformation.",
     },
+    storyPath: '/voices/it-takes-a-village',
+    storyLabel: {
+      zh: '阅读 Nate 的故事',
+      en: "Read Nate's story",
+    },
+    imageSrc: nateFounderPhoto,
+    imageAlt: {
+      zh: 'Nate 的肖像照片',
+      en: 'Portrait of Nate',
+    },
+    imageWidth: 1198,
+    imageHeight: 1600,
+    loading: 'eager' as const,
   },
   {
-    scope: {
-      zh: '对话',
-      en: 'Dialogue',
+    key: 'tianshi',
+    role: {
+      zh: '青年发起成员｜科技与社群方向',
+      en: 'Youth Initiating Member | Technology and Community',
     },
-    title: {
-      zh: '跨文化与系统变革',
-      en: 'Cross-cultural Exchange & Systemic Change',
+    name: {
+      zh: '张天时',
+      en: 'Tianshi Zhang',
     },
-    markers: {
-      zh: ['Claremont Eco-Forum', '耶鲁教授到访', '再生设计', '乡村美育'],
-      en: ['Claremont Eco-Forum', 'Yale faculty visit', 'Regenerative design', 'Rural aesthetics'],
-    },
-    body: {
-      zh: '在第 17 届克莱蒙生态文明国际论坛发表英文演讲，并在铁牛村参与组织国际学者与国内美育团队的在地交流。',
-      en: 'Delivered an English speech at the 17th Claremont Eco-Forum and helped organize local exchanges in Tieniu Village with international scholars and domestic aesthetic education teams.',
-    },
-  },
-];
-
-const teamBackgroundRows = [
-  {
-    title: {
-      zh: '由在地经验出发',
-      en: 'Grounded in local experience',
+    focus: {
+      zh: ['科技与生态的连接', '青年开发者、社群共建者'],
+      en: ['Connecting technology and ecology', 'Young developer, community builder'],
     },
     body: {
-      zh: '团队从 Nate 在铁牛村的成长经验出发，把乡村真实问题转化为青少年可以理解、研究和参与的行动入口。',
-      en: "The team begins with Nate's lived experience in Tieniu Village, translating real rural issues into entry points that young people can understand, study, and act on.",
+      zh: '长期生活在城市，也持续参与铁牛村共建。张天时从编程、开发者社群和数字工具出发，希望把科技带回真实生活，把 AI 带到土地现场。',
+      en: 'Tianshi has grown up in the city while staying involved in Tieniu Village. Through programming, developer communities, and digital tools, he works to bring technology back into real life and onto the land.',
     },
-  },
-  {
-    title: {
-      zh: '连接研究、教育与社区',
-      en: 'Connecting research, education, and community',
+    storyPath: '/voices/technology-ecology-stars',
+    storyLabel: {
+      zh: '阅读天时的故事',
+      en: "Read Tianshi's story",
     },
-    body: {
-      zh: '成员围绕行为经济学、生态农业、乡村美育与青年社群组织协作，让学习不止停留在课堂或赛事里。',
-      en: 'Members collaborate around behavioral economics, ecological agriculture, rural aesthetics, and youth community organizing, so learning does not stop at classrooms or competitions.',
+    imageSrc: '/stories/technology-ecology-stars/images/image-001.webp',
+    imageAlt: {
+      zh: '张天时的肖像照片',
+      en: 'Portrait of Tianshi Zhang',
     },
-  },
-  {
-    title: {
-      zh: '用同龄人的方式发声',
-      en: 'Speaking in a youth voice',
-    },
-    body: {
-      zh: '阿柑少年希望让青少年从观察者成为讲述者，把土地、家庭消费与自我成长之间的关系说给更多同龄人听。',
-      en: 'R\'gan\u00a0Junior hopes young people can move from observers to storytellers, sharing how land, family consumption, and self-growth are connected.',
-    },
+    imageWidth: 1080,
+    imageHeight: 1620,
+    loading: 'lazy' as const,
   },
 ];
 
@@ -157,92 +154,66 @@ export default function About() {
           </h1>
           <div className="mobile-page-rule w-12 h-px bg-primary mb-12" />
 
-          <section data-page-motion="lead" className="founder-profile about-founder-profile mb-20 border-y border-border py-12 md:py-16">
-            <div className="grid gap-12 lg:grid-cols-[minmax(220px,300px)_minmax(0,1fr)] lg:items-start">
-              <figure className="about-founder-figure max-w-[320px] space-y-3 lg:max-w-none">
-                <div className="founder-photo-frame overflow-hidden rounded-lg bg-secondary/30">
-                  <img
-                    src={nateFounderPhoto}
-                    alt={t('Nate 的肖像照片', 'Portrait of Nate')}
-                    className="founder-photo-img aspect-[4/5] h-full w-full object-cover"
-                    style={{ objectPosition: 'center 32%' }}
-                  />
-                </div>
-              </figure>
-
-              <div className="about-founder-copy min-w-0 lg:pt-1">
-                <div className="max-w-2xl">
-                  <h2 className="founder-motion founder-motion-title mb-5 font-serif text-3xl leading-tight text-foreground md:text-5xl">
-                    {t('Nate ｜阿柑少年计划发起人', 'Nate | Founder of R\'gan\u00a0Junior')}
-                  </h2>
-                  <p className="founder-motion founder-motion-tagline text-sm font-medium leading-relaxed text-primary md:text-base">
-                    {lang === 'zh' ? (
-                      <>
-                        <span className="block">乡村在地的行为经济学</span>
-                        <span className="block">青年探索者、国际对话者</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="block">Rural-grounded behavioral economics</span>
-                        <span className="block">Young explorer, international dialogue builder</span>
-                      </>
-                    )}
-                  </p>
-                  <p className="founder-motion founder-motion-body mt-8 max-w-xl text-base leading-loose text-muted-foreground md:text-lg">
-                    {t(
-                      '生长于四川成都铁牛村，Nate 拥有从土地中自然生长出的生命视角。作为“阿柑少年计划”发起人，他致力于构建青年力量与乡村可持续转型的深度链接。',
-                      'Raised in Tieniu Village, Chengdu, Sichuan, Nate carries a life perspective that grew naturally from the land. As the founder of R\'gan\u00a0Junior, he is committed to building deep links between youth power and sustainable rural transformation.'
-                    )}
-                  </p>
-                </div>
-              </div>
+          <section id="team" data-page-motion="lead" className="about-team-section mb-20">
+            <div className="mb-12 max-w-2xl md:mb-16">
+              <p className="about-mobile-kicker text-xs uppercase tracking-[0.22em] text-primary/70">
+                {t('Team', 'Team')}
+              </p>
+              <h2 className="about-section-title mt-5 font-serif text-3xl leading-tight text-foreground md:text-4xl">
+                {t('共同发起，也长期行动', 'Initiating together, staying for the work')}
+              </h2>
+              <p className="mt-6 text-base leading-8 text-muted-foreground">
+                {t(
+                  '一条路径从土地与乡村生长，另一条路径从科技与青年社群出发。两位发起成员在真实生活中汇合。',
+                  'One path grew from land and village life. The other began with technology and youth communities. They meet in real-world action.'
+                )}
+              </p>
             </div>
 
-            <div className="founder-evidence mt-12 border-t border-border">
-              {founderEvidenceRows.map((row) => (
+            <div className="border-y border-border">
+              {teamMembers.map((member) => (
                 <article
-                  key={row.title.zh}
-                  className="founder-evidence-row grid gap-5 border-b border-border py-7 md:grid-cols-[96px_220px_minmax(0,1fr)] md:gap-8"
+                  key={member.key}
+                  className="about-team-member grid gap-10 border-b border-border py-12 last:border-b-0 md:grid-cols-[minmax(220px,300px)_minmax(0,1fr)] md:items-center md:gap-12 md:py-16"
                 >
-                  <p className="founder-evidence-scope text-sm text-primary">
-                    {pickLocalized(row.scope, lang)}
-                  </p>
-                  <h3 className="font-serif text-xl leading-snug text-foreground">
-                    {pickLocalized(row.title, lang)}
-                  </h3>
-                  <div>
-                    <div className="mb-3 flex flex-wrap gap-x-3 gap-y-2">
-                      {row.markers[lang].map((marker, index) => (
-                        <span key={marker} className="founder-evidence-marker text-sm text-foreground/85">
-                          {marker}
-                          {index < row.markers[lang].length - 1 && (
-                            <span className="ml-3 text-muted-foreground/35">/</span>
-                          )}
+                  <figure className="about-founder-figure max-w-[300px]">
+                    <div className="founder-photo-frame overflow-hidden rounded-lg bg-secondary/30">
+                      <img
+                        src={member.imageSrc}
+                        alt={member.imageAlt[lang]}
+                        width={member.imageWidth}
+                        height={member.imageHeight}
+                        loading={member.loading}
+                        className="founder-photo-img aspect-[4/5] h-full w-full object-cover object-[center_32%]"
+                      />
+                    </div>
+                  </figure>
+
+                  <div className="about-founder-copy min-w-0">
+                    <p className="text-sm font-medium leading-relaxed text-primary md:text-base">
+                      {member.role[lang]}
+                    </p>
+                    <h3 className="mt-4 text-balance font-serif text-3xl leading-tight text-foreground md:text-5xl">
+                      {member.name[lang]}
+                    </h3>
+                    <p className="mt-5 text-sm font-medium leading-relaxed text-primary md:text-base">
+                      {member.focus[lang].map((line) => (
+                        <span key={line} className="block">
+                          {line}
                         </span>
                       ))}
-                    </div>
-                    <p className="text-sm leading-7 text-muted-foreground">
-                      {pickLocalized(row.body, lang)}
                     </p>
+                    <p className="mt-8 max-w-xl text-pretty text-base leading-loose text-muted-foreground md:text-lg">
+                      {member.body[lang]}
+                    </p>
+                    <Link
+                      to={member.storyPath}
+                      className="cursor-target mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition duration-200 hover:bg-primary/90 active:translate-y-px"
+                    >
+                      <span>{member.storyLabel[lang]}</span>
+                      <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                    </Link>
                   </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section data-page-motion="actions" className="about-team-section mb-20 border-b border-border pb-16">
-            <h2 className="about-section-title font-serif text-2xl text-foreground mb-8">
-              {t('Nate 团队背景', 'Nate Team Background')}
-            </h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {teamBackgroundRows.map((row) => (
-              <article key={row.title.zh} className="about-team-card border-t border-border pt-5">
-                  <h3 className="font-serif text-xl leading-snug text-foreground">
-                    {pickLocalized(row.title, lang)}
-                  </h3>
-                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                    {pickLocalized(row.body, lang)}
-                  </p>
                 </article>
               ))}
             </div>
