@@ -541,151 +541,6 @@
     transition-duration: 400ms;
   }
 
-  @keyframes seed-community-drift {
-    0%, 100% {
-      transform: translate3d(0, 0, 0);
-    }
-    50% {
-      transform: translate3d(0, -7px, 0);
-    }
-  }
-
-  .seed-community-label {
-    position: relative;
-    overflow: hidden;
-    animation: seed-community-drift 7.5s ease-in-out infinite;
-    will-change: transform;
-  }
-
-  .seed-community-label::before {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    border-radius: inherit;
-    pointer-events: none;
-    background:
-      linear-gradient(110deg, transparent 0%, hsl(var(--accent) / 0.16) 46%, transparent 74%),
-      radial-gradient(circle at 18% 20%, hsl(var(--accent) / 0.18), transparent 28%),
-      radial-gradient(circle at 82% 80%, hsl(var(--primary) / 0.12), transparent 34%);
-    opacity: 0.84;
-  }
-
-  .seed-community-label > span {
-    position: relative;
-    z-index: 1;
-  }
-
-  @keyframes seed-community-entry-flow {
-    0%, 100% {
-      background-position: 0% 50%, 50% 50%, 50% 50%;
-    }
-    50% {
-      background-position: 100% 50%, 50% 50%, 50% 50%;
-    }
-  }
-
-  .seed-community-entry {
-    isolation: isolate;
-  }
-
-  .seed-community-entry-field {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 0;
-    width: min(340px, 86vw);
-    height: 76px;
-    border-radius: 999px;
-    pointer-events: none;
-    background:
-      linear-gradient(
-        90deg,
-        transparent 0%,
-        hsl(var(--primary) / 0.12) 18%,
-        hsl(var(--accent) / 0.46) 48%,
-        hsl(var(--primary) / 0.22) 70%,
-        transparent 100%
-      ),
-      radial-gradient(circle at 50% 50%, hsl(var(--accent) / 0.34), transparent 38%),
-      radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.2), transparent 64%);
-    background-size: 220% 100%, 100% 100%, 100% 100%;
-    filter: blur(8px) saturate(1.04);
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    transition:
-      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      width 420ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .seed-community-entry-field::before,
-  .seed-community-entry-field::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border-radius: 999px;
-    transform: translate(-50%, -50%);
-  }
-
-  .seed-community-entry-field::before {
-    width: 88%;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      hsl(var(--primary) / 0.25),
-      hsl(var(--accent) / 0.58),
-      hsl(var(--primary) / 0.25),
-      transparent
-    );
-  }
-
-  .seed-community-entry-field::after {
-    width: 11px;
-    height: 11px;
-    border: 1px solid hsl(var(--accent) / 0.72);
-    background: hsl(var(--background) / 0.78);
-    box-shadow:
-      0 0 0 8px hsl(var(--accent) / 0.1),
-      0 0 26px hsl(var(--primary) / 0.2);
-    transition:
-      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .seed-community-entry:hover .seed-community-entry-field,
-    .seed-community-entry:focus-within .seed-community-entry-field {
-      width: min(390px, 92vw);
-      animation: seed-community-entry-flow 3.2s ease-in-out infinite;
-      opacity: 1;
-      transform: translate(-50%, -50%) scaleX(1.08) scaleY(0.94);
-      filter: blur(9px) saturate(1.2);
-    }
-
-    .seed-community-entry:hover .seed-community-entry-field::after,
-    .seed-community-entry:focus-within .seed-community-entry-field::after {
-      transform: translate(-50%, -50%) scale(1.24);
-      box-shadow:
-        0 0 0 11px hsl(var(--accent) / 0.14),
-        0 0 34px hsl(var(--primary) / 0.28);
-    }
-  }
-
-  .seed-community-entry:active .seed-community-entry-field {
-    transform: translate(-50%, -50%) scaleX(0.94) scaleY(0.76);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .seed-community-label,
-    .seed-community-entry-field {
-      animation: none;
-      will-change: auto;
-    }
-  }
-
   .route-stage {
     position: relative;
   }
@@ -936,56 +791,6 @@
     line-height: 1.35;
   }
 
-  .join-magic-burst {
-    position: absolute;
-    top: clamp(12rem, 23vh, 17rem);
-    right: max(2.2rem, calc((100vw - 68rem) / 2 + 3.75rem));
-    z-index: 2;
-    width: 10rem;
-    height: 10rem;
-    pointer-events: none;
-    transform: translate(20%, -35%);
-    transform-origin: center;
-  }
-
-  .join-magic-burst::before {
-    content: '';
-    position: absolute;
-    inset: 16%;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle, hsl(var(--accent) / 0.52), transparent 62%),
-      radial-gradient(circle at 35% 42%, hsl(var(--primary) / 0.2), transparent 54%);
-    filter: blur(11px);
-  }
-
-  .join-magic-burst span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0.52rem;
-    height: 0.52rem;
-    border-radius: 999px;
-    background: hsl(var(--accent) / 0.72);
-    box-shadow: 0 0 1.2rem hsl(var(--accent) / 0.34);
-    animation: join-magic-particle 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: var(--delay);
-  }
-
-  @keyframes join-magic-particle {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(0.6);
-    }
-    24% {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-      transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)) scale(0.2);
-    }
-  }
-
   .join-identity-section {
     position: relative;
     background: hsl(var(--background));
@@ -1230,13 +1035,6 @@
       opacity: 0.92;
     }
 
-    .join-magic-burst {
-      top: 10rem;
-      right: -0.8rem;
-      width: 7.5rem;
-      height: 7.5rem;
-    }
-
     .join-minimal-tabs {
       display: grid;
       align-items: stretch;
@@ -1333,12 +1131,6 @@
     .join-motion {
       opacity: 1;
       animation: none;
-    }
-
-    .join-magic-burst,
-    .join-magic-burst span {
-      animation: none;
-      opacity: 0;
     }
 
     .join-detail-row,
@@ -2578,12 +2370,6 @@
       letter-spacing: 0;
     }
 
-    .seed-community-label {
-      max-width: 20.5rem;
-      padding-inline: 1.5rem;
-      font-size: 1.6rem;
-      line-height: 1.22;
-    }
   }
 
   @media (max-width: 767px) {

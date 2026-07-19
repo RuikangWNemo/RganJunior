@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -62,10 +62,10 @@ const panelTransition = {
   },
 };
 
-const burstParticles = Array.from({ length: 12 }, (_, index) => index);
-
 function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -96,7 +96,7 @@ function canCreateWebGLContext() {
 }
 
 function useWebGLAvailable() {
-  const [webGLAvailable, setWebGLAvailable] = useState(false);
+  const [webGLAvailable, setWebGLAvailable] = useState<boolean | null>(null);
 
   useEffect(() => {
     setWebGLAvailable(canCreateWebGLContext());
@@ -160,45 +160,25 @@ function MobileJoinIdentityCard({
   );
 }
 
-function MagicBurst({ burstKey }: { burstKey: number }) {
-  return (
-    <motion.div
-      key={burstKey}
-      className="join-magic-burst"
-      aria-hidden="true"
-      initial={{ opacity: 0, scale: 0.66 }}
-      animate={{ opacity: [0, 1, 0], scale: [0.7, 1.05, 1.32] }}
-      transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {burstParticles.map((index) => (
-        <span
-          key={index}
-          style={
-            {
-              '--angle': `${index * 30}deg`,
-              '--distance': `${36 + (index % 4) * 13}px`,
-              '--delay': `${index * 24}ms`,
-            } as CSSProperties
-          }
-        />
-      ))}
-    </motion.div>
-  );
-}
-
 export default function JoinUs() {
   const { lang, t } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
   const prefersReducedMotion = usePrefersReducedMotion();
   const webGLAvailable = useWebGLAvailable();
   const [activeId, setActiveId] = useState<JoinAudienceId>('join-youth');
-  const [burstKey, setBurstKey] = useState(0);
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (joinAudiences.some((item) => item.id === hash)) {
       setActiveId(hash as JoinAudienceId);
     }
+  }, []);
+
+  useEffect(() => {
+    Object.values(identityVisuals).forEach(({ card }) => {
+      const image = new Image();
+      image.src = card;
+    });
   }, []);
 
   const activeContent = useMemo(
@@ -209,26 +189,24 @@ export default function JoinUs() {
   const activeTitle = pickLocalized(activeContent.trigger, lang);
   const activeEyebrow = pickLocalized(activeVisual.eyebrow, lang);
   const activeMobileIntro = pickLocalized(mobileIntroById[activeId], lang);
-  const shouldRenderLanyard = webGLAvailable && !prefersReducedMotion && import.meta.env.MODE !== 'test';
+  const shouldRenderLanyard =
+    webGLAvailable === true && !prefersReducedMotion && import.meta.env.MODE !== 'test';
+  const shouldRenderStaticCard =
+    webGLAvailable === false || prefersReducedMotion || import.meta.env.MODE === 'test';
 
   const handleIdentitySelect = (nextId: JoinAudienceId) => {
     if (nextId === activeId) return;
     setActiveId(nextId);
-    if (!prefersReducedMotion) {
-      setBurstKey((value) => value + 1);
-    }
   };
 
   return (
     <div className="join-page pt-20">
       <div className="join-floating-lanyard-layer" aria-hidden={false}>
-        {burstKey > 0 && !prefersReducedMotion && <MagicBurst burstKey={burstKey} />}
         <div className="join-floating-lanyard-card">
           <p className="sr-only">{pickLocalized(activeVisual.cardAlt, lang)}</p>
           {shouldRenderLanyard ? (
-            <Suspense fallback={<StaticJoinCard visual={activeVisual} title={activeTitle} subtitle={activeEyebrow} lang={lang} />}>
+            <Suspense fallback={null}>
               <Lanyard
-                key={activeId}
                 position={[0, 0, 18]}
                 gravity={[0, -32, 0]}
                 fov={17}
@@ -247,9 +225,9 @@ export default function JoinUs() {
                 className="join-lanyard"
               />
             </Suspense>
-          ) : (
+          ) : shouldRenderStaticCard ? (
             <StaticJoinCard visual={activeVisual} title={activeTitle} subtitle={activeEyebrow} lang={lang} />
-          )}
+          ) : null}
         </div>
       </div>
 
