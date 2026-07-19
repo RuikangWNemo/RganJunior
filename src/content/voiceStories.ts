@@ -1,9 +1,13 @@
 import type { LocalizedText } from '@/lib/brand';
 import campInvitationHtml from './voices/summer-co-creation-camp-invitation.html?raw';
 import nateStoryHtml from './voices/it-takes-a-village.html?raw';
+import nateStoryEnglishHtml from './voices/it-takes-a-village.en.html?raw';
 import ruorongStoryHtml from './voices/tea-connects-an-american-girl.html?raw';
+import ruorongStoryEnglishHtml from './voices/tea-connects-an-american-girl.en.html?raw';
 import ruoyinStoryHtml from './voices/tea-kitchen-and-summer.html?raw';
+import ruoyinStoryEnglishHtml from './voices/tea-kitchen-and-summer.en.html?raw';
 import tianshiStoryHtml from './voices/technology-ecology-stars.html?raw';
+import tianshiStoryEnglishHtml from './voices/technology-ecology-stars.en.html?raw';
 
 export type VoiceStoryKind = 'project-letter' | 'growth-story';
 
@@ -21,7 +25,7 @@ export interface VoiceStory {
   coverAlt: LocalizedText;
   coverWidth: number;
   coverHeight: number;
-  bodyHtml: string;
+  bodyHtml: LocalizedText;
 }
 
 export const voiceStories: VoiceStory[] = [
@@ -51,7 +55,7 @@ export const voiceStories: VoiceStory[] = [
     },
     coverWidth: 1280,
     coverHeight: 545,
-    bodyHtml: campInvitationHtml,
+    bodyHtml: { zh: campInvitationHtml, en: campInvitationHtml },
   },
   {
     slug: 'it-takes-a-village',
@@ -76,7 +80,7 @@ export const voiceStories: VoiceStory[] = [
     },
     coverWidth: 1280,
     coverHeight: 544,
-    bodyHtml: nateStoryHtml,
+    bodyHtml: { zh: nateStoryHtml, en: nateStoryEnglishHtml },
   },
   {
     slug: 'tea-connects-an-american-girl',
@@ -101,7 +105,7 @@ export const voiceStories: VoiceStory[] = [
     },
     coverWidth: 1280,
     coverHeight: 545,
-    bodyHtml: ruorongStoryHtml,
+    bodyHtml: { zh: ruorongStoryHtml, en: ruorongStoryEnglishHtml },
   },
   {
     slug: 'tea-kitchen-and-summer',
@@ -126,7 +130,7 @@ export const voiceStories: VoiceStory[] = [
     },
     coverWidth: 1280,
     coverHeight: 544,
-    bodyHtml: ruoyinStoryHtml,
+    bodyHtml: { zh: ruoyinStoryHtml, en: ruoyinStoryEnglishHtml },
   },
   {
     slug: 'technology-ecology-stars',
@@ -151,7 +155,7 @@ export const voiceStories: VoiceStory[] = [
     },
     coverWidth: 1280,
     coverHeight: 545,
-    bodyHtml: tianshiStoryHtml,
+    bodyHtml: { zh: tianshiStoryHtml, en: tianshiStoryEnglishHtml },
   },
 ];
 

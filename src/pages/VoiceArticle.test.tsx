@@ -49,8 +49,35 @@ describe('VoiceArticle', () => {
     voiceStories
       .filter((story) => story.kind === 'growth-story')
       .forEach((story) => {
-        expect(story.bodyHtml).toContain('article-media-frame');
-        expect(story.bodyHtml).not.toContain('更多照片如下');
+        expect(story.bodyHtml.zh).toContain('article-media-frame');
+        expect(story.bodyHtml.en).toContain('article-media-frame');
+        expect(story.bodyHtml.zh).not.toContain('更多照片如下');
+        expect(story.bodyHtml.en.match(/<img\b/g)).toHaveLength(
+          story.bodyHtml.zh.match(/<img\b/g)?.length ?? 0
+        );
+      });
+  });
+
+  it('renders a complete English body for every growth story', () => {
+    const expectedCopy: Record<string, string> = {
+      'it-takes-a-village': 'My name is Nate.',
+      'tea-connects-an-american-girl': "Hi everyone, I'm Ruorong!",
+      'tea-kitchen-and-summer': "Hi everyone! I'm Ruoyin, though you can also call me Ruby.",
+      'technology-ecology-stars': "Hello, I'm Tianshi Zhang.",
+    };
+
+    window.localStorage.setItem('rgan-lang', 'en');
+
+    voiceStories
+      .filter((story) => story.kind === 'growth-story')
+      .forEach((story) => {
+        const { container, unmount } = renderVoiceArticle(`/voices/${story.slug}`);
+        const body = container.querySelector('.voice-article-body');
+
+        expect(body).toHaveAttribute('lang', 'en');
+        expect(body).toHaveTextContent(expectedCopy[story.slug]);
+        expect(screen.queryByText('This story is presented in its original Chinese text.')).not.toBeInTheDocument();
+        unmount();
       });
   });
 
@@ -70,8 +97,10 @@ describe('VoiceArticle', () => {
     ];
 
     voiceStories.forEach((story) => {
-      retiredContent.forEach((content) => {
-        expect(story.bodyHtml).not.toContain(content);
+      Object.values(story.bodyHtml).forEach((bodyHtml) => {
+        retiredContent.forEach((content) => {
+          expect(bodyHtml).not.toContain(content);
+        });
       });
     });
   });

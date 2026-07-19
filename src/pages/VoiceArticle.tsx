@@ -69,15 +69,15 @@ export default function VoiceArticle() {
         </div>
 
         <div className="voice-article-reading container mx-auto max-w-[47rem] px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          {lang === 'en' && (
+          {lang === 'en' && !isGrowthStory && (
             <p className="mb-10 border-l-2 border-primary/45 pl-5 text-sm leading-7 text-muted-foreground">
               This story is presented in its original Chinese text.
             </p>
           )}
           <div
             className="voice-article-body"
-            lang="zh-CN"
-            dangerouslySetInnerHTML={{ __html: story.bodyHtml }}
+            lang={lang === 'zh' ? 'zh-CN' : 'en'}
+            dangerouslySetInnerHTML={{ __html: pickLocalized(story.bodyHtml, lang) }}
           />
 
           <div className="voice-article-source mt-16 border-t border-border pt-8">
