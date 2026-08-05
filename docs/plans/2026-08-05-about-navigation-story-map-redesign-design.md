@@ -18,13 +18,15 @@ The project development timeline sits within the Story chapter because it explai
 
 Desktop navigation exposes a secondary menu beneath About. The About page also contains a sticky in-page chapter menu. Mobile navigation expands the same three destinations beneath About. Every surface links to the same anchors, and the in-page menu indicates the currently visible chapter.
 
+The in-page chapter menu uses one shared green indicator. It moves smoothly between Philosophy, Story, and Team after a click or active-section change, and becomes instant when reduced motion is requested.
+
 Anchor navigation must work both from within `/about` and from other routes. Section headings receive adequate scroll margin so they are not hidden behind fixed navigation.
 
 ## Visual Direction
 
-Use the homepage palette as the foundation: warm paper for long-form reading, the existing primary forest green for emphasis, and a deeper green for the map and high-contrast chapter transitions. The design should feel editorial and grounded rather than like a dashboard or a stack of generic cards.
+Use the homepage palette as the foundation: the homepage warm paper is the default page and reading surface, the existing primary forest green is the only accent, and deep green is reserved for a small number of immersive or evidence-led blocks.
 
-The page rhythm alternates between light reading surfaces and dark green immersive surfaces. Thin rules, restrained labels, large serif headings, and generous spacing provide hierarchy. Motion is limited to navigation feedback, section reveal, and user-triggered map transitions.
+The hero, chapter navigation, story copy, development timeline, and team remain on the homepage light theme. Deep green appears only in the Mission emphasis block, the interactive Tieniu map, and the land-response evidence block. Thin rules, restrained labels, large serif headings, and generous spacing provide hierarchy. Motion is limited to navigation feedback, section reveal, and user-triggered map transitions.
 
 ## Philosophy Chapter
 

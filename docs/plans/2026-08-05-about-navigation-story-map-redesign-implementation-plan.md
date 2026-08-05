@@ -12,6 +12,7 @@
 - Add an accessible About dropdown to the desktop primary navigation.
 - Add the three About destinations beneath About in the mobile navigation drawer.
 - Add a sticky in-page chapter navigation with active-section feedback.
+- Animate one shared green indicator between the three active chapter positions.
 - Support hash navigation both from `/about` and from other routes.
 
 ## 3. Replace the scroll-driven story map
@@ -31,8 +32,9 @@
 
 ## 5. Apply the visual system
 
-- Use the existing primary green and a deeper forest green across the About page.
-- Retain the brand typefaces and warm paper text color.
+- Use the homepage warm paper and foreground tokens across the About page.
+- Use the existing primary green as the only accent and reserve deeper forest green for the Mission block, interactive map, and land-response evidence.
+- Retain the brand typefaces and homepage text hierarchy.
 - Use one restrained radius system, sparse borders, and no generic equal-card row.
 - Define explicit desktop and mobile layouts.
 
