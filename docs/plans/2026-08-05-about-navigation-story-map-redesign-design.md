@@ -20,6 +20,8 @@ Desktop navigation exposes a secondary menu beneath About. The About page also c
 
 The in-page chapter menu uses one shared green indicator. It moves smoothly between Philosophy, Story, and Team after a click or active-section change, and becomes instant when reduced motion is requested.
 
+The primary-navigation dropdown and the in-page chapter menu share the same active chapter state. Clicking either surface updates the other immediately; scrolling into a chapter also updates the dropdown selection. Hash navigation uses smooth positioning rather than an instant anchor jump. The dropdown uses an opaque homepage-paper surface with a clearly tinted green active item.
+
 Anchor navigation must work both from within `/about` and from other routes. Section headings receive adequate scroll margin so they are not hidden behind fixed navigation.
 
 ## Visual Direction

@@ -13,6 +13,8 @@
 - Add the three About destinations beneath About in the mobile navigation drawer.
 - Add a sticky in-page chapter navigation with active-section feedback.
 - Animate one shared green indicator between the three active chapter positions.
+- Synchronize the primary About dropdown with the in-page active chapter, including scroll-driven chapter changes.
+- Use smooth, reduced-motion-aware hash positioning and an opaque dropdown surface with a stronger active state.
 - Support hash navigation both from `/about` and from other routes.
 
 ## 3. Replace the scroll-driven story map
