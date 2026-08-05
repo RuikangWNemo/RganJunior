@@ -14,6 +14,7 @@
 - Add a sticky in-page chapter navigation with active-section feedback.
 - Animate one shared green indicator between the three active chapter positions.
 - Synchronize the primary About dropdown with the in-page active chapter, including scroll-driven chapter changes.
+- Place a marker at each chapter start and evaluate those markers from a passive, animation-frame-throttled scroll handler so upward, downward, and fast cross-chapter scrolling stay synchronized.
 - Use smooth, reduced-motion-aware hash positioning and an opaque dropdown surface with a stronger active state.
 - Support hash navigation both from `/about` and from other routes.
 

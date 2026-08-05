@@ -22,6 +22,8 @@ The in-page chapter menu uses one shared green indicator. It moves smoothly betw
 
 The primary-navigation dropdown and the in-page chapter menu share the same active chapter state. Clicking either surface updates the other immediately; scrolling into a chapter also updates the dropdown selection. Hash navigation uses smooth positioning rather than an instant anchor jump. The dropdown uses an opaque homepage-paper surface with a clearly tinted green active item.
 
+Each chapter exposes a marker at its top edge. During manual scrolling, a passive, animation-frame-throttled scroll check selects the last marker that has crossed a viewport activation line. This keeps both navigation surfaces synchronized while scrolling in either direction, including fast movement across the long Story chapter.
+
 Anchor navigation must work both from within `/about` and from other routes. Section headings receive adequate scroll margin so they are not hidden behind fixed navigation.
 
 ## Visual Direction
