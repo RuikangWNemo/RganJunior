@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import ActionLayerStory from '@/components/home/ActionLayerStory';
 import HeroCopy from '@/components/home/HeroCopy';
 import HomeHeroFlow from '@/components/home/HomeHeroFlow';
-import HomeScrollVideo from '@/components/home/HomeScrollVideo';
 import HeroMascotStage from '@/components/home/HeroMascotStage';
 import SeedCommunity from '@/components/home/SeedCommunity';
 import WholeLifeGrowth from '@/components/home/WholeLifeGrowth';
@@ -32,8 +31,6 @@ export default function Index() {
           <HeroCopy onJoin={() => { window.location.href = '/join'; }} />
         </div>
       </section>
-
-      <HomeScrollVideo />
 
       <WholeLifeGrowth />
 

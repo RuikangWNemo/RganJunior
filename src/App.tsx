@@ -11,6 +11,7 @@ import Actions from "./pages/Actions";
 import JoinUs from "./pages/JoinUs";
 import JoinApply from "./pages/JoinApply";
 import Voices from "./pages/Voices";
+import VoiceArticle from "./pages/VoiceArticle";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
               <Route path="/field-research" element={<Navigate to="/actions" replace />} />
               <Route path="/actions" element={<Actions />} />
               <Route path="/voices" element={<Voices />} />
+              <Route path="/voices/:slug" element={<VoiceArticle />} />
               <Route path="/join" element={<JoinUs />} />
               <Route path="/join/apply" element={<JoinApply />} />
               <Route path="*" element={<NotFound />} />

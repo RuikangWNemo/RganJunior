@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import BrandHead from './BrandHead';
 import Navbar from './Navbar';
@@ -40,8 +40,10 @@ function syncSmoothScrollDamping() {
 
 export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
+  const reducedMotion = useReducedMotion();
   const isHome = location.pathname === '/';
-  const showMascotCompanion = !isHome && location.pathname !== '/about';
+  const isEditorialRoute = location.pathname === '/about' || location.pathname.startsWith('/voices');
+  const showMascotCompanion = !isHome && !isEditorialRoute && location.pathname !== '/join';
 
   useEffect(() => {
     if (!location.hash) {
@@ -52,12 +54,17 @@ export default function Layout({ children }: { children: ReactNode }) {
 
     const target = window.document.getElementById(location.hash.slice(1));
     if (target) {
-      window.setTimeout(() => {
-        target.scrollIntoView({ block: 'start' });
+      const timeoutId = window.setTimeout(() => {
+        target.scrollIntoView({
+          behavior: reducedMotion ? 'auto' : 'smooth',
+          block: 'start',
+        });
         syncSmoothScrollDamping();
       }, 80);
+
+      return () => window.clearTimeout(timeoutId);
     }
-  }, [location.pathname, location.hash]);
+  }, [location.pathname, location.hash, reducedMotion]);
 
   return (
     <div className="min-h-screen flex flex-col">

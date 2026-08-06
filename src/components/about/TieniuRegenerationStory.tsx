@@ -1,410 +1,162 @@
-import { type CSSProperties, useMemo, useRef, useState } from 'react';
-import { useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { BRAND, pickLocalized, type LocalizedText } from '@/lib/brand';
-import { cn } from '@/lib/utils';
+import { BRAND, pickLocalized } from '@/lib/brand';
 
-type SceneId = 'memory' | 'monoculture' | 'soil' | 'response' | 'departure';
-
-interface Scene {
-  id: SceneId;
-  image: string;
-  mapPosition: {
-    x: number;
-    y: number;
-  };
-  evidence?: {
-    src: string;
-    title: LocalizedText;
-    caption: LocalizedText;
-    variant: 'photo' | 'wide' | 'diagram';
-  };
-  eyebrow: LocalizedText;
-  title: LocalizedText;
-  lines: LocalizedText[];
-  annotation?: LocalizedText;
-}
-
-const imageBase = '/archive/elements/photos/site-ecology';
-const infographicBase = '/archive/elements/graphics/infographics';
-
-const scenes: Scene[] = [
+const repairPractices = [
   {
-    id: 'memory',
-    image: `${imageBase}/s02-pine-forest-transition.jpg`,
-    mapPosition: { x: 33, y: 34 },
-    eyebrow: { zh: '土地的记忆', en: 'Land Memory' },
     title: {
-      zh: '在阿柑少年现在生长的土地上，曾经有一片马尾松林。',
-      en: 'Where R\'gan\u00a0Junior now grows, a pine forest once stood.',
+      zh: '停止除草剂，让草重新长出来',
+      en: 'Stop herbicide and let ground cover return',
     },
-    lines: [
-      {
-        zh: '树、草、鸟、虫和土壤，共同维持着一个缓慢而稳定的系统。',
-        en: 'Trees, ground cover, birds, insects, and soil held a slow and stable system together.',
-      },
-    ],
-    annotation: { zh: '多层结构 / 生态记忆', en: 'Layered habitat / ecological memory' },
+    body: {
+      zh: '地被植物重新覆盖土壤，减少裸地，也为昆虫、根系和微生物恢复创造条件。',
+      en: 'Ground cover protects exposed soil and creates conditions for insects, roots, and microorganisms to return.',
+    },
   },
   {
-    id: 'monoculture',
-    image: `${imageBase}/s02-orchard-spraying-scene.jpg`,
-    mapPosition: { x: 57, y: 42 },
-    evidence: {
-      src: `${infographicBase}/s06-traditional-linpan-land-use-poster.jpg`,
-      title: { zh: '传统林盘用地结构', en: 'Traditional Linpan land-use structure' },
-      caption: {
-        zh: '传统林盘不是单一果园，而是院落、林地、水体与果园共同组成的生活生态单元。',
-        en: 'Traditional Linpan is not a single orchard, but a living ecology of courtyard, woods, water, and orchard.',
-      },
-      variant: 'diagram',
-    },
-    eyebrow: { zh: '一种作物之后', en: 'After One Crop' },
     title: {
-      zh: '当土地只剩一种作物，生态系统也开始失去层次。',
-      en: 'When the land kept only one crop, the ecosystem began to lose its layers.',
+      zh: '从单一种植回到多层生态',
+      en: 'Move from monoculture back to layered ecology',
     },
-    lines: [
-      {
-        zh: '单一种植的柑橘、化肥、除草剂和高强度管理，让大树、鸟类、昆虫和地被植物逐渐退场。',
-        en: 'Monoculture citrus, fertilizer, herbicide, and intensive management pushed large trees, birds, insects, and ground cover away.',
-      },
-    ],
-    annotation: { zh: '单一种植 / 高强度人工管理', en: 'Monoculture / intensive management' },
+    body: {
+      zh: '乔木、果树、地被、水体和动物重新建立关系，让林盘不只是一片果园。',
+      en: 'Trees, orchards, ground cover, water, and animals rebuild relationships, so Linpan becomes more than an orchard.',
+    },
   },
   {
-    id: 'soil',
-    image: `${imageBase}/s04-soil-root-damage.jpg`,
-    mapPosition: { x: 46, y: 66 },
-    evidence: {
-      src: `${imageBase}/s04-soil-root-damage.jpg`,
-      title: { zh: '板结与根系损伤', en: 'Compaction and root damage' },
-      caption: {
-        zh: '土壤失去孔隙之后，根系、微生物和水分都很难重新形成健康关系。',
-        en: 'When soil loses pore space, roots, microorganisms, and water struggle to form a healthy relationship again.',
-      },
-      variant: 'photo',
-    },
-    eyebrow: { zh: '土壤的数字', en: 'The Soil Number' },
     title: {
-      zh: '1.7%，是土地发出的提醒。',
-      en: '1.7% was the warning from the soil.',
+      zh: '把修复变成真实的生活经验',
+      en: 'Turn repair into lived experience',
     },
-    lines: [
-      {
-        zh: '我们刚来到这里时，土壤有机质含量约为 1.7%。健康且有营养的土壤，通常需要达到 4% - 5%。',
-        en: 'When we first came here, soil organic matter was about 1.7%. Fertile soil usually needs to reach 4% to 5%.',
-      },
-      {
-        zh: '恢复，可能需要 5 - 8 年以上的持续修复。',
-        en: 'Recovery may require five to eight years of continuous repair.',
-      },
-    ],
-    annotation: { zh: '板结 / 酸化 / 肥力下降', en: 'Compaction / acidification / declining fertility' },
-  },
-  {
-    id: 'response',
-    image: `${imageBase}/s09-earthworm-soil-recovery.jpg`,
-    mapPosition: { x: 63, y: 62 },
-    evidence: {
-      src: `${infographicBase}/s05-linpan-biodiversity-restoration-diagram.png`,
-      title: { zh: '林盘生物多样性修复图', en: 'Linpan biodiversity restoration diagram' },
-      caption: {
-        zh: '修复不是增加装饰性的绿色，而是让乔木、地被、水体、作物和动物重新形成结构。',
-        en: 'Repair is not decorative greening. It rebuilds relationships among trees, ground cover, water, crops, and animals.',
-      },
-      variant: 'wide',
+    body: {
+      zh: '少年在劳动和观察中理解食物从哪里来，也理解土地、家庭消费与社区行动如何彼此影响。',
+      en: 'Through work and observation, young people learn where food comes from and how land, household choices, and community action affect one another.',
     },
-    eyebrow: { zh: '土地开始回应', en: 'The Land Responds' },
-    title: {
-      zh: '我们停止除草剂，让草重新长出来。',
-      en: 'We stopped herbicide, and let ground cover return.',
-    },
-    lines: [
-      {
-        zh: '后来，蚯蚓洞出现了。根系、草和有益生物重新进入土壤，修复不再只是计划，而开始被看见。',
-        en: 'Then earthworm tunnels appeared. Roots, grass, and beneficial life returned to the soil. Repair became visible.',
-      },
-    ],
-    annotation: { zh: '1.7% → 2.5% / 土地正在回应', en: '1.7% → 2.5% / the land is responding' },
-  },
-  {
-    id: 'departure',
-    image: `${imageBase}/s06-linpan-aerial-overview.jpg`,
-    mapPosition: { x: 76, y: 30 },
-    evidence: {
-      src: `${infographicBase}/s07-ecological-agri-product-solution-board.png`,
-      title: { zh: '生态农产品解决方案', en: 'Ecological agri-product solution' },
-      caption: {
-        zh: '生态农业不只是生产方式，也成为少年理解食物、劳动、土地和社区的真实入口。',
-        en: 'Ecological agriculture is not only production. It becomes an entry into food, labor, land, and community.',
-      },
-      variant: 'diagram',
-    },
-    eyebrow: { zh: '从林盘到少年', en: 'From Linpan to Youth' },
-    title: {
-      zh: '阿柑少年，是从这片土地的修复中长出来的。',
-      en: 'R\'gan\u00a0Junior grew out of the repair of this land.',
-    },
-    lines: [
-      {
-        zh: '9 亩，是一个林盘样本。40 亩，是正在发生的生态实践。9900 亩，是一个村庄作为生态家园的想象。',
-        en: 'Nine mu is one Linpan sample. Forty mu is an ecological practice in motion. 9900 mu is the imagination of a village as an ecological home.',
-      },
-      {
-        zh: '少年在这里理解土壤、食物、劳动、生态和社区之间真实的关系，然后从这里出发。',
-        en: 'Young people understand the real relationship between soil, food, labor, ecology, and community here, then depart from here.',
-      },
-    ],
-    annotation: { zh: '真实世界课堂 / 在这里出发', en: 'Real-world classroom / departing from here' },
   },
 ];
 
-function clamp(value: number, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function getLocalProgress(globalProgress: number, index: number) {
-  const sceneStart = index / scenes.length;
-  const sceneEnd = (index + 1) / scenes.length;
-  return clamp((globalProgress - sceneStart) / Math.max(0.001, sceneEnd - sceneStart));
-}
-
-function StoryMapPanel({
-  scene,
-  activeIndex,
-  sceneProgress,
-  lang,
-  compact = false,
-}: {
-  scene: Scene;
-  activeIndex: number;
-  sceneProgress: number;
-  lang: 'zh' | 'en';
-  compact?: boolean;
-}) {
-  return (
-    <aside
-      className={cn('land-memory-map-card', compact && 'is-compact')}
-      aria-label={lang === 'zh' ? '土地修复故事地图' : 'Land repair story map'}
-    >
-      <div className="land-memory-map-header">
-        <span>{lang === 'zh' ? '土地修复地图' : 'Land repair map'}</span>
-        <span>{String(activeIndex + 1).padStart(2, '0')} / {String(scenes.length).padStart(2, '0')}</span>
-      </div>
-      <div className="land-memory-map-surface">
-        <div className="land-memory-map-field" />
-        <div className="land-memory-map-route" />
-        {scenes.map((item, index) => (
-          <span
-            key={item.id}
-            className={cn(
-              'land-memory-map-dot',
-              index <= activeIndex && 'is-past',
-              index === activeIndex && 'is-active',
-            )}
-            style={
-              {
-                '--dot-x': `${item.mapPosition.x}%`,
-                '--dot-y': `${item.mapPosition.y}%`,
-              } as CSSProperties
-            }
-          />
-        ))}
-        <span
-          className="land-memory-map-focus"
-          style={
-            {
-              '--dot-x': `${scene.mapPosition.x}%`,
-              '--dot-y': `${scene.mapPosition.y}%`,
-            } as CSSProperties
-          }
-        />
-      </div>
-      <div className="land-memory-map-caption">
-        <span>{pickLocalized(scene.eyebrow, lang)}</span>
-        <strong>{pickLocalized(scene.annotation ?? scene.title, lang)}</strong>
-      </div>
-      <div className="land-memory-map-progress" aria-hidden="true">
-        <span style={{ transform: `scaleX(${(activeIndex + sceneProgress) / scenes.length})` }} />
-      </div>
-    </aside>
-  );
-}
+const landScales = [
+  {
+    value: '9',
+    unit: { zh: '亩', en: 'mu' },
+    label: { zh: '一个林盘修复样本', en: 'one Linpan repair site' },
+  },
+  {
+    value: '40',
+    unit: { zh: '亩', en: 'mu' },
+    label: { zh: '正在发生的生态实践', en: 'ecological practice in progress' },
+  },
+  {
+    value: '9900',
+    unit: { zh: '亩', en: 'mu' },
+    label: { zh: '一个村庄的生态家园想象', en: 'a village imagined as an ecological home' },
+  },
+];
 
 export default function TieniuRegenerationStory() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
-  const storyRef = useRef<HTMLElement>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: storyRef,
-    offset: ['start center', 'end center'],
-  });
-  const [progress, setProgress] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    setProgress(clamp(latest));
-  });
-
-  const activeIndex = Math.min(scenes.length - 1, Math.floor(progress * scenes.length));
-  const activeScene = scenes[activeIndex];
-  const sceneProgress = getLocalProgress(progress, activeIndex);
-  const showEvidence = Boolean(activeScene.evidence && sceneProgress > 0.64);
-  const copyVisible = !showEvidence;
-  const storyStyle = useMemo(
-    () => ({
-      '--story-progress': progress,
-      '--scene-progress': sceneProgress,
-    }) as CSSProperties,
-    [progress, sceneProgress],
-  );
 
   return (
-    <section
-      ref={storyRef}
-      className="land-memory relative my-28 h-[560vh] w-screen bg-[#10120d]"
-      style={storyStyle}
-      data-active-scene={activeScene.id}
-    >
-      <div className="land-memory-mobile-list">
-        {scenes.map((scene, index) => (
-          <article key={scene.id} className="land-memory-mobile-scene">
-            <StoryMapPanel scene={scene} activeIndex={index} sceneProgress={1} lang={lang} compact />
-            <div className="land-memory-mobile-copy">
-              <p className="land-memory-scene-count">
-                {String(index + 1).padStart(2, '0')} / {pickLocalized(scene.eyebrow, lang)}
-              </p>
-              <h2>{pickLocalized(scene.title, lang)}</h2>
-              <div className="land-memory-mobile-body">
-                {scene.lines.map((line) => (
-                  <p key={line.zh}>{pickLocalized(line, lang)}</p>
-                ))}
-              </div>
-              {scene.evidence && (
-                <figure className={cn('land-memory-mobile-evidence', `is-${scene.evidence.variant}`)}>
-                  <div>
-                    <img src={scene.evidence.src} alt={pickLocalized(scene.evidence.title, lang)} loading="lazy" />
-                  </div>
-                  <figcaption>
-                    <span>{pickLocalized(scene.evidence.title, lang)}</span>
-                    <small>{pickLocalized(scene.evidence.caption, lang)}</small>
-                  </figcaption>
-                </figure>
+    <section className="about-land-repair" aria-labelledby="land-repair-title">
+      <header className="about-land-repair__header">
+        <h3 id="land-repair-title">{t('一片土地，如何慢慢恢复', 'How a piece of land slowly recovers')}</h3>
+        <p>
+          {t(
+            '土地修复不是一张需要跟随滚动阅读的地图，而是一段仍在持续的实践。先看清问题，再理解每一个改变。',
+            'Land repair is not a map to decode while scrolling. It is an ongoing practice: first understand the problem, then see each change clearly.',
+          )}
+        </p>
+      </header>
+
+      <div className="about-land-repair__problem">
+        <figure>
+          <img
+            src="/archive/elements/photos/site-ecology/s04-soil-root-damage.jpg"
+            alt={t('板结土壤与受损根系的现场照片', 'Compacted soil and damaged roots on site')}
+            loading="lazy"
+          />
+          <figcaption>{t('板结与根系损伤', 'Soil compaction and root damage')}</figcaption>
+        </figure>
+
+        <div className="about-land-repair__problem-copy">
+          <p>{t('土地曾经面对什么', 'What the land was facing')}</p>
+          <h4>{t('当土地只剩一种作物，生态系统也开始失去层次。', 'When the land kept only one crop, the ecosystem began to lose its layers.')}</h4>
+          <p>
+            {t(
+              '单一种植、化肥、除草剂和高强度管理，让大树、鸟类、昆虫和地被植物逐渐退场。土壤失去孔隙后，根系、微生物和水分也很难重新形成健康关系。',
+              'Monoculture, fertilizer, herbicide, and intensive management pushed trees, birds, insects, and ground cover away. As soil lost pore space, roots, microorganisms, and water struggled to form healthy relationships.',
+            )}
+          </p>
+          <div className="about-land-repair__soil-number">
+            <strong>1.7%</strong>
+            <span>
+              {t(
+                '刚来到这里时的土壤有机质含量。健康且有营养的土壤通常需要达到 4% - 5%。',
+                'Soil organic matter when the work began. Fertile soil commonly needs to reach 4% to 5%.',
               )}
-            </div>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="about-land-repair__practice">
+        <div className="about-land-repair__practice-copy">
+          <h4>{t('修复从可持续的小事开始', 'Repair begins with sustainable daily choices')}</h4>
+          <div className="about-land-repair__practice-list">
+            {repairPractices.map((practice) => (
+              <article key={practice.title.zh}>
+                <h5>{pickLocalized(practice.title, lang)}</h5>
+                <p>{pickLocalized(practice.body, lang)}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <figure className="about-land-repair__diagram">
+          <img
+            src="/archive/elements/graphics/infographics/s05-linpan-biodiversity-restoration-diagram.png"
+            alt={t('林盘生物多样性修复前后示意图', 'Diagram comparing Linpan biodiversity before and after restoration')}
+            loading="lazy"
+          />
+          <figcaption>
+            {t(
+              '修复不是增加装饰性的绿色，而是让乔木、地被、水体、作物和动物重新形成结构。',
+              'Repair is not decorative greening. It rebuilds relationships among trees, ground cover, water, crops, and animals.',
+            )}
+          </figcaption>
+        </figure>
+      </div>
+
+      <div className="about-land-repair__response">
+        <div>
+          <p>{t('土地开始回应', 'The land begins to respond')}</p>
+          <h4>{t('蚯蚓洞重新出现，草与根系重新进入土壤。', 'Earthworm tunnels return, along with ground cover and roots.')}</h4>
+        </div>
+        <div className="about-land-repair__change">
+          <span>1.7%</span>
+          <i aria-hidden="true" />
+          <strong>2.5%</strong>
+          <small>{t('土壤有机质的阶段性变化', 'A measured change in soil organic matter')}</small>
+        </div>
+      </div>
+
+      <div className="about-land-repair__scales">
+        {landScales.map((scale) => (
+          <article key={scale.value}>
+            <p>
+              <strong>{scale.value}</strong>
+              <span>{pickLocalized(scale.unit, lang)}</span>
+            </p>
+            <small>{pickLocalized(scale.label, lang)}</small>
           </article>
         ))}
       </div>
 
-      <div className="land-memory-scroll-stage sticky top-0 min-h-[100dvh] overflow-hidden">
-        <div className="land-memory-visual" aria-hidden="true">
-          {scenes.map((scene, index) => {
-            const distance = Math.abs(index - activeIndex);
-            const opacity = distance === 0 ? 1 : distance === 1 ? 0.16 : 0;
-            return (
-              <img
-                key={scene.id}
-                src={scene.image}
-                alt=""
-                className="land-memory-image"
-                style={{
-                  opacity,
-                  transform: prefersReducedMotion ? undefined : `scale(${1.04 + progress * 0.045 + index * 0.002})`,
-                }}
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
-            );
-          })}
-          <div className="land-memory-grade" />
-          <div className="land-memory-grain" />
-          <div className="land-memory-boundary boundary-one" />
-          <div className="land-memory-boundary boundary-two" />
-          <div className="land-memory-boundary boundary-three" />
-          <div className="land-memory-soil-line" />
-          <div className="land-memory-roots roots-one" />
-          <div className="land-memory-roots roots-two" />
-          <div className="land-memory-groundcover" />
-          <div className="land-memory-worm" />
-        </div>
-
-        <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl flex-col justify-center px-4 py-24 sm:px-6 lg:px-8">
-          <div className="land-memory-grid grid gap-8 lg:grid-cols-[minmax(280px,0.68fr)_minmax(360px,0.82fr)] lg:items-center">
-            <StoryMapPanel scene={activeScene} activeIndex={activeIndex} sceneProgress={sceneProgress} lang={lang} />
-
-            <article className="land-memory-copy-shell">
-              <div className={cn('land-memory-copy', copyVisible && 'is-visible')}>
-                <p className="land-memory-scene-count mb-5 text-xs font-medium text-[#f2c37a]">
-                  {String(activeIndex + 1).padStart(2, '0')} / {pickLocalized(activeScene.eyebrow, lang)}
-                </p>
-                <h2 className="font-serif text-3xl leading-tight text-[#fff8ea] sm:text-4xl lg:text-5xl">
-                  {pickLocalized(activeScene.title, lang)}
-                </h2>
-                <div className="land-memory-body mt-7 text-base leading-8 text-[#fff3dc]">
-                  {activeScene.lines.map((line) => (
-                    <div key={line.zh} className="land-memory-line-group">
-                      <p>{pickLocalized(line, lang)}</p>
-                    </div>
-                  ))}
-                </div>
-                {activeScene.annotation && (
-                  <p className="mt-8 border-t border-[#f4ead8]/24 pt-5 text-xs uppercase tracking-[0.24em] text-[#e8c790]">
-                    {pickLocalized(activeScene.annotation, lang)}
-                  </p>
-                )}
-              </div>
-
-              {activeScene.evidence && (
-                <figure
-                  className={cn(
-                    'land-memory-inline-evidence',
-                    `is-${activeScene.evidence.variant}`,
-                    showEvidence && 'is-visible',
-                  )}
-                  style={{ '--inline-evidence-progress': showEvidence ? clamp((sceneProgress - 0.64) / 0.28) : 0 } as CSSProperties}
-                >
-                  <div className="land-memory-inline-evidence-image">
-                    <img
-                      src={activeScene.evidence.src}
-                      alt={pickLocalized(activeScene.evidence.title, lang)}
-                      loading="lazy"
-                    />
-                  </div>
-                  <figcaption>
-                    <span>{pickLocalized(activeScene.evidence.title, lang)}</span>
-                    <small>{pickLocalized(activeScene.evidence.caption, lang)}</small>
-                  </figcaption>
-                </figure>
-              )}
-            </article>
-          </div>
-
-          <div className="land-memory-data">
-            <div className="land-memory-metric metric-soil">
-              <span>1.7%</span>
-              <small>{lang === 'zh' ? '初始土壤有机质' : 'Initial organic matter'}</small>
-            </div>
-            <div className="land-memory-metric metric-repair">
-              <span>2.5%</span>
-              <small>{lang === 'zh' ? '土地开始回应' : 'The land responds'}</small>
-            </div>
-            <div className="land-memory-scale">
-              <span>9亩</span>
-              <span>40亩</span>
-              <span>9900亩</span>
-            </div>
-          </div>
-
-          <div className="land-memory-footer">
-            <div className="h-px flex-1 bg-[#f4ead8]/24" />
-            <p>
-              {lang === 'zh'
-                ? `${brandName}不是来到铁牛村做活动，而是从这片土地的修复中长出来。`
-                : `${brandName} did not simply come to Tieniu for activities. It grew out of this land's repair.`}
-            </p>
-          </div>
-        </div>
-      </div>
+      <blockquote className="about-land-repair__closing">
+        {lang === 'zh'
+          ? `${brandName}不是来到铁牛村做活动，而是从这片土地的修复中长出来。`
+          : `${brandName} did not simply come to Tieniu for activities. It grew out of this land's repair.`}
+      </blockquote>
     </section>
   );
 }

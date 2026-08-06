@@ -135,7 +135,7 @@ export default function JoinApplicationForm({
   };
 
   return (
-    <form className={cn('join-application-form join-application-form-minimal border-y border-border/80 py-8', className)} onSubmit={handleSubmit}>
+    <form className={cn('join-application-form join-application-form-minimal', className)} onSubmit={handleSubmit}>
       <div className="join-form-grid grid gap-5 sm:grid-cols-2">
         <div className="join-form-field sm:col-span-2">
           <Label htmlFor="join-audience" className="text-foreground">
@@ -145,7 +145,7 @@ export default function JoinApplicationForm({
             value={formData.audience}
             onValueChange={(value) => updateFormField('audience', value as JoinAudienceId)}
           >
-            <SelectTrigger id="join-audience" className="mt-2 bg-background/80">
+            <SelectTrigger id="join-audience" className="mt-2">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -169,7 +169,8 @@ export default function JoinApplicationForm({
             autoComplete="name"
             required
             maxLength={120}
-            className="mt-2 bg-background/80"
+            placeholder={t('怎么称呼你', 'How should we address you?')}
+            className="mt-2"
           />
         </div>
 
@@ -185,7 +186,7 @@ export default function JoinApplicationForm({
             required
             maxLength={180}
             placeholder={t('邮箱 / 微信 / 电话', 'Email / WeChat / phone')}
-            className="mt-2 bg-background/80"
+            className="mt-2"
           />
         </div>
 
@@ -199,7 +200,11 @@ export default function JoinApplicationForm({
             onChange={(event) => updateFormField('message', event.target.value)}
             required
             maxLength={1800}
-            className="mt-2 min-h-32 bg-background/80"
+            placeholder={t(
+              '可以说说你是谁、为什么来到这里，以及你期待一起做些什么……',
+              'Tell us who you are, what brought you here, and what you hope we might do together…'
+            )}
+            className="mt-2 min-h-36"
           />
         </div>
 

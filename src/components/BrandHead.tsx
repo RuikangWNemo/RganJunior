@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import {
   BRAND,
   DEFAULT_OG_IMAGE,
+  OFFICIAL_LOGO_URL,
   SITE_URL,
   getCanonicalUrl,
   getDocumentTitle,
@@ -67,6 +68,7 @@ export default function BrandHead() {
     const description = getRouteDescription(location.pathname, lang);
     const title = getDocumentTitle(location.pathname, lang);
     const canonicalUrl = getCanonicalUrl(location.pathname);
+    const officialLogoAlt = pickLocalized(BRAND.logoAlt, lang);
 
     document.title = title;
     document.documentElement.lang = lang;
@@ -79,11 +81,14 @@ export default function BrandHead() {
     upsertMeta("property", "og:description", description);
     upsertMeta("property", "og:url", canonicalUrl);
     upsertMeta("property", "og:image", DEFAULT_OG_IMAGE);
-    upsertMeta("property", "og:image:alt", pickLocalized(BRAND.description, lang));
+    upsertMeta("property", "og:image:alt", officialLogoAlt);
+    upsertMeta("property", "og:image:width", "1200");
+    upsertMeta("property", "og:image:height", "630");
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", title);
     upsertMeta("name", "twitter:description", description);
     upsertMeta("name", "twitter:image", DEFAULT_OG_IMAGE);
+    upsertMeta("name", "twitter:image:alt", officialLogoAlt);
     upsertLink("canonical", canonicalUrl);
 
     upsertJsonLd("organization", {
@@ -95,7 +100,7 @@ export default function BrandHead() {
       email: "contact@rganjunior.org",
       description,
       image: DEFAULT_OG_IMAGE,
-      logo: `${SITE_URL}/favicon.png`,
+      logo: OFFICIAL_LOGO_URL,
       sameAs: [],
     });
   }, [lang, location.pathname]);

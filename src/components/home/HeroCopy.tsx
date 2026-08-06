@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import BrandWordmark from '@/components/BrandWordmark';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized } from '@/lib/brand';
 
@@ -14,8 +15,11 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
 
   return (
     <div className="home-hero-copy relative z-20 order-2 w-full min-w-0 max-w-full lg:order-2 lg:max-w-4xl">
-      <h1 className="home-hero-title animate-fade-in-up-apple font-serif text-[3rem] font-semibold leading-[1.02] text-foreground sm:text-6xl md:text-7xl xl:text-[5.05rem]">
-        {brandName}
+      <h1
+        aria-label={brandName}
+        className="home-hero-title animate-fade-in-up-apple text-foreground"
+      >
+        <BrandWordmark aria-hidden="true" className="home-hero-wordmark" />
       </h1>
 
       <p

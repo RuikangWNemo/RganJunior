@@ -19,10 +19,16 @@ export const BRAND = {
     zh: "阿柑少年吉祥物",
     en: "R'gan Junior mascot",
   },
+  logoAlt: {
+    zh: "阿柑少年官方标志",
+    en: "Official R-Gan Junior logo",
+  },
 } as const satisfies Record<string, LocalizedText>;
 
 export const SITE_URL = "https://www.rganjunior.org";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/s06-linpan-aerial-overview.jpg`;
+export const OFFICIAL_LOGO_PATH = "/brand/rgan-junior-official-logo.webp";
+export const OFFICIAL_LOGO_URL = `${SITE_URL}${OFFICIAL_LOGO_PATH}`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/brand/rgan-junior-official-social-card.jpg`;
 export const CONTACT_EMAIL = "contact@rganjunior.org";
 
 export type RouteMeta = {
@@ -74,8 +80,8 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Action",
     },
     description: {
-      zh: "查看阿柑少年山野探索、田野调查、城乡行动与山野互动的三层行动逻辑。",
-      en: "Explore R'gan Junior's three-layer action logic: mountain exploration, field investigation, and urban-rural action.",
+      zh: "查看阿柑少年自 2023 年以来的营地、田野实践、论坛、来访交流与校园 CSA 活动记录。",
+      en: "Browse R'gan Junior activity records since 2023, including camps, field practice, forums, visits, and campus CSA.",
     },
   },
   "/voices": {
@@ -84,8 +90,8 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Partner Voices",
     },
     description: {
-      zh: "阿柑少年伙伴之声的独立整理页，后续发布真实访谈文字、音频、播客片段与短片。",
-      en: "A dedicated Partner Voices page for prepared interviews, audio, podcast clips, and short films from R'gan Junior.",
+      zh: "阅读阿柑少年发起人与伙伴们关于土地、茶、厨房、科技和真实成长的故事。",
+      en: "Read stories from R'gan Junior initiators and partners about land, tea, cooking, technology, and real-world growth.",
     },
   },
   "/join": {
@@ -126,16 +132,24 @@ function normalizePathname(pathname: string): string {
   return pathname.replace(/\/+$/, "") || "/";
 }
 
+function resolveRouteMeta(pathname: string): RouteMeta | undefined {
+  if (pathname.startsWith("/voices/")) {
+    return ROUTE_META["/voices"];
+  }
+
+  return ROUTE_META[pathname];
+}
+
 export function getRouteTitle(pathname: string, language: SiteLanguage): string {
   const normalizedPath = normalizePathname(pathname);
-  const title = ROUTE_META[normalizedPath]?.title ?? BRAND.name;
+  const title = resolveRouteMeta(normalizedPath)?.title ?? BRAND.name;
 
   return pickLocalized(title, language);
 }
 
 export function getRouteDescription(pathname: string, language: SiteLanguage): string {
   const normalizedPath = normalizePathname(pathname);
-  const description = ROUTE_META[normalizedPath]?.description ?? BRAND.description;
+  const description = resolveRouteMeta(normalizedPath)?.description ?? BRAND.description;
 
   return pickLocalized(description, language);
 }

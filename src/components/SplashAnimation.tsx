@@ -1,333 +1,328 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, type Variants } from 'framer-motion';
-import mascotFull from '@/assets/mascot-full.png';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { BRAND, pickLocalized } from '@/lib/brand';
 
 interface SplashAnimationProps {
   onComplete: () => void;
 }
 
-const splashDuration = 6800;
+type IntroPhase = 'video' | 'statement';
 
-const naturalMotes = [
-  { left: '24%', top: '34%', size: 3, delay: 2.55, drift: -22, duration: 2.9 },
-  { left: '68%', top: '31%', size: 2, delay: 2.8, drift: -28, duration: 3.1 },
-  { left: '39%', top: '66%', size: 2, delay: 3.05, drift: -20, duration: 2.7 },
-  { left: '61%', top: '62%', size: 3, delay: 3.18, drift: -26, duration: 2.9 },
-  { left: '33%', top: '52%', size: 2, delay: 3.42, drift: -18, duration: 2.6 },
-];
+const INTRO_VIDEO_SRC = '/videos/home-scroll-video.mp4';
+const INTRO_START_FRAME = '/videos/home-intro-start.webp';
+const INTRO_END_FRAME = '/videos/home-intro-end.webp';
+const VIDEO_LOAD_TIMEOUT_MS = 5200;
+const VIDEO_SAFETY_TIMEOUT_MS = 20000;
+const STATEMENT_HOLD_MS = 6200;
 
-const awakeningLines = {
-  zh: ['在真实世界中，长成自己', '山野恢复感知', '田野理解问题', '城乡行动中长成自己'],
+const statements = {
+  zh: [
+    '在一个高度焦虑、不确定的时代，青少年应该回到自然、走进社区，在真实世界中重新认识自己与社会。',
+    '青少年在乡村与城市之间探索、疗愈、学习并行动，把自我成长与土地、社区和更大的生态系统重新连接起来。',
+  ],
   en: [
-    'Grow into yourself in the real world',
-    'Restore the senses in the wild',
-    'Understand real questions in the field',
-    'Grow through urban-rural action',
+    'At a time of profound anxiety and uncertainty, young people need to return to nature, step into their communities, and rediscover themselves and society in the real world.',
+    'Exploring, healing, learning, and taking action between countryside and city, young people reconnect their growth with the land, their communities, and the wider ecosystem.',
   ],
 };
 
-const textLineVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 10,
-    filter: 'blur(8px)',
-  },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      delay,
-      duration: 0.72,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
 function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
+
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
       return;
     }
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setPrefersReducedMotion(mediaQuery.matches);
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
 
-    update();
-    mediaQuery.addEventListener('change', update);
-    return () => mediaQuery.removeEventListener('change', update);
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
   }, []);
 
   return prefersReducedMotion;
 }
 
 export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
-  const { lang } = useLanguage();
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const { lang, t } = useLanguage();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const onCompleteRef = useRef(onComplete);
   const completedRef = useRef(false);
-  const brandName = pickLocalized(BRAND.name, lang);
-  const mascotAlt = pickLocalized(BRAND.mascotAlt, lang);
-  const subtitle = lang === 'zh' ? '当代青少年的生命觉醒之路' : 'A Path of Awakening for Young People';
-
-  const completionDelay = prefersReducedMotion ? 3200 : splashDuration;
-  const textStartDelay = prefersReducedMotion ? 0.28 : 2.58;
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [phase, setPhase] = useState<IntroPhase>('video');
+  const [isMediaReady, setIsMediaReady] = useState(false);
+  const [hasVideoStarted, setHasVideoStarted] = useState(false);
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
+  const finishIntro = useCallback(() => {
+    if (completedRef.current) {
+      return;
+    }
+
+    completedRef.current = true;
+    onCompleteRef.current();
+  }, []);
+
+  const showStatement = useCallback(() => {
+    setPhase((currentPhase) => (currentPhase === 'statement' ? currentPhase : 'statement'));
+  }, []);
+
   useEffect(() => {
-    const complete = () => {
-      if (completedRef.current) {
-        return;
+    if (prefersReducedMotion) {
+      videoRef.current?.pause();
+      showStatement();
+    }
+  }, [prefersReducedMotion, showStatement]);
+
+  useEffect(() => {
+    if (phase !== 'video' || prefersReducedMotion || hasVideoStarted) {
+      return;
+    }
+
+    const loadTimeout = window.setTimeout(showStatement, VIDEO_LOAD_TIMEOUT_MS);
+    return () => window.clearTimeout(loadTimeout);
+  }, [hasVideoStarted, phase, prefersReducedMotion, showStatement]);
+
+  useEffect(() => {
+    if (phase !== 'video' || prefersReducedMotion) {
+      return;
+    }
+
+    const safetyTimeout = window.setTimeout(showStatement, VIDEO_SAFETY_TIMEOUT_MS);
+    return () => window.clearTimeout(safetyTimeout);
+  }, [phase, prefersReducedMotion, showStatement]);
+
+  useEffect(() => {
+    if (phase !== 'statement') {
+      return;
+    }
+
+    const statementTimer = window.setTimeout(finishIntro, STATEMENT_HOLD_MS);
+    return () => window.clearTimeout(statementTimer);
+  }, [finishIntro, phase]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const root = document.documentElement;
+    const body = document.body;
+    const targetCursor = document.querySelector<HTMLElement>('.target-cursor-wrapper');
+    const previousRootOverflow = root.style.overflow;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyPaddingRight = body.style.paddingRight;
+    const previousTargetCursorVisibility = targetCursor?.style.visibility ?? '';
+    const scrollbarWidth = Math.max(window.innerWidth - root.clientWidth, 0);
+
+    root.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    if (targetCursor) {
+      targetCursor.style.visibility = 'hidden';
+    }
+
+    return () => {
+      root.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+      body.style.paddingRight = previousBodyPaddingRight;
+      if (targetCursor) {
+        targetCursor.style.visibility = previousTargetCursorVisibility;
       }
-
-      completedRef.current = true;
-      onCompleteRef.current();
     };
+  }, []);
 
-    const timer = window.setTimeout(complete, completionDelay);
-    return () => window.clearTimeout(timer);
-  }, [completionDelay]);
+  const handleVideoCanPlay = useCallback(() => {
+    setIsMediaReady(true);
+
+    const playback = videoRef.current?.play();
+    if (playback) {
+      void playback.catch(showStatement);
+    }
+  }, [showStatement]);
+
+  const transitionDuration = prefersReducedMotion ? 0.01 : 0.7;
+  const statementVisible = phase === 'statement';
 
   const splashContent = (
-    <AnimatePresence>
+    <motion.div
+      data-splash-screen="cinematic-intro"
+      data-intro-phase={phase}
+      data-media-ready={isMediaReady ? 'true' : 'false'}
+      className="fixed inset-0 z-[1000] isolate overflow-hidden bg-[#f3eadb] text-[#2d2a24]"
+      style={{ zIndex: 1000 }}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: prefersReducedMotion ? 1 : 1.006 }}
+      transition={{ duration: prefersReducedMotion ? 0.2 : 0.9, ease: [0.4, 0, 0.2, 1] }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('阿柑少年开场影像', "R'gan Junior opening film")}
+    >
+      <img
+        src={INTRO_START_FRAME}
+        alt=""
+        aria-hidden="true"
+        className={`absolute inset-0 h-full w-full scale-[1.015] object-cover object-center transition-opacity duration-700 ${
+          hasVideoStarted || statementVisible ? 'opacity-0' : 'opacity-100'
+        }`}
+        draggable={false}
+      />
+
+      {!prefersReducedMotion && (
+        <video
+          ref={videoRef}
+          className={`absolute inset-0 h-full w-full scale-[1.015] object-cover object-center transition-opacity duration-1000 ${
+            hasVideoStarted && !statementVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+          src={INTRO_VIDEO_SRC}
+          poster={INTRO_START_FRAME}
+          muted
+          autoPlay
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          tabIndex={-1}
+          aria-hidden="true"
+          onLoadedData={() => setIsMediaReady(true)}
+          onCanPlay={handleVideoCanPlay}
+          onPlaying={() => setHasVideoStarted(true)}
+          onEnded={showStatement}
+          onError={showStatement}
+        />
+      )}
+
+      <motion.img
+        src={INTRO_END_FRAME}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full scale-[1.015] object-cover object-center"
+        draggable={false}
+        initial={false}
+        animate={{ opacity: prefersReducedMotion && statementVisible ? 0.18 : 0 }}
+        transition={{ duration: transitionDuration, ease: [0.22, 1, 0.36, 1] }}
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.13] mix-blend-soft-light"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23noise)' opacity='0.22'/%3E%3C/svg%3E\")",
+        }}
+      />
+
       <motion.div
-        data-splash-screen="paper-awakening"
-        className="fixed inset-0 z-[1000] flex items-center justify-center overflow-hidden bg-[#f6efdf] text-[#2c261f]"
-        style={{ zIndex: 1000 }}
-        initial={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.72, ease: [0.4, 0, 0.2, 1] }}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,250,236,0.98)_0%,rgba(246,237,218,0.98)_48%,rgba(232,219,195,0.98)_100%)]"
+        initial={false}
+        animate={{ opacity: statementVisible ? 1 : 0 }}
+        transition={{ duration: prefersReducedMotion ? 0.01 : 1.05, ease: [0.4, 0, 0.2, 1] }}
+      />
+
+      <div
+        className="relative z-10 flex h-full min-h-[100svh] items-center justify-center px-5 py-24 sm:px-8 md:px-12"
+        aria-hidden={!statementVisible}
+        aria-live="polite"
       >
-        <motion.div
-          aria-hidden="true"
-          className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: prefersReducedMotion ? 0.01 : 1.1, ease: 'easeOut' }}
-          style={{
-            background:
-              'radial-gradient(circle at 50% 38%, rgba(255, 130, 47, 0.22), transparent 31%), radial-gradient(circle at 18% 82%, rgba(34, 109, 78, 0.14), transparent 34%), radial-gradient(circle at 82% 74%, rgba(219, 168, 89, 0.18), transparent 34%), linear-gradient(180deg, #faf4e7 0%, #f1e4cf 55%, #e8ddc9 100%)',
-          }}
-        />
-
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-[0.13] mix-blend-multiply"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.34'/%3E%3C/svg%3E\")",
-          }}
-        />
-
-        <motion.svg
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full text-[#226d4e]"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: prefersReducedMotion ? 0.34 : [0, 0.3, 0.24] }}
-          transition={{ duration: prefersReducedMotion ? 0.01 : 2.2, ease: 'easeOut' }}
-        >
-          <path
-            d="M-80 610C190 480 288 700 514 552C720 417 860 265 1120 388C1275 462 1374 430 1526 326"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.1"
-            strokeOpacity="0.22"
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+          <motion.div
+            aria-hidden="true"
+            className="mb-7 h-px w-16 origin-center bg-[#236d4f]/55 sm:mb-9 sm:w-20"
+            initial={false}
+            animate={{ opacity: statementVisible ? 1 : 0, scaleX: statementVisible ? 1 : 0.2 }}
+            transition={{
+              delay: statementVisible && !prefersReducedMotion ? 0.92 : 0,
+              duration: prefersReducedMotion ? 0.01 : 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           />
-          <path
-            d="M-110 318C124 236 288 302 440 382C613 473 756 520 936 410C1114 302 1252 248 1542 286"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.9"
-            strokeOpacity="0.16"
-          />
-          <motion.path
-            d="M-80 610C190 480 288 700 514 552C720 417 860 265 1120 388C1275 462 1374 430 1526 326"
-            fill="none"
-            stroke="#f47d2c"
-            strokeLinecap="round"
-            strokeWidth="1.4"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={
-              prefersReducedMotion
-                ? { pathLength: 0.48, opacity: 0.2 }
-                : { pathLength: [0, 0.45, 0.62], opacity: [0, 0.36, 0.18] }
-            }
-            transition={{ delay: 0.7, duration: prefersReducedMotion ? 0.01 : 3.6, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </motion.svg>
 
-        <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-5 py-10 sm:px-8">
-          <div className="relative flex h-[18rem] w-[18rem] items-center justify-center sm:h-[22rem] sm:w-[22rem] md:h-[25rem] md:w-[25rem]">
-            <motion.div
-              aria-hidden="true"
-              className="absolute inset-[16%] rounded-full bg-[#ff7d2d]/18 blur-3xl"
-              initial={{ opacity: 0, scale: 0.82 }}
+          {statements[lang].map((statement, index) => (
+            <motion.p
+              key={statement}
+              className={`max-w-[46em] font-serif text-[clamp(1.12rem,2.25vw,2.1rem)] font-medium leading-[1.72] tracking-[0.015em] text-[#2d2a24] ${
+                index === 0 ? '' : 'mt-6 sm:mt-8'
+              }`}
+              initial={false}
               animate={{
-                opacity: prefersReducedMotion ? 0.48 : [0, 0.52, 0.38],
-                scale: prefersReducedMotion ? 1 : [0.82, 1.06, 1],
-              }}
-              transition={{ delay: prefersReducedMotion ? 0 : 0.35, duration: prefersReducedMotion ? 0.01 : 2.4, ease: [0.22, 1, 0.36, 1] }}
-            />
-
-            <motion.div
-              aria-hidden="true"
-              className="absolute h-[72%] w-[72%] rounded-full border border-[#226d4e]/12"
-              initial={{ opacity: 0, scale: 0.84 }}
-              animate={{ opacity: prefersReducedMotion ? 0.24 : [0, 0.32, 0.16], scale: prefersReducedMotion ? 1 : [0.84, 1.04, 1.08] }}
-              transition={{ delay: 1.05, duration: prefersReducedMotion ? 0.01 : 3.2, ease: [0.22, 1, 0.36, 1] }}
-            />
-
-            <motion.div
-              className="absolute h-[82%] w-[82%]"
-              initial={{ opacity: 0, scale: 0.92, y: 18, rotate: -1.2, filter: 'blur(10px)' }}
-              animate={{
-                opacity: prefersReducedMotion ? 1 : [0, 0.86, 1],
-                scale: prefersReducedMotion ? 1 : [0.92, 1.025, 1],
-                y: prefersReducedMotion ? 0 : [18, -4, 0],
-                rotate: prefersReducedMotion ? 0 : [-1.2, 0.8, 0],
-                filter: prefersReducedMotion ? 'blur(0px)' : ['blur(10px)', 'blur(1px)', 'blur(0px)'],
+                opacity: statementVisible ? 1 : 0,
+                y: statementVisible ? 0 : prefersReducedMotion ? 0 : 18,
               }}
               transition={{
-                delay: prefersReducedMotion ? 0 : 0.65,
-                duration: prefersReducedMotion ? 0.01 : 1.72,
-                times: [0, 0.72, 1],
+                delay: statementVisible && !prefersReducedMotion ? 1.06 + index * 0.42 : 0,
+                duration: prefersReducedMotion ? 0.01 : 0.82,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <motion.img
-                src={mascotFull}
-                alt={mascotAlt}
-                className="h-full w-full object-contain drop-shadow-[0_30px_54px_rgba(71,48,29,0.18)]"
-                draggable={false}
-                animate={
-                  prefersReducedMotion
-                    ? undefined
-                    : {
-                        scale: [1, 1.018, 1, 1.01, 1],
-                        y: [0, -5, 0, -2, 0],
-                        rotate: [0, -0.35, 0, 0.28, 0],
-                      }
-                }
-                transition={{
-                  delay: 2.18,
-                  duration: 4.4,
-                  times: [0, 0.28, 0.56, 0.78, 1],
-                  ease: [0.37, 0, 0.2, 1],
-                }}
-              />
-            </motion.div>
-
-            {!prefersReducedMotion &&
-              naturalMotes.map((mote) => (
-                <motion.span
-                  key={`${mote.left}-${mote.top}`}
-                  aria-hidden="true"
-                  className="absolute rounded-full bg-[#fff9ed]"
-                  style={{
-                    left: mote.left,
-                    top: mote.top,
-                    width: mote.size,
-                    height: mote.size,
-                    boxShadow: '0 0 18px rgba(255, 134, 49, 0.32)',
-                  }}
-                  initial={{ opacity: 0, y: 0, scale: 0.4 }}
-                  animate={{ opacity: [0, 0.72, 0], y: [0, mote.drift], scale: [0.4, 1, 0.74] }}
-                  transition={{ delay: mote.delay, duration: mote.duration, ease: 'easeOut' }}
-                />
-              ))}
-
-            {!prefersReducedMotion && (
-              <>
-                <motion.svg
-                  aria-hidden="true"
-                  className="absolute left-[19%] top-[38%] h-8 w-8 text-[#226d4e]"
-                  viewBox="0 0 32 32"
-                  initial={{ opacity: 0, x: -12, y: 8, rotate: -18 }}
-                  animate={{ opacity: [0, 0.42, 0], x: [0, 22, 38], y: [0, -8, -14], rotate: [-18, 8, 16] }}
-                  transition={{ delay: 3.2, duration: 2.7, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <path
-                    d="M26 6C16 6 8 11 7 23c10 1 17-5 19-17Z"
-                    fill="currentColor"
-                    fillOpacity="0.28"
-                  />
-                  <path d="M9 22c5-5 9-8 16-14" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1.3" />
-                </motion.svg>
-                <motion.span
-                  aria-hidden="true"
-                  className="absolute right-[21%] top-[42%] h-3 w-3 rounded-full bg-[#226d4e]/18"
-                  initial={{ opacity: 0, x: 0, y: 0, scale: 0.5 }}
-                  animate={{ opacity: [0, 0.5, 0], x: [0, 16, 34], y: [0, 8, 16], scale: [0.5, 1, 0.72] }}
-                  transition={{ delay: 3.45, duration: 2, ease: [0.22, 1, 0.36, 1] }}
-                />
-              </>
-            )}
-          </div>
-
-          <motion.div
-            className="relative -mt-2 flex max-w-3xl flex-col items-center text-center sm:-mt-5"
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.p
-              data-splash-brand
-              className="font-serif text-3xl font-semibold text-[#2c261f] sm:text-4xl md:text-5xl"
-              variants={textLineVariants}
-              custom={textStartDelay}
-            >
-              {brandName}
+              {statement}
             </motion.p>
-            <motion.p
-              data-splash-subtitle
-              className="mt-3 text-sm font-medium text-[#226d4e] sm:text-base"
-              variants={textLineVariants}
-              custom={textStartDelay + 0.24}
-            >
-              {subtitle}
-            </motion.p>
-            <div className="mt-5 flex flex-col items-center gap-1.5 text-sm leading-6 text-[#4d4438] sm:text-base">
-              {awakeningLines[lang].map((line, index) => (
-                <motion.p
-                  key={line}
-                  data-splash-line
-                  variants={textLineVariants}
-                  custom={textStartDelay + 0.54 + index * 0.16}
-                >
-                  {line}
-                </motion.p>
-              ))}
-            </div>
-          </motion.div>
-
-          {!prefersReducedMotion && (
-            <motion.div
-              aria-hidden="true"
-              className="absolute bottom-7 left-1/2 h-px w-28 -translate-x-1/2 overflow-hidden bg-[#226d4e]/12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ delay: 1.2, duration: 6.1, ease: 'easeInOut' }}
-            >
-              <motion.div
-                className="h-full bg-[#f47d2c]/55"
-                initial={{ x: '-100%' }}
-                animate={{ x: '100%' }}
-                transition={{ delay: 1.2, duration: 6.1, ease: 'linear' }}
-              />
-            </motion.div>
-          )}
+          ))}
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+
+      <motion.button
+        type="button"
+        className={`absolute right-5 top-[max(1.25rem,env(safe-area-inset-top))] z-20 rounded-full px-4 py-2 text-xs font-medium tracking-[0.18em] shadow-sm backdrop-blur-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent sm:right-7 sm:px-5 sm:text-sm ${
+          statementVisible
+            ? 'border border-[#2d2a24]/20 bg-white/25 text-[#2d2a24]/70 hover:border-[#2d2a24]/35 hover:text-[#2d2a24] focus-visible:ring-[#2d2a24]/55'
+            : 'border border-white/25 bg-black/10 text-white/85 hover:border-white/45 hover:bg-black/20 hover:text-white focus-visible:ring-white/75'
+        }`}
+        onClick={finishIntro}
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 1, duration: prefersReducedMotion ? 0.01 : 0.5 }}
+      >
+        {t('跳过', 'Skip')}
+      </motion.button>
+
+      <div
+        data-intro-progress
+        className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[3px] bg-white/10 transition-opacity duration-500 ${
+          statementVisible ? 'opacity-0' : 'opacity-100'
+        }`}
+        aria-hidden="true"
+      >
+        <motion.div
+          className="h-full origin-left bg-[#ffb35d]/80"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: statementVisible ? 1 : hasVideoStarted ? 0.98 : 0.03 }}
+          transition={
+            statementVisible
+              ? { duration: transitionDuration, ease: [0.22, 1, 0.36, 1] }
+              : hasVideoStarted
+                ? { duration: 15, ease: 'linear' }
+                : { duration: 0.5, ease: 'easeOut' }
+          }
+        />
+      </div>
+
+      <AnimatePresence>
+        {phase === 'video' && !hasVideoStarted && (
+          <motion.p
+            className="absolute bottom-7 left-1/2 z-20 -translate-x-1/2 text-xs tracking-[0.18em] text-white/65 sm:bottom-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ delay: 0.45, duration: 0.45 }}
+          >
+            {t('影像正在载入', 'Loading film')}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 
   if (typeof document === 'undefined') {
