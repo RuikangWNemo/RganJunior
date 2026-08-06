@@ -20,8 +20,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ['"Noto Serif SC"', 'Georgia', 'serif'],
-        sans: ['"Noto Sans SC"', '"Inter"', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-handwriting-serif)'],
+        sans: ['var(--font-handwriting-sans)'],
       },
       colors: {
         border: "hsl(var(--border))",

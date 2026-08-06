@@ -80,8 +80,8 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Action",
     },
     description: {
-      zh: "查看阿柑少年山野探索、田野调查、城乡行动与山野互动的三层行动逻辑。",
-      en: "Explore R'gan Junior's three-layer action logic: mountain exploration, field investigation, and urban-rural action.",
+      zh: "查看阿柑少年自 2023 年以来的营地、田野实践、论坛、来访交流与校园 CSA 活动记录。",
+      en: "Browse R'gan Junior activity records since 2023, including camps, field practice, forums, visits, and campus CSA.",
     },
   },
   "/voices": {

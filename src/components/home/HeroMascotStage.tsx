@@ -5,25 +5,30 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useHeroMotion } from '@/hooks/useHeroMotion';
 import { BRAND, pickLocalized } from '@/lib/brand';
 import SplashAnimation from '@/components/SplashAnimation';
+import {
+  HOME_INTRO_STORAGE_KEY,
+  completeHomeIntro,
+  parseHomeIntroState,
+  refreshHomeIntroVisit,
+  shouldShowHomeIntro,
+  type HomeIntroState,
+} from '@/lib/homeIntro';
 
 interface HeroMascotStageProps {
   sectionRef: RefObject<HTMLElement | null>;
 }
 
-const splashStorageKey = 'hasSeenSplashAnimation';
-const splashVersion = 'brand-film-v8-paper-awakening';
-
-function readSplashVersion() {
+function readHomeIntroState() {
   try {
-    return window.localStorage.getItem(splashStorageKey);
+    return parseHomeIntroState(window.localStorage.getItem(HOME_INTRO_STORAGE_KEY));
   } catch {
     return null;
   }
 }
 
-function writeSplashVersion() {
+function writeHomeIntroState(state: HomeIntroState) {
   try {
-    window.localStorage.setItem(splashStorageKey, splashVersion);
+    window.localStorage.setItem(HOME_INTRO_STORAGE_KEY, JSON.stringify(state));
   } catch {
     // If storage is unavailable, still let the page continue past the intro.
   }
@@ -47,22 +52,26 @@ export default function HeroMascotStage({ sectionRef }: HeroMascotStageProps) {
     handleTouchEnd,
   } = useHeroMotion(sectionRef);
 
-  // 检查是否应该显示开屏动画
   useEffect(() => {
     const isHomePage = window.location.pathname === '/';
-    const seenSplashVersion = readSplashVersion();
-    
-    if (isHomePage && seenSplashVersion !== splashVersion) {
+    const now = Date.now();
+    const introState = readHomeIntroState();
+
+    if (isHomePage && shouldShowHomeIntro(introState, now)) {
       setShowSplash(true);
     } else {
       setSplashComplete(true);
+
+      if (isHomePage && introState) {
+        writeHomeIntroState(refreshHomeIntroVisit(introState, now));
+      }
     }
   }, []);
 
   const handleSplashComplete = useCallback(() => {
     setShowSplash(false);
     setSplashComplete(true);
-    writeSplashVersion();
+    writeHomeIntroState(completeHomeIntro(Date.now()));
   }, []);
 
   const wrapperStyle: CSSProperties = {
@@ -95,14 +104,12 @@ export default function HeroMascotStage({ sectionRef }: HeroMascotStageProps) {
 
   return (
     <>
-      {/* 开屏动画 */}
       <AnimatePresence>
         {showSplash && (
           <SplashAnimation onComplete={handleSplashComplete} />
         )}
       </AnimatePresence>
 
-      {/* 正常的吉祥物展示 */}
       {splashComplete && (
         <div className="home-hero-mascot-wrap relative order-1 flex justify-center lg:order-1 lg:justify-start">
           <div

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
-import mascotWide from '@/assets/mascot-wide.png';
 import { useLanguage } from '@/contexts/LanguageContext';
+import SeedCommunityStage from '@/components/home/SeedCommunityStage';
 import { cn } from '@/lib/utils';
 
 const communityRoles = [
@@ -16,20 +16,7 @@ export default function SeedCommunity() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section
-      id="seed-community"
-      className="paper-texture relative isolate overflow-hidden border-b border-forest-foreground/10 bg-forest text-forest-foreground"
-    >
-      <div className="pointer-events-none absolute -right-48 -top-64 size-[44rem] rounded-full border border-forest-foreground/10" aria-hidden="true" />
-      <div className="pointer-events-none absolute -bottom-64 left-[18%] size-[32rem] rounded-full border border-forest-foreground/5" aria-hidden="true" />
-
-      <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div
-          className={cn(
-            'group/stage relative min-h-[54rem] py-20 sm:min-h-[58rem] sm:py-28 lg:min-h-[46rem] lg:py-28',
-            lang === 'en' && 'min-h-[59rem] sm:min-h-[61rem] lg:min-h-[50rem]'
-          )}
-        >
+    <SeedCommunityStage id="seed-community" lang={lang}>
           <motion.div
             initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -110,27 +97,6 @@ export default function SeedCommunity() {
               </span>
             </Link>
           </motion.div>
-
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 48, rotate: 2 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.75, delay: 0.34, ease: 'easeOut' }}
-            className="pointer-events-none absolute bottom-0 right-[-7rem] z-10 w-[31rem] origin-bottom transition-transform duration-200 group-hover/stage:-rotate-1 group-focus-within/stage:-rotate-1 motion-reduce:transition-none sm:right-[-4rem] sm:w-[37rem] lg:right-[-9rem] lg:w-[48rem] xl:right-[-6rem] xl:w-[50rem]"
-            aria-hidden="true"
-          >
-            <img
-              src={mascotWide}
-              alt=""
-              width={1125}
-              height={705}
-              loading="lazy"
-              decoding="async"
-              className="h-auto w-full select-none"
-            />
-          </motion.div>
-        </div>
-      </div>
-    </section>
+    </SeedCommunityStage>
   );
 }
