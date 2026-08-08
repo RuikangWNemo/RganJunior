@@ -9,6 +9,7 @@
 - 适用范围：公开内容网站
 - 不适用范围：登录后社区、管理后台、认证流程和业务表单界面
 - 迁移方式：Strangler Pattern，逐页替换，不先重写 legacy CSS
+- Designer specimen：已制作，等待共同评审
 
 ## North Star
 
@@ -97,6 +98,7 @@ Legacy CSS 只承担兼容职责，不反向定义新系统。
 5. [Spacing System](./05-spacing-system.md)
 6. [Content Module Library](./06-content-module-library.md)
 7. [Responsive Rules](./07-responsive-rules.md)
+8. [Designer Specimen](./specimen/README.md)
 
 ## v1 冻结条件
 
