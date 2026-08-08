@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import handler from './action-inquiry.js';
+import handler from '../../api/action-inquiry.js';
 
 function createResponse() {
   const response = {
