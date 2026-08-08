@@ -7,7 +7,8 @@
 ## 展示结构
 
 - Nate 继续使用现有双栏发起人介绍，不改变层级与内容。
-- 三位伙伴按张天时、陈若容、黄若音的顺序出现在 Nate 介绍之后。
+- Nate 与三位伙伴共同位于人物档案区；三位伙伴按张天时、陈若容、黄若音的顺序紧接在 Nate 介绍之后。
+- 人物档案区完整结束后，才进入后续“青少年共创伙伴”与“成人支持团队”内容。
 - 桌面端为三列等宽卡片，移动端收束为单列。
 - 每张卡使用仓库内已有的本人真实竖版照片，并保留真实姓名。
 - 尚未确认的身份、标题和简介全部显示为 `？？？`。
@@ -24,6 +25,8 @@
 | 张天时 | `/stories/technology-ecology-stars/images/image-001.webp` | `/voices/technology-ecology-stars` |
 | 陈若容 | `/stories/tea-connects-an-american-girl/images/image-001.webp` | `/voices/tea-connects-an-american-girl` |
 | 黄若音 | `/stories/tea-kitchen-and-summer/images/image-001.webp` | `/voices/tea-kitchen-and-summer` |
+
+英文姓名固定显示为 `Nate Shi`、`ZHANG Tianshi`、`Russie Chen`、`Ruby Huang`。
 
 ## 验收标准
 
