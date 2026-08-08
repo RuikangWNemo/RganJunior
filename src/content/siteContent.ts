@@ -56,7 +56,7 @@ export const siteBeliefs: BeliefContent[] = [
       src: '/images/home/belief-nature-teacher.webp',
       alt: {
         zh: '阿柑在山林溪流边观察自然',
-        en: "R'gan observing nature beside a mountain stream",
+        en: "R-Gan Junior participants observing nature beside a mountain stream",
       },
       position: 'center 48%',
     },
@@ -74,7 +74,7 @@ export const siteBeliefs: BeliefContent[] = [
       src: '/images/home/belief-real-world-classroom.webp',
       alt: {
         zh: '阿柑在乡村与城市之间记录真实世界',
-        en: "R'gan taking notes between village and city landscapes",
+        en: "R-Gan Junior participants taking notes between village and city landscapes",
       },
       position: 'center 50%',
     },
@@ -92,7 +92,7 @@ export const siteBeliefs: BeliefContent[] = [
       src: '/images/home/belief-young-people-now.webp',
       alt: {
         zh: '一群阿柑一起种植、记录和发声',
-        en: "A group of R'gans planting, documenting, and speaking up",
+        en: "R-Gan Junior participants planting, documenting, and speaking up",
       },
       position: 'center 46%',
     },
@@ -131,7 +131,7 @@ export const actionLayers: ActionLayerContent[] = [
       src: '/images/actions/mountain-sensing.webp',
       alt: {
         zh: '阿柑在山野溪流边感知自然',
-        en: "R'gan sensing nature beside a mountain stream",
+        en: "R-Gan Junior participants sensing nature beside a mountain stream",
       },
       position: 'center 50%',
       contain: true,
@@ -187,7 +187,7 @@ export const actionLayers: ActionLayerContent[] = [
       src: '/images/actions/field-research.webp',
       alt: {
         zh: '阿柑在田野里记录与研究真实问题',
-        en: "R'gan documenting and studying real questions in the field",
+        en: "R-Gan Junior participants documenting and studying real questions in the field",
       },
       position: 'center 50%',
       contain: true,
@@ -243,7 +243,7 @@ export const actionLayers: ActionLayerContent[] = [
       src: '/images/actions/urban-rural-action.webp',
       alt: {
         zh: '阿柑在城乡之间连接社群与行动',
-        en: "R'gan connecting community and action across urban and rural settings",
+        en: "R-Gan Junior connecting community and action across urban and rural settings",
       },
       position: 'center 50%',
       contain: true,
@@ -304,11 +304,11 @@ export const impactProof = [
 export const joinAudiences: JoinAudienceContent[] = [
   {
     id: 'join-youth',
-    trigger: { zh: '成为阿柑少年', en: "Become R'gan Junior Youth" },
-    heading: { zh: '成为阿柑少年', en: "Become R'gan Junior Youth" },
+    trigger: { zh: '成为阿柑少年', en: "Become R-Gan Junior Youth" },
+    heading: { zh: '成为阿柑少年', en: "Become R-Gan Junior Youth" },
     intro: {
       zh: '如果你感到焦虑、迷茫、疲惫，但仍然渴望真实、自然与意义，阿柑少年欢迎你进入这段长期同行。',
-      en: "If you feel anxious, lost, or exhausted, yet still long for what is real, natural, and meaningful, R'gan Junior welcomes you into this long companionship.",
+      en: "If you feel anxious, lost, or exhausted, yet still long for what is real, natural, and meaningful, R-Gan Junior welcomes you into this long companionship.",
     },
     rows: [
       {
@@ -340,8 +340,8 @@ export const joinAudiences: JoinAudienceContent[] = [
   },
   {
     id: 'join-parents',
-    trigger: { zh: '成为阿柑家长', en: "Become an R'gan Junior Parent" },
-    heading: { zh: '成为阿柑家长', en: "Become an R'gan Junior Parent" },
+    trigger: { zh: '成为阿柑家长', en: "Become an R-Gan Junior Parent" },
+    heading: { zh: '成为阿柑家长', en: "Become an R-Gan Junior Parent" },
     intro: {
       zh: '如果你希望孩子在真实世界中成长，而不是只被焦虑推着向前，欢迎先了解我们的路径、节奏与陪伴方式。',
       en: 'If you hope your child can grow in the real world instead of being pushed only by anxiety, we invite you to first understand our path, rhythm, and care.',
@@ -380,7 +380,7 @@ export const joinAudiences: JoinAudienceContent[] = [
     heading: { zh: '成为合作伙伴', en: 'Become a Partner' },
     intro: {
       zh: '如果你希望从研究、教育、来访或资源连接进入阿柑少年，这里是合作伙伴的入口。',
-      en: "If you want to enter R'gan Junior through research, education, visits, or resource connection, this is the partner entry point.",
+      en: "If you want to enter R-Gan Junior through research, education, visits, or resource connection, this is the partner entry point.",
     },
     rows: [
       {

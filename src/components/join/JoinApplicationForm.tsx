@@ -233,7 +233,7 @@ export default function JoinApplicationForm({
             >
               {t(
                 '同意阿柑少年为后续联系保存这些信息。',
-                "I agree that R'gan Junior may keep this information for follow-up."
+                "I agree that R-Gan Junior may keep this information for follow-up."
               )}
             </Label>
           </div>

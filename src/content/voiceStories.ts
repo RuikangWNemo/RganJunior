@@ -36,7 +36,7 @@ export const voiceStories: VoiceStory[] = [
     kindLabel: { zh: '项目发起信', en: 'Project Letter' },
     title: {
       zh: '阿柑少年生活共创营｜来自阿柑少年的一份邀请',
-      en: "R'gan Junior Life Co-creation Camp: An Invitation",
+      en: "R-Gan Junior Life Co-creation Camp: An Invitation",
     },
     description: {
       zh: '这个暑假，Nate 与天时邀请同龄人走进森林、田野和真实社区，在共同生活中重新理解土地、食物和自己的责任。',
@@ -44,14 +44,14 @@ export const voiceStories: VoiceStory[] = [
     },
     author: {
       zh: 'Nate、张天时与阿柑少年发起小组',
-      en: "Nate, Tianshi, and the R'gan Junior initiating group",
+      en: "Nate, Tianshi, and the R-Gan Junior initiating group",
     },
     displayDate: '2026-07-13',
     originalUrl: 'https://mp.weixin.qq.com/s/tR160-ThkMAFroQFxSvtvQ',
     cover: '/stories/summer-co-creation-camp-invitation/cover.jpg',
     coverAlt: {
       zh: '两位少年站在菜园中的阿柑少年生活共创营封面',
-      en: "R'gan Junior camp cover showing two young people in a garden",
+      en: "R-Gan Junior camp cover showing two young people in a garden",
     },
     coverWidth: 1280,
     coverHeight: 545,
@@ -68,7 +68,7 @@ export const voiceStories: VoiceStory[] = [
     },
     description: {
       zh: '阿柑少年从一个城市孩子的孤独、一片森林的空气和许多人一次次的接纳与托举里慢慢长出来。',
-      en: "R'gan Junior grew from a city child's loneliness, the air of a forest, and the care of a whole community.",
+      en: "R-Gan Junior grew from a city child's loneliness, the air of a forest, and the care of a whole community.",
     },
     author: { zh: 'Nate Shi', en: 'Nate Shi' },
     displayDate: '2026-07-15',
@@ -89,7 +89,7 @@ export const voiceStories: VoiceStory[] = [
     kindLabel: { zh: '成长故事', en: 'Growth Story' },
     title: {
       zh: '一碗茶，如何让一个美国女孩走进阿柑少年',
-      en: "How a Bowl of Tea Brought an American Girl to R'gan Junior",
+      en: "How a Bowl of Tea Brought an American Girl to R-Gan Junior",
     },
     description: {
       zh: '若容从一碗茶和一次次回到中国的经历出发，找到与伙伴共同走进森林、乡村和内心的方式。',
@@ -114,7 +114,7 @@ export const voiceStories: VoiceStory[] = [
     kindLabel: { zh: '成长故事', en: 'Growth Story' },
     title: {
       zh: '茶、厨房、阿柑少年，还有这个夏天',
-      en: "Tea, the Kitchen, R'gan Junior, and This Summer",
+      en: "Tea, the Kitchen, R-Gan Junior, and This Summer",
     },
     description: {
       zh: '若音在作茶、下厨和亲近自然的日常里放慢脚步，也邀请更多青少年重新感受生活。',
@@ -143,7 +143,7 @@ export const voiceStories: VoiceStory[] = [
     },
     description: {
       zh: '张天时希望把科技带回真实生活，把 AI 和数字工具带到土地现场，为阿柑少年提供来自科技与社群的力量。',
-      en: "Tianshi wants to bring technology back into daily life and connect AI, digital tools, land, and R'gan Junior's community.",
+      en: "Tianshi wants to bring technology back into daily life and connect AI, digital tools, land, and R-Gan Junior's community.",
     },
     author: { zh: '张天时', en: 'Tianshi Zhang' },
     displayDate: '2026-07-18',

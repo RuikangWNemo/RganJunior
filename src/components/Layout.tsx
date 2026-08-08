@@ -7,6 +7,7 @@ import Footer from './Footer';
 import MascotCompanion from './MascotCompanion';
 import SmoothScrollDamping from './SmoothScrollDamping';
 import TargetCursor from './ui/TargetCursor';
+import CommunityChrome from './community/CommunityChrome';
 
 const routeShellVariants = {
   initial: (isHome: boolean) => ({
@@ -42,8 +43,18 @@ export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const reducedMotion = useReducedMotion();
   const isHome = location.pathname === '/';
-  const isEditorialRoute = location.pathname === '/about' || location.pathname.startsWith('/voices');
-  const showMascotCompanion = !isHome && !isEditorialRoute && location.pathname !== '/join';
+  const isCommunityRoute = location.pathname.startsWith('/community');
+  const isEditorialRoute =
+    location.pathname.startsWith('/about') ||
+    location.pathname === '/story' ||
+    location.pathname.startsWith('/field-notes') ||
+    location.pathname.startsWith('/impact') ||
+    location.pathname.startsWith('/voices');
+  const showMascotCompanion =
+    !isHome &&
+    !isEditorialRoute &&
+    location.pathname !== '/join' &&
+    !isCommunityRoute;
 
   useEffect(() => {
     if (!location.hash) {
@@ -52,43 +63,60 @@ export default function Layout({ children }: { children: ReactNode }) {
       return;
     }
 
-    const target = window.document.getElementById(location.hash.slice(1));
-    if (target) {
-      const timeoutId = window.setTimeout(() => {
+    const timeoutId = window.setTimeout(() => {
+      const target = window.document.getElementById(location.hash.slice(1));
+      if (target) {
         target.scrollIntoView({
           behavior: reducedMotion ? 'auto' : 'smooth',
           block: 'start',
         });
         syncSmoothScrollDamping();
-      }, 80);
+      }
+    }, 80);
 
-      return () => window.clearTimeout(timeoutId);
-    }
+    return () => window.clearTimeout(timeoutId);
   }, [location.pathname, location.hash, reducedMotion]);
 
+  const routeContent = isCommunityRoute ? (
+    <div className="route-stage flex-1">
+      <main className="route-page-shell community-route-page-shell flex-1" data-route-transition="stable">
+        {children}
+      </main>
+    </div>
+  ) : (
+    <div className="route-stage flex-1">
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.main
+          key={location.pathname}
+          custom={isHome}
+          variants={routeShellVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="route-page-shell flex-1"
+          data-route-transition="animated"
+        >
+          {children}
+        </motion.main>
+      </AnimatePresence>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <SmoothScrollDamping />
+    <div className={`min-h-screen flex flex-col ${isCommunityRoute ? 'community-route-shell' : ''}`}>
+      {!isCommunityRoute && <SmoothScrollDamping />}
       <BrandHead />
-      <Navbar hideLogo={isHome} />
-      <div className="route-stage flex-1">
-        <AnimatePresence initial={false} mode="popLayout">
-          <motion.main
-            key={location.pathname}
-            custom={isHome}
-            variants={routeShellVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className="route-page-shell flex-1"
-          >
-            {children}
-          </motion.main>
-        </AnimatePresence>
-      </div>
-      <Footer />
-      {showMascotCompanion && <MascotCompanion />}
-      <TargetCursor spinDuration={2.6} hideDefaultCursor={false} parallaxOn />
+      {isCommunityRoute ? (
+        <CommunityChrome>{routeContent}</CommunityChrome>
+      ) : (
+        <>
+          <Navbar hideLogo={isHome} />
+          {routeContent}
+          <Footer />
+          {showMascotCompanion && <MascotCompanion />}
+          <TargetCursor spinDuration={2.6} hideDefaultCursor={false} parallaxOn />
+        </>
+      )}
     </div>
   );
 }

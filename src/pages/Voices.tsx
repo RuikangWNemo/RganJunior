@@ -48,7 +48,7 @@ export default function Voices() {
               <p className="mt-5 text-base leading-8 text-muted-foreground">
                 {t(
                   '四个不同的生活方向，汇成阿柑少年的共同经验。',
-                  "Four different paths become part of R'gan Junior's shared experience."
+                  "Four different paths become part of R-Gan Junior's shared experience."
                 )}
               </p>
             </div>

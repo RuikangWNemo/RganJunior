@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "include": [
+    "src/lib/supabase/**/*.ts",
+    "src/services/**/*.ts",
+    "src/vite-env.d.ts"
+  ]
+}

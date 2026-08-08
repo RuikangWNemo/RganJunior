@@ -280,7 +280,7 @@ export default function Strands({
       premultipliedAlpha: true,
       antialias: true,
     };
-    const webgl2Context = canvas.getContext('webgl2', contextAttributes);
+    const webgl2Context = canvas.getContext('webgl2', contextAttributes) as WebGL2RenderingContext | null;
     if (!webgl2Context) return;
 
     const renderer = (() => {
@@ -301,7 +301,7 @@ export default function Strands({
     const gl = renderer.gl;
 
     if (!renderer.isWebgl2) {
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      webgl2Context.getExtension('WEBGL_lose_context')?.loseContext();
       return;
     }
 

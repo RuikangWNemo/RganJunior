@@ -4,10 +4,218 @@
 Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
 
 ## Current Request
-Optimize the About page's scroll/map/story presentation so the narrative and visual state feel bound together, and simplify the mobile Join/Apply path into a premium minimal flow with fewer visible details.
+Complete the Community collaborative-editor configuration end to end: local Supabase server secret, Vercel server variables, managed Redis status, local services, and live create/load/save/collaboration verification.
 
 ## Current Phase
-About story binding and mobile Join/Apply simplification in progress
+Configuration audit in progress; obtain credentials without exposing them, then configure local and hosted environments and verify the complete editor path.
+
+## 2026-08-08 Collaborative Editor Configuration
+
+### Phase 1: Credential And Environment Audit
+- [x] Verify current Supabase/Vercel guidance and inspect existing local/hosted variable names without exposing values
+- [ ] Obtain the Supabase secret through an authorized surface and store it only in ignored/server-side configuration
+- [x] Obtain the Supabase secret through an authorized surface and store it only in ignored/server-side configuration
+- [x] Determine whether a managed Redis integration already exists (none exists; Upstash creation awaits explicit third-party terms approval)
+- **Status:** in progress
+
+### Phase 2: Local And Hosted Configuration
+- [x] Configure `.env.local` without overwriting unrelated local values
+- [x] Configure required Vercel Development, Preview, and Production variables (Development via `.env.local`; Preview/Production via Vercel sensitive variables)
+- [ ] Configure Redis if an existing no-cost/in-scope resource is available; request confirmation before any paid provisioning
+- **Status:** pending
+
+### Phase 3: End-To-End Verification
+- [x] Restart local services and verify JSON API, WebSocket, editor load, autosave, presence, and revisions (new draft/comments still require an intentional content mutation)
+- [ ] Verify hosted environment/deployment when credentials and infrastructure are available
+- [ ] Run focused tests, typecheck, lint, build, and credential-leak checks
+- **Status:** pending
+
+## 2026-08-08 Community Collaborative Editor
+
+### Phase 1: Discovery And Approved Design
+- [x] Inspect the existing article editor, field-note service, database content model, revision model, public renderer, and media path
+- [x] Compare BlockNote, Tiptap, and Lexical using official technical sources
+- [x] Confirm BlockNote Core + Yjs + self-hosted Hocuspocus
+- [x] Confirm first-version real-time collaboration and the invited-member plus active-member-link permission model
+- [x] Confirm editor UX, permissions/storage, recovery/mobile, and acceptance criteria section by section
+- [x] Write and commit `docs/plans/2026-08-08-community-collaborative-editor-design.md`
+- **Status:** complete
+
+### Phase 2: Detailed Implementation Plan
+- [x] Inspect exact frontend, API, database, test, and deployment integration points
+- [x] Verify current Supabase and Vercel guidance relevant to Auth, RLS, WebSockets, and persistence
+- [x] Create the detailed implementation plan
+- **Status:** complete
+
+### Phase 3: Data And Collaboration Foundation
+- [x] Add schema, RLS, RPCs, generated types, and database tests
+- [x] Add Hocuspocus authentication, persistence, materialization, presence, and local/production configuration
+- [x] Add permission and share-link services
+- **Status:** complete
+
+### Phase 4: Editor And Collaboration UI
+- [x] Replace the textarea editor with BlockNote and the approved document workspace
+- [x] Add autosave, offline status, collaboration cursors, comments, sharing, and version history
+- [x] Complete bilingual and responsive behavior
+- **Status:** complete
+
+### Phase 5: Publishing And Compatibility
+- [x] Materialize safe JSON, plain-text, and HTML snapshots
+- [x] Render published community notes without loading editor code
+- [x] Add legacy plain-text conversion and recovery fallback
+- **Status:** complete
+
+### Phase 6: Verification
+- [x] Run focused and full frontend/database tests, type checks, lint, build, and advisors
+- [x] Verify permissions, reconnect/read-only boundaries, review locking, public rendering, and responsive layout with automated browser/service/database coverage
+- [x] Record the remaining managed Redis and Vercel environment deployment gate
+- **Status:** complete (manual two-account production smoke follows deployment)
+
+### Errors Encountered
+
+| Error | Attempt | Resolution |
+| --- | --- | --- |
+| Git could not create `.git/index.lock` inside the workspace sandbox | 1 | Re-ran the narrowly scoped add/commit with approved elevated Git access; design commit `a8f4732` succeeded |
+| Combined planning-file patch did not match the exact `findings.md` header context | 1 | Split the update into smaller file-specific patches with exact context |
+| API inspection referenced nonexistent `api/community/member-search.js` | 1 | Use `rg --files api` output and inspect the actual TypeScript endpoint/helper files |
+| Web browser safety layer rejected direct open of `https://supabase.com/changelog.md` | 1 | Fetched the same official Markdown file read-only with bounded `curl` and reviewed relevant breaking changes |
+| Implementation-plan pre-commit check found trailing whitespace on the date line | 1 | Removed the two trailing spaces before staging; no file had been staged yet |
+| `npm view` registry calls hung or returned empty output inside the default sandbox | 1 | Interrupted the hanging process and reused an approved, read-only `npm view` network scope for version checks |
+| Dependency install through configured `registry.npmmirror.com` produced no output for two minutes | 1 | Npm debug log showed extremely slow metadata fetches (up to 156s); interrupted before manifest writes and switched the next attempt to official `registry.npmjs.org` |
+| Dependency install through official `registry.npmjs.org` timed out on the first BlockNote manifest after four retries | 1 | Stop registry retries for now, continue the independent database slice, and revisit installation through cache/mirror after useful progress |
+| Local Supabase validation could not use Docker Desktop because the app is not installed | 1 | Discovered installed Colima as the alternative container runtime |
+| First Colima startup remained on base disk-image download with no progress for two minutes | 1 | Interrupted the non-destructive initialization and switched to the available authenticated Supabase connector for read-only inspection and later controlled validation |
+| Combined command output appeared to duplicate a pgTAP named argument, and the removal patch did not match | 1 | Read exact numbered lines; the file contains one argument and needs no change—the apparent duplicate was output concatenation |
+| First rollback database test violated the final Membership suspension constraint | 1 | Added the later-migration `suspension_source = 'administrator'` fixture field; the transaction rolled back fully |
+| Second rollback test passed an `integer` literal to the `smallint` Yjs schema-version RPC | 1 | Added explicit `::smallint` casts to direct SQL test calls; application RPC types will remain generated from the database signature |
+| Third rollback test found trigger/RLS helpers had been revoked from their invoking roles | 1 | Reviewed every private-helper call site and granted only the required `authenticated/service_role` EXECUTE privileges; private schema remains outside the Data API |
+| Hosted rollback execution of legacy test 001 hit its one-time `SUPER_ADMIN_ALREADY_BOOTSTRAPPED` fixture | 1 | Keep the valid empty-database bootstrap test unchanged; use the independent Membership/Field Notes workflow test for hosted compatibility |
+| New database test initially reused existing numeric prefix `007` | 1 | Renamed it to the next free prefix `010_community_collaborative_editor.sql` before handoff |
+| First document-model Vitest could not resolve BlockNote peer `y-prosemirror` | 1 | Query and install the required `1.3.7` peer explicitly; `y-protocols 1.0.7` is already deduped across BlockNote/Hocuspocus |
+| App typecheck found a Block-to-PartialBlock generic mismatch in the new snapshot serializer | 1 | Broaden the JSON normalization input to `readonly unknown[]` while retaining a strongly typed `FieldNoteBlocks` output; unrelated HomePhotoScroll/Lanyard/Strands errors remain separate |
+| Explicit Vitest command still skipped the new TypeScript API test | 1 | Expanded the existing API include rule from `*.test.js` to TypeScript/JavaScript test and spec files, then rerun the service suite |
+| Updated rollback test called `pg_temp.assert_true` without its label argument | 1 | Added the descriptive second argument; the failed transaction rolled back fully |
+| `npx ui-skills categories` returned no usable category output | 1 | Use the approved community design system and BlockNote interaction conventions as the smallest available UI context |
+| First official BlockNote demo `curl` used an unquoted URL containing `?` | 1 | Re-ran the bounded read-only request with a quoted URL and captured the official thread/mark implementation |
+| First hosted migration rollback was rejected for unbounded DDL lock/statement risk | 1 | Added a 5-second lock timeout and 120-second statement timeout; both rollback suites then passed without persistent changes |
+| Local `npm run supabase:types` lacked a CLI access token and shell redirection emptied the generated file | 1 | Regenerated the authoritative 69,694-character file through the connected Supabase tool and restored it atomically with `apply_patch` |
+| Browser verification found the public article query attempted a privacy-blocked raw People join | 1 | Removed the raw People join, retained safe community-author fallback metadata, and reverified with no data-access warning |
+| Full tests initially waited on live Supabase article queries in JSDOM | 1 | Kept production live-note merging enabled while making tests use the deterministic local article repository |
+| Vercel connector could not list deployments because the available token lacks the project team scope | 1 | Use the linked CLI or authenticated dashboard/browser surface instead; do not repeat the connector call |
+| In-app browser Supabase dashboard navigation timed out at the sign-in redirect | 1 | Inspected the resulting page, confirmed it is unauthenticated, and switched to checking another available browser session instead of retrying |
+| Sandboxed Supabase CLI device authorization could not resolve `api.supabase.com` | 1 | Canceled the retry prompt and restarted only the official CLI login command with narrowly scoped network access |
+| Local secret configurator rejected `community_editor` despite the CLI reporting a 41-character value | 1 | Metadata-only inspection found the value contains U+00B7 mask characters; use the complete legacy `service_role` key returned by the same authorized API instead |
+| Vercel Environment Variables Add button did not hydrate an editable form in the controlled dashboard | 1 | Use the linked official CLI, which supports sensitive values from stdin and avoids browser clipboard exposure |
+| Cached Vercel CLI token is invalid and the team scope cannot be accessed | 1 | Start a fresh official Vercel login flow from the authenticated local user context before changing hosted variables |
+| New Chrome tab timed out before loading the Vercel GitHub CLI authorization URL | 1 | Reuse the already authenticated Vercel project tab for the same official authorization URL, then inspect the resulting page before any click |
+| Old Vercel CLI rejected the out-of-band verification token after the browser completed GitHub login | 1 | Stop the deprecated CLI path; the reconnected dashboard Add dialog is working and supports bulk `.env` import directly |
+| Node 20 could not start Supabase Realtime because native WebSocket is unavailable | 1 | Start Vite directly with installed Homebrew Node 23.7.0; ports 5173 and 1234 then listen successfully |
+| Sandboxed `curl` could not reach the elevated local development server | 1 | Re-run only the localhost curl check with approved local network access; the correct endpoint returns JSON |
+| First API check used `/field-note-editor/110`, which is not the endpoint shape | 1 | Use the actual query form `/field-note-editor?noteId=110`; it returns `401 application/json` rather than HTML/source |
+
+## 2026-08-07 Super Admin And Application Recovery
+### Phase 1: Diagnose Online State And Code Paths
+- [x] Inspect the target account, active roles, application rows, membership, safety state, and application events online
+- [x] Trace the submit/review RPC state transitions and frontend destination logic
+- [x] Reproduce the exact `APPLICATION_STATE_CONFLICT` condition without mutating an application
+- **Status:** complete
+
+### Phase 2: Repair Authorization And Workflow
+- [x] Promote the target account from Admin to Super Admin with an audit record
+- [x] Confirm the affected application needs no data repair because approval and Membership creation already committed
+- [x] Patch the durable SQL/frontend cause and add regression coverage if the conflict is systemic
+- **Status:** complete
+
+### Phase 3: Verify Dashboard Entry
+- [x] Verify application approval creates an active Membership and community-member role
+- [x] Verify `get_my_community_state` returns the `/community` dashboard destination after approval
+- [x] Run focused tests, build/type checks, and Supabase security advisors when schema code changes
+- **Status:** complete
+
+## 2026-08-07 Community Onboarding Language Fix
+### Phase 1: Diagnosis And Design
+- [x] Trace the form, service input, generated RPC type, SQL validation, and profile constraint
+- [x] Confirm canonical persisted values are `zh` and `en`
+- [x] Compare frontend mapping, service compatibility, and database normalization approaches
+- [x] Approve frontend/type alignment without a Supabase schema change
+- [x] Write and commit the approved design document
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Change onboarding service input language type to `zh | en`
+- [x] Submit the application language directly from CommunityOnboarding
+- [x] Add Chinese and English regression tests for the RPC payload
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run focused tests and lint
+- [x] Run production build and relevant full test suite
+- [x] Verify no hosted Supabase migration or data mutation is required
+- **Status:** complete
+
+## 2026-08-07 Community Entry And Auth Redesign
+### Phase 1: Discovery And Design
+- [x] Inspect the current menu, Logo, mascot entry, community auth page, layout, routes, Vercel rewrite, and environment configuration
+- [x] Confirm main-site entry behavior and compare three auth-portal visual directions
+- [x] Confirm the modern editorial portal direction, orange headline/deep-green text hierarchy, and age-first registration flow
+- [x] Confirm the same-domain transition strategy: `/community` now, configurable subdomain later
+- [x] Write and commit the approved design document
+- **Status:** complete
+
+### Phase 2: Implementation
+- [x] Add a centralized community entry URL helper with same-origin default and future override
+- [x] Remove the ordinary community nav item, restore the Logo home link, and add standalone desktop/mobile launchers
+- [x] Make the homepage mascot open the same community entry in a new window
+- [x] Isolate `/community` routes from the public Navbar, Footer, mascot companion, and target cursor
+- [x] Redesign CommunityAuth with an independent brand bar, editorial hierarchy, focused modes, and age-first registration
+- [x] Update focused tests and environment documentation
+- **Status:** complete
+
+### Phase 3: Verification
+- [x] Run focused tests, the full relevant test suite, lint/type checks, and production build
+- [x] Browser-check `/`, main navigation, `/community/auth`, registration steps, desktop, and mobile
+- [x] Record any unrelated existing failures separately
+- **Status:** complete
+
+## 2026-08-07 Community Platform
+### Phase 1: Discovery
+- [x] Read the supplied long-term “content + identity + community + practice” product proposal
+- [x] Read brainstorming, Supabase, Postgres, UI routing, and file-planning instructions
+- [x] Inspect current routes, navigation, auth/profile/content services, database migrations, permissions, and recent commits
+- [x] Verify current Supabase Auth and Realtime capabilities against official documentation
+- **Status:** complete
+
+### Phase 2: Product And Architecture Decisions
+- [x] Confirm delivery boundary: complete architecture, implemented continuously in verified phases
+- [x] Confirm minor-member consent and communication boundary
+- [x] Present 2–3 implementation approaches and recommend unified extension of the existing backend
+- [ ] Validate architecture, data model, navigation/UI, security, moderation, error handling, and tests section by section
+  - [x] Overall architecture, routes, role semantics, and mascot/navbar entry behavior
+  - [x] Identity data, membership application state machine, and review administration
+  - [x] Publishing, People, Practice, messaging, moderation, notifications, and activity
+  - [x] Error handling, rollout, and test strategy
+- **Status:** complete
+
+### Phase 3: Approved Design And Plan
+- [x] Write and commit the approved community-platform design document
+- [x] Produce a detailed phased implementation plan
+- **Status:** complete
+
+### Phase 4: Implementation
+- [x] Begin only after design approval
+- [x] Implement Phase 1A identity, role, membership, and guardian-consent database foundations
+- [x] Implement Phase 1B–1D services, routes, entry interactions, People, Stories, and Admin
+- [x] Complete Phase 1E online and browser verification
+- [x] Implement and verify Phase 2 Practice
+- [x] Implement and verify Phase 3 Messages, Moderation, and Realtime
+- **Status:** complete
+
+### Phase 5: Production Configuration Handoff
+- [ ] Activate a legally reviewed guardian informed-consent document
+- [ ] Configure Vercel `SUPABASE_SECRET_KEY`, guardian encryption/HMAC secrets, and invite/OTP delivery webhooks
+- [ ] Enable Supabase Auth leaked-password protection and production SMTP/redirect allowlist
+- [ ] Assign the first admin/super-admin and Facilitator roles through the audited workflow
+- **Status:** blocked on external credentials, legal review, and named operators; code and database intentionally fail closed until configured
 
 ## 2026-07-06 About Story And Join Simplification
 ### Phase 1: Discovery
@@ -420,6 +628,33 @@ About story binding and mobile Join/Apply simplification in progress
 | Remove long phase history from the homepage | The user explicitly requested deleting the "我们如何行动" section |
 | Remove the complex youth/parent join copy from the homepage | The user explicitly requested deleting that copy and the Join page can hold detailed conversion content |
 | Replace the dark horizontal photo strip with an editorial photo composition | The user called the homepage photos especially ugly and approved a premium/minimal redesign |
+
+## Errors Encountered
+| Error | Attempt | Resolution |
+|-------|---------|------------|
+| Full app TypeScript check still exits with existing unrelated errors | Ran `npm run typecheck:app` after the final React refinement | Confirmed every error remains in HomePhotoScroll, Lanyard, or Strands; no changed community file appears, while targeted lint/tests and production build pass |
+| React-review refinement patch contained an invalid hunk boundary | Tried to patch two TSX files and progress in one malformed patch | Rebuilt the update with valid per-file hunks and recorded the review adjustment |
+| Hosted migration version differs from the locally generated empty-file timestamp | `apply_migration` recorded online version `20260807152919`, while `supabase migration new` had created local version `20260807152158` | Rename the local migration to the authoritative hosted version so future migration lists remain aligned |
+| Planning update patch contained an invalid hunk boundary | Tried to update the error table and progress in one malformed patch | Rebuilt the patch with valid per-file hunks before continuing |
+| Linked remote database test cannot find a project ref | Ran `supabase test db ... --linked`; this workspace has no persisted CLI link metadata | Do not create/use a local Supabase instance; apply the reviewed migration through the authenticated Supabase connector and verify with an equivalent transaction test query online |
+| New admin UI regression test cannot find a disabled “正在处理…” button | Ran focused tests before the production UI change | Expected red-phase failure; add per-row pending state, disable actions, then rerun |
+| New application-status regression test observes zero community refresh calls | Ran focused tests before the production status-page change | Expected red-phase failure; refresh AuthContext after an approved application is loaded |
+| Combined Supabase docs and live-state output omitted the live-state result | Requested verbose docs and the target state in one parallel call | Keep the docs finding, then rerun only the bounded live-state query before deciding on any repair |
+| Expanded community/navigation batch reports 4 Navbar failures | Included `Navbar.test.tsx` while checking the surrounding entry flow; its assertions still expect superseded product labels and anchors such as `/programs#life-camp` | Treat as the same unrelated program-navigation test drift, and keep final regression evidence scoped to onboarding, auth, and the RPC boundary |
+| Full Vitest suite reports 5 failing files / 11 tests in existing program-page copy assertions | Ran `npm test` after the language fix; examples expect old copy such as “生活共创营” and “两种进入共同生活的方式”, while the current pages render newer content | Keep those unrelated content/test changes out of this scoped fix; verify the onboarding and community path with focused suites, build, lint, and type checks |
+| New onboarding regression test fails for Chinese with `language: 'zh-CN'` | Ran the test before the production fix to prove the failure | Change the page payload and service type to the canonical `zh | en` contract, then rerun |
+| Second headless Chrome launch reported an existing profile lock | Tried to start another process while the original CDP browser was still reachable | Reused the healthy browser already listening on port 9222; final probe completed successfully |
+| CDP probe timed out checking the visually hidden age radio | Playwright tried to pointer-click the `sr-only` input and the visible label text intercepted it | Keep the accessible radio implementation; make the browser probe click the visible label text like a real user |
+| `agent-browser` is unavailable | Browser-verification skill preflight found no executable | Use the previously proven headless Chrome/CDP workflow for screenshots, DOM assertions, responsive metrics, overlays, and console errors |
+| Full app TypeScript check exits with existing errors | Ran `npm run typecheck:app` after the redesign | Confirmed all errors remain outside this scope in HomePhotoScroll, Lanyard, and Strands; focused lint, tests, backend/API typecheck, and production build pass |
+| Parallel full-suite commands yielded before returning final exit codes | Started tests, build, and two typechecks concurrently; the wrapper printed partial logs with undefined exits | Re-run each verification independently and capture its explicit completion result |
+| Sandbox denied `ps` while checking those yielded processes | Tried a read-only process listing | Avoid process inspection and use independent bounded verification commands instead |
+| CommunityAuth focused test could not find the exact signup password label | First focused run passed 22/23 tests; helper copy inside the label changed the accessible name | Moved the helper to a described element via `aria-describedby`, preserving a clean input label |
+| A multi-file planning patch had an invalid hunk separator | Tried to update findings and the error table in one malformed patch | Rebuilt the patch with valid per-file hunks before continuing |
+| `rg` treated the theme-token pattern as an option | Ran a pattern beginning with `--primary` without the option terminator | Re-run with `rg -n -- '<pattern>'` before editing theme-dependent styles |
+| `npx ui-skills categories` stalled with no output | Started the required UI skill-category inspection and polled once | Interrupted the idle process and selected the specific local `design-taste-frontend` skill as the narrow fallback |
+| Planning patch could not find an older `Errors Encountered` section | Tried one combined patch against the historical planning-file structure | Split the update around headings that exist and recorded the mismatch here |
+| `.git/index.lock` operation not permitted | Tried to stage the approved design doc in the default sandbox | Re-ran the scoped `git add` with approved elevated Git access, then committed only the design document |
 
 ## Risks
 - The requested English name says "R'gan Youth" while the current brand system says "R'gan Junior"; implementation should either use the requested wording in the elevator pitch or keep the existing site brand elsewhere.

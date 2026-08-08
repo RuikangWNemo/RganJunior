@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SeedCommunityStage from '@/components/home/SeedCommunityStage';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -42,7 +43,7 @@ const identityVisuals: Record<JoinAudienceId, JoinIdentityVisual> = {
     card: '/images/join/youth-card.webp',
     cardAlt: {
       zh: '成为阿柑少年的悬挂卡片插图',
-      en: "Hanging card illustration for R'gan Junior youth",
+      en: "Hanging card illustration for R-Gan Junior youth",
     },
   },
   'join-parents': {
@@ -50,7 +51,7 @@ const identityVisuals: Record<JoinAudienceId, JoinIdentityVisual> = {
     card: '/images/join/parents-card.webp',
     cardAlt: {
       zh: '成为阿柑家长的悬挂卡片插图',
-      en: "Hanging card illustration for R'gan Junior parents",
+      en: "Hanging card illustration for R-Gan Junior parents",
     },
   },
   'join-partners': {
@@ -272,7 +273,7 @@ export default function JoinUs() {
         type="button"
         onClick={toggleGuide}
         className="join-editorial-mascot-hit cursor-target pointer-events-auto absolute z-10 rounded-[48%] outline-none focus-visible:ring-4 focus-visible:ring-[#ffb17f]"
-        aria-label={t('向阿柑提问', 'Ask R’gan')}
+        aria-label={t('向阿柑提问', 'Ask R-Gan Junior')}
         aria-expanded={guideOpen}
         aria-controls="join-mascot-guide"
       />
@@ -360,7 +361,7 @@ export default function JoinUs() {
         >
           <div className="join-editorial-cover__copy">
             <h1 id="join-editorial-title" className="join-editorial-cover__title">
-              {t('成为阿柑少年', 'Become an R’gan youth')}
+              {t('成为阿柑少年', 'Become an R-Gan Junior')}
             </h1>
             <p className="join-editorial-cover__subtitle">
               {t('与我们同行', 'Walk with us')}
@@ -571,6 +572,17 @@ export default function JoinUs() {
             />
           ) : null}
         </motion.div>
+
+        <Button asChild className="join-editorial-primary-cta btn-apple cursor-target group/join-cta">
+          <Link to="/join/apply">
+            {t('立即加入', 'Join Now')}
+            <ArrowRight
+              className="ml-2 transition-transform duration-200 group-hover/join-cta:translate-x-1 motion-reduce:transition-none"
+              size={18}
+              aria-hidden="true"
+            />
+          </Link>
+        </Button>
       </SeedCommunityStage>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -637,7 +649,7 @@ export default function JoinUs() {
             </div>
 
             <footer className="join-role-folio__footer" aria-hidden="true">
-              <span>R’GAN JUNIOR / SEED COMMUNITY</span>
+              <span>R-Gan Junior / SEED COMMUNITY</span>
               <span>{activeMeta.issue}—03</span>
             </footer>
           </article>

@@ -119,7 +119,7 @@ export default function HomeScrollVideo() {
       ref={sectionRef}
       className="home-scroll-video"
       data-ready={isReady ? 'true' : 'false'}
-      aria-label={t('阿甘少年滚动影像', "R'gan Junior scroll film")}
+      aria-label={t('阿甘少年滚动影像', "R-Gan Junior scroll film")}
     >
       <div className="home-scroll-video__sticky">
         <video

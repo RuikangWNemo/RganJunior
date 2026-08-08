@@ -169,7 +169,7 @@ export default function SplashAnimation({ onComplete }: SplashAnimationProps) {
       transition={{ duration: prefersReducedMotion ? 0.2 : 0.9, ease: [0.4, 0, 0.2, 1] }}
       role="dialog"
       aria-modal="true"
-      aria-label={t('阿柑少年开场影像', "R'gan Junior opening film")}
+      aria-label={t('阿柑少年开场影像', "R-Gan Junior opening film")}
     >
       <img
         src={INTRO_START_FRAME}

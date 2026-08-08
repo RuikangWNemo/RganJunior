@@ -221,7 +221,7 @@ function Band({
   const draggedRef = useRef<THREE.Vector3 | false>(false);
   const hoveredRef = useRef(false);
   const { camera, gl, raycaster, viewport } = useThree();
-  const segmentProps = { type: 'dynamic' as const, canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
+  const segmentProps = { type: 'dynamic' as const, canSleep: true, colliders: false as const, angularDamping: 4, linearDamping: 4 };
   const { nodes, materials } = useGLTF(cardGLB) as unknown as LanyardGLTF;
   const texture = useTexture(lanyardImage || lanyard);
   const frontTex = useTexture(frontImage || BLANK_PIXEL);

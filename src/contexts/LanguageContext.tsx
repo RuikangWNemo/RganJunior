@@ -18,8 +18,8 @@ function detectLanguage(): Language {
   return browserLang.startsWith('zh') ? 'zh' : 'en';
 }
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Language>(detectLanguage);
+export function LanguageProvider({ children, initialLanguage }: { children: React.ReactNode; initialLanguage?: Language }) {
+  const [lang, setLangState] = useState<Language>(() => initialLanguage ?? detectLanguage());
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const setLang = useCallback((l: Language) => {
