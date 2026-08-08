@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SeedCommunityStage from '@/components/home/SeedCommunityStage';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -571,6 +572,17 @@ export default function JoinUs() {
             />
           ) : null}
         </motion.div>
+
+        <Button asChild className="join-editorial-primary-cta btn-apple cursor-target group/join-cta">
+          <Link to="/join/apply">
+            {t('立即加入', 'Join Now')}
+            <ArrowRight
+              className="ml-2 transition-transform duration-200 group-hover/join-cta:translate-x-1 motion-reduce:transition-none"
+              size={18}
+              aria-hidden="true"
+            />
+          </Link>
+        </Button>
       </SeedCommunityStage>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>

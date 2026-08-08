@@ -1,97 +1,35 @@
 import { useRef } from 'react';
-import ActionLayerStory from '@/components/home/ActionLayerStory';
+import HomeBeliefs from '@/components/home/HomeBeliefs';
+import HomeFieldScene from '@/components/home/HomeFieldScene';
+import HomeFounderStory from '@/components/home/HomeFounderStory';
 import HeroCopy from '@/components/home/HeroCopy';
 import HomeHeroFlow from '@/components/home/HomeHeroFlow';
 import HeroMascotStage from '@/components/home/HeroMascotStage';
+import HomePrograms from '@/components/home/HomePrograms';
 import SeedCommunity from '@/components/home/SeedCommunity';
-import WholeLifeGrowth from '@/components/home/WholeLifeGrowth';
-import { siteBeliefs } from '@/content/siteContent';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { pickLocalized } from '@/lib/brand';
 import BlobCursor from '@/components/ui/BlobCursor';
-import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
 
 export default function Index() {
   const heroRef = useRef<HTMLElement>(null);
-  const { lang, t } = useLanguage();
 
   return (
-    <>
-      <section ref={heroRef} className="home-hero-section relative isolate overflow-hidden bg-background">
+    <div className="home-editorial">
+      <section ref={heroRef} className="home-hero-section relative isolate min-h-svh overflow-hidden bg-background">
         <HomeHeroFlow />
         <div className="pointer-events-none absolute inset-0 z-[1] hidden lg:block" aria-hidden="true">
           <BlobCursor />
         </div>
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[hsl(42_28%_96%)]"
-          aria-hidden="true"
-        />
-        <div className="home-hero-grid container relative z-10 mx-auto grid min-h-[min(760px,84svh)] items-center gap-7 px-4 pb-10 pt-20 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-28 lg:grid-cols-[minmax(200px,0.42fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:pb-20 lg:pt-28 xl:min-h-[min(820px,84svh)]">
+        <div className="home-hero-grid container relative z-10 mx-auto grid min-h-svh items-center gap-7 px-4 pb-10 pt-20 sm:gap-10 sm:px-6 sm:pb-16 sm:pt-24 lg:grid-cols-[minmax(22.2rem,0.5fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:pb-20 lg:pt-24">
           <HeroMascotStage sectionRef={heroRef} />
-          <HeroCopy onJoin={() => { window.location.href = '/join'; }} />
+          <HeroCopy onJoin={() => { window.location.href = '/programs/inquiry?program=life-experience-camp'; }} />
         </div>
       </section>
 
-      <WholeLifeGrowth />
-
-      <section className="home-beliefs-section section-breathing bg-background">
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="home-beliefs-header mb-12 max-w-3xl">
-            <ScrollProgressReveal direction="up" distance={48} scale={false} blur={false}>
-              <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
-                {t('我们相信什么', 'What We Believe')}
-              </p>
-              <h2 className="mt-5 font-serif text-4xl leading-tight text-foreground md:text-5xl">
-                {t('我们相信这些简单的事', 'A few things we keep returning to')}
-              </h2>
-            </ScrollProgressReveal>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {siteBeliefs.map((belief, index) => (
-              <ScrollProgressReveal
-                key={belief.title.en}
-                direction="up"
-                distance={36}
-                scale={false}
-                blur={false}
-                delay={index * 0.04}
-              >
-                <article className="home-belief-card relative overflow-hidden border-t border-border pb-8 pt-6 md:pb-10">
-                  <img
-                    src={belief.image.src}
-                    alt=""
-                    aria-hidden="true"
-                    width={560}
-                    height={420}
-                    loading="lazy"
-                    decoding="async"
-                    sizes="(min-width: 768px) 260px, 240px"
-                    className="pointer-events-none absolute left-1/2 top-4 z-0 w-[76%] max-w-[260px] -translate-x-1/2 select-none opacity-[0.24] saturate-[0.86] mix-blend-multiply md:top-5"
-                    style={{
-                      objectPosition: belief.image.position,
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 0%, rgb(0 0 0 / 0.76) 28%, rgb(0 0 0 / 0.28) 62%, transparent 100%)',
-                      maskImage: 'linear-gradient(to bottom, black 0%, rgb(0 0 0 / 0.76) 28%, rgb(0 0 0 / 0.28) 62%, transparent 100%)',
-                    }}
-                  />
-                  <p className="relative z-10 mb-4 text-xs uppercase tracking-[0.2em] text-primary/70">
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                  <h3 className="relative z-10 font-serif text-2xl leading-snug text-foreground">
-                    {pickLocalized(belief.title, lang)}
-                  </h3>
-                  <p className="relative z-10 mt-5 text-sm leading-7 text-muted-foreground md:text-base md:leading-8">
-                    {pickLocalized(belief.description, lang)}
-                  </p>
-                </article>
-              </ScrollProgressReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <ActionLayerStory />
+      <HomeFieldScene />
+      <HomeBeliefs />
+      <HomePrograms />
+      <HomeFounderStory />
       <SeedCommunity />
-    </>
+    </div>
   );
 }

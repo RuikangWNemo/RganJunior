@@ -80,19 +80,19 @@ export default function HomeHeroFlow() {
       >
         <defs>
           <linearGradient id="home-hero-thread-green" x1="90" y1="500" x2="1320" y2="220" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="hsl(36 78% 58%)" stopOpacity="0.16" />
-            <stop offset="0.42" stopColor="hsl(160 100% 20%)" stopOpacity="0.32" />
-            <stop offset="1" stopColor="hsl(188 46% 62%)" stopOpacity="0.18" />
+            <stop offset="0" stopColor="hsl(20 82% 58%)" stopOpacity="0.24" />
+            <stop offset="0.42" stopColor="hsl(40 33% 95%)" stopOpacity="0.34" />
+            <stop offset="1" stopColor="hsl(168 38% 72%)" stopOpacity="0.22" />
           </linearGradient>
           <linearGradient id="home-hero-thread-warm" x1="40" y1="610" x2="1180" y2="300" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="hsl(160 100% 20%)" stopOpacity="0.08" />
-            <stop offset="0.48" stopColor="hsl(37 76% 60%)" stopOpacity="0.28" />
-            <stop offset="1" stopColor="hsl(160 100% 20%)" stopOpacity="0.16" />
+            <stop offset="0" stopColor="hsl(40 33% 95%)" stopOpacity="0.12" />
+            <stop offset="0.48" stopColor="hsl(20 82% 58%)" stopOpacity="0.3" />
+            <stop offset="1" stopColor="hsl(40 33% 95%)" stopOpacity="0.2" />
           </linearGradient>
           <linearGradient id="home-hero-thread-cool" x1="190" y1="270" x2="1430" y2="430" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="hsl(188 42% 64%)" stopOpacity="0.1" />
-            <stop offset="0.5" stopColor="hsl(160 100% 20%)" stopOpacity="0.2" />
-            <stop offset="1" stopColor="hsl(36 72% 60%)" stopOpacity="0.12" />
+            <stop offset="0" stopColor="hsl(174 42% 76%)" stopOpacity="0.16" />
+            <stop offset="0.5" stopColor="hsl(40 33% 95%)" stopOpacity="0.26" />
+            <stop offset="1" stopColor="hsl(20 82% 58%)" stopOpacity="0.18" />
           </linearGradient>
           <filter id="home-hero-thread-glow" x="-8%" y="-28%" width="116%" height="156%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
