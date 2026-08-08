@@ -1,7 +1,7 @@
 export const ABOUT_CHAPTER_CHANGE_EVENT = 'rgan:about-chapter-change';
 export const ABOUT_CHAPTER_SELECT_EVENT = 'rgan:about-chapter-select';
 
-export const ABOUT_CHAPTER_IDS = ['mission', 'story', 'team'] as const;
+export const ABOUT_CHAPTER_IDS = ['team', 'belief', 'method', 'places'] as const;
 
 export type AboutChapterId = (typeof ABOUT_CHAPTER_IDS)[number];
 

@@ -114,7 +114,7 @@ export default function HeroMascotStage({ sectionRef }: HeroMascotStageProps) {
         <div className="home-hero-mascot-wrap relative order-1 flex justify-center lg:order-1 lg:justify-start">
           <div
             ref={stageRef}
-            className="home-hero-mascot-stage relative w-full max-w-[13.5rem] transition-transform duration-500 ease-out sm:max-w-[16rem] lg:max-w-[18.5rem] xl:max-w-[19.5rem]"
+            className="home-hero-mascot-stage relative w-full max-w-[16.2rem] transition-transform duration-500 ease-out sm:max-w-[19.2rem] lg:max-w-[22.2rem] xl:max-w-[23.4rem]"
             style={wrapperStyle}
             onMouseMove={handlePointerMove}
             onMouseLeave={handlePointerLeave}

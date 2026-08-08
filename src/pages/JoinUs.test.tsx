@@ -26,9 +26,13 @@ describe('JoinUs', () => {
 
   it('renders a minimal cover and one continuous identity path', () => {
     const { container } = renderJoinUs();
+    const primaryJoinLink = screen.getByRole('link', { name: '立即加入' });
 
     expect(screen.getByRole('heading', { name: '成为阿柑少年' })).toBeInTheDocument();
     expect(screen.getByText('与我们同行')).toBeInTheDocument();
+    expect(primaryJoinLink).toHaveAttribute('href', '/join/apply');
+    expect(container.querySelector('#join-community')).toContainElement(primaryJoinLink);
+    expect(container.querySelector('.join-editorial-cover')).not.toContainElement(primaryJoinLink);
     expect(screen.queryByText('SEED COMMUNITY')).not.toBeInTheDocument();
     expect(screen.queryByText('JOIN ISSUE 01')).not.toBeInTheDocument();
     expect(screen.queryByText('种子社群 · 加入我们')).not.toBeInTheDocument();
