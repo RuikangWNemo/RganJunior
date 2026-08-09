@@ -13,6 +13,7 @@ import { BRAND, pickLocalized } from '@/lib/brand';
 import { isManualGuardianFlow } from '@/lib/guardianFlow';
 import { isValidNewPassword } from '@/lib/passwordValidation';
 import {
+  EMAIL_OTP_LENGTH,
   requestPasswordReset,
   sendEmailOtp,
   sendMagicLink,
@@ -225,8 +226,8 @@ export default function CommunityAuth() {
           setOtpSent(true);
           setResendSeconds(OTP_RESEND_COOLDOWN_SECONDS);
           setNotice(lang === 'zh'
-            ? '确认邮件已发送：可以点击邮件链接，也可以在这里输入 6 位验证码。'
-            : 'Confirmation sent. Use the email link or enter the 6-digit code here.');
+            ? `确认邮件已发送：可以点击邮件链接，也可以在这里输入 ${EMAIL_OTP_LENGTH} 位验证码。`
+            : `Confirmation sent. Use the email link or enter the ${EMAIL_OTP_LENGTH}-digit code here.`);
         }
       } else if (mode === 'magic') {
         await sendMagicLink(email);
@@ -300,8 +301,8 @@ export default function CommunityAuth() {
 
   const description = mode === 'signupVerify'
     ? lang === 'zh'
-      ? '输入邮件中的 6 位验证码，或直接点击邮件里的确认链接。'
-      : 'Enter the 6-digit code or use the confirmation link in your email.'
+      ? `输入邮件中的 ${EMAIL_OTP_LENGTH} 位验证码，或直接点击邮件里的确认链接。`
+      : `Enter the ${EMAIL_OTP_LENGTH}-digit code or use the confirmation link in your email.`
     : mode === 'signup'
     ? isSignupIdentity
       ? lang === 'zh' ? '选择一个主身份，也可以补充其他身份。所有选择都需要管理员确认。' : 'Choose one primary identity and add any secondary identities. All selections require admin confirmation.'
@@ -313,7 +314,7 @@ export default function CommunityAuth() {
       : mode === 'otp'
         ? otpSent
           ? lang === 'zh' ? '验证码发送到了下面的邮箱。' : 'The code was sent to the email below.'
-          : lang === 'zh' ? '我们会发送一封包含 6 位验证码的邮件。' : 'We will email you a 6-digit verification code.'
+          : lang === 'zh' ? `我们会发送一封包含 ${EMAIL_OTP_LENGTH} 位验证码的邮件。` : `We will email you a ${EMAIL_OTP_LENGTH}-digit verification code.`
       : mode === 'reset'
         ? lang === 'zh' ? '输入注册邮箱，接收密码重设邮件。' : 'Enter your registered email to reset your password.'
         : lang === 'zh' ? '使用用户名或邮箱，回到你的社群空间。' : 'Use your username or email to return to the community.';
@@ -446,20 +447,20 @@ export default function CommunityAuth() {
 
                   <div className="space-y-3">
                     <p id="community-email-otp-label" className="text-sm font-medium text-foreground">
-                      {lang === 'zh' ? '6 位邮箱验证码' : '6-digit email code'}
+                      {lang === 'zh' ? `${EMAIL_OTP_LENGTH} 位邮箱验证码` : `${EMAIL_OTP_LENGTH}-digit email code`}
                     </p>
                     <InputOTP
                       aria-labelledby="community-email-otp-label"
                       autoComplete="one-time-code"
                       inputMode="numeric"
-                      maxLength={6}
+                      maxLength={EMAIL_OTP_LENGTH}
                       pattern={REGEXP_ONLY_DIGITS}
                       value={otp}
                       onChange={setOtp}
                       containerClassName="justify-center"
                     >
                       <InputOTPGroup>
-                        {Array.from({ length: 6 }, (_, index) => (
+                        {Array.from({ length: EMAIL_OTP_LENGTH }, (_, index) => (
                           <InputOTPSlot key={index} index={index} className="h-12 w-11 text-base sm:w-12" />
                         ))}
                       </InputOTPGroup>
@@ -654,7 +655,7 @@ export default function CommunityAuth() {
 
               <button
                 className={primaryButtonClass}
-                disabled={busy || identitiesLoading || (isSignupIdentity && !primaryIdentitySlug) || (isSignupAge && !ageBand) || (isSignupAccount && !isValidNewPassword(password, confirmPassword)) || (isOtpEntry && otp.length !== 6)}
+                disabled={busy || identitiesLoading || (isSignupIdentity && !primaryIdentitySlug) || (isSignupAge && !ageBand) || (isSignupAccount && !isValidNewPassword(password, confirmPassword)) || (isOtpEntry && otp.length !== EMAIL_OTP_LENGTH)}
               >
                 {mode === 'magic'
                   ? <Link2 className="size-4" aria-hidden="true" />

@@ -7,6 +7,7 @@ import CommunityAuth from './CommunityAuth';
 
 const { authMocks, authState, identityMocks, identityOptions } = vi.hoisted(() => ({
   authMocks: {
+    EMAIL_OTP_LENGTH: 8,
     requestPasswordReset: vi.fn(),
     sendEmailOtp: vi.fn(),
     sendMagicLink: vi.fn(),
@@ -156,11 +157,11 @@ describe('CommunityAuth', () => {
     expect(authMocks.sendEmailOtp).toHaveBeenCalledWith('member@example.com');
     expect(screen.getByRole('button', { name: '60 秒后可重新发送' })).toBeDisabled();
 
-    fireEvent.change(screen.getByLabelText('6 位邮箱验证码'), { target: { value: '123456' } });
+    fireEvent.change(screen.getByLabelText('8 位邮箱验证码'), { target: { value: '12345678' } });
     fireEvent.click(screen.getByRole('button', { name: '验证并登录' }));
 
     await waitFor(() => {
-      expect(authMocks.verifyEmailOtp).toHaveBeenCalledWith('member@example.com', '123456');
+      expect(authMocks.verifyEmailOtp).toHaveBeenCalledWith('member@example.com', '12345678');
     });
   });
 
@@ -187,7 +188,7 @@ describe('CommunityAuth', () => {
       primaryIdentitySlug: 'youth-co-creator',
       secondaryIdentitySlugs: ['parent-guardian'],
     });
-    expect(screen.getByLabelText('6 位邮箱验证码')).toBeInTheDocument();
+    expect(screen.getByLabelText('8 位邮箱验证码')).toBeInTheDocument();
     expect(screen.getByText(/确认链接/)).toBeInTheDocument();
   });
 });

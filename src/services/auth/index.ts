@@ -6,6 +6,8 @@ import { BackendServiceError, throwIfSupabaseError } from '@/lib/supabase/errors
 
 export type AgeBand = 'under_14' | 'age_14_17' | 'adult_18_plus';
 
+export const EMAIL_OTP_LENGTH = 8;
+
 export type SignUpInput = {
   email: string;
   password: string;

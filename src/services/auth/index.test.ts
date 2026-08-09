@@ -84,12 +84,12 @@ describe('auth service', () => {
     });
   });
 
-  it('normalizes and verifies a six-digit email OTP', async () => {
-    await verifyEmailOtp(' Person@Example.com ', '123 456');
+  it('normalizes and verifies the configured email OTP', async () => {
+    await verifyEmailOtp(' Person@Example.com ', '1234 5678');
 
     expect(auth.verifyOtp).toHaveBeenCalledWith({
       email: 'person@example.com',
-      token: '123456',
+      token: '12345678',
       type: 'email',
     });
   });

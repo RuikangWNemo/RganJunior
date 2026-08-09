@@ -7,6 +7,7 @@ import CommunitySettings from './CommunitySettings';
 
 const { authMocks, profileMocks } = vi.hoisted(() => ({
   authMocks: {
+    EMAIL_OTP_LENGTH: 8,
     reauthenticate: vi.fn(),
     signOut: vi.fn(),
     updateEmail: vi.fn(),
@@ -58,8 +59,8 @@ describe('CommunitySettings password security', () => {
     fireEvent.click(sendButton);
 
     await waitFor(() => expect(authMocks.reauthenticate).toHaveBeenCalledTimes(1));
-    const codeInput = await screen.findByLabelText('6 位邮箱验证码');
-    fireEvent.change(codeInput, { target: { value: '123456' } });
+    const codeInput = await screen.findByLabelText('8 位邮箱验证码');
+    fireEvent.change(codeInput, { target: { value: '12345678' } });
     fireEvent.change(screen.getByLabelText('新密码'), { target: { value: 'new-password-123' } });
     fireEvent.change(screen.getByLabelText('确认新密码'), { target: { value: 'different-password' } });
 
@@ -72,7 +73,7 @@ describe('CommunitySettings password security', () => {
     fireEvent.click(updateButton);
 
     await waitFor(() => {
-      expect(authMocks.updatePassword).toHaveBeenCalledWith('new-password-123', '123456');
+      expect(authMocks.updatePassword).toHaveBeenCalledWith('new-password-123', '12345678');
     });
     expect(screen.getByRole('status')).toHaveTextContent('密码已安全更新。');
     expect(screen.queryByLabelText('新密码')).not.toBeInTheDocument();

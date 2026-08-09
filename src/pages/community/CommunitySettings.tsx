@@ -10,7 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
 import { isValidNewPassword } from '@/lib/passwordValidation';
 import { getMyCommunityProfile, updateMyCommunityProfile } from '@/services/community-profile';
-import { reauthenticate, updateEmail, updatePassword } from '@/services/auth';
+import { EMAIL_OTP_LENGTH, reauthenticate, updateEmail, updatePassword } from '@/services/auth';
 
 type ProfileVisibility = 'private' | 'members' | 'public';
 type BusyAction = 'profile' | 'email' | 'passwordCode' | 'password' | null;
@@ -105,8 +105,8 @@ export default function CommunitySettings() {
   const savePassword = async (event: FormEvent) => {
     event.preventDefault();
     setError(null); setNotice(null);
-    if (passwordCode.length !== 6) {
-      setError(t('请输入邮件中的 6 位验证码。', 'Enter the 6-digit code from your email.'));
+    if (passwordCode.length !== EMAIL_OTP_LENGTH) {
+      setError(t(`请输入邮件中的 ${EMAIL_OTP_LENGTH} 位验证码。`, `Enter the ${EMAIL_OTP_LENGTH}-digit code from your email.`));
       return;
     }
     if (!isValidNewPassword(newPassword, confirmPassword)) {
@@ -198,14 +198,14 @@ export default function CommunitySettings() {
                 <form className="mt-5 space-y-5" onSubmit={savePassword}>
                   <div className="space-y-3">
                     <div className="flex items-center justify-between gap-3">
-                      <label id="community-password-code-label" className="text-sm font-semibold text-[hsl(var(--community-forest))]">{t('6 位邮箱验证码', '6-digit email code')}</label>
+                      <label id="community-password-code-label" className="text-sm font-semibold text-[hsl(var(--community-forest))]">{t(`${EMAIL_OTP_LENGTH} 位邮箱验证码`, `${EMAIL_OTP_LENGTH}-digit email code`)}</label>
                       <span className="max-w-[12rem] truncate text-xs text-[hsl(var(--community-forest)/0.5)]">{user?.email}</span>
                     </div>
                     <InputOTP
                       aria-labelledby="community-password-code-label"
                       autoComplete="one-time-code"
                       inputMode="numeric"
-                      maxLength={6}
+                      maxLength={EMAIL_OTP_LENGTH}
                       pattern={REGEXP_ONLY_DIGITS}
                       value={passwordCode}
                       onChange={setPasswordCode}
@@ -213,7 +213,7 @@ export default function CommunitySettings() {
                       disabled={busyAction !== null}
                     >
                       <InputOTPGroup>
-                        {Array.from({ length: 6 }, (_, index) => <InputOTPSlot key={index} index={index} className="h-11 w-10 text-base" />)}
+                        {Array.from({ length: EMAIL_OTP_LENGTH }, (_, index) => <InputOTPSlot key={index} index={index} className="h-11 w-10 text-base" />)}
                       </InputOTPGroup>
                     </InputOTP>
                     <button type="button" className="inline-flex items-center gap-2 text-xs font-semibold text-[hsl(var(--community-forest))] underline-offset-4 enabled:hover:underline disabled:cursor-not-allowed disabled:opacity-45" onClick={() => void sendPasswordCode()} disabled={busyAction !== null || resendSeconds > 0}>
@@ -231,7 +231,7 @@ export default function CommunitySettings() {
                     disabled={busyAction !== null}
                   />
 
-                  <button className={`${communityPrimaryButtonClass} w-full`} disabled={busyAction !== null || passwordCode.length !== 6 || !isValidNewPassword(newPassword, confirmPassword)}>
+                  <button className={`${communityPrimaryButtonClass} w-full`} disabled={busyAction !== null || passwordCode.length !== EMAIL_OTP_LENGTH || !isValidNewPassword(newPassword, confirmPassword)}>
                     {busyAction === 'password' ? t('正在安全更新…', 'Updating securely…') : t('验证并修改密码', 'Verify and change password')}
                   </button>
                   <button type="button" className="min-h-10 w-full text-xs font-semibold text-[hsl(var(--community-forest)/0.65)] underline underline-offset-4" onClick={() => { setPasswordVerificationSent(false); setPasswordCode(''); setNewPassword(''); setConfirmPassword(''); setResendSeconds(0); }} disabled={busyAction !== null}>{t('取消修改密码', 'Cancel password change')}</button>
