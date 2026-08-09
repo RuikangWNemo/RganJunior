@@ -142,10 +142,10 @@ select pg_temp.assert_true(
   )
   and (
     select guardian_consent_status = 'required'
-      and not can_complete_onboarding
+      and can_complete_onboarding
     from public.get_my_guardian_consent_state()
   ),
-  'under-14 registration remains minimized and onboarding stays closed'
+  'under-14 registration remains safe while onboarding is available'
 );
 select pg_temp.expect_error(
   $$select public.create_guardian_consent_request_server(
@@ -298,7 +298,7 @@ select public.complete_community_onboarding(
   requested_profile_visibility => 'members'
 );
 
--- A 14-17 applicant can onboard first but remains pending until guardian confirmation.
+-- A 14-17 applicant can onboard and enter ordinary review without Guardian confirmation.
 reset role;
 set local role authenticated;
 select pg_temp.authenticate_as(
@@ -321,8 +321,8 @@ select pg_temp.assert_true(
   public.submit_community_application(
     current_setting('test.guardian_teen_application_id')::bigint,
     '希望加入长期共练。'
-  ) = 'pending_guardian',
-  'a 14-17 application waits outside the review queue'
+  ) = 'submitted',
+  'a 14-17 application enters the review queue immediately'
 );
 
 reset role;
@@ -375,7 +375,7 @@ select pg_temp.assert_true(
     from public.community_applications
     where id = current_setting('test.guardian_teen_application_id')::bigint
   ),
-  'guardian verification moves the teen application into the review queue'
+  'optional Guardian verification leaves the teen application in the review queue'
 );
 
 -- OTP does not masquerade as identity verification.
@@ -421,7 +421,7 @@ select pg_temp.assert_true(
   'separate consent and identity evidence allow the reviewed teen Membership'
 );
 
--- Verified withdrawal suspends internal access but preserves the base account.
+-- Guardian withdrawal remains auditable but does not gate a 14-17 Membership.
 set local role service_role;
 select pg_temp.authenticate_service();
 select public.withdraw_guardian_consent_server(
@@ -438,12 +438,12 @@ select pg_temp.assert_true(
     where user_id = '50000000-0000-0000-0000-000000000002'
   )
   and (
-    select status = 'suspended'
-      and suspension_source = 'guardian_consent'
+    select status = 'active'
+      and suspension_source is null
     from public.community_memberships
     where user_id = '50000000-0000-0000-0000-000000000002'
   )
-  and not exists (
+  and exists (
     select 1
     from public.user_roles ur
     join public.roles r on r.id = ur.role_id
@@ -455,7 +455,7 @@ select pg_temp.assert_true(
     from public.profiles
     where user_id = '50000000-0000-0000-0000-000000000002'
   ),
-  'withdrawal suspends Membership capabilities while preserving the account'
+  'teen Guardian withdrawal preserves Membership capabilities and the base account'
 );
 
 set local role authenticated;
@@ -467,7 +467,7 @@ select pg_temp.expect_error(
   $$select public.restore_community_membership(
     '50000000-0000-0000-0000-000000000002'
   )$$,
-  'an administrator cannot bypass missing minor consent when restoring Membership'
+  'an active teen Membership has nothing to restore after optional consent withdrawal'
 );
 
 -- A renewed verified request automatically restores a safety-suspended Membership.

@@ -57,7 +57,12 @@ export default function SeedCommunityStage({
         </>
       )}
 
-      <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div
+        className={cn(
+          'relative z-10 mx-auto',
+          isJoin ? 'container max-w-6xl px-4 sm:px-6 lg:px-8' : 'home-editorial-shell'
+        )}
+      >
         <div
           className={cn(
             'group/stage relative',

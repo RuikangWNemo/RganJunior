@@ -5,18 +5,19 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import CommunityOnboarding from './CommunityOnboarding';
 
-const { completeCommunityOnboarding, refreshCommunity } = vi.hoisted(() => ({
+const { communityState, completeCommunityOnboarding, refreshCommunity } = vi.hoisted(() => ({
+  communityState: {
+    age_band: 'adult_18_plus',
+    guardian_consent_status: 'not_required',
+    onboarding_completed: false,
+  },
   completeCommunityOnboarding: vi.fn(),
   refreshCommunity: vi.fn(),
 }));
 
 vi.mock('@/contexts/AuthContext', () => ({
   useAuth: () => ({
-    communityState: {
-      age_band: 'adult_18_plus',
-      guardian_consent_status: 'not_required',
-      onboarding_completed: false,
-    },
+    communityState,
     refreshCommunity,
   }),
 }));
@@ -54,6 +55,11 @@ describe('CommunityOnboarding language payload', () => {
   beforeEach(() => {
     window.localStorage.clear();
     vi.clearAllMocks();
+    Object.assign(communityState, {
+      age_band: 'adult_18_plus',
+      guardian_consent_status: 'not_required',
+      onboarding_completed: false,
+    });
     completeCommunityOnboarding.mockResolvedValue(1);
     refreshCommunity.mockResolvedValue(undefined);
   });
@@ -75,5 +81,17 @@ describe('CommunityOnboarding language payload', () => {
     expect(completeCommunityOnboarding).toHaveBeenCalledWith(
       expect.objectContaining({ language: 'en' }),
     );
+  });
+
+  it('allows an under-14 applicant to complete onboarding before Guardian confirmation', () => {
+    Object.assign(communityState, {
+      age_band: 'under_14',
+      guardian_consent_status: 'required',
+    });
+    renderOnboarding('zh');
+
+    expect(screen.getByRole('heading', { name: '先让伙伴认识你。' })).toBeInTheDocument();
+    expect(screen.getByLabelText('current path')).toHaveTextContent('/community/onboarding');
+    expect(screen.getByText('安全确认')).toBeInTheDocument();
   });
 });

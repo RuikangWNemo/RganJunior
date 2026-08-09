@@ -13,7 +13,7 @@ describe('getCommunityRouteMeta', () => {
   });
 
   it('keeps member sections connected to the community home', () => {
-    for (const path of ['/community/people', '/community/practice', '/community/messages', '/community/settings']) {
+    for (const path of ['/community/stories/square', '/community/people', '/community/practice', '/community/messages', '/community/settings']) {
       expect(getCommunityRouteMeta(path).back?.to).toBe('/community');
     }
   });

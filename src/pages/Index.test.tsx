@@ -51,10 +51,12 @@ describe('homepage editorial refresh', () => {
     expect(founderHeading).toBeInTheDocument();
     expect(founderHeading.querySelectorAll('.home-founder-story__title-line')).toHaveLength(2);
     const communityHeading = screen.getByRole('heading', { level: 2, name: '成为阿柑少年、家长或伙伴。' });
+    const communityLead = screen.getByText('种下一段长期同行的关系，一起走进真实世界。');
     expect(communityHeading).toHaveClass('seed-community__title');
-    expect(screen.getByText('种下一段长期同行的关系，一起走进真实世界。')).toHaveClass(
-      'seed-community__lead',
-    );
+    expect(communityLead).toHaveClass('seed-community__lead');
+    expect(communityHeading.parentElement).toHaveClass('seed-community__headline-stack');
+    expect(communityHeading.parentElement).toContainElement(communityLead);
+    expect(container.querySelector('#seed-community .home-editorial-shell')).toBeInTheDocument();
     expect(container.querySelectorAll('.seed-community__role')).toHaveLength(3);
     expect(screen.getByText('进入加入入口')).toHaveClass('seed-community__entry-label');
 

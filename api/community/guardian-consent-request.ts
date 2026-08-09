@@ -7,6 +7,7 @@ import {
   sha256Hex,
 } from '../_lib/community-security.js';
 import { ApiAuthError, requireUser } from '../_lib/auth.js';
+import { guardianFlowMode } from '../_lib/guardian-flow.js';
 import { assertGuardianInviteProviderConfigured, sendGuardianInvite } from '../_lib/guardian-otp-provider.js';
 import {
   compactString,
@@ -42,15 +43,19 @@ export default async function handler(request: ApiRequest, response: ApiResponse
     const applicationId = typeof body.applicationId === 'number' && Number.isInteger(body.applicationId)
       ? body.applicationId
       : null;
+    const flowMode = guardianFlowMode();
 
     if (!guardianName || !relationship || !isValidContact(channel, contact)) {
       return sendJson(response, 400, { ok: false, code: 'INVALID_GUARDIAN_DETAILS' });
     }
-    assertGuardianInviteProviderConfigured();
+    if (flowMode === 'automated') assertGuardianInviteProviderConfigured();
 
     const { data: state, error: stateError } = await supabase.rpc('get_my_guardian_consent_state');
     if (stateError || !state?.[0] || state[0].age_band === 'adult_18_plus') {
       return sendJson(response, 400, { ok: false, code: 'MINOR_ACCOUNT_REQUIRED' });
+    }
+    if (flowMode === 'manual' && (state[0].age_band !== 'under_14' || applicationId === null)) {
+      return sendJson(response, 400, { ok: false, code: 'UNDER_14_APPLICATION_REQUIRED' });
     }
 
     const secretClient = createSecretSupabaseClient();
@@ -84,12 +89,14 @@ export default async function handler(request: ApiRequest, response: ApiResponse
       return sendJson(response, 503, {
         ok: false,
         code: 'GUARDIAN_LEGAL_DOCUMENT_NOT_ACTIVE',
-        message: '监护人知情协议仍在审核，暂时不能发送确认邀请。',
+        message: '监护人知情文件仍在审核，暂时不能登记联系信息。',
       });
     }
 
     const token = createConsentToken();
-    const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+    const expiresAt = new Date(
+      Date.now() + (flowMode === 'manual' ? 7 * 24 : 48) * 60 * 60 * 1000,
+    ).toISOString();
     const { data: requestId, error: requestError } = await secretClient.rpc(
       'create_guardian_consent_request_server',
       {
@@ -108,16 +115,24 @@ export default async function handler(request: ApiRequest, response: ApiResponse
     );
     if (requestError || !requestId) throw requestError || new Error('Consent request was not created.');
 
-    const confirmationUrl = `${requestOrigin(request)}/community/guardian-consent?token=${encodeURIComponent(token)}`;
-    await sendGuardianInvite({
-      channel: channel as 'email' | 'phone',
-      contact,
-      guardianName,
-      confirmationUrl,
-      language,
-    });
+    if (flowMode === 'automated') {
+      const confirmationUrl = `${requestOrigin(request)}/community/guardian-consent?token=${encodeURIComponent(token)}`;
+      await sendGuardianInvite({
+        channel: channel as 'email' | 'phone',
+        contact,
+        guardianName,
+        confirmationUrl,
+        language,
+      });
+    }
 
-    return sendJson(response, 200, { ok: true, requestId, expiresAt });
+    return sendJson(response, 200, {
+      ok: true,
+      requestId,
+      expiresAt,
+      mode: flowMode,
+      delivery: flowMode === 'manual' ? 'staff_follow_up' : 'provider_invite',
+    });
   } catch (error) {
     if (error instanceof ApiAuthError) {
       return sendJson(response, error.statusCode, { ok: false, code: error.code });

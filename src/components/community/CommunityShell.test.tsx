@@ -17,7 +17,7 @@ describe('CommunityShell', () => {
           <Routes>
             <Route path="/community" element={<CommunityShell />}>
               <Route index element={<p>Dashboard</p>} />
-              <Route path="stories" element={<p>Stories page</p>} />
+              <Route path="stories/square" element={<p>Square page</p>} />
             </Route>
           </Routes>
         </LanguageProvider>
@@ -26,9 +26,10 @@ describe('CommunityShell', () => {
 
     const mobileNavigation = screen.getByRole('navigation', { name: '社群主要导航' });
     expect(within(mobileNavigation).getAllByRole('link')).toHaveLength(5);
-    for (const label of ['首页', '文章', '伙伴', '共练', '消息']) {
+    for (const label of ['首页', '文章广场', '伙伴', '共练', '消息']) {
       expect(within(mobileNavigation).getByRole('link', { name: label })).toBeInTheDocument();
     }
+    expect(screen.getByRole('link', { name: '我的文章' })).toHaveAttribute('href', '/community/stories');
     expect(screen.getByRole('link', { name: '设置' })).toHaveAttribute('href', '/community/settings');
   });
 
@@ -39,7 +40,7 @@ describe('CommunityShell', () => {
           <Routes>
             <Route path="/community" element={<CommunityShell />}>
               <Route index element={<p>Dashboard</p>} />
-              <Route path="stories" element={<p>Stories page</p>} />
+              <Route path="stories/square" element={<p>Square page</p>} />
             </Route>
           </Routes>
         </LanguageProvider>
@@ -48,9 +49,9 @@ describe('CommunityShell', () => {
 
     const desktopNavigation = screen.getByRole('navigation', { name: '社群导航' });
     const mobileNavigation = screen.getByRole('navigation', { name: '社群主要导航' });
-    fireEvent.click(within(mobileNavigation).getByRole('link', { name: '文章' }));
+    fireEvent.click(within(mobileNavigation).getByRole('link', { name: '文章广场' }));
 
-    expect(screen.getByText('Stories page')).toBeInTheDocument();
+    expect(screen.getByText('Square page')).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: '社群导航' })).toBe(desktopNavigation);
   });
 });

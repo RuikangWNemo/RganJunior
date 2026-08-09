@@ -27,21 +27,23 @@ export default function SeedCommunity() {
             <p className="seed-community-kicker">
               {t('种子社群', 'Seed Community')}
             </p>
-            <h2 className={`seed-community__title seed-community__title--${lang} mt-6`}>
-              {lang === 'zh' ? (
-                '成为阿柑少年、家长或伙伴。'
-              ) : (
-                <>
-                  Become an <span className="whitespace-nowrap">R-Gan</span> Junior, parent, or partner.
-                </>
-              )}
-            </h2>
-            <p className={`seed-community__lead seed-community__lead--${lang} mt-6 max-w-lg`}>
-              {t(
-                '种下一段长期同行的关系，一起走进真实世界。',
-                'Plant a lasting relationship and step into the real world together.'
-              )}
-            </p>
+            <div className="seed-community__headline-stack mt-6">
+              <h2 className={`seed-community__title seed-community__title--${lang}`}>
+                {lang === 'zh' ? (
+                  '成为阿柑少年、家长或伙伴。'
+                ) : (
+                  <>
+                    Become an <span className="whitespace-nowrap">R-Gan</span> Junior, parent, or partner.
+                  </>
+                )}
+              </h2>
+              <p className={`seed-community__lead seed-community__lead--${lang} mt-6 max-w-lg`}>
+                {t(
+                  '种下一段长期同行的关系，一起走进真实世界。',
+                  'Plant a lasting relationship and step into the real world together.'
+                )}
+              </p>
+            </div>
 
             <div className="relative mt-8 h-40 max-w-xl sm:mt-10 sm:h-44" aria-label={t('加入身份', 'Ways to join')}>
               <svg

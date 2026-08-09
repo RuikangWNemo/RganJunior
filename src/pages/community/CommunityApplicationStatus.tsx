@@ -6,6 +6,7 @@ import CommunityProcessSteps from '@/components/community/CommunityProcessSteps'
 import { CommunityErrorState, CommunityLoadingState, CommunitySurface, communityPrimaryButtonClass } from '@/components/community/CommunitySurface';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
+import { isManualGuardianFlow } from '@/lib/guardianFlow';
 import { getMyCommunityApplication } from '@/services/memberships';
 
 export default function CommunityApplicationStatus() {
@@ -33,7 +34,9 @@ export default function CommunityApplicationStatus() {
 
   const applicationStatus = application?.status || communityState?.application_status || 'submitted';
   const stateCopy = {
-    pending_guardian: { title: t('等待监护人确认', 'Waiting for guardian confirmation'), body: t('监护人完成知情说明与手机验证后，申请才会进入审核队列。', 'Your application enters review after guardian confirmation and phone verification.'), icon: ShieldAlert },
+    pending_guardian: { title: t('等待监护人确认', 'Waiting for guardian confirmation'), body: isManualGuardianFlow
+      ? t('请先登记监护人联系方式。工作人员会与监护人沟通并留档确认，完成后申请才进入审核队列。', 'Provide a guardian contact first. Staff will contact them and record confirmation before the application enters review.')
+      : t('监护人完成知情说明与手机验证后，申请才会进入审核队列。', 'Your application enters review after guardian confirmation and phone verification.'), icon: ShieldAlert },
     submitted: { title: t('申请已提交', 'Application submitted'), body: t('工作人员会认真阅读你的申请。账号和公开内容浏览不受影响。', 'Our team will read your application. Your account and public browsing remain available.'), icon: Clock3 },
     under_review: { title: t('正在审核', 'Under review'), body: t('申请已经由工作人员接手。', 'A team member is reviewing your application.'), icon: Clock3 },
     more_info_requested: { title: t('需要补充资料', 'More information needed'), body: t('请根据审核说明补充申请内容。', 'Please add the information requested in the review note.'), icon: FilePenLine },
@@ -46,7 +49,7 @@ export default function CommunityApplicationStatus() {
   return (
     <div className="community-page-frame">
       <CommunitySurface eyebrow="Application status" title={copy.title} description={copy.body} width="wide">
-        <CommunityProcessSteps current={applicationStatus === 'pending_guardian' ? 'safety' : 'review'} safetyRequired={communityState?.age_band !== 'adult_18_plus'} />
+        <CommunityProcessSteps current={applicationStatus === 'pending_guardian' ? 'safety' : 'review'} safetyRequired={communityState?.age_band === 'under_14'} />
         {loading ? <CommunityLoadingState label={t('正在读取申请状态…', 'Loading application status…')} /> : (
           <div className="flex flex-col items-start gap-6 rounded-[1.45rem] bg-[hsl(var(--community-paper-deep)/0.55)] p-5 sm:flex-row sm:p-7">
             <div className="grid size-16 shrink-0 place-items-center rounded-[1.35rem] rounded-bl-md bg-[hsl(var(--community-orange)/0.12)] text-[hsl(var(--community-orange))]"><Icon className="size-7" /></div>
@@ -55,7 +58,7 @@ export default function CommunityApplicationStatus() {
               {application?.decision_reason ? <p className="rounded-2xl border border-[hsl(var(--community-forest)/0.09)] bg-white/70 p-4 text-[hsl(var(--community-forest))]">{application.decision_reason}</p> : null}
               {error ? <CommunityErrorState message={error} onRetry={() => void load()} /> : null}
               <div className="flex flex-wrap gap-3">
-                {applicationStatus === 'pending_guardian' ? <Link className={communityPrimaryButtonClass} to="/community/guardian-consent">{t('继续监护人确认', 'Continue guardian confirmation')}</Link> : null}
+                {applicationStatus === 'pending_guardian' ? <Link className={communityPrimaryButtonClass} to="/community/guardian-consent">{isManualGuardianFlow ? t('登记监护人联系方式', 'Provide guardian contact') : t('继续监护人确认', 'Continue guardian confirmation')}</Link> : null}
                 {applicationStatus === 'approved' || communityState?.membership_status === 'active' ? <Link className={communityPrimaryButtonClass} to="/community">{t('进入社群', 'Enter community')}</Link> : null}
                 {applicationStatus === 'rejected' ? <Link className={communityPrimaryButtonClass} to="/community/apply">{t('再次申请', 'Apply again')}</Link> : null}
               </div>

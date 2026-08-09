@@ -42,12 +42,26 @@ export async function getMyCommunityApplication() {
 }
 
 export async function listMembershipApplications(statuses?: string[]) {
-  const { data, error } = await getSupabaseClient().rpc('list_membership_applications', {
+  const supabase = getSupabaseClient();
+  const { data, error } = await supabase.rpc('list_membership_applications', {
     application_statuses: statuses,
     page_size: 50,
   });
   throwIfSupabaseError(error, 'MEMBERSHIP_APPLICATIONS_READ_FAILED');
-  return data;
+  const applicationIds = data.map((application) => application.id);
+  const { data: declarations, error: declarationsError } = await supabase.rpc(
+    'list_membership_application_identity_declarations',
+    { target_application_ids: applicationIds },
+  );
+  throwIfSupabaseError(declarationsError, 'MEMBERSHIP_APPLICATION_IDENTITIES_READ_FAILED');
+  const declarationsByApplication = new Map(
+    declarations.map((declaration) => [declaration.application_id, declaration]),
+  );
+  return data.map((application) => ({
+    ...application,
+    declared_primary_identity_slug: declarationsByApplication.get(application.id)?.primary_identity_slug || null,
+    declared_secondary_identity_slugs: declarationsByApplication.get(application.id)?.secondary_identity_slugs || [],
+  }));
 }
 
 export async function reviewMembershipApplication(
@@ -55,13 +69,24 @@ export async function reviewMembershipApplication(
   decision: 'approve' | 'reject',
   applicantMessage: string,
   internalNote?: string,
+  confirmedPrimaryIdentitySlug?: string,
+  confirmedSecondaryIdentitySlugs: string[] = [],
 ) {
-  const { error } = await getSupabaseClient().rpc('review_community_application', {
-    target_application_id: applicationId,
-    review_decision: decision,
-    applicant_message: applicantMessage,
-    reviewer_internal_note: internalNote,
-  });
+  const { error } = decision === 'approve'
+    ? await getSupabaseClient().rpc('review_community_application_with_identities', {
+      target_application_id: applicationId,
+      review_decision: decision,
+      applicant_message: applicantMessage,
+      reviewer_internal_note: internalNote,
+      confirmed_primary_identity_slug: confirmedPrimaryIdentitySlug,
+      confirmed_secondary_identity_slugs: confirmedSecondaryIdentitySlugs,
+    })
+    : await getSupabaseClient().rpc('review_community_application', {
+      target_application_id: applicationId,
+      review_decision: decision,
+      applicant_message: applicantMessage,
+      reviewer_internal_note: internalNote,
+    });
   throwIfSupabaseError(error, 'MEMBERSHIP_APPLICATION_REVIEW_FAILED');
 }
 

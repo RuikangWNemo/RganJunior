@@ -23,6 +23,7 @@ const labels = {
   application: { zh: '申请状态', en: 'Application status' },
   guardian: { zh: '安全确认', en: 'Safety confirmation' },
   stories: { zh: '文章', en: 'Stories' },
+  storySquare: { zh: '文章广场', en: 'Story square' },
   newStory: { zh: '写文章', en: 'New story' },
   editStory: { zh: '编辑文章', en: 'Edit story' },
   people: { zh: '伙伴', en: 'People' },
@@ -31,6 +32,7 @@ const labels = {
   settings: { zh: '设置', en: 'Settings' },
   admin: { zh: '管理', en: 'Admin' },
   applications: { zh: '申请审核', en: 'Applications' },
+  identities: { zh: '身份与星球', en: 'Identities & planets' },
   reports: { zh: '举报处理', en: 'Reports' },
 } as const satisfies Record<string, LocalizedText>;
 
@@ -64,6 +66,9 @@ export function getCommunityRouteMeta(pathname: string): CommunityRouteMeta {
   if (pathname === '/community/stories') {
     return { section: labels.stories, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.stories }] };
   }
+  if (pathname === '/community/stories/square') {
+    return { section: labels.storySquare, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.storySquare }] };
+  }
   if (pathname === '/community/people') {
     return { section: labels.people, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.people }] };
   }
@@ -78,6 +83,9 @@ export function getCommunityRouteMeta(pathname: string): CommunityRouteMeta {
   }
   if (pathname === '/community/admin/applications') {
     return { section: labels.applications, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.admin }, { label: labels.applications }] };
+  }
+  if (pathname === '/community/admin/identities') {
+    return { section: labels.identities, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.admin }, { label: labels.identities }] };
   }
   if (pathname === '/community/admin/reports') {
     return { section: labels.reports, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.admin }, { label: labels.reports }] };

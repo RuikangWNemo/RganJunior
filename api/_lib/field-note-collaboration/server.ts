@@ -41,17 +41,20 @@ export function createFieldNoteCollaborationServer(
   const extensions: Extension[] = [createFieldNoteDatabaseExtension(persistence)];
 
   const redisUrl = options.redisUrl?.trim();
+  const instanceName = options.instanceName?.trim();
   if (redisUrl) {
+    if (!instanceName) throw new Error('COMMUNITY_COLLAB_INSTANCE_NAME_REQUIRED');
     extensions.unshift(createFieldNoteRedisExtension(
       redisUrl,
-      options.instanceName?.trim() || `rgan-${randomUUID()}`,
+      instanceName,
+      `${instanceName}-${randomUUID()}`,
     ));
   } else if (options.requireRedis) {
     throw new Error('COMMUNITY_COLLAB_REDIS_REQUIRED');
   }
 
   return new Server<FieldNoteCollaborationContext>({
-    name: options.instanceName?.trim() || 'rgan-field-notes',
+    name: instanceName || 'rgan-field-notes',
     stopOnSignals: options.stopOnSignals ?? false,
     quiet: true,
     debounce: 1_500,

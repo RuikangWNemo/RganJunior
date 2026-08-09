@@ -34,7 +34,7 @@ export default function CommunityApply() {
   return (
     <div className="community-page-frame">
       <CommunitySurface eyebrow="Community application" title={t('告诉我们，你为何来到这里。', 'Tell us what brings you here.')} description={t('账号会一直保留。申请通过后，才会开放创作、伙伴、共练和消息等成员功能。', 'Your account remains yours. Stories, People, Practice, and Messages open after membership is approved.')} aside={<p>{t('我们关注的不是标准答案，而是你真实的期待、愿意投入的方式，以及你希望和谁一起成长。', 'There is no perfect answer. We care about your real hopes, how you want to participate, and who you hope to grow alongside.')}</p>} width="wide">
-        <CommunityProcessSteps current="application" safetyRequired={communityState.age_band !== 'adult_18_plus'} />
+        <CommunityProcessSteps current="application" safetyRequired={communityState.age_band === 'under_14'} />
         <form className="space-y-5" onSubmit={submit}>
           <label className={labelClass}><span>{t('为什么想加入？ *', 'Why would you like to join? *')}</span><textarea className={communityTextareaClass} value={form.motivation} onChange={(event) => setForm({ ...form, motivation: event.target.value })} required /></label>
           <label className={labelClass}><span>{t('你希望在这里获得什么？', 'What do you hope to find here?')}</span><textarea className={communityTextareaClass} value={form.hopes} onChange={(event) => setForm({ ...form, hopes: event.target.value })} /></label>

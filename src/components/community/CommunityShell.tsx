@@ -1,12 +1,21 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { BookOpenText, ClipboardCheck, Home, MessageCircle, Settings, ShieldCheck, Sparkles, Users } from 'lucide-react';
+import { BookOpenText, ClipboardCheck, Home, MessageCircle, Newspaper, Settings, ShieldCheck, Sparkles, Tags, Users } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
 
-const communityNav = [
+const desktopCommunityNav = [
   { to: '/community', label: 'navHome' as const, icon: Home, end: true },
-  { to: '/community/stories', label: 'navStories' as const, icon: BookOpenText },
+  { to: '/community/stories/square', label: 'navStorySquare' as const, icon: Newspaper },
+  { to: '/community/stories', label: 'navMyStories' as const, icon: BookOpenText, end: true },
+  { to: '/community/people', label: 'navPeople' as const, icon: Users },
+  { to: '/community/practice', label: 'navPractice' as const, icon: Sparkles },
+  { to: '/community/messages', label: 'navMessages' as const, icon: MessageCircle },
+];
+
+const mobileCommunityNav = [
+  { to: '/community', label: 'navHome' as const, icon: Home, end: true },
+  { to: '/community/stories/square', label: 'navStorySquare' as const, icon: Newspaper },
   { to: '/community/people', label: 'navPeople' as const, icon: Users },
   { to: '/community/practice', label: 'navPractice' as const, icon: Sparkles },
   { to: '/community/messages', label: 'navMessages' as const, icon: MessageCircle },
@@ -18,6 +27,7 @@ export default function CommunityShell() {
   const { t, copy } = useCommunityUi();
   const adminLinks = [
     permissions.includes('memberships.review') ? { to: '/community/admin/applications', label: copy('applications'), icon: ClipboardCheck } : null,
+    permissions.includes('people.manage') ? { to: '/community/admin/identities', label: copy('identities'), icon: Tags } : null,
     permissions.includes('messages.moderate') ? { to: '/community/admin/reports', label: copy('reports'), icon: ShieldCheck } : null,
   ].filter(Boolean) as Array<{ to: string; label: string; icon: typeof ClipboardCheck }>;
 
@@ -31,7 +41,7 @@ export default function CommunityShell() {
               <p className="mt-1 font-serif text-xl text-[hsl(var(--community-forest))]">{t('社群中枢', 'Your community')}</p>
             </div>
             <nav className="space-y-1" aria-label={copy('navigation')}>
-              {communityNav.map(({ to, label, icon: Icon, end }) => (
+              {desktopCommunityNav.map(({ to, label, icon: Icon, end }) => (
                 <NavLink key={to} to={to} end={end} className={({ isActive }) => `community-nav-link ${isActive ? 'is-active' : ''}`}>
                   <span className="community-nav-link__icon"><Icon className="size-4" aria-hidden="true" /></span>
                   {copy(label)}
@@ -62,7 +72,7 @@ export default function CommunityShell() {
       </div>
 
       <nav className="community-mobile-nav lg:hidden" aria-label={copy('mobileNavigation')}>
-        {communityNav.map(({ to, label, icon: Icon, end }) => (
+        {mobileCommunityNav.map(({ to, label, icon: Icon, end }) => (
           <NavLink key={to} to={to} end={end} className={({ isActive }) => `community-mobile-nav__link ${isActive ? 'is-active' : ''}`}>
             <Icon className="size-5" aria-hidden="true" />
             <span>{copy(label)}</span>

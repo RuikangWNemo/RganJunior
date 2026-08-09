@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ArrowLeft, ChevronDown, ClipboardCheck, ExternalLink, LogOut, Settings, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ClipboardCheck, ExternalLink, LogOut, Settings, ShieldCheck, Tags } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import mascotWide from '@/assets/mascot-wide.png';
@@ -23,6 +23,7 @@ export default function CommunityChrome({ children }: { children: ReactNode }) {
   const { lang, setLang, t, copy } = useCommunityUi();
   const meta = getCommunityRouteMeta(location.pathname);
   const canReviewApplications = permissions.includes('memberships.review');
+  const canManageIdentities = permissions.includes('people.manage');
   const canReviewReports = permissions.includes('messages.moderate');
   const accountLabel = user?.email?.slice(0, 1).toUpperCase() || '?';
 
@@ -101,6 +102,11 @@ export default function CommunityChrome({ children }: { children: ReactNode }) {
                   {canReviewApplications ? (
                     <DropdownMenuItem className="rounded-xl px-3 py-2.5" onSelect={() => navigate('/community/admin/applications')}>
                       <ClipboardCheck className="mr-2 size-4" />{copy('applications')}
+                    </DropdownMenuItem>
+                  ) : null}
+                  {canManageIdentities ? (
+                    <DropdownMenuItem className="rounded-xl px-3 py-2.5" onSelect={() => navigate('/community/admin/identities')}>
+                      <Tags className="mr-2 size-4" />{copy('identities')}
                     </DropdownMenuItem>
                   ) : null}
                   {canReviewReports ? (

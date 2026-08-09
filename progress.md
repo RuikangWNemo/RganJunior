@@ -1,5 +1,38 @@
 # Progress
 
+## 2026-08-09 Manual Guardian + Redis Rollout
+
+- Production is live from commit `a2d8e47` at `https://www.rganjunior.org`.
+- The user selected staff-led manual Guardian confirmation while retaining the automated OTP implementation for future use.
+- The age boundary is confirmed: under 14 requires Guardian confirmation; ages 14–17 do not.
+- Upstash Redis through Vercel Marketplace is approved for collaboration persistence.
+- The approved design is committed as `fbd465e`.
+- The repository does not provide the requested `writing-plans` skill, so `planning-with-files` is being used as the documented fallback.
+- Current work: produce the exact integration plan, then implement database/API/UI/configuration changes and verify Preview and Production.
+- Re-read the Supabase workflow and current changelog; no new breaking change blocks the approved private-schema/RPC design, and this task has no Supabase MCP tools available.
+- Located the latest workflow override, applicant redirects, status messaging, Guardian service/API boundaries, database tests, and the missing admin controls that the implementation plan must cover.
+- Confirmed the private Guardian schema can be extended rather than replaced: manual requests can reuse encrypted contact/legal-document records, and a staff-only confirmation RPC can create the existing canonical consent/audit records.
+- Mapped the existing server crypto, webhook, signed-in Guardian setup, public OTP path, and permission helper. Manual mode can be added without deleting the future automated flow.
+- Identified the remaining schema/API requirements: manual-request provenance, staff-only decrypted read, atomic confirmation plus identity attestation, explicit `pending_guardian` admin listing, and a hosted active-document check.
+- Completed the hosted document check: only the inactive draft exists. The rollout will preserve this as a deliberate final safety gate instead of activating draft legal text.
+- Read the applicable Vercel Marketplace, Storage, environment, CLI, deployment, and full-story verification guidance; next is live integration discovery/provisioning before code depends on its environment contract.
+- Started creation of `rgan-community-collab-preview` with the approved free/no-auto-upgrade/Tokyo configuration, scoped only to Preview. Vercel is waiting for the account owner to accept first-time Upstash Marketplace terms; no resource exists yet.
+- The original CLI wait expired before the completed browser confirmation reached it. Terms state and resource list are being checked before retrying creation.
+- Preview Redis was provisioned successfully. The independent Production Free resource was rejected before creation; no paid plan was selected, and namespace-isolation compatibility is being checked.
+- Redis inspection found the shared-resource namespace and cross-instance identifier bugs. The implementation plan will fix both before connecting the Free resource to Production.
+- Added `docs/plans/2026-08-09-community-manual-guardian-and-redis-implementation-plan.md` with exact database, API, UI, Redis, environment, verification, and legal activation gates.
+- Created migration `20260809004953_manual_guardian_review.sql` through Supabase CLI and added manual-consent provenance plus server-only read/confirm/decline RPCs. Workflow overrides and regression tests are next.
+- Added the approved onboarding, submission, state-routing, identity-review, approval, restoration, and profile-update overrides. Manual confirmation now records the staff actor directly in the private Guardian audit event.
+- Supabase CLI v2.67.1 recognized the new migration, but linked dry-run is deferred until the expired/missing CLI login is renewed; no remote schema change occurred.
+- Implemented server AES-GCM decryption, explicit Guardian flow-mode parsing, manual request creation without webhook delivery, a permission-checked staff review API, and typed client services. Backend/API TypeScript passes.
+- Fixed Redis deployment isolation and cross-instance identity; the focused collaboration suite passes 9/9. UI routing selected the existing Community form/surface patterns after the UI Skills CLI returned no category content.
+- Updated registration, onboarding, application, status, Guardian-contact, and admin-review UI for manual mode. Existing Community page tests pass 7/7 and app TypeScript passes.
+- Applied the React best-practices review: independent post-confirmation staff-list and Guardian-record refreshes now run in parallel rather than as a client-side waterfall.
+- Added manual-mode UI regressions for under-14 onboarding, contact capture without OTP, pending-Guardian admin listing, sensitive-contact reveal, and double-submit locking. Focused tests pass 6/6 and app TypeScript remains clean.
+- Added database regression `011_manual_guardian_review.sql`, updated legacy 14–17/withdrawal expectations, and added 9 server tests for encryption, flow parsing, webhook bypass, staff projection, authorization, and affirmations.
+- Upstash is connected to both Preview and Production. TLS source URLs, `rgan-preview` / `rgan-production` namespaces, and manual mode flags validate successfully; sensitive aliases and Guardian secrets are stored in Vercel, with an ignored mode-600 local backup.
+- Deleted the two temporary Vercel environment snapshot files after validation. No pulled secret snapshot remains in `/private/tmp`.
+
 ## 2026-08-08 Community Collaborative Editor
 
 - Created the dedicated Supabase secret key `community_editor` from the authenticated project API Keys page. Its value remains masked and has not been printed to logs or chat.

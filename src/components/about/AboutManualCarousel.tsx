@@ -15,6 +15,8 @@ type AboutManualCarouselProps<T> = {
   className?: string;
   viewportClassName?: string;
   slideClassName?: string;
+  activeIndex?: number;
+  onActiveIndexChange?: (index: number) => void;
 };
 
 export default function AboutManualCarousel<T>({
@@ -29,6 +31,8 @@ export default function AboutManualCarousel<T>({
   className,
   viewportClassName,
   slideClassName,
+  activeIndex,
+  onActiveIndexChange,
 }: AboutManualCarouselProps<T>) {
   return (
     <HomeFadeCarousel
@@ -40,6 +44,8 @@ export default function AboutManualCarousel<T>({
       nextLabel={nextLabel}
       showArrows={false}
       navigationPlacement="after"
+      activeIndex={activeIndex}
+      onActiveIndexChange={onActiveIndexChange}
       className={cn('about-fold-carousel', className)}
       viewportClassName={cn('about-fold-carousel__viewport', viewportClassName)}
       slideClassName={cn('about-fold-carousel__slide', slideClassName)}

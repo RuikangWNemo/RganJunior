@@ -40,11 +40,13 @@ import GuardianConsent from "./pages/community/GuardianConsent";
 import CommunityHome from "./pages/community/CommunityHome";
 import CommunityPeople from "./pages/community/CommunityPeople";
 import CommunityStories from "./pages/community/CommunityStories";
+import CommunityStorySquare from "./pages/community/CommunityStorySquare";
 import CommunityStoryEditor from "./pages/community/CommunityStoryEditor";
 import CommunityPractice from "./pages/community/CommunityPractice";
 import CommunityMessages from "./pages/community/CommunityMessages";
 import CommunitySettings from "./pages/community/CommunitySettings";
 import CommunityAdminApplications from "./pages/community/CommunityAdminApplications";
+import CommunityAdminIdentities from "./pages/community/CommunityAdminIdentities";
 import CommunityAdminReports from "./pages/community/CommunityAdminReports";
 
 const queryClient = new QueryClient();
@@ -108,6 +110,9 @@ const App = () => (
                 <Route element={<CommunityRequirePermission permission="memberships.review" />}>
                   <Route path="/community/admin/applications" element={<div className="community-page-frame"><CommunityAdminApplications /></div>} />
                 </Route>
+                <Route element={<CommunityRequirePermission permission="people.manage" />}>
+                  <Route path="/community/admin/identities" element={<div className="community-page-frame"><CommunityAdminIdentities /></div>} />
+                </Route>
                 <Route element={<CommunityRequirePermission permission="messages.moderate" />}>
                   <Route path="/community/admin/reports" element={<div className="community-page-frame"><CommunityAdminReports /></div>} />
                 </Route>
@@ -117,6 +122,7 @@ const App = () => (
                     <Route index element={<CommunityHome />} />
                     <Route path="people" element={<CommunityPeople />} />
                     <Route path="stories" element={<CommunityStories />} />
+                    <Route path="stories/square" element={<CommunityStorySquare />} />
                     <Route path="stories/new" element={<CommunityStoryEditor />} />
                     <Route path="stories/:noteId/edit" element={<CommunityStoryEditor />} />
                     <Route path="practice" element={<CommunityPractice />} />

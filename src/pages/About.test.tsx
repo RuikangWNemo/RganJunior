@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
@@ -25,15 +25,28 @@ describe('About editorial content system', () => {
   });
 
   it('uses the growth statement as the eyebrow and keeps the brand on its own title line', () => {
-    renderAbout();
+    const { container } = renderAbout();
 
     expect(screen.getByText('把成长放回真实生活里')).toBeInTheDocument();
     expect(screen.queryByText('把成长放回真实生活里。')).not.toBeInTheDocument();
     expect(screen.queryByText('About / 关于阿柑少年')).not.toBeInTheDocument();
 
     const title = screen.getByRole('heading', { level: 1, name: '关于阿柑少年' });
+    const hero = container.querySelector('.about-v2-hero--full-bleed');
     const brandLine = title.querySelector('.about-v2-hero__title-brand');
 
+    expect(hero).toContainElement(title);
+    expect(within(title).getByText('关于')).toHaveClass('about-v2-hero__title-about');
+    expect(
+      screen.getByText(
+        '真正的成长发生在很多地方。在森林、茶山、饭桌、厨房、果园和运动场上，也在人与人的真实相处中。',
+      ),
+    ).toHaveClass('about-v2-hero__lead');
+    expect(
+      within(hero as HTMLElement).getByRole('img', {
+        name: '铁牛村林盘、果园、鱼塘与院落的航拍图',
+      }),
+    ).toHaveAttribute('loading', 'eager');
     expect(brandLine?.querySelector('svg')).toHaveAttribute('data-wordmark-language', 'zh');
     expect(brandLine?.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
     expect(within(title).queryByText('阿柑少年')).not.toBeInTheDocument();
@@ -88,26 +101,59 @@ describe('About editorial content system', () => {
     ]);
 
     const adultRoster = screen.getByLabelText('成人支持团队成员名录');
-    expect(within(adultRoster).getAllByRole('article')).toHaveLength(8);
-    expect(within(adultRoster).getAllByRole('img')).toHaveLength(8);
+    expect(within(adultRoster).getAllByRole('article')).toHaveLength(6);
+    expect(within(adultRoster).getAllByRole('img')).toHaveLength(6);
     expect(within(adultRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
       '/images/about/adult-support/adult-support-01.webp',
       '/images/about/adult-support/adult-support-02.webp',
-      '/images/about/adult-support/adult-support-03.webp',
-      '/images/about/adult-support/adult-support-04.webp',
       '/images/about/adult-support/adult-support-05.webp',
       '/images/about/adult-support/adult-support-06.webp',
       '/images/about/adult-support/adult-support-07.webp',
       '/images/about/adult-support/adult-support-08.webp',
     ]);
     expect(within(adultRoster).getAllByRole('img').every((image) => image.getAttribute('loading') === 'lazy')).toBe(true);
-    expect(within(adultRoster).getAllByText('？？？')).toHaveLength(16);
+    expect(within(adultRoster).getAllByText('？？？')).toHaveLength(12);
 
     expect(within(team as HTMLElement).getByText('参与共创，也支持每一次活动真实发生。')).toBeInTheDocument();
     const parentGuardianRoster = screen.getByLabelText('家长守护团成员名录');
-    expect(within(parentGuardianRoster).getAllByRole('article')).toHaveLength(4);
-    expect(within(parentGuardianRoster).getAllByText('姓名待补充')).toHaveLength(4);
-    expect(within(parentGuardianRoster).getAllByText('角色待补充')).toHaveLength(4);
+    expect(parentGuardianRoster.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(9);
+    expect(parentGuardianRoster).toHaveAttribute('aria-roledescription', 'carousel');
+    expect(within(parentGuardianRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
+      '/images/about/adult-support/adult-support-03.webp',
+      '/images/about/adult-support/adult-support-04.webp',
+      '/images/about/parent-guardian/parent-guardian-03.webp',
+      '/images/about/parent-guardian/parent-guardian-04.webp',
+      '/images/about/parent-guardian/parent-guardian-05.webp',
+      '/images/about/parent-guardian/parent-guardian-06.webp',
+      '/images/about/parent-guardian/parent-guardian-07.webp',
+      '/images/about/parent-guardian/parent-guardian-08.webp',
+      '/images/about/parent-guardian/parent-guardian-09.webp',
+    ]);
+    expect(within(parentGuardianRoster).getAllByRole('img').map((image) => image.getAttribute('loading'))).toEqual([
+      'eager',
+      'eager',
+      'eager',
+      'lazy',
+      'lazy',
+      'lazy',
+      'lazy',
+      'lazy',
+      'lazy',
+    ]);
+    expect(within(parentGuardianRoster).getAllByText('？？？')).toHaveLength(18);
+    expect(
+      within(screen.getByRole('group', { name: '选择家长守护团成员' })).getAllByRole('button'),
+    ).toHaveLength(9);
+    expect(screen.getByRole('button', { name: '查看家长守护团成员 1 资料' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: '切换到家长守护团成员 4' }));
+    expect(screen.getByRole('button', { name: '查看家长守护团成员 4 资料' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
   });
 
   it('keeps the English brand name together on one title line', () => {
@@ -117,6 +163,7 @@ describe('About editorial content system', () => {
     const title = screen.getByRole('heading', { level: 1, name: 'About R-Gan Junior' });
     const brandLine = title.querySelector('.about-v2-hero__title-brand');
 
+    expect(within(title).getByText('About')).toHaveClass('about-v2-hero__title-about');
     expect(brandLine?.querySelector('svg')).toHaveAttribute('data-wordmark-language', 'en');
     expect(brandLine?.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
     expect(within(title).queryByText('R-Gan Junior')).not.toBeInTheDocument();
@@ -208,10 +255,71 @@ describe('About editorial content system', () => {
 
     const methodCarousel = screen.getByRole('region', { name: '我们如何做轮播' });
     fireEvent.click(within(methodCarousel).getByRole('button', { name: '查看青少年主理' }));
-    expect(methodCarousel.querySelector('[data-active="true"]')).toHaveTextContent('青少年主理');
+    expect(
+      methodCarousel.querySelector('.about-fold-carousel__slide[data-active="true"]'),
+    ).toHaveTextContent('青少年主理');
 
     const placesCarousel = screen.getByRole('region', { name: '三个生态基地轮播' });
     fireEvent.click(within(placesCarousel).getByRole('button', { name: '查看黎波黑茶部落' }));
     expect(placesCarousel.querySelector('[data-active="true"]')).toHaveTextContent('黎波黑茶部落');
+  });
+
+  it('maps the four supplied photo groups to the four ways of working', () => {
+    renderAbout();
+
+    const methodCarousel = screen.getByRole('region', { name: '我们如何做轮播' });
+    const reels = methodCarousel.querySelectorAll('.about-method-photo-reel');
+
+    expect(reels).toHaveLength(4);
+    expect([...reels].map((reel) => reel.querySelectorAll('img').length)).toEqual([5, 6, 7, 9]);
+    expect(
+      [...reels].every((reel) => reel.parentElement?.firstElementChild === reel),
+    ).toBe(true);
+    expect(
+      [...reels].map((reel) => reel.querySelector('img')?.getAttribute('src')),
+    ).toEqual([
+      '/images/about/methods/01/01-shared-life.webp',
+      '/images/about/methods/02/01-community-visit.webp',
+      '/images/about/methods/03/01-issue-workshop.webp',
+      '/images/about/methods/04/01-youth-led-moment.webp',
+    ]);
+    expect(within(methodCarousel).getByRole('region', { name: '真实生活照片轮播' })).toBeInTheDocument();
+  });
+
+  it('cycles through 01–04 as each active photo group finishes', () => {
+    vi.useFakeTimers();
+
+    try {
+      renderAbout();
+      const methodCarousel = screen.getByRole('region', { name: '我们如何做轮播' });
+      const cycles = [
+        { title: '真实生活', photoCount: 5, nextTitle: '真实社区' },
+        { title: '真实社区', photoCount: 6, nextTitle: '真实议题' },
+        { title: '真实议题', photoCount: 7, nextTitle: '青少年主理' },
+        { title: '青少年主理', photoCount: 9, nextTitle: '真实生活' },
+      ];
+
+      cycles.forEach(({ title, photoCount, nextTitle }) => {
+        const reel = within(methodCarousel).getByRole('region', { name: `${title}照片轮播` });
+
+        for (let photoIndex = 1; photoIndex < photoCount; photoIndex += 1) {
+          act(() => vi.advanceTimersByTime(4300));
+          expect(
+            within(reel).getByRole('button', { name: `查看${title}第 ${photoIndex + 1} 张照片` }),
+          ).toHaveAttribute('aria-pressed', 'true');
+        }
+
+        act(() => vi.advanceTimersByTime(4300));
+
+        expect(
+          methodCarousel.querySelector('.about-fold-carousel__slide[data-active="true"]'),
+        ).toHaveTextContent(nextTitle);
+        expect(
+          within(methodCarousel).getByRole('button', { name: `查看${nextTitle}第 1 张照片` }),
+        ).toHaveAttribute('aria-pressed', 'true');
+      });
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

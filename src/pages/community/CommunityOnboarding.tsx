@@ -19,7 +19,6 @@ export default function CommunityOnboarding() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (communityState?.age_band === 'under_14' && communityState.guardian_consent_status !== 'verified') return <Navigate to="/community/guardian-consent" replace />;
   if (communityState?.onboarding_completed) return <Navigate to="/community/enter" replace />;
 
   const change = (key: keyof typeof form, value: string | boolean) => setForm((current) => ({ ...current, [key]: value }));
@@ -45,7 +44,7 @@ export default function CommunityOnboarding() {
         aside={<><p className="font-semibold text-[hsl(var(--community-forest))]">{t('资料边界', 'Profile boundaries')}</p><p className="mt-3">{t('用户名用于登录；中文名和英文名只有在你选择展示真实姓名时才会出现在伙伴目录。私密全名不会公开。', 'Your username is used to sign in. Chinese and English names only appear when you choose to show them. Your private full name is never public.')}</p></>}
         width="wide"
       >
-        <CommunityProcessSteps current="profile" safetyRequired={communityState?.age_band !== 'adult_18_plus'} />
+        <CommunityProcessSteps current="profile" safetyRequired={communityState?.age_band === 'under_14'} />
         <form className="grid gap-5 sm:grid-cols-2" onSubmit={submit}>
           <label className={labelClass}><span>{t('用户名 *', 'Username *')}</span><input className={communityInputClass} value={form.username} onChange={(event) => change('username', event.target.value)} pattern="[A-Za-z0-9][A-Za-z0-9_-]{2,31}" autoComplete="username" required /></label>
           <label className={labelClass}><span>{t('主页显示名 *', 'Display name *')}</span><input className={communityInputClass} value={form.displayName} onChange={(event) => change('displayName', event.target.value)} required /></label>

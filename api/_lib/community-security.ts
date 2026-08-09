@@ -1,5 +1,6 @@
 import {
   createCipheriv,
+  createDecipheriv,
   createHash,
   createHmac,
   randomBytes,
@@ -54,6 +55,34 @@ export function encryptSensitive(value: string): string {
   const ciphertext = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
   const tag = cipher.getAuthTag();
   return ['v1', iv.toString('base64url'), tag.toString('base64url'), ciphertext.toString('base64url')].join('.');
+}
+
+export function decryptSensitive(value: string): string {
+  const [version, ivText, tagText, ciphertextText, ...extra] = value.split('.');
+  if (version !== 'v1' || !ivText || !tagText || !ciphertextText || extra.length) {
+    throw new CommunitySecurityError(
+      'INVALID_ENCRYPTED_PAYLOAD',
+      'Encrypted Guardian data has an unsupported format.',
+    );
+  }
+  try {
+    const decipher = createDecipheriv(
+      'aes-256-gcm',
+      encryptionKey(),
+      Buffer.from(ivText, 'base64url'),
+    );
+    decipher.setAuthTag(Buffer.from(tagText, 'base64url'));
+    return Buffer.concat([
+      decipher.update(Buffer.from(ciphertextText, 'base64url')),
+      decipher.final(),
+    ]).toString('utf8');
+  } catch (error) {
+    if (error instanceof CommunitySecurityError) throw error;
+    throw new CommunitySecurityError(
+      'INVALID_ENCRYPTED_PAYLOAD',
+      'Encrypted Guardian data could not be decrypted.',
+    );
+  }
 }
 
 export function createConsentToken(): string {

@@ -254,20 +254,24 @@ select pg_temp.authenticate_as(
   'application-reviewer@test.rgan'
 );
 
-select public.review_community_application(
+select public.review_community_application_with_identities(
   current_setting('test.membership_adult_application_id')::bigint,
   'approve',
   '欢迎进入阿柑少年社群。',
-  '成年人流程测试通过'
+  '成年人流程测试通过',
+  'participant',
+  array[]::text[]
 );
 
 -- Retrying the same terminal decision is idempotent. This covers browser
 -- double-clicks and network retries after the first transaction committed.
-select public.review_community_application(
+select public.review_community_application_with_identities(
   current_setting('test.membership_adult_application_id')::bigint,
   'approve',
   '欢迎进入阿柑少年社群。',
-  '重复审批不应产生第二次副作用'
+  '重复审批不应产生第二次副作用',
+  'participant',
+  array[]::text[]
 );
 
 select pg_temp.expect_error(
@@ -330,11 +334,21 @@ select pg_temp.authenticate_as(
   '40000000-0000-0000-0000-000000000001',
   'application-adult@test.rgan'
 );
-insert into public.field_notes (slug, title, content, visibility)
+insert into public.field_notes (slug, title, content)
 values (
   'membership-only-note-test',
   '成员限定文章',
-  '只向当前正式成员开放。',
+  '只向当前正式成员开放。'
+);
+select set_config(
+  'test.membership_field_note_tag_id',
+  (public.find_or_create_field_note_tag('成员协作测试标签', 'Membership workflow test tag')).id::text,
+  true
+);
+select public.save_field_note_metadata(
+  (select id from public.field_notes where slug = 'membership-only-note-test'),
+  (select id from public.article_categories where slug = 'people-stories'),
+  array[current_setting('test.membership_field_note_tag_id')::bigint],
   'members'
 );
 update public.field_notes
@@ -357,12 +371,13 @@ update public.field_notes
 set status = 'published', published_at = now()
 where slug = 'membership-only-note-test';
 
-insert into public.field_notes (slug, title, content, visibility)
+insert into public.field_notes (slug, title, content, visibility, category_id)
 values (
   'membership-access-note-test',
   '另一位成员的限定文章',
   '用来验证成员状态，而不是作者所有权。',
-  'members'
+  'members',
+  (select id from public.article_categories where slug = 'people-stories')
 );
 update public.field_notes
 set status = 'submitted'
@@ -380,13 +395,9 @@ where slug = 'membership-access-note-test';
 reset role;
 set local role anon;
 select pg_temp.authenticate_anon();
-select pg_temp.assert_true(
-  (
-    select count(*)
-    from public.list_community_people(20, null, null)
-    where display_name = '申请人甲'
-  ) = 1,
-  'anonymous visitors can see only the safe projection of an active member public profile'
+select pg_temp.expect_error(
+  $$select * from public.list_community_people(20, null, null)$$,
+  'anonymous visitors cannot read the member-only People directory'
 );
 select pg_temp.assert_true(
   (
@@ -620,7 +631,7 @@ select pg_temp.assert_true(
   'a rejected applicant can create a second versioned attempt'
 );
 
--- A 14-17 applicant is held before review until guardian consent is verified.
+-- A 14-17 applicant enters ordinary review without Guardian confirmation.
 reset role;
 set local role authenticated;
 select pg_temp.authenticate_as(
@@ -643,8 +654,8 @@ select pg_temp.assert_true(
   public.submit_community_application(
     current_setting('test.membership_teen_application_id')::bigint,
     '希望参加青少年共练。'
-  ) = 'pending_guardian',
-  'a 14-17 application waits for verified guardian consent'
+  ) = 'submitted',
+  'a 14-17 application enters the ordinary review queue'
 );
 
 reset role;

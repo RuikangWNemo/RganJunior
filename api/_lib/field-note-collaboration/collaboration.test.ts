@@ -21,7 +21,7 @@ import {
   postgresByteaToUint8Array,
   uint8ArrayToPostgresBytea,
 } from './persistence.js';
-import { parseRedisUrl } from './redis.js';
+import { fieldNoteRedisPrefix, parseRedisUrl } from './redis.js';
 import type { CollaborationRpcClient } from './rpc.js';
 import { createFieldNoteCollaborationServer } from './server.js';
 
@@ -178,6 +178,17 @@ describe('collaboration server configuration', () => {
       },
       requireRedis: true,
     })).toThrow('COMMUNITY_COLLAB_REDIS_REQUIRED');
+  });
+
+  it('isolates shared Redis channels by deployment namespace', () => {
+    expect(fieldNoteRedisPrefix('rgan-preview')).toBe('rgan:field-notes:rgan-preview');
+    expect(fieldNoteRedisPrefix('rgan-production')).toBe('rgan:field-notes:rgan-production');
+    expect(fieldNoteRedisPrefix(' Preview / Branch 42 ')).toBe(
+      'rgan:field-notes:preview-branch-42',
+    );
+    expect(() => fieldNoteRedisPrefix('---')).toThrow(
+      'INVALID_COMMUNITY_COLLAB_INSTANCE_NAME',
+    );
   });
 
   it('blocks client updates to the protected comment map', () => {

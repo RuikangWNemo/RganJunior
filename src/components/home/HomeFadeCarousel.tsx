@@ -32,6 +32,8 @@ type HomeFadeCarouselProps<T> = {
   showCounter?: boolean;
   showArrows?: boolean;
   navigationPlacement?: 'before' | 'after';
+  activeIndex?: number;
+  onActiveIndexChange?: (index: number) => void;
 };
 
 export default function HomeFadeCarousel<T>({
@@ -49,11 +51,14 @@ export default function HomeFadeCarousel<T>({
   showCounter = false,
   showArrows = true,
   navigationPlacement = 'before',
+  activeIndex: controlledActiveIndex,
+  onActiveIndexChange,
 }: HomeFadeCarouselProps<T>) {
   const reducedMotion = useReducedMotion();
   const carouselRef = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [uncontrolledActiveIndex, setUncontrolledActiveIndex] = useState(0);
+  const activeIndex = controlledActiveIndex ?? uncontrolledActiveIndex;
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [carouselVisible, setCarouselVisible] = useState(true);
   const [pageVisible, setPageVisible] = useState(
@@ -62,8 +67,10 @@ export default function HomeFadeCarousel<T>({
 
   const goTo = useCallback((index: number) => {
     if (items.length === 0) return;
-    setActiveIndex((index + items.length) % items.length);
-  }, [items.length]);
+    const nextIndex = (index + items.length) % items.length;
+    if (controlledActiveIndex === undefined) setUncontrolledActiveIndex(nextIndex);
+    onActiveIndexChange?.(nextIndex);
+  }, [controlledActiveIndex, items.length, onActiveIndexChange]);
 
   const goPrevious = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);

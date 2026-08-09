@@ -8,6 +8,11 @@ import CommunityStoryEditor from './CommunityStoryEditor';
 
 const getBundle = vi.fn();
 const checkpoint = vi.fn();
+const getMetadata = vi.fn();
+const listCategories = vi.fn();
+const listTags = vi.fn();
+const saveMetadata = vi.fn();
+const createTag = vi.fn();
 
 vi.mock('@/contexts/AuthContext', () => ({
   useAuth: () => ({
@@ -22,6 +27,11 @@ vi.mock('@/services/field-note-editor', () => ({
 
 vi.mock('@/services/field-notes', () => ({
   createFieldNote: vi.fn(),
+  getFieldNoteMetadata: (...args: unknown[]) => getMetadata(...args),
+  listArticleCategories: (...args: unknown[]) => listCategories(...args),
+  listFieldNoteTags: (...args: unknown[]) => listTags(...args),
+  saveFieldNoteMetadata: (...args: unknown[]) => saveMetadata(...args),
+  findOrCreateFieldNoteTag: (...args: unknown[]) => createTag(...args),
 }));
 
 vi.mock('@/components/community/editor/StoryCollaborationPanel', () => ({
@@ -94,6 +104,11 @@ describe('CommunityStoryEditor', () => {
       status: 'draft',
       savedAt: '2026-08-08T06:00:00.000Z',
     });
+    getMetadata.mockReset().mockResolvedValue({ categoryId: 1, topicIds: [], visibility: 'private' });
+    listCategories.mockReset().mockResolvedValue([{ id: 1, name_zh: '人物故事', name_en: 'People Stories', slug: 'people-stories', sort_order: 10, is_active: true }]);
+    listTags.mockReset().mockResolvedValue([]);
+    saveMetadata.mockReset().mockResolvedValue(undefined);
+    createTag.mockReset().mockResolvedValue({ id: 8, name_zh: '乡村教育', name_en: null });
   });
 
   it('loads the advanced collaborative workspace with a stable return path', async () => {
@@ -122,5 +137,24 @@ describe('CommunityStoryEditor', () => {
       submit: false,
     })));
     expect(await screen.findByText('已创建一个可追溯的版本。')).toBeInTheDocument();
+  });
+
+  it('saves category, tags, and visibility before submission', async () => {
+    renderEditor();
+    await screen.findByTestId('advanced-editor');
+
+    fireEvent.click(screen.getByText('公开'));
+    fireEvent.change(screen.getByPlaceholderText('新建标签'), { target: { value: '乡村教育' } });
+    fireEvent.click(screen.getByRole('button', { name: '添加新标签' }));
+    await waitFor(() => expect(createTag).toHaveBeenCalledWith('乡村教育'));
+
+    fireEvent.click(screen.getByRole('button', { name: '提交审核' }));
+
+    await waitFor(() => expect(saveMetadata).toHaveBeenCalledWith(42, {
+      categoryId: 1,
+      topicIds: [8],
+      visibility: 'public',
+    }));
+    expect(checkpoint).toHaveBeenCalledWith(expect.objectContaining({ submit: true }));
   });
 });

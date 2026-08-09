@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
@@ -15,9 +15,11 @@ import {
 } from 'lucide-react';
 
 import CommunityPeoplePlanetBoundary from '@/components/community/CommunityPeoplePlanetBoundary';
+import CommunityPlanetNavigator, { COMMUNITY_PLANETS } from '@/components/community/CommunityPlanetNavigator';
 import { createAvatarIdentity } from '@/components/community/peoplePlanetModel';
 import { CommunityEmptyState, CommunityErrorState, CommunityLoadingState, CommunitySurface } from '@/components/community/CommunitySurface';
 import { useCommunityUi } from '@/lib/communityUi';
+import { parseConfirmedIdentityLabels, type PlanetSlug } from '@/services/community-identities';
 import { createDirectConversationWithPerson } from '@/services/messages';
 import { getMyCommunityProfile } from '@/services/community-profile';
 import { listCommunityPeople, type CommunityPerson } from '@/services/people';
@@ -33,6 +35,26 @@ function getDisplayName(person: CommunityPerson) {
 
 function getLocation(person: CommunityPerson) {
   return [person.city, person.region, person.country].filter(Boolean).join(' · ');
+}
+
+function isPlanetSlug(value: string | null): value is PlanetSlug {
+  return value === 'youth' || value === 'support' || value === 'guardian';
+}
+
+function CommunityIdentityBadges({ person, t }: { person: CommunityPerson; t: Translate }) {
+  const identities = parseConfirmedIdentityLabels(person.identity_labels || []);
+  if (!identities.length) return null;
+  return (
+    <div className="community-identity-badges" aria-label={t('已确认身份', 'Confirmed identities')}>
+      {identities.map((identity) => (
+        <span key={identity.slug} style={{ '--identity-color': identity.color || '#72B18A' } as CSSProperties}>
+          <i aria-hidden="true" />
+          {t(identity.nameZh, identity.nameEn || identity.nameZh)}
+          <small>{identity.isPrimary ? t('主身份', 'Primary') : t('副身份', 'Secondary')}</small>
+        </span>
+      ))}
+    </div>
+  );
 }
 
 function CommunityAvatar({ person, className = '', isOwn = false }: { person: CommunityPerson; className?: string; isOwn?: boolean }) {
@@ -78,6 +100,7 @@ function CommunityPersonCard({
       </div>
       <h2>{displayName}</h2>
       {person.name_zh || person.name_en ? <p className="community-person-card__names">{[person.name_zh, person.name_en].filter(Boolean).join(' / ')}</p> : null}
+      <CommunityIdentityBadges person={person} t={t} />
       {person.bio ? <p className="community-person-card__bio">{person.bio}</p> : <p className="community-person-card__bio is-empty">{t('还没有写下自我介绍。', 'No introduction yet.')}</p>}
       <div className="community-person-card__footer">
         {location ? <p className="community-person-card__location"><MapPin className="size-3.5" aria-hidden="true" />{location}</p> : null}
@@ -127,6 +150,7 @@ function CommunityPersonDetail({
       <p className="community-people-planet__detail-kicker">{isMe ? t('我的位置', 'My place') : t('星球伙伴', 'Planet member')}</p>
       <h2>{displayName}</h2>
       {person.name_zh || person.name_en ? <p className="community-people-planet__names">{[person.name_zh, person.name_en].filter(Boolean).join(' / ')}</p> : null}
+      <CommunityIdentityBadges person={person} t={t} />
       <p className="community-people-planet__bio">{person.bio || t('这位伙伴还没有写下自我介绍。', 'This member has not added an introduction yet.')}</p>
       <div className="community-people-planet__meta">
         {location ? <span><MapPin className="size-3.5" aria-hidden="true" />{location}</span> : null}
@@ -154,8 +178,9 @@ function CommunityPlanetLoading({ t }: { t: Translate }) {
 
 export default function CommunityPeople() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const reducedMotion = Boolean(useReducedMotion());
-  const { t, formatDate } = useCommunityUi();
+  const { lang, t, formatDate } = useCommunityUi();
   const [people, setPeople] = useState<CommunityPerson[]>([]);
   const [ownPersonId, setOwnPersonId] = useState<number | null>(null);
   const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
@@ -166,9 +191,15 @@ export default function CommunityPeople() {
   const [startingId, setStartingId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const selectedPlanet: PlanetSlug = isPlanetSlug(searchParams.get('planet')) ? searchParams.get('planet') as PlanetSlug : 'youth';
+  const filteredPeople = useMemo(
+    () => people.filter((person) => person.planet_slugs?.includes(selectedPlanet)),
+    [people, selectedPlanet],
+  );
+
   const selectedPerson = useMemo(
-    () => people.find((person) => person.id === selectedPersonId) || null,
-    [people, selectedPersonId],
+    () => filteredPeople.find((person) => person.id === selectedPersonId) || null,
+    [filteredPeople, selectedPersonId],
   );
 
   const load = useCallback(() => {
@@ -189,6 +220,10 @@ export default function CommunityPeople() {
   useEffect(() => {
     if (reducedMotion) setAutoRotate(false);
   }, [reducedMotion]);
+
+  useEffect(() => {
+    setSelectedPersonId((current) => current && filteredPeople.some((person) => person.id === current) ? current : null);
+  }, [filteredPeople]);
 
   const startConversation = async (personId: number) => {
     setStartingId(personId);
@@ -214,17 +249,36 @@ export default function CommunityPeople() {
     setResetVersion((current) => current + 1);
   };
 
+  const selectPlanet = (planet: PlanetSlug) => {
+    const next = new URLSearchParams(searchParams);
+    next.set('planet', planet);
+    setSearchParams(next, { replace: true });
+    setSelectedPersonId(null);
+    setAutoRotate(!reducedMotion);
+    setResetVersion((current) => current + 1);
+  };
+
+  const selectedPlanetConfig = COMMUNITY_PLANETS.find((planet) => planet.slug === selectedPlanet) || COMMUNITY_PLANETS[0];
+
   return (
     <CommunitySurface
-      eyebrow="People planet"
-      title={t('转动星球，看见彼此发光。', 'Turn the planet. See each other shine.')}
-      description={t('每一颗星都是一位选择在社群中被看见的正式成员。星轨只是视觉引导，不代表真实社交关系。', 'Every star is an active member who chose to be visible here. The trails are visual guides, not representations of real relationships.')}
+      eyebrow="Connected people planets"
+      title={t('三个星球，沿着支持彼此连通。', 'Three planets, connected through support.')}
+      description={t('默认从阿柑少年圈出发，也可以切换到成人支持团队或家长守护团。交叠位置来自已确认的多身份成员。', 'Start in the R-Gan Junior Circle, then switch to adult support or parent guardians. Overlaps reflect confirmed multi-identity members.')}
       width="wide"
     >
       {loading ? <CommunityLoadingState label={t('正在寻找社群伙伴…', 'Finding community members…')} variant="cards" /> : null}
       {!loading && error ? <CommunityErrorState message={error} onRetry={load} /> : null}
-      {!loading && people.length ? (
-        <div className="community-people-explorer community-people-explorer--night">
+      {!loading && !error ? (
+        <>
+          <CommunityPlanetNavigator
+            people={people}
+            selectedPlanet={selectedPlanet}
+            t={t}
+            language={lang}
+            onSelect={selectPlanet}
+          />
+          <div id="community-focused-planet" className="community-people-explorer community-people-explorer--night" role="tabpanel">
           <div className="community-people-explorer__toolbar">
             <div className="community-people-explorer__modes" role="group" aria-label={t('伙伴浏览方式', 'People view')}>
               <button type="button" aria-pressed={view === 'planet'} onClick={() => setView('planet')}>
@@ -237,7 +291,7 @@ export default function CommunityPeople() {
 
             {view === 'planet' ? (
               <div className="community-people-explorer__controls">
-                <span className="community-people-explorer__live"><i />{people.length} {t('位伙伴在线展示', 'people in the constellation')}</span>
+                <span className="community-people-explorer__live"><i />{filteredPeople.length} {t('位伙伴在当前星球', 'people on this planet')}</span>
                 <button type="button" disabled={reducedMotion} onClick={() => setAutoRotate((current) => !current)}>
                   {autoRotate ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
                   {reducedMotion ? t('已减少动效', 'Reduced motion') : autoRotate ? t('暂停', 'Pause') : t('继续', 'Resume')}
@@ -262,8 +316,8 @@ export default function CommunityPeople() {
                   )}>
                     <Suspense fallback={<CommunityPlanetLoading t={t} />}>
                       <CommunityPeoplePlanet
-                        people={people}
-                        ariaLabel={t('可旋转的伙伴星球', 'Rotatable community people planet')}
+                        people={filteredPeople}
+                        ariaLabel={`${lang === 'zh' ? selectedPlanetConfig.zh : selectedPlanetConfig.en} · ${t('可旋转的伙伴星球', 'Rotatable community people planet')}`}
                         selectedPersonId={selectedPersonId}
                         ownPersonId={ownPersonId}
                         autoRotate={autoRotate}
@@ -295,10 +349,10 @@ export default function CommunityPeople() {
                     <p>{t('伙伴索引', 'People index')}</p>
                     <h2 id="community-people-index-title">{t('从名字出发，也能抵达同一颗星。', 'Start with a name and reach the same star.')}</h2>
                   </div>
-                  <span>{people.length}</span>
+                  <span>{filteredPeople.length}</span>
                 </div>
                 <div className="community-people-index__list">
-                  {people.map((person) => {
+                  {filteredPeople.map((person) => {
                     const displayName = getDisplayName(person);
                     const isMe = person.id === ownPersonId;
                     return (
@@ -308,12 +362,13 @@ export default function CommunityPeople() {
                       </button>
                     );
                   })}
+                  {!filteredPeople.length ? <p className="community-people-index__empty">{t('这个星球暂时还没有已确认并公开展示的成员。', 'No confirmed, visible members are on this planet yet.')}</p> : null}
                 </div>
               </section>
             </>
           ) : (
             <div className="community-people-list">
-              {people.map((person, index) => (
+              {filteredPeople.map((person, index) => (
                 <CommunityPersonCard
                   key={person.id}
                   person={person}
@@ -324,11 +379,12 @@ export default function CommunityPeople() {
                   onMessage={(personId) => void startConversation(personId)}
                 />
               ))}
+              {!filteredPeople.length ? <CommunityEmptyState title={t('这个星球正在等待伙伴', 'This planet is waiting for members')} description={t('已确认身份且选择展示资料的成员会出现在这里。', 'Members with confirmed identities and visible profiles will appear here.')} /> : null}
             </div>
           )}
-        </div>
+          </div>
+        </>
       ) : null}
-      {!loading && !error && !people.length ? <CommunityEmptyState title={t('伙伴们还在准备资料', 'Profiles are still taking shape')} description={t('当正式成员选择在目录中出现时，你会在这里看见他们。', 'Members will appear here when they choose to share their profile.')} /> : null}
     </CommunitySurface>
   );
 }

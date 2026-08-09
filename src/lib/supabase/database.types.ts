@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      article_categories: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: number
+          is_active: boolean
+          name_en: string | null
+          name_zh: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: never
+          is_active?: boolean
+          name_en?: string | null
+          name_zh: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: never
+          is_active?: boolean
+          name_en?: string | null
+          name_zh?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       community_applications: {
         Row: {
           additional_info: string | null
@@ -628,6 +664,7 @@ export type Database = {
         Row: {
           approved_at: string | null
           archived_at: string | null
+          category_id: number | null
           collaboration_mode: string
           content: string
           content_html: string | null
@@ -656,6 +693,7 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           archived_at?: string | null
+          category_id?: number | null
           collaboration_mode?: string
           content?: string
           content_html?: string | null
@@ -684,6 +722,7 @@ export type Database = {
         Update: {
           approved_at?: string | null
           archived_at?: string | null
+          category_id?: number | null
           collaboration_mode?: string
           content?: string
           content_html?: string | null
@@ -711,6 +750,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "field_notes_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "article_categories"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "field_notes_cover_media_id_fkey"
             columns: ["cover_media_id"]
             isOneToOne: false
@@ -733,12 +779,16 @@ export type Database = {
           created_at: string
           created_by: string | null
           description: string | null
+          description_en: string | null
           icon: string | null
           id: number
           is_active: boolean
+          is_core: boolean
           is_public: boolean
           name_en: string | null
           name_zh: string
+          planet_slug: string | null
+          selectable_on_signup: boolean
           slug: string
           sort_order: number
           updated_at: string
@@ -749,12 +799,16 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          description_en?: string | null
           icon?: string | null
           id?: never
           is_active?: boolean
+          is_core?: boolean
           is_public?: boolean
           name_en?: string | null
           name_zh: string
+          planet_slug?: string | null
+          selectable_on_signup?: boolean
           slug: string
           sort_order?: number
           updated_at?: string
@@ -765,12 +819,16 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          description_en?: string | null
           icon?: string | null
           id?: never
           is_active?: boolean
+          is_core?: boolean
           is_public?: boolean
           name_en?: string | null
           name_zh?: string
+          planet_slug?: string | null
+          selectable_on_signup?: boolean
           slug?: string
           sort_order?: number
           updated_at?: string
@@ -1741,6 +1799,39 @@ export type Database = {
         Args: { decline_reason?: string; request_token: string }
         Returns: undefined
       }
+      decline_manual_guardian_confirmation_server: {
+        Args: {
+          target_actor_user_id: string
+          target_application_id: number
+          target_reason: string
+        }
+        Returns: undefined
+      }
+      find_or_create_field_note_tag: {
+        Args: { tag_name_en?: string; tag_name_zh: string }
+        Returns: {
+          archived_at: string | null
+          color: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          icon: string | null
+          id: number
+          is_active: boolean
+          name_en: string | null
+          name_zh: string
+          parent_id: number | null
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "topics"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       get_audit_logs: {
         Args: { before_created_at?: string; page_size?: number }
         Returns: {
@@ -1755,6 +1846,7 @@ export type Database = {
           metadata: Json
         }[]
       }
+      get_community_identity_stats_admin: { Args: never; Returns: Json }
       get_community_person_by_slug: {
         Args: { person_slug: string }
         Returns: {
@@ -1793,6 +1885,30 @@ export type Database = {
           otp_required: boolean
           request_id: string
           request_status: string
+        }[]
+      }
+      get_manual_guardian_review_server: {
+        Args: { target_actor_user_id: string; target_application_id: number }
+        Returns: {
+          consented_at: string
+          contact_channel: string
+          contact_ciphertext: string
+          contact_last4: string
+          document_effective_at: string
+          document_key: string
+          document_locale: string
+          document_status: string
+          document_title: string
+          document_version: number
+          guardian_name: string
+          guardian_relationship: string
+          legal_document_id: number
+          request_created_at: string
+          request_id: string
+          request_status: string
+          reviewer_note: string
+          verification_basis: string
+          verification_method: string
         }[]
       }
       get_my_community_application: {
@@ -1907,6 +2023,40 @@ export type Database = {
         Args: { target_session_id: number }
         Returns: string
       }
+      list_community_identity_labels_admin: {
+        Args: never
+        Returns: {
+          color: string
+          description_en: string
+          description_zh: string
+          icon: string
+          id: number
+          is_active: boolean
+          is_core: boolean
+          is_public: boolean
+          name_en: string
+          name_zh: string
+          planet_slug: string
+          selectable_on_signup: boolean
+          slug: string
+          sort_order: number
+          updated_at: string
+        }[]
+      }
+      list_community_identity_members_admin: {
+        Args: { page_size?: number; search_query?: string }
+        Returns: {
+          display_name: string
+          latest_assigned_at: string
+          membership_status: string
+          nature_name: string
+          person_id: number
+          planet_slugs: string[]
+          primary_identity_slug: string
+          secondary_identity_slugs: string[]
+          user_id: string
+        }[]
+      }
       list_community_people: {
         Args: {
           before_joined_at?: string
@@ -1920,10 +2070,17 @@ export type Database = {
           country: string
           display_name: string
           id: number
+          identity_labels: Json
           joined_at: string
           name_en: string
           name_zh: string
           nature_name: string
+          planet_slugs: string[]
+          primary_identity_color: string
+          primary_identity_name_en: string
+          primary_identity_name_zh: string
+          primary_identity_slug: string
+          primary_planet_slug: string
           profile_visibility: string
           region: string
           slug: string
@@ -1996,6 +2153,15 @@ export type Database = {
           updated_at: string
         }[]
       }
+      list_membership_application_identity_declarations: {
+        Args: { target_application_ids?: number[] }
+        Returns: {
+          application_id: number
+          primary_identity_slug: string
+          secondary_identity_slugs: string[]
+          user_id: string
+        }[]
+      }
       list_membership_applications: {
         Args: {
           application_statuses?: string[]
@@ -2040,6 +2206,21 @@ export type Database = {
           timezone: string
           title: string
           waitlist_count: number
+        }[]
+      }
+      list_signup_identity_options: {
+        Args: never
+        Returns: {
+          color: string
+          description_en: string
+          description_zh: string
+          icon: string
+          id: number
+          name_en: string
+          name_zh: string
+          planet_slug: string
+          slug: string
+          sort_order: number
         }[]
       }
       load_field_note_collab_document_server: {
@@ -2090,6 +2271,20 @@ export type Database = {
           target_thread_snapshot: Json
         }
         Returns: undefined
+      }
+      record_manual_guardian_confirmation_server: {
+        Args: {
+          affirmed_guardianship: boolean
+          affirmed_joining: boolean
+          affirmed_notice_read: boolean
+          target_actor_user_id: string
+          target_application_id: number
+          target_confirmed_at: string
+          target_reviewer_note?: string
+          target_verification_basis: string
+          target_verification_method: string
+        }
+        Returns: number
       }
       remove_growth_media: {
         Args: { target_growth_record_id: number; target_media_asset_id: number }
@@ -2148,6 +2343,17 @@ export type Database = {
         }
         Returns: undefined
       }
+      review_community_application_with_identities: {
+        Args: {
+          applicant_message: string
+          confirmed_primary_identity_slug?: string
+          confirmed_secondary_identity_slugs?: string[]
+          review_decision: string
+          reviewer_internal_note?: string
+          target_application_id: number
+        }
+        Returns: undefined
+      }
       review_minor_identity_verification: {
         Args: {
           review_decision: string
@@ -2174,9 +2380,26 @@ export type Database = {
         Args: { target_role_id: number; target_user_id: string }
         Returns: undefined
       }
+      save_field_note_metadata: {
+        Args: {
+          target_category_id: number
+          target_field_note_id: number
+          target_topic_ids?: number[]
+          target_visibility?: string
+        }
+        Returns: undefined
+      }
       send_direct_message: {
         Args: { message_body: string; target_conversation_id: string }
         Returns: number
+      }
+      set_community_member_identities_admin: {
+        Args: {
+          primary_identity_slug: string
+          secondary_identity_slugs?: string[]
+          target_person_id: number
+        }
+        Returns: undefined
       }
       set_role_permissions: {
         Args: { permission_keys: string[]; target_role_id: number }
@@ -2206,6 +2429,21 @@ export type Database = {
       }
       unblock_community_member: {
         Args: { target_user_id: string }
+        Returns: undefined
+      }
+      update_community_identity_label_admin: {
+        Args: {
+          target_color?: string
+          target_description_en?: string
+          target_description_zh?: string
+          target_is_active?: boolean
+          target_label_id: number
+          target_name_en?: string
+          target_name_zh: string
+          target_planet_slug?: string
+          target_selectable_on_signup?: boolean
+          target_sort_order?: number
+        }
         Returns: undefined
       }
       update_growth_record: {

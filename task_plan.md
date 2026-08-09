@@ -4,10 +4,40 @@
 Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
 
 ## Current Request
-Complete the Community collaborative-editor configuration end to end: local Supabase server secret, Vercel server variables, managed Redis status, local services, and live create/load/save/collaboration verification.
+Implement the approved Community manual Guardian-review mode and configure managed Redis so every age band can register, under-14 membership remains blocked until staff-recorded Guardian confirmation, and collaborative editing works in Preview and Production.
 
 ## Current Phase
-Configuration audit in progress; obtain credentials without exposing them, then configure local and hosted environments and verify the complete editor path.
+Database and server implementation in progress; write regression coverage, create the Supabase migration through the CLI, and implement the manual Guardian API boundary.
+
+## 2026-08-09 Manual Guardian + Redis Rollout
+
+- [x] Phase 1 — Confirm product, safety, legal, and infrastructure design.
+- [x] Phase 2 — Write the exact implementation and verification plan.
+- [ ] Phase 3 — Add the database workflow and server APIs for manual Guardian contact/confirmation. **Remote validation pending**
+- [x] Phase 4 — Update applicant, status, and staff-review UI for the approved age behavior.
+- [ ] Phase 5 — Provision isolated Redis, generate stable Guardian secrets, configure Vercel, and deploy Preview/Production. **Configuration complete; deploy pending**
+- [ ] Phase 6 — Run database/app/browser verification, push GitHub, and document the release.
+
+### Errors
+
+- A combined planning-file patch expected stale Current Request text and the heading `# Findings & Decisions`, but the repository uses different text and `# Findings`; no files changed, so the update was split into exact per-file patches.
+- A second combined patch still matched stale Current Request wording; verification failed before any write, and the next exact-context patch succeeded.
+- API/service inspection referenced nonexistent `src/services/community-applications/index.ts`; use the actual membership service located from `rg --files src/services`.
+- The first hosted legal-document probe tried the uninstalled `dotenv/config` preload; retry with Node's built-in `--env-file=.env.local` so no dependency or secret output is needed.
+- The built-in env-file retry used the shell's default Node 20, which current `supabase-js` rejects because native WebSocket is unavailable; use the already-installed `/opt/homebrew/bin/node` 23 runtime.
+- The first network-enabled legal-document query used nonexistent column `content_hash`; the migration defines `content_sha256`, so retry with the authoritative schema name.
+- The first Upstash creation CLI timed out after its five-minute terms-acceptance window before the user confirmation arrived; verify the installation state and retry the same idempotent resource creation parameters.
+- A second Free Upstash resource for Production was rejected because the installation exposes only paid plans after its first Free database. Do not select a paid plan; use the approved shared-resource/separate-namespace fallback after verifying the collaboration Redis prefix.
+- The first combined implementation-plan patch matched the phase text in the wrong order and wrote nothing; split creation of the plan document from exact planning-status updates.
+- The first generated workflow-override patch expected one exact onboarding guard string but found none after extraction; no migration content changed, so inspect literal whitespace and retry with bounded structural replacements.
+- The structural retry validated eight overrides but found the profile-update guard uses a split-line condition; no workflow override was written, so add the alternate bounded pattern and rerun once.
+- Linked `supabase db push --dry-run` could not authenticate because the CLI access token is no longer present. Continue local implementation/tests and restart device authorization before hosted rollback validation or migration apply.
+- The first Redis runtime/test patch used a stale test title and wrote nothing; split runtime edits from insertion into the actual `collaboration server configuration` block.
+- `npx ui-skills categories` and the narrow `forms` listing again returned no usable context. Follow the approved Community design system and existing accessible form/surface primitives.
+- The first multi-page UI patch expected a nonexistent CommunityAuth import and wrote nothing; split the shared flag/basic routing edits from exact CommunityAuth and status copy patches.
+- The first sandboxed move of Upstash-generated `.agents` content was denied, while `skills-lock.json` was already moved to the temporary backup. A narrowly authorized retry moved `.agents`; both artifacts remain recoverable under `/private/tmp/rgan-upstash-skills-auto-20260809`.
+- Vercel `integration resource connect` did not accept the Marketplace `store_…` ID and made no change; list the resource's CLI identifier and retry by resource name.
+- The first post-write env validation attempted to read Vercel Sensitive values, which correctly pull as non-recoverable placeholders. Validate the non-sensitive Redis source and local secret backup instead; keep secret values unreadable after creation.
 
 ## 2026-08-08 Collaborative Editor Configuration
 

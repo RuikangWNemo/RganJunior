@@ -1,5 +1,72 @@
 # Findings
 
+## 2026-08-09 Approved Manual Guardian + Redis Rollout
+
+### Approved behavior
+
+- Every age band may create an account, finish onboarding, and submit a membership application.
+- Applicants aged 18+ and 14–17 enter ordinary staff review without Guardian confirmation.
+- Applicants under 14 remain `pending_guardian` until staff has contacted a parent/guardian and recorded explicit confirmation.
+- Under-14 applicants may sign in and view application status, but cannot enter member surfaces, post, message, upload, or collaborate until Guardian confirmation and membership approval are both complete.
+- The existing automated Guardian invite/OTP schema and APIs stay available for a future mode, while the current UI uses staff-led manual confirmation.
+- Guardian contact data remains encrypted; audit history is retained; staff must not paste complete identity documents into notes.
+- The user approved Upstash Redis through Vercel Marketplace, with Preview and Production isolated by distinct resources or key prefixes.
+
+### Existing implementation facts
+
+- `CommunityAuth.tsx` already creates Supabase Auth accounts for all age bands.
+- Membership submission currently sends both `under14` and `age14_17` to `pending_guardian`; only `under14` should do so in manual mode.
+- The current review RPC blocks both minor bands without Guardian verification; it must be narrowed to `under14`.
+- Private Guardian tables and automated invite/OTP functions already exist outside the public Data API.
+- Production collaboration intentionally fails closed without `COMMUNITY_COLLAB_REDIS_URL`.
+- Production Vercel environment variables do not yet include Redis, Guardian secrets, or a Guardian flow-mode flag.
+- The current Supabase changelog adds no breaking change that affects this migration. The existing 2026 Data API explicit-exposure change still reinforces keeping Guardian detail in the private schema and granting public RPC execution intentionally.
+- No Supabase MCP tools are available in this task, so schema iteration and verification must use the authenticated CLI/linked database paths already established by the repository.
+- The active application-state implementation is overwritten by `20260807152919_idempotent_community_application_review.sql`; the new migration must replace the latest function signature, not only edit the original workflow migration.
+- `CommunityOnboarding.tsx` currently diverts every unverified under-14 account to the Guardian page before onboarding, while `CommunityApply.tsx` sends `pending_guardian` applicants there after submission. Manual mode needs the Guardian page to collect a contact for staff follow-up without invoking OTP delivery.
+- The current application status UI treats all non-adults as requiring safety review; this must change to under-14 only.
+- The existing admin application view already exposes masked Guardian status and identity state, but has no manual-contact read or consent-recording control.
+- Existing Guardian storage already has the fields needed for manual confirmation: encrypted contact, Guardian name/relationship, legal-document reference, three affirmations, confirmation timestamp, staff/event audit, and optional evidence hashes.
+- `private.create_guardian_consent_request_server` is service-role only and already associates the latest application and legal document; manual mode can reuse it while skipping webhook delivery.
+- The latest approval function separately requires both Guardian consent and identity verification for both minor bands. The new rule should narrow Guardian consent to under-14 and remove the special minor gate for 14–17 while preserving ordinary staff review.
+- `private.get_my_guardian_consent_state` currently reports onboarding completion only after under-14 verification; manual mode must permit onboarding/application before verification while membership eligibility remains false.
+- The Guardian request endpoint currently asserts webhook configuration before any write. A `GUARDIAN_FLOW_MODE=manual` branch can keep rate limiting, encryption, legal-document lookup, and request creation while omitting token delivery and returning a staff-follow-up result.
+- `community-security.ts` implements AES-256-GCM encryption but no decryption helper; an admin-only API will need authenticated sensitive-review permission plus a strict decryption response contract.
+- The public token/OTP page can remain compiled for future automated mode, while the signed-in setup view switches its copy and outcome according to the manual flow flag.
+- Admin API authentication already has `requirePermission`; `memberships.review_sensitive` is the appropriate existing permission for reading decrypted Guardian contact and recording the sensitive confirmation.
+- `listMembershipApplications()` does not include `pending_guardian` in its default database filter, so the staff screen must explicitly request that status or change the RPC default.
+- `private.guardian_consents.otp_challenge_id` is currently mandatory. Manual confirmation needs provenance-aware schema changes: nullable OTP challenge for manual records plus method, staff actor, verification basis, and bounded notes with consistency checks.
+- The clean state transition is one staff RPC that verifies the actor permission, closes the manual request, inserts the canonical consent record and guardian-attestation identity record, marks both safety states verified, moves `pending_guardian` to `submitted`, writes audit events, and notifies the applicant.
+- Manual mode can reuse the existing `pending` Guardian request state and token hash without delivering the token. Only the consent evidence needs provenance extensions; this avoids altering the proven automated-request state machine.
+- Approval and recovery functions must consistently enforce: under-14 = Guardian + identity; age 14–17 = identity only; adult = ordinary review. Updating only submission/review would leave restoration and profile routes inconsistent.
+- Because server-role RPC calls do not carry the staff user's Supabase JWT, manual consent functions must persist the validated staff actor explicitly in `recorded_by` and `guardian_consent_events.actor_user_id`; relying on `auth.uid()` would produce a null actor.
+- The staff API uses only authenticated POST actions (`read`, `confirm`, `decline`), requires `memberships.review_sensitive` before invoking service-role RPCs, decrypts exactly one contact in memory, and never returns ciphertext or lookup/token hashes.
+- The original Guardian legal document migration inserts only a draft. The hosted state must be checked for an active reviewed document before request collection can be enabled; activating draft text without an approved legal basis is not acceptable.
+- The hosted read-only check confirms exactly one Guardian document: `guardian-community-consent` v1, title marked draft, status `draft`, with no effective or published timestamp. There is no active legally reviewed document to present or record today.
+- Current database regression coverage explicitly asserts that 14–17 applicants wait for Guardian confirmation and that under-14 onboarding is blocked. Those assertions must be replaced with the newly approved behavior while keeping automated OTP tests intact.
+
+### Legal/safety basis
+
+- The rollout treats data about children under 14 as sensitive personal information and requires separate parent/guardian consent under China PIPL Articles 28 and 31.
+- Internal staff approval does not substitute for Guardian consent; the confirmation record must precede membership approval for under-14 applicants.
+- Implementation and Redis deployment may proceed, but the staff confirmation path must fail closed until an active Guardian document exists; publishing or rewriting legal terms is a separate authorization/review decision.
+
+### Vercel execution constraints
+
+- Upstash Redis should be provisioned through the linked Vercel Marketplace integration before adapting environment names; the integration controls the actual injected variables.
+- Preview and Production resources must be connected with environment-specific scopes. Sensitive values must remain server-only and be added/updated through stdin or integration injection, never command text or source files.
+- Preview verification should use `vercel curl` under deployment protection. The Production candidate should use `--prod --skip-domain`, then be promoted only after verification.
+- Marketplace provisioning may require first-time terms acceptance in the browser; the CLI should remain running while the user accepts rather than being killed or replaced with a manual mock.
+- Vercel Sensitive environment values are intentionally non-recoverable through `env pull`; successful write output plus name/scope checks are the hosted verification boundary. Format/length verification must happen before upload or against the local mode-600 backup.
+- Live discovery found `upstash/upstash-kv`; its `free` plan is explicit, `autoUpgrade` defaults to true, and Tokyo `hnd1` is available. The rollout therefore sets `--plan free`, `autoUpgrade=false`, `prodPack=false`, and `eviction=false` explicitly.
+- `rgan-community-collab-preview` is ready on the Free plan and connected only to Preview. Upstash does not offer a second Free database in this installation; Production must share it with a distinct namespace or require a separately approved paid plan.
+- The current Hocuspocus Redis extension hardcodes the channel prefix `rgan:field-notes`; `COMMUNITY_COLLAB_INSTANCE_NAME` is used as the Redis message identifier, not as a namespace. Therefore the existing code does not safely isolate shared Preview/Production data.
+- The current stable instance name is also reused as the Redis message identifier, which would cause separate Vercel instances in the same environment to ignore each other. The fix is a stable environment-derived prefix plus a unique per-process identifier.
+
+### Design artifact
+
+- `docs/plans/2026-08-09-community-manual-guardian-and-redis-design.md` was approved and committed as `fbd465e`.
+
 ## 2026-08-08 Community Collaborative Editor — Final State
 
 - Supabase now has a dedicated `community_editor` server-only secret key for the collaborative editor; the dashboard exposes a unique `Copy API key` action on that row, so the value can be transferred without revealing it.

@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
-import { UserRound } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import AboutManualCarousel from '@/components/about/AboutManualCarousel';
+import AboutMethodPhotoReel from '@/components/about/AboutMethodPhotoReel';
 import LivingLabCard from '@/components/about/LivingLabCard';
+import ParentGuardianReel from '@/components/about/ParentGuardianReel';
 import BrandWordmark from '@/components/BrandWordmark';
 import EditorialSectionNav from '@/components/ui/EditorialSectionNav';
+import { aboutMethodPhotoGroups } from '@/content/aboutMethodPhotos';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized } from '@/lib/brand';
 import {
@@ -100,15 +102,23 @@ const youthPartners: readonly YouthPartner[] = [
 const adultTeamPhotos = [
   '/images/about/adult-support/adult-support-01.webp',
   '/images/about/adult-support/adult-support-02.webp',
-  '/images/about/adult-support/adult-support-03.webp',
-  '/images/about/adult-support/adult-support-04.webp',
   '/images/about/adult-support/adult-support-05.webp',
   '/images/about/adult-support/adult-support-06.webp',
   '/images/about/adult-support/adult-support-07.webp',
   '/images/about/adult-support/adult-support-08.webp',
 ] as const;
 
-const parentGuardianSlots = [1, 2, 3, 4] as const;
+const parentGuardianPhotos = [
+  '/images/about/adult-support/adult-support-03.webp',
+  '/images/about/adult-support/adult-support-04.webp',
+  '/images/about/parent-guardian/parent-guardian-03.webp',
+  '/images/about/parent-guardian/parent-guardian-04.webp',
+  '/images/about/parent-guardian/parent-guardian-05.webp',
+  '/images/about/parent-guardian/parent-guardian-06.webp',
+  '/images/about/parent-guardian/parent-guardian-07.webp',
+  '/images/about/parent-guardian/parent-guardian-08.webp',
+  '/images/about/parent-guardian/parent-guardian-09.webp',
+] as const;
 
 const coCreationDirections = [
   {
@@ -214,6 +224,7 @@ const methods = [
       zh: '从日常小事开始，重新感受身体、节奏、关系和照顾自己的能力。',
       en: 'Start with ordinary moments and rediscover the body, rhythm, relationships, and the ability to care for oneself.',
     },
+    photos: aboutMethodPhotoGroups[0],
   },
   {
     number: '02',
@@ -223,6 +234,7 @@ const methods = [
       zh: '孩子走进正在发生的乡村生活，看见食物、土地、产业和人之间的真实连接。',
       en: 'Young people enter village life as it unfolds and see the real connections among food, land, livelihoods, and people.',
     },
+    photos: aboutMethodPhotoGroups[1],
   },
   {
     number: '03',
@@ -232,6 +244,7 @@ const methods = [
       zh: '问题来自真实现场，也回到真实生活中被讨论、观察和回应。',
       en: 'Questions come from real places and return to everyday life to be discussed, observed, and answered.',
     },
+    photos: aboutMethodPhotoGroups[2],
   },
   {
     number: '04',
@@ -241,6 +254,7 @@ const methods = [
       zh: '他们在小队、任务和分享中提出问题、表达想法，也学习把一点点想法变成行动。',
       en: 'In teams, missions, and sharing, they raise questions, express ideas, and learn to turn a small thought into action.',
     },
+    photos: aboutMethodPhotoGroups[3],
   },
 ] as const;
 
@@ -391,6 +405,15 @@ export default function About() {
   const [activeChapter, setActiveChapter] = useState<AboutChapterId>(
     () => readAboutChapterHash(location.hash) ?? 'team',
   );
+  const [activeMethodIndex, setActiveMethodIndex] = useState(0);
+
+  const handleMethodCycleComplete = useCallback((completedMethodIndex: number) => {
+    setActiveMethodIndex((currentIndex) => (
+      currentIndex === completedMethodIndex
+        ? (currentIndex + 1) % methods.length
+        : currentIndex
+    ));
+  }, []);
 
   const scrollToChapter = useCallback((chapterId: AboutChapterId) => {
     chapterSelectionLockRef.current = Date.now() + CHAPTER_SELECTION_LOCK_MS;
@@ -447,12 +470,12 @@ export default function About() {
 
   return (
     <div className="about-v2-page pt-20">
-      <header className="about-v2-hero">
+      <header className="about-v2-hero about-v2-hero--full-bleed">
         <div className="about-v2-shell about-v2-hero__grid">
           <div className="about-v2-hero__copy">
             <p>{t('把成长放回真实生活里', 'Put growth back into real life')}</p>
             <h1 aria-label={t('关于阿柑少年', `About ${brandName}`)}>
-              {t('关于', 'About')}
+              <span className="about-v2-hero__title-about">{t('关于', 'About')}</span>
               <span className="about-v2-hero__title-brand">
                 <BrandWordmark
                   language={lang}
@@ -461,7 +484,7 @@ export default function About() {
                 />
               </span>
             </h1>
-            <div>
+            <div className="about-v2-hero__lead">
               {t(
                 '真正的成长发生在很多地方。在森林、茶山、饭桌、厨房、果园和运动场上，也在人与人的真实相处中。',
                 'Real growth happens in many places: forests, tea mountains, dining tables, kitchens, orchards, sports fields, and honest relationships.',
@@ -705,28 +728,7 @@ export default function About() {
                   </div>
                 </article>
 
-                <div
-                  className="about-v2-adult-roster about-v2-parent-guardian-roster"
-                  aria-label={t('家长守护团成员名录', 'Parent guardian circle member directory')}
-                >
-                  {parentGuardianSlots.map((slot) => (
-                    <article
-                      key={slot}
-                      aria-label={t(
-                        `家长守护团成员 ${slot} 占位档案`,
-                        `Parent guardian circle member ${slot} placeholder profile`,
-                      )}
-                    >
-                      <figure aria-hidden="true">
-                        <UserRound />
-                      </figure>
-                      <div>
-                        <h4>{t('姓名待补充', 'Name to be added')}</h4>
-                        <p>{t('角色待补充', 'Role to be added')}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
+                <ParentGuardianReel photos={parentGuardianPhotos} />
               </section>
             </div>
           </div>
@@ -791,21 +793,32 @@ export default function About() {
             <AboutManualCarousel
               items={methods}
               className="about-v2-methods"
+              activeIndex={activeMethodIndex}
+              onActiveIndexChange={setActiveMethodIndex}
               ariaLabel={t('我们如何做轮播', 'How we work carousel')}
               navigationLabel={t('选择一种实践方式', 'Choose a way of working')}
               previousLabel={t('上一个实践方式', 'Previous way of working')}
               nextLabel={t('下一个实践方式', 'Next way of working')}
               getItemLabel={(method) => pickLocalized(method.title, lang)}
               getSelectLabel={(method) => t(`查看${method.title.zh}`, `View ${method.title.en}`)}
-              renderSlide={(method) => (
+              renderSlide={(method, methodIndex, active) => (
                 <article key={method.number}>
-                  <div>
-                    <span>{method.number}</span>
-                    <h3>{pickLocalized(method.title, lang)}</h3>
-                  </div>
-                  <div>
-                    <p className="about-v2-method__examples">{pickLocalized(method.examples, lang)}</p>
-                    <p>{pickLocalized(method.body, lang)}</p>
+                  <AboutMethodPhotoReel
+                    photos={method.photos}
+                    title={method.title}
+                    methodIndex={methodIndex}
+                    active={active}
+                    onCycleComplete={handleMethodCycleComplete}
+                  />
+                  <div className="about-v2-method__copy">
+                    <div>
+                      <span>{method.number}</span>
+                      <h3>{pickLocalized(method.title, lang)}</h3>
+                    </div>
+                    <div>
+                      <p className="about-v2-method__examples">{pickLocalized(method.examples, lang)}</p>
+                      <p>{pickLocalized(method.body, lang)}</p>
+                    </div>
                   </div>
                 </article>
               )}

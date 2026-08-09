@@ -23,6 +23,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { CommunityErrorState, CommunityLoadingState } from '@/components/community/CommunitySurface';
 import StoryCollaborationPanel from '@/components/community/editor/StoryCollaborationPanel';
+import StoryPublishingSettings from '@/components/community/editor/StoryPublishingSettings';
 import { useAuth } from '@/contexts/AuthContext';
 import type { FieldNoteSaveState } from '@/lib/field-note-document/types';
 import { useCommunityUi } from '@/lib/communityUi';
@@ -31,7 +32,15 @@ import {
   getFieldNoteEditorBundle,
   type FieldNoteEditorBundle,
 } from '@/services/field-note-editor';
-import { createFieldNote } from '@/services/field-notes';
+import {
+  createFieldNote,
+  findOrCreateFieldNoteTag,
+  getFieldNoteMetadata,
+  listArticleCategories,
+  listFieldNoteTags,
+  saveFieldNoteMetadata,
+  type FieldNoteMetadata,
+} from '@/services/field-notes';
 
 const CollaborativeStoryEditor = lazy(
   () => import('@/components/community/editor/CollaborativeStoryEditor'),
@@ -89,10 +98,16 @@ export default function CommunityStoryEditor() {
   const dirtyVersionRef = useRef(0);
   const savedVersionRef = useRef(0);
   const autoSaveTimerRef = useRef<number | null>(null);
+  const metadataRef = useRef<FieldNoteMetadata>({ categoryId: null, topicIds: [], visibility: 'private' });
+  const metadataDirtyRef = useRef(false);
 
   const [bundle, setBundle] = useState<FieldNoteEditorBundle | null>(null);
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
+  const [metadata, setMetadata] = useState<FieldNoteMetadata>(metadataRef.current);
+  const [categories, setCategories] = useState<Awaited<ReturnType<typeof listArticleCategories>>>([]);
+  const [tags, setTags] = useState<Awaited<ReturnType<typeof listFieldNoteTags>>>([]);
+  const [creatingTag, setCreatingTag] = useState(false);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -140,12 +155,22 @@ export default function CommunityStoryEditor() {
     let active = true;
     setLoading(true);
     setError(null);
-    getFieldNoteEditorBundle(existingId, accessToken, shareToken)
-      .then((nextBundle) => {
+    Promise.all([
+      getFieldNoteEditorBundle(existingId, accessToken, shareToken),
+      getFieldNoteMetadata(existingId),
+      listArticleCategories(),
+      listFieldNoteTags(),
+    ])
+      .then(([nextBundle, nextMetadata, nextCategories, nextTags]) => {
         if (!active) return;
         setBundle(nextBundle);
         setTitle(nextBundle.access.title);
         setExcerpt(nextBundle.access.excerpt);
+        setMetadata(nextMetadata);
+        setCategories(nextCategories);
+        setTags(nextTags);
+        metadataRef.current = nextMetadata;
+        metadataDirtyRef.current = false;
         titleRef.current = nextBundle.access.title;
         excerptRef.current = nextBundle.access.excerpt;
       })
@@ -170,6 +195,10 @@ export default function CommunityStoryEditor() {
       if (mode !== 'automatic') setError(t('请先填写标题。', 'Add a title before saving.'));
       return;
     }
+    if (mode === 'submit' && !metadataRef.current.categoryId) {
+      setError(t('提交审核前，请先选择一个主分类。', 'Choose a primary category before submitting.'));
+      return;
+    }
 
     if (mode !== 'automatic' && autoSaveTimerRef.current) {
       window.clearTimeout(autoSaveTimerRef.current);
@@ -183,6 +212,10 @@ export default function CommunityStoryEditor() {
       setNotice(null);
     }
     try {
+      if (bundle.access.isOwner && (metadataDirtyRef.current || mode === 'submit')) {
+        await saveFieldNoteMetadata(existingId, metadataRef.current);
+        metadataDirtyRef.current = false;
+      }
       const result = await checkpointFieldNote({
         noteId: existingId,
         accessToken,
@@ -213,7 +246,7 @@ export default function CommunityStoryEditor() {
     } finally {
       if (mode !== 'automatic') setBusy(false);
     }
-  }, [accessToken, bundle?.access.canWrite, existingId, refreshBundle, shareToken, t]);
+  }, [accessToken, bundle?.access.canWrite, bundle?.access.isOwner, existingId, refreshBundle, shareToken, t]);
 
   const scheduleAutoSave = useCallback(() => {
     markDirty();
@@ -246,6 +279,31 @@ export default function CommunityStoryEditor() {
     setExcerpt(value);
     scheduleAutoSave();
   };
+  const handleMetadataChange = (nextMetadata: FieldNoteMetadata) => {
+    metadataRef.current = nextMetadata;
+    metadataDirtyRef.current = true;
+    setMetadata(nextMetadata);
+    scheduleAutoSave();
+  };
+  const handleCreateTag = async (name: string) => {
+    if (creatingTag) return;
+    setCreatingTag(true);
+    setError(null);
+    try {
+      const tag = await findOrCreateFieldNoteTag(name);
+      setTags((current) => current.some((item) => item.id === tag.id) ? current : [...current, tag]);
+      handleMetadataChange({
+        ...metadataRef.current,
+        topicIds: metadataRef.current.topicIds.includes(tag.id)
+          ? metadataRef.current.topicIds
+          : [...metadataRef.current.topicIds, tag.id],
+      });
+    } catch (tagError) {
+      setError(tagError instanceof Error ? tagError.message : t('无法新建标签。', 'Could not create the tag.'));
+    } finally {
+      setCreatingTag(false);
+    }
+  };
   const handleEditorReady = useCallback((editor: BlockNoteEditor) => {
     editorRef.current = editor;
   }, []);
@@ -262,6 +320,7 @@ export default function CommunityStoryEditor() {
   const SaveIcon = stateCopy.icon;
   const editable = bundle.access.canWrite;
   const canSubmit = bundle.access.isOwner && ['draft', 'changes_requested'].includes(bundle.access.status);
+  const metadataEditable = editable && bundle.access.isOwner;
 
   return (
     <section className="community-story-editor" aria-label={t('文章协作编辑器', 'Collaborative story editor')}>
@@ -288,7 +347,7 @@ export default function CommunityStoryEditor() {
             </button>
           ) : null}
           {canSubmit && editable ? (
-            <button type="button" className="community-button community-button--primary min-h-10" disabled={busy || !title.trim()} onClick={() => void persist('submit')}>
+            <button type="button" className="community-button community-button--primary min-h-10" disabled={busy || !title.trim() || !metadata.categoryId} onClick={() => void persist('submit')}>
               <Send className="size-4" />{t('提交审核', 'Submit')}
             </button>
           ) : null}
@@ -334,13 +393,34 @@ export default function CommunityStoryEditor() {
               disabled={!editable}
               maxLength={2_000}
             />
-            <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+            <div className="mt-3 text-xs">
               <div className="community-story-editor__meta-card"><span>{t('语言', 'Language')}</span><strong>{bundle.access.language === 'zh' ? '中文' : 'English'}</strong></div>
-              <div className="community-story-editor__meta-card"><span>{t('可见性', 'Visibility')}</span><strong>{bundle.access.visibility === 'private' ? t('仅自己', 'Private') : bundle.access.visibility === 'members' ? t('成员', 'Members') : t('公开', 'Public')}</strong></div>
             </div>
             {!editable ? (
               <p className="mt-3 flex items-start gap-2 rounded-xl bg-[hsl(var(--community-forest)/0.055)] p-3 text-xs leading-5 text-[hsl(var(--community-forest)/0.62)]">
                 <LockKeyhole className="mt-0.5 size-3.5 shrink-0" />{t('当前阶段正文为只读；你仍可查看评论与版本。', 'Content is read-only at this stage; comments and versions remain available.')}
+              </p>
+            ) : null}
+          </section>
+
+          <section className="border-t border-[hsl(var(--community-forest)/0.1)] pt-5">
+            <p className="community-story-editor__section-label">{t('发布设置', 'Publishing settings')}</p>
+            <div className="mt-3">
+              <StoryPublishingSettings
+                categories={categories}
+                tags={tags}
+                metadata={metadata}
+                language={bundle.access.language === 'en' ? 'en' : 'zh'}
+                editable={metadataEditable}
+                creatingTag={creatingTag}
+                t={t}
+                onChange={handleMetadataChange}
+                onCreateTag={handleCreateTag}
+              />
+            </div>
+            {editable && !bundle.access.isOwner ? (
+              <p className="mt-3 flex items-start gap-2 rounded-xl bg-[hsl(var(--community-forest)/0.055)] p-3 text-xs leading-5 text-[hsl(var(--community-forest)/0.62)]">
+                <LockKeyhole className="mt-0.5 size-3.5 shrink-0" />{t('协作者可以编辑正文；分类、标签和可见范围由文章作者管理。', 'Collaborators can edit the body; the owner manages category, tags, and visibility.')}
               </p>
             ) : null}
           </section>

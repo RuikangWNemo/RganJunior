@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, ShieldCheck } from 'lucide-react';
 
 import CommunityProcessSteps from '@/components/community/CommunityProcessSteps';
@@ -13,6 +13,7 @@ import {
 } from '@/components/community/CommunitySurface';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
+import { isManualGuardianFlow } from '@/lib/guardianFlow';
 import {
   getGuardianConsentRequest,
   requestGuardianConsent,
@@ -142,30 +143,40 @@ function MinorGuardianSetup() {
   const submit = async (event: FormEvent) => {
     event.preventDefault(); setBusy(true); setError(null);
     try { await requestGuardianConsent({ ...form, applicationId, language: lang }); setSent(true); }
-    catch (requestError) { setError(requestError instanceof Error ? requestError.message : t('邀请发送失败。', 'Could not send the invitation.')); }
+    catch (requestError) { setError(requestError instanceof Error ? requestError.message : isManualGuardianFlow ? t('联系方式登记失败。', 'Could not save the contact details.') : t('邀请发送失败。', 'Could not send the invitation.')); }
     finally { setBusy(false); }
   };
+
+  if (isManualGuardianFlow && communityState?.age_band && communityState.age_band !== 'under_14') {
+    return <Navigate to={communityState.destination || '/community/application'} replace />;
+  }
 
   return (
     <div className="community-page-frame">
       <CommunitySurface
         eyebrow="Youth safety"
-        title={sent ? t('确认邀请已发送', 'Confirmation invitation sent') : t('邀请监护人知情确认', 'Invite a guardian to confirm')}
-        description={sent ? t('请监护人打开收到的链接，阅读说明并完成手机验证码。', 'Ask your guardian to open the link, read the notice, and complete phone verification.') : t('这里只收集发送确认所必需的监护人联系信息。', 'We only collect the guardian contact details needed to send this confirmation.')}
-        aside={<p>{communityState?.age_band === 'under_14' ? t('未满 14 岁：监护人确认前不会继续收集完整个人主页资料。', 'Under 14: full profile details are not collected before guardian confirmation.') : t('14–17 岁：可以先完善资料，但正式社群审核前必须完成监护人确认。', 'Age 14–17: profile setup can happen first, but guardian confirmation is required before membership review.')}</p>}
+        title={isManualGuardianFlow
+          ? sent ? t('联系方式已登记', 'Contact details saved') : t('登记监护人联系方式', 'Provide guardian contact details')
+          : sent ? t('确认邀请已发送', 'Confirmation invitation sent') : t('邀请监护人知情确认', 'Invite a guardian to confirm')}
+        description={isManualGuardianFlow
+          ? sent ? t('工作人员会与监护人联系、说明社群与隐私事项，并留档确认。', 'Staff will contact the guardian, explain the community and privacy notice, and record confirmation.') : t('联系方式只用于本次监护人沟通与入群审核，不会出现在公开主页。', 'These details are used only for Guardian communication and membership review, and never appear on a public profile.')
+          : sent ? t('请监护人打开收到的链接，阅读说明并完成手机验证码。', 'Ask your guardian to open the link, read the notice, and complete phone verification.') : t('这里只收集发送确认所必需的监护人联系信息。', 'We only collect the guardian contact details needed to send this confirmation.')}
+        aside={<p>{isManualGuardianFlow
+          ? t('未满 14 岁可以正常完成资料和申请；在监护人确认与申请审批完成前，成员功能保持关闭。', 'Under-14 applicants can complete their profile and application normally. Member features stay closed until Guardian confirmation and application approval are complete.')
+          : communityState?.age_band === 'under_14' ? t('未满 14 岁：监护人确认前不会继续收集完整个人主页资料。', 'Under 14: full profile details are not collected before guardian confirmation.') : t('14–17 岁：可以先完善资料，但正式社群审核前必须完成监护人确认。', 'Age 14–17: profile setup can happen first, but guardian confirmation is required before membership review.')}</p>}
         width="wide"
       >
         <CommunityProcessSteps current="safety" />
         {sent ? (
-          <div className="space-y-5"><div className="flex items-center gap-4 rounded-[1.4rem] bg-[hsl(var(--community-forest)/0.07)] p-6"><CheckCircle2 className="size-8 shrink-0 text-[hsl(var(--community-orange))]" /><p>{t('你可以稍后回到这里查看状态。', 'You can return here later to check the status.')}</p></div><button type="button" className={communitySecondaryButtonClass} onClick={() => setSent(false)}>{t('重新发送邀请', 'Send invitation again')}</button></div>
+          <div className="space-y-5"><div className="flex items-center gap-4 rounded-[1.4rem] bg-[hsl(var(--community-forest)/0.07)] p-6"><CheckCircle2 className="size-8 shrink-0 text-[hsl(var(--community-orange))]" /><p>{isManualGuardianFlow ? t('你可以在申请状态页查看进度；工作人员完成联系后，申请会自动进入审核。', 'Check progress on the application page. After staff completes contact, the application automatically enters review.') : t('你可以稍后回到这里查看状态。', 'You can return here later to check the status.')}</p></div><div className="flex flex-wrap gap-3"><Link className={communityPrimaryButtonClass} to="/community/application">{t('查看申请状态', 'View application status')}</Link><button type="button" className={communitySecondaryButtonClass} onClick={() => setSent(false)}>{isManualGuardianFlow ? t('更新联系方式', 'Update contact') : t('重新发送邀请', 'Send invitation again')}</button></div></div>
         ) : (
           <form className="space-y-5" onSubmit={submit}>
             <label className="block space-y-2 text-sm font-semibold"><span>{t('监护人姓名 *', 'Guardian name *')}</span><input className={communityInputClass} value={form.guardianName} onChange={(event) => setForm({ ...form, guardianName: event.target.value })} required /></label>
             <label className="block space-y-2 text-sm font-semibold"><span>{t('与我的关系 *', 'Relationship to me *')}</span><input className={communityInputClass} value={form.relationship} onChange={(event) => setForm({ ...form, relationship: event.target.value })} placeholder={t('父亲、母亲或其他监护人', 'Parent or other guardian')} required /></label>
-            <label className="block space-y-2 text-sm font-semibold"><span>{t('发送方式', 'Send by')}</span><select className={communityInputClass} value={form.contactChannel} onChange={(event) => setForm({ ...form, contactChannel: event.target.value as 'email' | 'phone' })}><option value="email">{t('邮箱', 'Email')}</option><option value="phone">{t('手机号', 'Phone')}</option></select></label>
+            <label className="block space-y-2 text-sm font-semibold"><span>{isManualGuardianFlow ? t('优先联系方法', 'Preferred contact method') : t('发送方式', 'Send by')}</span><select className={communityInputClass} value={form.contactChannel} onChange={(event) => setForm({ ...form, contactChannel: event.target.value as 'email' | 'phone' })}><option value="email">{t('邮箱', 'Email')}</option><option value="phone">{t('手机号', 'Phone')}</option></select></label>
             <label className="block space-y-2 text-sm font-semibold"><span>{form.contactChannel === 'email' ? t('监护人邮箱 *', 'Guardian email *') : t('监护人手机号 *', 'Guardian phone *')}</span><input className={communityInputClass} type={form.contactChannel === 'email' ? 'email' : 'tel'} value={form.contact} onChange={(event) => setForm({ ...form, contact: event.target.value })} required /></label>
             {error ? <CommunityErrorState message={error} /> : null}
-            <button className={`${communityPrimaryButtonClass} w-full`} disabled={busy}>{busy ? t('正在发送…', 'Sending…') : t('发送确认邀请', 'Send confirmation invitation')}</button>
+            <button className={`${communityPrimaryButtonClass} w-full`} disabled={busy}>{busy ? isManualGuardianFlow ? t('正在登记…', 'Saving…') : t('正在发送…', 'Sending…') : isManualGuardianFlow ? t('提交联系方式', 'Save contact details') : t('发送确认邀请', 'Send confirmation invitation')}</button>
           </form>
         )}
       </CommunitySurface>

@@ -37,11 +37,87 @@ export async function requestGuardianConsent(input: {
 }) {
   const { data } = await getSupabaseClient().auth.getSession();
   if (!data.session) throw new BackendServiceError('AUTH_REQUIRED', 'Sign in is required.');
-  return postJson<{ ok: true; requestId: string; expiresAt: string }>(
+  return postJson<{
+    ok: true;
+    requestId: string;
+    expiresAt: string;
+    mode: 'manual' | 'automated';
+    delivery: 'staff_follow_up' | 'provider_invite';
+  }>(
     '/api/community/guardian-consent-request',
     input,
     data.session.access_token,
   );
+}
+
+export type ManualGuardianReview = {
+  applicationId: number;
+  requestId: string;
+  requestStatus: string;
+  guardianName: string;
+  guardianRelationship: string;
+  contactChannel: 'email' | 'phone';
+  contact: string;
+  contactLast4: string;
+  legalDocument: {
+    id: number;
+    key: string;
+    version: number;
+    locale: string;
+    title: string;
+    status: string;
+    effectiveAt: string | null;
+  };
+  requestCreatedAt: string;
+  consentedAt: string | null;
+  verificationMethod: string | null;
+  verificationBasis: string | null;
+  reviewerNote: string | null;
+};
+
+async function postManualReview<T>(body: Record<string, unknown>): Promise<T> {
+  const { data } = await getSupabaseClient().auth.getSession();
+  if (!data.session) throw new BackendServiceError('AUTH_REQUIRED', 'Sign in is required.');
+  return postJson<T>(
+    '/api/community/guardian-manual-review',
+    body,
+    data.session.access_token,
+  );
+}
+
+export async function getManualGuardianReview(applicationId: number) {
+  const result = await postManualReview<{ ok: true; review: ManualGuardianReview }>({
+    action: 'read',
+    applicationId,
+  });
+  return result.review;
+}
+
+export async function confirmManualGuardianReview(input: {
+  applicationId: number;
+  verificationMethod: string;
+  confirmedAt: string;
+  affirmedGuardianship: boolean;
+  affirmedNoticeRead: boolean;
+  affirmedJoining: boolean;
+  verificationBasis: string;
+  reviewerNote?: string;
+}) {
+  return postManualReview<{ ok: true; status: 'verified'; consentId: number }>({
+    action: 'confirm',
+    ...input,
+  });
+}
+
+export async function declineManualGuardianReview(
+  applicationId: number,
+  reason: string,
+) {
+  return postManualReview<{ ok: true; status: 'declined' }>({
+    action: 'decline',
+    applicationId,
+    reason,
+  });
 }
 
 export async function getGuardianConsentRequest(token: string) {
