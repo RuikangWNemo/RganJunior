@@ -28,7 +28,7 @@ function noteAuthor(note: CommunitySquareFieldNote) {
   const person = [...note.field_note_authors]
     .sort((left, right) => left.author_order - right.author_order)
     .find((relation) => relation.people)?.people;
-  return person?.nature_name || person?.display_name || person?.name_zh || person?.name_en || null;
+  return person?.nature_name || person?.display_name || null;
 }
 
 function noteCover(note: CommunitySquareFieldNote) {

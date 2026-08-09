@@ -32,7 +32,7 @@ function squareNote(input: { id: number; title: string; slug: string; categoryId
     updated_at: `2026-08-0${input.id}T00:00:00.000Z`,
     article_categories: category,
     field_note_topics: [{ topic_id: input.tagId, topics: { id: input.tagId, name_zh: input.tag, name_en: null } }],
-    field_note_authors: [{ author_order: 0, contribution_role: 'author', people: { nature_name: `作者${input.id}`, display_name: null, name_zh: null, name_en: null } }],
+    field_note_authors: [{ author_order: 0, contribution_role: 'author', people: { id: input.id, slug: `author-${input.id}`, nature_name: `作者${input.id}`, display_name: '' } }],
     field_note_media: [],
   };
 }

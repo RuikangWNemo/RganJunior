@@ -100,8 +100,8 @@ function mappedAuthors(record: PublicNoteRecord): FieldNotePerson[] {
     .map((person): FieldNotePerson => ({
       slug: String(person.slug ?? 'community-author'),
       name: {
-        zh: String(person.name_zh || person.display_name || '社群作者'),
-        en: String(person.name_en || person.display_name || 'Community author'),
+        zh: String(person.nature_name || person.display_name || '社群作者'),
+        en: String(person.nature_name || person.display_name || 'Community author'),
       },
       identity: 'collaborator',
       identityLabel: { zh: '社群作者', en: 'Community author' },

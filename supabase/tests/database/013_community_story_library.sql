@@ -248,6 +248,13 @@ values
   ('story-square-public-test', '公开广场文章', '正文', 'd1000000-0000-0000-0000-000000000001', current_setting('test.story_category_id')::bigint, 'published', 'public', now()),
   ('story-square-private-test', '私密已发布文章', '正文', 'd1000000-0000-0000-0000-000000000001', current_setting('test.story_category_id')::bigint, 'published', 'private', now());
 
+update public.people
+set is_public = true,
+    profile_visibility = 'public',
+    nature_name = '山风',
+    full_name_private = '不应公开的姓名'
+where user_id = 'd1000000-0000-0000-0000-000000000001';
+
 set local role anon;
 select set_config('request.jwt.claim.sub', '', true);
 select set_config('request.jwt.claim.role', 'anon', true);
@@ -262,6 +269,23 @@ select pg_temp.assert_true(
       and visibility = 'public'
   ),
   'the public square query can read only published public stories'
+);
+
+select pg_temp.assert_true(
+  (
+    select count(*) = 1
+    from public.field_notes fn
+    join public.field_note_authors fna on fna.field_note_id = fn.id
+    join public.people pe on pe.id = fna.person_id
+    where fn.slug = 'story-square-public-test'
+      and pe.nature_name = '山风'
+  ),
+  'the public square can embed the allowlisted public author columns'
+);
+
+select pg_temp.expect_error(
+  $$select full_name_private from public.people limit 1$$,
+  'anonymous story readers cannot select private People columns'
 );
 
 rollback;

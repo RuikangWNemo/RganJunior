@@ -54,5 +54,10 @@ describe('field note listing boundaries', () => {
     expect(query.eq).toHaveBeenCalledWith('status', 'published');
     expect(query.eq).toHaveBeenCalledWith('visibility', 'public');
     expect(query.limit).toHaveBeenCalledWith(100);
+    const relationQuery = String(query.select.mock.calls[0]?.[0]);
+    expect(relationQuery).toMatch(
+      /people\(\s*id,\s*slug,\s*display_name,\s*nature_name\s*\)/,
+    );
+    expect(relationQuery).not.toContain('people(*)');
   });
 });

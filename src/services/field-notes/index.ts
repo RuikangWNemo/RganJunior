@@ -14,6 +14,10 @@ export type FieldNoteStatus =
 export type FieldNoteVisibility = 'private' | 'members' | 'public';
 export type ArticleCategory = Tables<'article_categories'>;
 export type FieldNoteTag = Tables<'topics'>;
+type PublicStoryAuthor = Pick<
+  Tables<'people'>,
+  'id' | 'slug' | 'display_name' | 'nature_name'
+>;
 
 export type ManagedFieldNote = Tables<'field_notes'> & {
   article_categories: ArticleCategory | null;
@@ -31,7 +35,7 @@ export type CommunitySquareFieldNote = ManagedFieldNote & {
   field_note_authors: Array<{
     author_order: number;
     contribution_role: string | null;
-    people: Tables<'people'> | null;
+    people: PublicStoryAuthor | null;
   }>;
 };
 
@@ -45,7 +49,11 @@ const storyRelations = `
   *,
   article_categories(*),
   field_note_topics(topic_id, topics(*)),
-  field_note_authors(author_order, contribution_role, people(*)),
+  field_note_authors(
+    author_order,
+    contribution_role,
+    people(id, slug, display_name, nature_name)
+  ),
   field_note_media(usage_role, media_assets(*))
 `;
 
