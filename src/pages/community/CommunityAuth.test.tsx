@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { LanguageProvider } from '@/contexts/LanguageContext';
@@ -16,8 +16,8 @@ const { authMocks, authState, identityMocks, identityOptions } = vi.hoisted(() =
     verifyEmailOtp: vi.fn(),
   },
   authState: {
-    user: null,
-    communityState: null,
+    user: null as null | { id: string },
+    communityState: null as null | { destination: string },
     loading: false,
   },
   identityMocks: {
@@ -80,6 +80,9 @@ function renderAuth() {
 describe('CommunityAuth', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    authState.user = null;
+    authState.communityState = null;
+    authState.loading = false;
     window.localStorage.clear();
     window.localStorage.setItem('rgan-lang', 'zh');
     authMocks.requestPasswordReset.mockResolvedValue({});
@@ -98,6 +101,23 @@ describe('CommunityAuth', () => {
     expect(screen.getByLabelText('用户名或邮箱')).toBeInTheDocument();
     expect(screen.getByLabelText('密码')).toHaveAttribute('autocomplete', 'current-password');
     expect(screen.getByRole('button', { name: '进入社群' })).toBeInTheDocument();
+  });
+
+  it('sends a newly authenticated user to the smart entry while community state loads', async () => {
+    authState.user = { id: 'new-user' };
+
+    render(
+      <MemoryRouter initialEntries={['/community/auth']}>
+        <LanguageProvider>
+          <Routes>
+            <Route path="/community/auth" element={<CommunityAuth />} />
+            <Route path="/community/enter" element={<p>进入社群入口</p>} />
+          </Routes>
+        </LanguageProvider>
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByText('进入社群入口')).toBeInTheDocument();
   });
 
   it('keeps identity and age steps before registration credentials', async () => {

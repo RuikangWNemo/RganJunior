@@ -148,8 +148,8 @@ export default function CommunityAuth() {
     );
   }
 
-  if (user && communityState) {
-    return <Navigate to={communityState.destination} replace />;
+  if (user) {
+    return <Navigate to={communityState?.destination || '/community/enter'} replace />;
   }
 
   const selectMode = (nextMode: AuthMode) => {
