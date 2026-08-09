@@ -142,5 +142,7 @@ export async function handleSendEmailRequest(
 }
 
 export default {
-  fetch: handleSendEmailRequest,
+  fetch(request: Request) {
+    return handleSendEmailRequest(request);
+  },
 };
