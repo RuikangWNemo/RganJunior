@@ -10,7 +10,7 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     include: [
       "src/**/*.{test,spec}.{ts,tsx}",
-      "api/**/*.{test,spec}.{ts,js}",
+      "api/**/*.{test,spec}.{ts,tsx,js}",
       "tests/**/*.{test,spec}.{ts,tsx,js}",
     ],
   },
