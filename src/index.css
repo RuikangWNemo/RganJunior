@@ -13215,6 +13215,23 @@
     object-position: center;
   }
 
+  .about-v2-parent-guardian-roster figure {
+    display: grid;
+    place-items: center;
+    border: 1px dashed hsl(var(--border));
+    color: var(--about-v2-forest-soft);
+  }
+
+  .about-v2-parent-guardian-roster figure svg {
+    width: clamp(3rem, 5vw, 4.5rem);
+    height: auto;
+    stroke-width: 1.25;
+  }
+
+  .about-v2-page .about-v2-parent-guardian-roster h4 {
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+  }
+
   .about-v2-adult-roster > article > div {
     padding: 0.9rem 0.25rem 0;
   }
@@ -13236,9 +13253,10 @@
   .about-v2-adult-support {
     margin-top: clamp(2rem, 4vw, 3.5rem);
     padding: clamp(2.25rem, 5vw, 4.5rem);
+    border: 1px solid hsl(var(--about-v2-forest-soft) / 0.12);
     border-radius: var(--about-v2-radius);
-    background: var(--about-v2-forest);
-    color: var(--about-v2-paper);
+    background: hsl(var(--about-v2-sage-hsl));
+    color: var(--about-v2-forest);
   }
 
   .about-v2-team-group .about-v2-adult-support {
@@ -13246,7 +13264,7 @@
   }
 
   .about-v2-adult-support > .about-v2-role {
-    color: #a9d5bd;
+    color: var(--about-v2-forest-soft);
   }
 
   .about-v2-adult-support > div {
@@ -13265,7 +13283,7 @@
   }
 
   .about-v2-adult-support div > p {
-    color: rgb(244 239 227 / 0.76);
+    color: var(--about-v2-forest);
     line-height: 1.95;
     text-wrap: pretty;
   }
@@ -15790,9 +15808,12 @@ html[lang='en'] .programs-editorial-intro h1 {
   text-wrap: pretty;
 }
 
-.about-v2-page .about-v2-adult-support div > p,
 .about-v2-page .about-v2-lab-feature .about-v2-lab-card__body {
   color: var(--about-v2-paper);
+}
+
+.about-v2-page .about-v2-adult-support div > p {
+  color: var(--about-v2-forest);
 }
 
 .about-v2-page .about-v2-partner-roster h5,

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { UserRound } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import AboutManualCarousel from '@/components/about/AboutManualCarousel';
 import LivingLabCard from '@/components/about/LivingLabCard';
@@ -106,6 +107,8 @@ const adultTeamPhotos = [
   '/images/about/adult-support/adult-support-07.webp',
   '/images/about/adult-support/adult-support-08.webp',
 ] as const;
+
+const parentGuardianSlots = [1, 2, 3, 4] as const;
 
 const coCreationDirections = [
   {
@@ -678,6 +681,48 @@ export default function About() {
                       <div>
                         <h4>？？？</h4>
                         <p>？？？</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+
+              <section className="about-v2-team-group" aria-labelledby="team-parent-guardian-title">
+                <header className="about-v2-team-group__header">
+                  <span aria-hidden="true">04</span>
+                  <h3 id="team-parent-guardian-title">{t('家长守护团', 'Parent Guardian Circle')}</h3>
+                </header>
+
+                <article className="about-v2-adult-support about-v2-parent-guardian-support">
+                  <div>
+                    <h4>{t('参与共创，也支持每一次活动真实发生。', 'Co-create with us and help every activity take shape.')}</h4>
+                    <p>
+                      {t(
+                        '家长守护团欢迎认同阿柑少年理念的家长加入。家长可以参与项目与内容共创，也可以在活动筹备、现场支持、家庭连接和安全陪伴中贡献经验与力量，和青少年、成人团队一起把真实行动托稳。',
+                        'The Parent Guardian Circle welcomes families who share the values of R-Gan Junior. Parents can co-create projects and content, contribute to activity preparation and on-site support, strengthen family connections, and help provide safe companionship alongside young people and the adult team.',
+                      )}
+                    </p>
+                  </div>
+                </article>
+
+                <div
+                  className="about-v2-adult-roster about-v2-parent-guardian-roster"
+                  aria-label={t('家长守护团成员名录', 'Parent guardian circle member directory')}
+                >
+                  {parentGuardianSlots.map((slot) => (
+                    <article
+                      key={slot}
+                      aria-label={t(
+                        `家长守护团成员 ${slot} 占位档案`,
+                        `Parent guardian circle member ${slot} placeholder profile`,
+                      )}
+                    >
+                      <figure aria-hidden="true">
+                        <UserRound />
+                      </figure>
+                      <div>
+                        <h4>{t('姓名待补充', 'Name to be added')}</h4>
+                        <p>{t('角色待补充', 'Role to be added')}</p>
                       </div>
                     </article>
                   ))}
