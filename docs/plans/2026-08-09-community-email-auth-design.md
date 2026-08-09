@@ -40,4 +40,3 @@ Magic Link 和邮箱验证码都由 `signInWithOtp` 发送，并设置 `shouldCr
 - 回调测试覆盖成功、URL 错误和无会话失败状态。
 - 运行相关 Vitest、应用与后端类型检查、lint 和生产构建。
 - 检查正式站用户名接口不再返回 503，并验证 Supabase 邮件模板同时含链接和验证码。
-
