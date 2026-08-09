@@ -19,12 +19,12 @@ export default function CommunityAuthCallback() {
   ));
 
   useEffect(() => {
-    if (callbackError) return;
     if (user) {
       navigate('/community/enter', { replace: true });
       return;
     }
     if (loading) return;
+    if (callbackError) return;
 
     let active = true;
     getCurrentSession()
@@ -40,7 +40,7 @@ export default function CommunityAuthCallback() {
     return () => { active = false; };
   }, [callbackError, loading, navigate, t, user]);
 
-  if (callbackError || (!user && !loading && authError)) {
+  if (!loading && !user && (callbackError || authError)) {
     return (
       <div className="community-page-frame">
         <div className="mx-auto flex min-h-[55dvh] max-w-lg items-center px-5 py-12">

@@ -166,6 +166,26 @@ describe('CommunityAuth', () => {
     expect(screen.getByRole('button', { name: '发送重设邮件' })).toBeInTheDocument();
   });
 
+  it('offers code entry after sending a Magic Link email', async () => {
+    renderAuth();
+
+    fireEvent.click(screen.getByRole('button', { name: '使用 Magic Link' }));
+    fireEvent.change(screen.getByLabelText('邮箱'), { target: { value: 'member@example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: '发送登录链接' }));
+
+    expect(await screen.findByRole('heading', { name: '输入邮箱验证码' })).toBeInTheDocument();
+    expect(authMocks.sendMagicLink).toHaveBeenCalledWith('member@example.com');
+    expect(screen.getByLabelText('8 位邮箱验证码')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '60 秒后可重新发送' })).toBeDisabled();
+
+    fireEvent.change(screen.getByLabelText('8 位邮箱验证码'), { target: { value: '12345678' } });
+    fireEvent.click(screen.getByRole('button', { name: '验证并登录' }));
+
+    await waitFor(() => {
+      expect(authMocks.verifyEmailOtp).toHaveBeenCalledWith('member@example.com', '12345678');
+    });
+  });
+
   it('sends and verifies an email code', async () => {
     renderAuth();
 

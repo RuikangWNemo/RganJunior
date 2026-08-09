@@ -65,4 +65,14 @@ describe('CommunityAuthCallback', () => {
     expect(screen.getByText('登录链接无效或已过期，请重新发送。')).toBeInTheDocument();
     expect(getCurrentSession).not.toHaveBeenCalled();
   });
+
+  it('keeps a valid session when a one-time link is opened again', async () => {
+    authState.user = { id: 'user-1' };
+    window.history.replaceState({}, '', '/community/auth/callback#error=access_denied&error_description=OTP+expired');
+    renderCallback();
+
+    expect(await screen.findByText('进入社群')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: '登录未完成' })).not.toBeInTheDocument();
+    expect(getCurrentSession).not.toHaveBeenCalled();
+  });
 });

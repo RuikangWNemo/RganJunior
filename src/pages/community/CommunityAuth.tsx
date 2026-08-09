@@ -229,15 +229,19 @@ export default function CommunityAuth() {
             ? `确认邮件已发送：可以点击邮件链接，也可以在这里输入 ${EMAIL_OTP_LENGTH} 位验证码。`
             : `Confirmation sent. Use the email link or enter the ${EMAIL_OTP_LENGTH}-digit code here.`);
         }
-      } else if (mode === 'magic') {
+      } else if (mode === 'magic' && !otpSent) {
         await sendMagicLink(email);
-        setNotice(lang === 'zh' ? '登录链接已发送，请查看邮箱。' : 'A sign-in link has been sent.');
+        setOtpSent(true);
+        setResendSeconds(OTP_RESEND_COOLDOWN_SECONDS);
+        setNotice(lang === 'zh'
+          ? '登录邮件已发送：可以点击邮件链接，也可以在这里输入验证码。'
+          : 'Sign-in email sent. Use its link or enter the code here.');
       } else if (mode === 'otp' && !otpSent) {
         await sendEmailOtp(email);
         setOtpSent(true);
         setResendSeconds(OTP_RESEND_COOLDOWN_SECONDS);
         setNotice(lang === 'zh' ? '验证码已发送，请查看邮箱。' : 'A verification code has been sent.');
-      } else if (mode === 'otp' || mode === 'signupVerify') {
+      } else if (mode === 'magic' || mode === 'otp' || mode === 'signupVerify') {
         const result = await verifyEmailOtp(email, otp);
         if (!result.session) {
           throw new Error(lang === 'zh'
@@ -262,10 +266,13 @@ export default function CommunityAuth() {
     setError(null);
     setNotice(null);
     try {
-      await sendEmailOtp(email);
+      if (mode === 'magic') await sendMagicLink(email);
+      else await sendEmailOtp(email);
       setOtp('');
       setResendSeconds(OTP_RESEND_COOLDOWN_SECONDS);
-      setNotice(lang === 'zh' ? '新的验证码已发送。' : 'A new verification code has been sent.');
+      setNotice(mode === 'magic'
+        ? lang === 'zh' ? '新的登录邮件已发送。' : 'A new sign-in email has been sent.'
+        : lang === 'zh' ? '新的验证码已发送。' : 'A new verification code has been sent.');
     } catch (resendError) {
       setError(submitErrorMessage(resendError, lang));
     } finally {
@@ -277,7 +284,7 @@ export default function CommunityAuth() {
   const isSignupAge = mode === 'signup' && signupStage === 'age';
   const isSignupAccount = mode === 'signup' && signupStage === 'account';
   const isSignupFlow = mode === 'signup' || mode === 'signupVerify';
-  const isOtpEntry = mode === 'signupVerify' || (mode === 'otp' && otpSent);
+  const isOtpEntry = mode === 'signupVerify' || ((mode === 'magic' || mode === 'otp') && otpSent);
   const ageLabel = ageOptions.find((option) => option.value === ageBand);
   const primaryIdentity = identityOptions.find((option) => option.slug === primaryIdentitySlug);
 
@@ -290,7 +297,9 @@ export default function CommunityAuth() {
         ? lang === 'zh' ? '再确认年龄范围' : 'Next, your age range'
         : lang === 'zh' ? '建立你的账号' : 'Create your account'
     : mode === 'magic'
-      ? lang === 'zh' ? '获取邮箱登录链接' : 'Get an email sign-in link'
+      ? otpSent
+        ? lang === 'zh' ? '输入邮箱验证码' : 'Enter your email code'
+        : lang === 'zh' ? '获取邮箱登录链接' : 'Get an email sign-in link'
       : mode === 'otp'
         ? otpSent
           ? lang === 'zh' ? '输入邮箱验证码' : 'Enter your email code'
@@ -310,7 +319,9 @@ export default function CommunityAuth() {
         ? lang === 'zh' ? '年龄范围用于安排合适的申请审核与青少年保护流程。' : 'Your age range determines the appropriate review and youth-safety flow.'
         : lang === 'zh' ? '先创建基础账号，个人主页资料将在下一步完善。' : 'Create a basic account first. Your profile comes next.'
     : mode === 'magic'
-      ? lang === 'zh' ? '我们会发送一封一次性登录邮件。' : 'We will send a one-time sign-in email.'
+      ? otpSent
+        ? lang === 'zh' ? '登录链接和验证码已发送到下面的邮箱。' : 'The sign-in link and code were sent to the email below.'
+        : lang === 'zh' ? `我们会发送一封包含登录链接和 ${EMAIL_OTP_LENGTH} 位验证码的一次性邮件。` : `We will send a one-time email with a sign-in link and ${EMAIL_OTP_LENGTH}-digit code.`
       : mode === 'otp'
         ? otpSent
           ? lang === 'zh' ? '验证码发送到了下面的邮箱。' : 'The code was sent to the email below.'
@@ -416,7 +427,7 @@ export default function CommunityAuth() {
                 </>
               ) : null}
 
-              {(mode === 'magic' || mode === 'reset' || (mode === 'otp' && !otpSent)) ? (
+              {((mode === 'magic' && !otpSent) || mode === 'reset' || (mode === 'otp' && !otpSent)) ? (
                 <label className="block space-y-2 text-sm font-medium text-foreground" htmlFor="community-email">
                   <span>{lang === 'zh' ? '邮箱' : 'Email'}</span>
                   <input
@@ -439,7 +450,9 @@ export default function CommunityAuth() {
                     <button
                       type="button"
                       className="shrink-0 text-xs font-semibold underline underline-offset-4"
-                      onClick={mode === 'signupVerify' ? returnToSignupAccount : () => selectMode('otp')}
+                      onClick={mode === 'signupVerify'
+                        ? returnToSignupAccount
+                        : () => selectMode(mode === 'magic' ? 'magic' : 'otp')}
                     >
                       {lang === 'zh' ? '修改' : 'Change'}
                     </button>
@@ -657,7 +670,7 @@ export default function CommunityAuth() {
                 className={primaryButtonClass}
                 disabled={busy || identitiesLoading || (isSignupIdentity && !primaryIdentitySlug) || (isSignupAge && !ageBand) || (isSignupAccount && !isValidNewPassword(password, confirmPassword)) || (isOtpEntry && otp.length !== EMAIL_OTP_LENGTH)}
               >
-                {mode === 'magic'
+                {mode === 'magic' && !otpSent
                   ? <Link2 className="size-4" aria-hidden="true" />
                   : mode === 'reset' || (mode === 'otp' && !otpSent)
                     ? <Mail className="size-4" aria-hidden="true" />
@@ -678,7 +691,9 @@ export default function CommunityAuth() {
                         : mode === 'signupVerify'
                           ? lang === 'zh' ? '验证并进入社群' : 'Verify and enter community'
                         : mode === 'magic'
-                          ? lang === 'zh' ? '发送登录链接' : 'Send sign-in link'
+                          ? otpSent
+                            ? lang === 'zh' ? '验证并登录' : 'Verify and sign in'
+                            : lang === 'zh' ? '发送登录链接' : 'Send sign-in link'
                           : mode === 'otp'
                             ? otpSent
                               ? lang === 'zh' ? '验证并登录' : 'Verify and sign in'
