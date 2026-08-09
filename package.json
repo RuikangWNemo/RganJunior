@@ -11,7 +11,7 @@
     "dev:collab": "tsx scripts/community-collaboration-server.ts",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "email:dev": "email dev --dir emails",
+    "email:dev": "email dev --dir api/_lib/auth-email/emails",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",

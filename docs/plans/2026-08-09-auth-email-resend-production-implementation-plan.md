@@ -41,15 +41,15 @@
 
 **Files:**
 
-- Create: `emails/types.ts`
-- Create: `emails/copy.ts`
-- Create: `emails/components/EmailLayout.tsx`
-- Create: `emails/components/EmailLogo.tsx`
-- Create: `emails/components/VerificationCode.tsx`
-- Create: `emails/components/EmailButton.tsx`
-- Create: `emails/components/EmailFooter.tsx`
-- Create: `emails/auth/*.tsx`
-- Create: `emails/previews/*.tsx`
+- Create: `api/_lib/auth-email/emails/types.ts`
+- Create: `api/_lib/auth-email/emails/copy.ts`
+- Create: `api/_lib/auth-email/emails/components/EmailLayout.tsx`
+- Create: `api/_lib/auth-email/emails/components/EmailLogo.tsx`
+- Create: `api/_lib/auth-email/emails/components/VerificationCode.tsx`
+- Create: `api/_lib/auth-email/emails/components/EmailButton.tsx`
+- Create: `api/_lib/auth-email/emails/components/EmailFooter.tsx`
+- Create: `api/_lib/auth-email/emails/auth/*.tsx`
+- Create: `api/_lib/auth-email/emails/previews/*.tsx`
 - Create: a compatible official email logo derivative under `public/brand/`
 - Test: `tests/auth-email/templates.test.tsx`
 

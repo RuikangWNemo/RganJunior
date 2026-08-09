@@ -52,7 +52,7 @@ npm install
 npm run email:dev
 ```
 
-预览目录是 `emails/`，包含登录验证码、Signup、Magic Link、Recovery、Invite、Email Change 与 Reauthentication 示例。预览使用虚构 Token 和邮箱，不会调用 Resend。
+预览目录是 `api/_lib/auth-email/emails/`，包含登录验证码、Signup、Magic Link、Recovery、Invite、Email Change 与 Reauthentication 示例。预览使用虚构 Token 和邮箱，不会调用 Resend。
 
 运行认证邮件测试：
 
@@ -62,7 +62,7 @@ npm test -- api/_lib/auth-email tests/api/auth-send-email.test.ts tests/auth-ema
 
 ## Templates
 
-模板位于 `emails/auth/`，公共邮件组件位于 `emails/components/`。中文和英文 Subject、Preview 与正文集中在 `emails/copy.ts`。
+模板位于 `api/_lib/auth-email/emails/auth/`，公共邮件组件位于 `api/_lib/auth-email/emails/components/`。中文和英文 Subject、Preview 与正文集中在 `api/_lib/auth-email/emails/copy.ts`。
 
 支持的 action：
 

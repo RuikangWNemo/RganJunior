@@ -2,16 +2,16 @@ import { createHash } from 'node:crypto';
 import { createElement, type ReactNode } from 'react';
 import { render } from '@react-email/components';
 
-import EmailChangeEmail from '../../../emails/auth/EmailChangeEmail.js';
-import InviteEmail from '../../../emails/auth/InviteEmail.js';
-import MagicLinkEmail from '../../../emails/auth/MagicLinkEmail.js';
-import PasswordResetEmail from '../../../emails/auth/PasswordResetEmail.js';
-import ReauthenticationEmail from '../../../emails/auth/ReauthenticationEmail.js';
-import SecurityNotificationEmail, { type SecurityNotificationDetail } from '../../../emails/auth/SecurityNotificationEmail.js';
-import SignInCodeEmail from '../../../emails/auth/SignInCodeEmail.js';
-import SignupEmail from '../../../emails/auth/SignupEmail.js';
-import { emailCopy } from '../../../emails/copy.js';
-import type { EmailLocale } from '../../../emails/types.js';
+import EmailChangeEmail from './emails/auth/EmailChangeEmail.js';
+import InviteEmail from './emails/auth/InviteEmail.js';
+import MagicLinkEmail from './emails/auth/MagicLinkEmail.js';
+import PasswordResetEmail from './emails/auth/PasswordResetEmail.js';
+import ReauthenticationEmail from './emails/auth/ReauthenticationEmail.js';
+import SecurityNotificationEmail, { type SecurityNotificationDetail } from './emails/auth/SecurityNotificationEmail.js';
+import SignInCodeEmail from './emails/auth/SignInCodeEmail.js';
+import SignupEmail from './emails/auth/SignupEmail.js';
+import { emailCopy } from './emails/copy.js';
+import type { EmailLocale } from './emails/types.js';
 import { selectAuthEmailLocale, type AuthEmailAction, type AuthEmailPayload } from './schema.js';
 import { buildConfirmationUrl, type AuthEmailUrlRuntime } from './urls.js';
 

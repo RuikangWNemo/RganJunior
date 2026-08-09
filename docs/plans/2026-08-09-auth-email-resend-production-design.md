@@ -47,7 +47,7 @@ api/
     urls.ts
     logging.ts
 
-emails/
+api/_lib/auth-email/emails/
   components/
     EmailLayout.tsx
     EmailLogo.tsx

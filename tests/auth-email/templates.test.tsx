@@ -1,14 +1,14 @@
 import { render } from '@react-email/components';
 import { describe, expect, it } from 'vitest';
 
-import EmailChangeEmail from '../../emails/auth/EmailChangeEmail.js';
-import InviteEmail from '../../emails/auth/InviteEmail.js';
-import MagicLinkEmail from '../../emails/auth/MagicLinkEmail.js';
-import PasswordResetEmail from '../../emails/auth/PasswordResetEmail.js';
-import ReauthenticationEmail from '../../emails/auth/ReauthenticationEmail.js';
-import SecurityNotificationEmail from '../../emails/auth/SecurityNotificationEmail.js';
-import SignInCodeEmail from '../../emails/auth/SignInCodeEmail.js';
-import SignupEmail from '../../emails/auth/SignupEmail.js';
+import EmailChangeEmail from '../../api/_lib/auth-email/emails/auth/EmailChangeEmail.js';
+import InviteEmail from '../../api/_lib/auth-email/emails/auth/InviteEmail.js';
+import MagicLinkEmail from '../../api/_lib/auth-email/emails/auth/MagicLinkEmail.js';
+import PasswordResetEmail from '../../api/_lib/auth-email/emails/auth/PasswordResetEmail.js';
+import ReauthenticationEmail from '../../api/_lib/auth-email/emails/auth/ReauthenticationEmail.js';
+import SecurityNotificationEmail from '../../api/_lib/auth-email/emails/auth/SecurityNotificationEmail.js';
+import SignInCodeEmail from '../../api/_lib/auth-email/emails/auth/SignInCodeEmail.js';
+import SignupEmail from '../../api/_lib/auth-email/emails/auth/SignupEmail.js';
 
 const confirmationUrl = 'https://project-ref.supabase.co/auth/v1/verify?token=hash&type=signup';
 
