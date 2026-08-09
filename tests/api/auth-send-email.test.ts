@@ -5,7 +5,7 @@ import {
   handleSendEmailRequest,
   type AuthEmailProviderResult,
   type AuthEmailRequestDependencies,
-} from './send-email.js';
+} from '../../api/auth/send-email.js';
 
 const signingSecret = Buffer.alloc(32, 9).toString('base64');
 const hookSecret = `v1,whsec_${signingSecret}`;

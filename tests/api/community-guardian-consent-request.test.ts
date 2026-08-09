@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import handler from './guardian-consent-request.js';
+import handler from '../../api/community/guardian-consent-request.js';
 
 const {
   assertGuardianInviteProviderConfigured,
@@ -16,22 +16,22 @@ const {
   sendGuardianInvite: vi.fn(),
 }));
 
-vi.mock('../_lib/auth.js', async (importOriginal) => ({
-  ...await importOriginal<typeof import('../_lib/auth.js')>(),
+vi.mock('../../api/_lib/auth.js', async (importOriginal) => ({
+  ...await importOriginal<typeof import('../../api/_lib/auth.js')>(),
   requireUser,
 }));
 
-vi.mock('../_lib/community-security.js', async (importOriginal) => ({
-  ...await importOriginal<typeof import('../_lib/community-security.js')>(),
+vi.mock('../../api/_lib/community-security.js', async (importOriginal) => ({
+  ...await importOriginal<typeof import('../../api/_lib/community-security.js')>(),
   consumeRateLimit,
 }));
 
-vi.mock('../_lib/guardian-otp-provider.js', () => ({
+vi.mock('../../api/_lib/guardian-otp-provider.js', () => ({
   assertGuardianInviteProviderConfigured,
   sendGuardianInvite,
 }));
 
-vi.mock('../_lib/supabase.js', () => ({
+vi.mock('../../api/_lib/supabase.js', () => ({
   createSecretSupabaseClient,
 }));
 

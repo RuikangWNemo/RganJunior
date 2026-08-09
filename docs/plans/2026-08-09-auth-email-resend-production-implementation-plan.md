@@ -67,9 +67,9 @@
 **Files:**
 
 - Create: `api/_lib/auth-email/dispatch.tsx`
-- Create: `api/auth/send-email.ts`
+- Create: `api/auth/send-email.tsx`
 - Test: `api/_lib/auth-email/dispatch.test.tsx`
-- Test: `api/auth/send-email.test.ts`
+- Test: `tests/api/auth-send-email.test.ts`
 
 **Steps:**
 

@@ -1,7 +1,11 @@
 import { Resend } from 'resend';
 
 import { readAuthEmailConfig, type AuthEmailConfig } from '../_lib/auth-email/config.js';
-import { AuthEmailDispatchError, buildAuthEmailDeliveries, type AuthEmailDelivery } from '../_lib/auth-email/dispatch.js';
+import {
+  AuthEmailDispatchError,
+  buildAuthEmailDeliveries,
+  type AuthEmailDelivery,
+} from '../_lib/auth-email/dispatch.js';
 import { logAuthEmailEvent } from '../_lib/auth-email/logging.js';
 import { AuthEmailPayloadError, parseAuthEmailPayload } from '../_lib/auth-email/schema.js';
 import { HookSignatureError, verifySupabaseHook } from '../_lib/auth-email/supabase-hook.js';

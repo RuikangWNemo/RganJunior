@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ApiAuthError } from '../_lib/auth.js';
-import { encryptSensitive } from '../_lib/community-security.js';
-import handler from './guardian-manual-review.js';
+import { ApiAuthError } from '../../api/_lib/auth.js';
+import { encryptSensitive } from '../../api/_lib/community-security.js';
+import handler from '../../api/community/guardian-manual-review.js';
 
 const { createSecretSupabaseClient, requirePermission, rpc } = vi.hoisted(() => ({
   createSecretSupabaseClient: vi.fn(),
@@ -10,12 +10,12 @@ const { createSecretSupabaseClient, requirePermission, rpc } = vi.hoisted(() => 
   rpc: vi.fn(),
 }));
 
-vi.mock('../_lib/auth.js', async (importOriginal) => ({
-  ...await importOriginal<typeof import('../_lib/auth.js')>(),
+vi.mock('../../api/_lib/auth.js', async (importOriginal) => ({
+  ...await importOriginal<typeof import('../../api/_lib/auth.js')>(),
   requirePermission,
 }));
 
-vi.mock('../_lib/supabase.js', () => ({
+vi.mock('../../api/_lib/supabase.js', () => ({
   createSecretSupabaseClient,
 }));
 

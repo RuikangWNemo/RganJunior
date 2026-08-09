@@ -28,7 +28,7 @@ Supabase Auth
 
 ## 现有项目适配
 
-项目是 Vite 5、React 18、React Router 6 与根目录 Vercel Functions，不是 Next.js。新增接口使用 `api/auth/send-email.ts`，不创建 `src/app` 或 Next.js Route Handler。
+项目是 Vite 5、React 18、React Router 6 与根目录 Vercel Functions，不是 Next.js。新增接口使用 `api/auth/send-email.tsx`，不创建 `src/app` 或 Next.js Route Handler。
 
 现有认证界面已经提供邮箱密码登录、Magic Link、邮箱验证码、注册确认、密码重置、邮箱变更和认证回调。实现保持增量：只把验证码重发倒计时由 30 秒调整为 60 秒，并补充必要测试，不重写登录页面。
 

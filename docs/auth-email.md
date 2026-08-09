@@ -57,7 +57,7 @@ npm run email:dev
 运行认证邮件测试：
 
 ```bash
-npm test -- api/_lib/auth-email api/auth/send-email.test.ts tests/auth-email
+npm test -- api/_lib/auth-email tests/api/auth-send-email.test.ts tests/auth-email
 ```
 
 ## Templates
