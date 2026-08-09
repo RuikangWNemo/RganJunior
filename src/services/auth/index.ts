@@ -27,10 +27,15 @@ export async function signUp(input: SignUpInput) {
 }
 
 export async function signInWithIdentifier(identifier: string, password: string) {
+  const normalizedIdentifier = identifier.trim().toLowerCase();
+  if (normalizedIdentifier.includes('@')) {
+    return signInWithPassword(normalizedIdentifier, password);
+  }
+
   const response = await fetch('/api/community/username-login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ identifier, password }),
+    body: JSON.stringify({ identifier: normalizedIdentifier, password }),
   });
   const result = await response.json() as {
     ok?: boolean;
@@ -64,6 +69,13 @@ export async function signInWithPassword(email: string, password: string) {
 }
 
 export async function sendMagicLink(email: string) {
+  return sendEmailOtp(email, 'AUTH_MAGIC_LINK_FAILED');
+}
+
+export async function sendEmailOtp(
+  email: string,
+  fallbackCode = 'AUTH_EMAIL_OTP_FAILED',
+) {
   const { data, error } = await getSupabaseClient().auth.signInWithOtp({
     email: email.trim().toLowerCase(),
     options: {
@@ -71,7 +83,17 @@ export async function sendMagicLink(email: string) {
       emailRedirectTo: buildAuthRedirectUrl('/community/auth/callback'),
     },
   });
-  throwIfSupabaseError(error, 'AUTH_MAGIC_LINK_FAILED');
+  throwIfSupabaseError(error, fallbackCode);
+  return data;
+}
+
+export async function verifyEmailOtp(email: string, token: string) {
+  const { data, error } = await getSupabaseClient().auth.verifyOtp({
+    email: email.trim().toLowerCase(),
+    token: token.replace(/\D/g, ''),
+    type: 'email',
+  });
+  throwIfSupabaseError(error, 'AUTH_EMAIL_OTP_VERIFY_FAILED');
   return data;
 }
 

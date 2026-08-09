@@ -1,21 +1,25 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowRight, Check, KeyRound, Mail, ShieldCheck } from 'lucide-react';
+import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { ArrowLeft, ArrowRight, Check, KeyRound, Link2, Mail, RefreshCw, ShieldCheck } from 'lucide-react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import mascotFull from '@/assets/mascot-full.png';
 import CommunityProcessSteps from '@/components/community/CommunityProcessSteps';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized } from '@/lib/brand';
 import {
   requestPasswordReset,
+  sendEmailOtp,
   sendMagicLink,
   signInWithIdentifier,
   signUp,
+  verifyEmailOtp,
   type AgeBand,
 } from '@/services/auth';
 
-type AuthMode = 'signin' | 'signup' | 'magic' | 'reset';
+type AuthMode = 'signin' | 'signup' | 'signupVerify' | 'magic' | 'otp' | 'reset';
 type SignupStage = 'age' | 'account';
 
 const authInputClass =
@@ -29,6 +33,31 @@ const ageOptions = [
   { value: 'age_14_17', zh: '14-17 岁', en: 'Age 14-17' },
   { value: 'adult_18_plus', zh: '已满 18 岁', en: '18 or older' },
 ] as const satisfies ReadonlyArray<{ value: AgeBand; zh: string; en: string }>;
+
+function submitErrorMessage(error: unknown, lang: 'zh' | 'en') {
+  const code = error && typeof error === 'object' && 'code' in error
+    ? String(error.code)
+    : '';
+
+  if (code === 'COMMUNITY_AUTH_UNAVAILABLE') {
+    return lang === 'zh'
+      ? '用户名登录暂时不可用，请改用注册邮箱、Magic Link 或邮箱验证码。'
+      : 'Username sign-in is temporarily unavailable. Use your email, Magic Link, or email code.';
+  }
+  if (code === 'otp_expired' || code === 'otp_disabled') {
+    return lang === 'zh'
+      ? '验证码无效或已过期，请重新发送。'
+      : 'The code is invalid or expired. Send a new one.';
+  }
+  if (code === 'over_email_send_rate_limit' || code === 'over_request_rate_limit') {
+    return lang === 'zh'
+      ? '发送得有些频繁，请稍后再试。'
+      : 'Too many requests. Please try again shortly.';
+  }
+  return error instanceof Error
+    ? error.message
+    : lang === 'zh' ? '请求失败，请重试。' : 'Request failed. Please try again.';
+}
 
 function CommunityPrinciples({ lang, className = '' }: { lang: 'zh' | 'en'; className?: string }) {
   const principles = [
@@ -58,6 +87,9 @@ export default function CommunityAuth() {
   const [identifier, setIdentifier] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [resendSeconds, setResendSeconds] = useState(0);
   const [ageBand, setAgeBand] = useState<AgeBand | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +101,12 @@ export default function CommunityAuth() {
     setError(null);
     setNotice(null);
   }, [mode, signupStage]);
+
+  useEffect(() => {
+    if (resendSeconds <= 0) return;
+    const timer = window.setTimeout(() => setResendSeconds((seconds) => seconds - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [resendSeconds]);
 
   if (loading) {
     return (
@@ -88,6 +126,17 @@ export default function CommunityAuth() {
   const selectMode = (nextMode: AuthMode) => {
     setMode(nextMode);
     if (nextMode === 'signup') setSignupStage('age');
+    setOtp('');
+    setOtpSent(false);
+    setResendSeconds(0);
+  };
+
+  const returnToSignupAccount = () => {
+    setMode('signup');
+    setSignupStage('account');
+    setOtp('');
+    setOtpSent(false);
+    setResendSeconds(0);
   };
 
   const submit = async (event: FormEvent) => {
@@ -113,16 +162,54 @@ export default function CommunityAuth() {
         if (!ageBand) throw new Error(lang === 'zh' ? '请先选择年龄范围。' : 'Choose your age range first.');
         const result = await signUp({ email, password, ageBand });
         if (result.session) navigate('/community/enter', { replace: true });
-        else setNotice(lang === 'zh' ? '验证邮件已发送，请在邮箱中完成确认。' : 'Check your email to confirm your account.');
+        else {
+          setMode('signupVerify');
+          setOtp('');
+          setOtpSent(true);
+          setResendSeconds(30);
+          setNotice(lang === 'zh'
+            ? '确认邮件已发送：可以点击邮件链接，也可以在这里输入 6 位验证码。'
+            : 'Confirmation sent. Use the email link or enter the 6-digit code here.');
+        }
       } else if (mode === 'magic') {
         await sendMagicLink(email);
         setNotice(lang === 'zh' ? '登录链接已发送，请查看邮箱。' : 'A sign-in link has been sent.');
+      } else if (mode === 'otp' && !otpSent) {
+        await sendEmailOtp(email);
+        setOtpSent(true);
+        setResendSeconds(30);
+        setNotice(lang === 'zh' ? '验证码已发送，请查看邮箱。' : 'A verification code has been sent.');
+      } else if (mode === 'otp' || mode === 'signupVerify') {
+        const result = await verifyEmailOtp(email, otp);
+        if (!result.session) {
+          throw new Error(lang === 'zh'
+            ? '验证成功，但未能建立登录会话。'
+            : 'Verified, but no sign-in session was created.');
+        }
+        navigate('/community/enter', { replace: true });
       } else {
         await requestPasswordReset(email);
         setNotice(lang === 'zh' ? '密码重设邮件已发送。' : 'A password reset email has been sent.');
       }
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : 'Request failed.');
+      setError(submitErrorMessage(submitError, lang));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const resendOtp = async () => {
+    if (resendSeconds > 0 || busy) return;
+    setBusy(true);
+    setError(null);
+    setNotice(null);
+    try {
+      await sendEmailOtp(email);
+      setOtp('');
+      setResendSeconds(30);
+      setNotice(lang === 'zh' ? '新的验证码已发送。' : 'A new verification code has been sent.');
+    } catch (resendError) {
+      setError(submitErrorMessage(resendError, lang));
     } finally {
       setBusy(false);
     }
@@ -130,24 +217,40 @@ export default function CommunityAuth() {
 
   const isSignupAge = mode === 'signup' && signupStage === 'age';
   const isSignupAccount = mode === 'signup' && signupStage === 'account';
+  const isSignupFlow = mode === 'signup' || mode === 'signupVerify';
+  const isOtpEntry = mode === 'signupVerify' || (mode === 'otp' && otpSent);
   const ageLabel = ageOptions.find((option) => option.value === ageBand);
 
-  const title = mode === 'signup'
+  const title = mode === 'signupVerify'
+    ? lang === 'zh' ? '确认你的邮箱' : 'Confirm your email'
+    : mode === 'signup'
     ? isSignupAge
       ? lang === 'zh' ? '先确认年龄范围' : 'Start with your age range'
       : lang === 'zh' ? '建立你的账号' : 'Create your account'
     : mode === 'magic'
       ? lang === 'zh' ? '获取邮箱登录链接' : 'Get an email sign-in link'
+      : mode === 'otp'
+        ? otpSent
+          ? lang === 'zh' ? '输入邮箱验证码' : 'Enter your email code'
+          : lang === 'zh' ? '使用邮箱验证码' : 'Use an email code'
       : mode === 'reset'
         ? lang === 'zh' ? '找回你的账号' : 'Recover your account'
         : lang === 'zh' ? '欢迎回来' : 'Welcome back';
 
-  const description = mode === 'signup'
+  const description = mode === 'signupVerify'
+    ? lang === 'zh'
+      ? '输入邮件中的 6 位验证码，或直接点击邮件里的确认链接。'
+      : 'Enter the 6-digit code or use the confirmation link in your email.'
+    : mode === 'signup'
     ? isSignupAge
       ? lang === 'zh' ? '年龄范围只用于安排合适的资料收集与监护人知情流程。' : 'Your age range determines the right profile and guardian flow.'
       : lang === 'zh' ? '先创建基础账号，个人主页资料将在下一步完善。' : 'Create a basic account first. Your profile comes next.'
     : mode === 'magic'
       ? lang === 'zh' ? '我们会发送一封一次性登录邮件。' : 'We will send a one-time sign-in email.'
+      : mode === 'otp'
+        ? otpSent
+          ? lang === 'zh' ? '验证码发送到了下面的邮箱。' : 'The code was sent to the email below.'
+          : lang === 'zh' ? '我们会发送一封包含 6 位验证码的邮件。' : 'We will email you a 6-digit verification code.'
       : mode === 'reset'
         ? lang === 'zh' ? '输入注册邮箱，接收密码重设邮件。' : 'Enter your registered email to reset your password.'
         : lang === 'zh' ? '使用用户名或邮箱，回到你的社群空间。' : 'Use your username or email to return to the community.';
@@ -187,7 +290,7 @@ export default function CommunityAuth() {
                 ['signin', '登录', 'Sign in'],
                 ['signup', '注册', 'Register'],
               ] as const).map(([value, zh, en]) => {
-                const selected = value === 'signup' ? mode === 'signup' : mode !== 'signup';
+                const selected = value === 'signup' ? isSignupFlow : !isSignupFlow;
                 return (
                   <button
                     key={value}
@@ -205,7 +308,7 @@ export default function CommunityAuth() {
             </div>
 
             <div className="pb-7 pt-8">
-              {mode === 'signup' ? <CommunityProcessSteps current="account" safetyRequired={ageBand !== 'adult_18_plus'} /> : null}
+              {isSignupFlow ? <CommunityProcessSteps current="account" safetyRequired={ageBand !== 'adult_18_plus'} /> : null}
               {mode === 'signup' ? (
                 <div className="mb-5 flex items-center gap-3 text-xs font-medium text-primary/65" aria-label={lang === 'zh' ? '注册进度' : 'Registration progress'}>
                   <span className={signupStage === 'age' ? 'text-primary' : ''}>{lang === 'zh' ? '年龄范围' : 'Age range'}</span>
@@ -247,7 +350,7 @@ export default function CommunityAuth() {
                 </>
               ) : null}
 
-              {(mode === 'magic' || mode === 'reset') ? (
+              {(mode === 'magic' || mode === 'reset' || (mode === 'otp' && !otpSent)) ? (
                 <label className="block space-y-2 text-sm font-medium text-foreground" htmlFor="community-email">
                   <span>{lang === 'zh' ? '邮箱' : 'Email'}</span>
                   <input
@@ -260,6 +363,56 @@ export default function CommunityAuth() {
                     required
                   />
                 </label>
+              ) : null}
+
+              {isOtpEntry ? (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 rounded-xl bg-primary/[0.06] px-4 py-3 text-sm text-primary">
+                    <Mail className="size-4 shrink-0" aria-hidden="true" />
+                    <span className="min-w-0 flex-1 truncate">{email}</span>
+                    <button
+                      type="button"
+                      className="shrink-0 text-xs font-semibold underline underline-offset-4"
+                      onClick={mode === 'signupVerify' ? returnToSignupAccount : () => selectMode('otp')}
+                    >
+                      {lang === 'zh' ? '修改' : 'Change'}
+                    </button>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p id="community-email-otp-label" className="text-sm font-medium text-foreground">
+                      {lang === 'zh' ? '6 位邮箱验证码' : '6-digit email code'}
+                    </p>
+                    <InputOTP
+                      aria-labelledby="community-email-otp-label"
+                      autoComplete="one-time-code"
+                      inputMode="numeric"
+                      maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS}
+                      value={otp}
+                      onChange={setOtp}
+                      containerClassName="justify-center"
+                    >
+                      <InputOTPGroup>
+                        {Array.from({ length: 6 }, (_, index) => (
+                          <InputOTPSlot key={index} index={index} className="h-12 w-11 text-base sm:w-12" />
+                        ))}
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 text-xs font-semibold text-primary underline-offset-4 enabled:hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+                    disabled={busy || resendSeconds > 0}
+                    onClick={resendOtp}
+                  >
+                    <RefreshCw className="size-3.5" aria-hidden="true" />
+                    {resendSeconds > 0
+                      ? lang === 'zh' ? `${resendSeconds} 秒后可重新发送` : `Resend in ${resendSeconds}s`
+                      : lang === 'zh' ? '重新发送验证码' : 'Resend code'}
+                  </button>
+                </div>
               ) : null}
 
               {isSignupAge ? (
@@ -346,8 +499,17 @@ export default function CommunityAuth() {
               {error ? <p className="rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">{error}</p> : null}
               {notice ? <p className="rounded-xl bg-primary/10 px-4 py-3 text-sm text-primary" role="status">{notice}</p> : null}
 
-              <button className={primaryButtonClass} disabled={busy || (isSignupAge && !ageBand)}>
-                {mode === 'magic' || mode === 'reset' ? <Mail className="size-4" aria-hidden="true" /> : mode === 'signin' || isSignupAccount ? <KeyRound className="size-4" aria-hidden="true" /> : null}
+              <button
+                className={primaryButtonClass}
+                disabled={busy || (isSignupAge && !ageBand) || (isOtpEntry && otp.length !== 6)}
+              >
+                {mode === 'magic'
+                  ? <Link2 className="size-4" aria-hidden="true" />
+                  : mode === 'reset' || (mode === 'otp' && !otpSent)
+                    ? <Mail className="size-4" aria-hidden="true" />
+                    : mode === 'signin' || isSignupAccount || isOtpEntry
+                      ? <KeyRound className="size-4" aria-hidden="true" />
+                      : null}
                 <span>
                   {busy
                     ? lang === 'zh' ? '请稍候' : 'Please wait'
@@ -357,8 +519,14 @@ export default function CommunityAuth() {
                         ? isSignupAge
                           ? lang === 'zh' ? '继续创建账号' : 'Continue'
                           : lang === 'zh' ? '注册账号' : 'Create account'
+                        : mode === 'signupVerify'
+                          ? lang === 'zh' ? '验证并进入社群' : 'Verify and enter community'
                         : mode === 'magic'
                           ? lang === 'zh' ? '发送登录链接' : 'Send sign-in link'
+                          : mode === 'otp'
+                            ? otpSent
+                              ? lang === 'zh' ? '验证并登录' : 'Verify and sign in'
+                              : lang === 'zh' ? '发送验证码' : 'Send verification code'
                           : lang === 'zh' ? '发送重设邮件' : 'Send reset email'}
                 </span>
                 {isSignupAge ? <ArrowRight className="size-4" aria-hidden="true" /> : null}
@@ -371,15 +539,22 @@ export default function CommunityAuth() {
                   <button type="button" onClick={() => selectMode('magic')} className="text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     {lang === 'zh' ? '使用 Magic Link' : 'Use Magic Link'}
                   </button>
+                  <button type="button" onClick={() => selectMode('otp')} className="text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    {lang === 'zh' ? '使用邮箱验证码' : 'Use email code'}
+                  </button>
                   <button type="button" onClick={() => selectMode('reset')} className="text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     {lang === 'zh' ? '找回密码' : 'Recover password'}
                   </button>
                 </>
-              ) : mode === 'magic' || mode === 'reset' ? (
+              ) : mode === 'magic' || mode === 'otp' || mode === 'reset' ? (
                 <button type="button" onClick={() => selectMode('signin')} className="inline-flex items-center gap-2 text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   <ArrowLeft className="size-4" aria-hidden="true" />
                   {lang === 'zh' ? '返回密码登录' : 'Back to password sign-in'}
                 </button>
+              ) : mode === 'signupVerify' ? (
+                <p className="text-center text-xs leading-5 text-foreground/55">
+                  {lang === 'zh' ? '链接与验证码均为一次性凭据，请勿转发邮件。' : 'Links and codes are single-use credentials. Do not forward the email.'}
+                </p>
               ) : (
                 <p className="text-center text-xs leading-5 text-foreground/55">
                   {lang === 'zh' ? '注册即表示你愿意遵守社群规则与隐私说明。' : 'By registering, you agree to the community rules and privacy notice.'}
