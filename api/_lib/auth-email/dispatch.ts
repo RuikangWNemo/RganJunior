@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import type { ReactNode } from 'react';
+import { createElement, type ReactNode } from 'react';
 import { render } from '@react-email/components';
 
 import EmailChangeEmail from '../../../emails/auth/EmailChangeEmail.js';
@@ -137,13 +137,13 @@ async function buildEmailChangeDeliveries(
     return Promise.all([
       renderedDelivery({
         action,
-        node: <EmailChangeEmail
-          confirmationUrl={confirmationUrl(payload, runtime, currentHash)}
-          locale={locale}
-          newEmail={newEmail}
-          recipientRole="current"
-          token={currentToken}
-        />,
+        node: createElement(EmailChangeEmail, {
+          confirmationUrl: confirmationUrl(payload, runtime, currentHash),
+          locale,
+          newEmail,
+          recipientRole: 'current',
+          token: currentToken,
+        }),
         recipientRole: 'current',
         subject: copy.emailChange.subject,
         to: payload.user.email,
@@ -151,13 +151,13 @@ async function buildEmailChangeDeliveries(
       }),
       renderedDelivery({
         action,
-        node: <EmailChangeEmail
-          confirmationUrl={confirmationUrl(payload, runtime, newHash)}
-          locale={locale}
-          newEmail={newEmail}
-          recipientRole="new"
-          token={newToken}
-        />,
+        node: createElement(EmailChangeEmail, {
+          confirmationUrl: confirmationUrl(payload, runtime, newHash),
+          locale,
+          newEmail,
+          recipientRole: 'new',
+          token: newToken,
+        }),
         recipientRole: 'new',
         subject: copy.emailChange.subject,
         to: newEmail,
@@ -170,13 +170,13 @@ async function buildEmailChangeDeliveries(
   const tokenHash = required(payload.email_data.token_hash, 'token_hash');
   return [await renderedDelivery({
     action,
-    node: <EmailChangeEmail
-      confirmationUrl={confirmationUrl(payload, runtime, tokenHash)}
-      locale={locale}
-      newEmail={newEmail}
-      recipientRole="new"
-      token={token}
-    />,
+    node: createElement(EmailChangeEmail, {
+      confirmationUrl: confirmationUrl(payload, runtime, tokenHash),
+      locale,
+      newEmail,
+      recipientRole: 'new',
+      token,
+    }),
     recipientRole: 'new',
     subject: copy.emailChange.subject,
     to: newEmail,
@@ -206,60 +206,60 @@ export async function buildAuthEmailDeliveries(
   switch (action) {
     case 'signup':
       subject = copy.signup.subject;
-      node = <SignupEmail
-        confirmationUrl={confirmationUrl(payload, runtime, payload.email_data.token_hash)}
-        locale={locale}
-        token={required(payload.email_data.token, 'token')}
-      />;
+      node = createElement(SignupEmail, {
+        confirmationUrl: confirmationUrl(payload, runtime, payload.email_data.token_hash),
+        locale,
+        token: required(payload.email_data.token, 'token'),
+      });
       break;
     case 'invite':
       subject = copy.invite.subject;
-      node = <InviteEmail
-        confirmationUrl={confirmationUrl(payload, runtime, payload.email_data.token_hash)}
-        locale={locale}
-      />;
+      node = createElement(InviteEmail, {
+        confirmationUrl: confirmationUrl(payload, runtime, payload.email_data.token_hash),
+        locale,
+      });
       break;
     case 'magiclink':
       subject = copy.magicLink.subject;
-      node = <MagicLinkEmail
-        confirmationUrl={confirmationUrl(payload, runtime, payload.email_data.token_hash)}
-        locale={locale}
-        token={payload.email_data.token}
-      />;
+      node = createElement(MagicLinkEmail, {
+        confirmationUrl: confirmationUrl(payload, runtime, payload.email_data.token_hash),
+        locale,
+        token: payload.email_data.token,
+      });
       break;
     case 'email':
       subject = copy.signIn.subject;
-      node = <SignInCodeEmail
-        confirmationUrl={payload.email_data.token_hash
+      node = createElement(SignInCodeEmail, {
+        confirmationUrl: payload.email_data.token_hash
           ? confirmationUrl(payload, runtime, payload.email_data.token_hash)
-          : undefined}
-        locale={locale}
-        token={required(payload.email_data.token, 'token')}
-      />;
+          : undefined,
+        locale,
+        token: required(payload.email_data.token, 'token'),
+      });
       break;
     case 'recovery':
       subject = copy.recovery.subject;
-      node = <PasswordResetEmail
-        confirmationUrl={confirmationUrl(payload, runtime, payload.email_data.token_hash)}
-        locale={locale}
-      />;
+      node = createElement(PasswordResetEmail, {
+        confirmationUrl: confirmationUrl(payload, runtime, payload.email_data.token_hash),
+        locale,
+      });
       break;
     case 'reauthentication':
       subject = copy.reauthentication.subject;
-      node = <ReauthenticationEmail
-        locale={locale}
-        token={required(payload.email_data.token, 'token')}
-      />;
+      node = createElement(ReauthenticationEmail, {
+        locale,
+        token: required(payload.email_data.token, 'token'),
+      });
       break;
     default: {
       const detail = securityDetail(action);
       const notification = copy.security[detail];
       subject = notification.subject;
-      node = <SecurityNotificationEmail
-        detail={detail}
-        locale={locale}
-        {...securityValues(payload)}
-      />;
+      node = createElement(SecurityNotificationEmail, {
+        detail,
+        locale,
+        ...securityValues(payload),
+      });
     }
   }
 

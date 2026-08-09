@@ -66,7 +66,7 @@
 
 **Files:**
 
-- Create: `api/_lib/auth-email/dispatch.tsx`
+- Create: `api/_lib/auth-email/dispatch.ts`
 - Create: `api/auth/send-email.tsx`
 - Test: `api/_lib/auth-email/dispatch.test.tsx`
 - Test: `tests/api/auth-send-email.test.ts`
