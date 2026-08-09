@@ -46,6 +46,21 @@ npm run build
 
 This repository uses the hosted Supabase project only. Do not start or reset a local Supabase database for this project.
 
+### Hosted Auth URLs
+
+The hosted project's Authentication → URL Configuration must use:
+
+```text
+Site URL
+https://www.rganjunior.org
+
+Redirect URLs
+https://www.rganjunior.org/community/auth/callback
+https://www.rganjunior.org/community/reset-password
+```
+
+Localhost URLs may remain in the redirect allow list for development, but the hosted Site URL must never point to localhost. `supabase/config.toml` configures the local CLI environment and does not replace the hosted project's Dashboard settings.
+
 ### Link the CLI
 
 ```bash

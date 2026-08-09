@@ -1,5 +1,6 @@
 import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
+import { buildAuthRedirectUrl } from '@/lib/authRedirect';
 import { getSupabaseClient } from '@/lib/supabase/client';
 import { BackendServiceError, throwIfSupabaseError } from '@/lib/supabase/errors';
 
@@ -11,10 +12,6 @@ export type SignUpInput = {
   ageBand: AgeBand;
 };
 
-function browserRedirect(path: string) {
-  return `${window.location.origin}${path}`;
-}
-
 export async function signUp(input: SignUpInput) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase.auth.signUp({
@@ -22,7 +19,7 @@ export async function signUp(input: SignUpInput) {
     password: input.password,
     options: {
       data: { age_band: input.ageBand },
-      emailRedirectTo: browserRedirect('/community/auth/callback'),
+      emailRedirectTo: buildAuthRedirectUrl('/community/auth/callback'),
     },
   });
   throwIfSupabaseError(error, 'AUTH_SIGN_UP_FAILED');
@@ -71,7 +68,7 @@ export async function sendMagicLink(email: string) {
     email: email.trim().toLowerCase(),
     options: {
       shouldCreateUser: false,
-      emailRedirectTo: browserRedirect('/community/auth/callback'),
+      emailRedirectTo: buildAuthRedirectUrl('/community/auth/callback'),
     },
   });
   throwIfSupabaseError(error, 'AUTH_MAGIC_LINK_FAILED');
@@ -81,7 +78,7 @@ export async function sendMagicLink(email: string) {
 export async function requestPasswordReset(email: string) {
   const { data, error } = await getSupabaseClient().auth.resetPasswordForEmail(
     email.trim().toLowerCase(),
-    { redirectTo: browserRedirect('/community/reset-password') },
+    { redirectTo: buildAuthRedirectUrl('/community/reset-password') },
   );
   throwIfSupabaseError(error, 'AUTH_PASSWORD_RESET_FAILED');
   return data;
