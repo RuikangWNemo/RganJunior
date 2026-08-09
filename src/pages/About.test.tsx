@@ -39,7 +39,7 @@ describe('About editorial content system', () => {
     expect(within(title).queryByText('阿柑少年')).not.toBeInTheDocument();
   });
 
-  it('presents the three team groups with youth and adult placeholder profiles', () => {
+  it('presents the four team groups with youth, adult, and parent placeholder profiles', () => {
     const { container } = renderAbout();
     const team = container.querySelector('#team');
 
@@ -52,7 +52,7 @@ describe('About editorial content system', () => {
       [...(team?.querySelectorAll('.about-v2-team-group__header h3') ?? [])].map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(['发起人', '青少年共创伙伴', '成人支持团队｜麦昆塔教育']);
+    ).toEqual(['发起人', '青少年共创伙伴', '成人支持团队｜麦昆塔教育', '家长守护团']);
     expect(
       [...(team?.querySelector('.about-v2-team-groups')?.children ?? [])].map(
         (section) => section.getAttribute('aria-labelledby'),
@@ -62,6 +62,7 @@ describe('About editorial content system', () => {
       'team-youth-title',
       'co-creation-directions-title',
       'team-adult-title',
+      'team-parent-guardian-title',
     ]);
     expect(screen.queryByAltText('青少年伙伴围绕真实项目记录与共创')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: '阅读 Nate 的发起人故事' })).toHaveAttribute(
@@ -101,6 +102,12 @@ describe('About editorial content system', () => {
     ]);
     expect(within(adultRoster).getAllByRole('img').every((image) => image.getAttribute('loading') === 'lazy')).toBe(true);
     expect(within(adultRoster).getAllByText('？？？')).toHaveLength(16);
+
+    expect(within(team as HTMLElement).getByText('参与共创，也支持每一次活动真实发生。')).toBeInTheDocument();
+    const parentGuardianRoster = screen.getByLabelText('家长守护团成员名录');
+    expect(within(parentGuardianRoster).getAllByRole('article')).toHaveLength(4);
+    expect(within(parentGuardianRoster).getAllByText('姓名待补充')).toHaveLength(4);
+    expect(within(parentGuardianRoster).getAllByText('角色待补充')).toHaveLength(4);
   });
 
   it('keeps the English brand name together on one title line', () => {
