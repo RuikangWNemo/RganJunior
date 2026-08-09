@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "vite",
     "dev:collab": "tsx scripts/community-collaboration-server.ts",
+    "prebuild": "npm run build:auth-email-runtime",
     "build": "vite build",
+    "build:auth-email-runtime": "esbuild api/_lib/auth-email/dispatch.ts --bundle --platform=node --format=esm --target=node24 --packages=external --outfile=api/_lib/auth-email/dispatch.runtime.mjs",
     "build:dev": "vite build --mode development",
     "email:dev": "email dev --dir api/_lib/auth-email/emails",
     "lint": "eslint .",

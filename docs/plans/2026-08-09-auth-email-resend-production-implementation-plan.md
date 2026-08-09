@@ -67,6 +67,8 @@
 **Files:**
 
 - Create: `api/_lib/auth-email/dispatch.ts`
+- Create: `api/_lib/auth-email/dispatch.runtime.mjs`
+- Create: `api/_lib/auth-email/dispatch.runtime.d.mts`
 - Create: `api/auth/send-email.tsx`
 - Test: `api/_lib/auth-email/dispatch.test.tsx`
 - Test: `tests/api/auth-send-email.test.ts`

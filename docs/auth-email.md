@@ -60,6 +60,8 @@ npm run email:dev
 npm test -- api/_lib/auth-email tests/api/auth-send-email.test.ts tests/auth-email
 ```
 
+`npm run build` 会先把邮件渲染源码打包为 `api/_lib/auth-email/dispatch.runtime.mjs`，确保 Vercel Lambda 不依赖跨文件的 TSX 路径追踪。
+
 ## Templates
 
 模板位于 `api/_lib/auth-email/emails/auth/`，公共邮件组件位于 `api/_lib/auth-email/emails/components/`。中文和英文 Subject、Preview 与正文集中在 `api/_lib/auth-email/emails/copy.ts`。

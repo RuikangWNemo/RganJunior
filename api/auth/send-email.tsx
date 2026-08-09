@@ -5,7 +5,7 @@ import {
   AuthEmailDispatchError,
   buildAuthEmailDeliveries,
   type AuthEmailDelivery,
-} from '../_lib/auth-email/dispatch.js';
+} from '../_lib/auth-email/dispatch.runtime.mjs';
 import { logAuthEmailEvent } from '../_lib/auth-email/logging.js';
 import { AuthEmailPayloadError, parseAuthEmailPayload } from '../_lib/auth-email/schema.js';
 import { HookSignatureError, verifySupabaseHook } from '../_lib/auth-email/supabase-hook.js';
