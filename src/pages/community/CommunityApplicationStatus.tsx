@@ -30,7 +30,7 @@ export default function CommunityApplicationStatus() {
     } finally { setLoading(false); }
   }, [refreshCommunity, t]);
 
-  useEffect(() => { void load(); }, [load]);
+  useEffect(() => { void load(); }, [communityState?.application_status, load]);
 
   const applicationStatus = application?.status || communityState?.application_status || 'submitted';
   const stateCopy = {

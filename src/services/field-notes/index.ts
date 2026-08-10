@@ -1,6 +1,7 @@
 import { getSupabaseClient } from '@/lib/supabase/client';
 import type { Tables, TablesInsert, TablesUpdate } from '@/lib/supabase/database.types';
 import { BackendServiceError, throwIfSupabaseError } from '@/lib/supabase/errors';
+import { refreshStoredMediaUrls } from '@/services/media';
 
 export type FieldNoteStatus =
   | 'draft'
@@ -38,6 +39,8 @@ export type CommunitySquareFieldNote = ManagedFieldNote & {
     people: PublicStoryAuthor | null;
   }>;
 };
+
+export type EditorialFieldNote = CommunitySquareFieldNote;
 
 export interface FieldNoteMetadata {
   categoryId: number | null;
@@ -145,6 +148,40 @@ export async function listMyFieldNotes() {
 
 export async function listCommunitySquareFieldNotes(limit = 100) {
   return listPublishedFieldNotes(undefined, limit);
+}
+
+export async function listEditorialFieldNotes() {
+  const { data, error } = await getSupabaseClient()
+    .from('field_notes')
+    .select(storyRelations)
+    .in('status', ['submitted', 'in_review', 'changes_requested', 'approved', 'published'])
+    .order('updated_at', { ascending: false });
+  throwIfSupabaseError(error, 'EDITORIAL_FIELD_NOTES_READ_FAILED');
+  return (data ?? []) as unknown as EditorialFieldNote[];
+}
+
+export async function resolveEditorialPreviewHtml(note: EditorialFieldNote) {
+  const assets = note.field_note_media
+    .map((relation) => relation.media_assets)
+    .filter((asset): asset is NonNullable<typeof asset> => Boolean(asset));
+  return refreshStoredMediaUrls(note.content_html, assets);
+}
+
+export async function publishFieldNote(id: number) {
+  return updateFieldNote(id, { status: 'published', visibility: 'public' });
+}
+
+export async function setFieldNoteFeatured(id: number, featured: boolean) {
+  const { data, error } = await getSupabaseClient()
+    .from('field_notes')
+    .update({ featured })
+    .eq('id', id)
+    .eq('status', 'published')
+    .select('*')
+    .maybeSingle();
+  throwIfSupabaseError(error, 'FIELD_NOTE_FEATURE_UPDATE_FAILED');
+  if (!data) throw new BackendServiceError('FIELD_NOTE_FEATURE_NOT_PUBLISHED', 'Only published stories can be featured.');
+  return data;
 }
 
 export async function listArticleCategories(options: { includeInactive?: boolean } = {}) {

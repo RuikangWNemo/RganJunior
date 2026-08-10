@@ -30,11 +30,11 @@ export default function VoiceArticle() {
         <header className="voice-article-header border-b border-border/70 pb-12 pt-14 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24">
           <div className="voice-article-header__inner container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <Link
-              to="/voices"
+              to="/about#team"
               className="voice-article-back cursor-target inline-flex items-center gap-2 text-sm text-muted-foreground transition-organic hover:text-primary"
             >
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-              <span>{t('返回伙伴之声', 'Back to Partner Voices')}</span>
+              <span>{t('返回我们的团队', 'Back to Our Team')}</span>
             </Link>
 
             <div className="voice-article-intro mt-12 max-w-4xl">
@@ -100,8 +100,8 @@ export default function VoiceArticle() {
             <h2 id="next-voice-story" className="font-serif text-3xl text-foreground md:text-4xl">
               {t('继续阅读', 'Continue reading')}
             </h2>
-            <Link to="/voices" className="hidden items-center gap-2 text-sm text-primary sm:inline-flex">
-              {t('查看全部', 'View all')}
+            <Link to="/about#team" className="hidden items-center gap-2 text-sm text-primary sm:inline-flex">
+              {t('返回我们的团队', 'Back to Our Team')}
               <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </Link>
           </div>

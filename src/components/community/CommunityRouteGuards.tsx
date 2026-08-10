@@ -47,3 +47,10 @@ export function CommunityRequirePermission({ permission }: { permission: string 
   if (!permissions.includes(permission)) return <Navigate to="/community" replace />;
   return <Outlet />;
 }
+
+export function CommunityRequireAnyPermission({ permissions: required }: { permissions: string[] }) {
+  const { permissions, loading } = useAuth();
+  if (loading) return <CommunityLoading />;
+  if (!required.some((permission) => permissions.includes(permission))) return <Navigate to="/community" replace />;
+  return <Outlet />;
+}

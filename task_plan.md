@@ -1,13 +1,40 @@
 # Task Plan
 
 ## Goal
-Optimize the R'gan Junior / 阿柑少年 website so it reaches a top-tier education, youth growth, outdoor learning, and visual storytelling standard. The research should diagnose the current site, benchmark leading references, clarify brand positioning, propose homepage information architecture, define visual and interaction direction, strengthen SEO/conversion/parent trust, and produce a practical code implementation plan.
+Build a privacy-preserving, real-data website analytics system for the Community administrator interface, including continuous anonymous collection, configurable reporting start date, live activity, traffic, engagement time, popular pages, and acquisition sources.
 
 ## Current Request
-Implement the approved Community manual Guardian-review mode and configure managed Redis so every age band can register, under-14 membership remains blocked until staff-recorded Guardian confirmation, and collaborative editing works in Preview and Production.
+Implement the approved Supabase-first anonymous website analytics design without disturbing existing uncommitted website work.
 
 ## Current Phase
-Database and server implementation in progress; write regression coverage, create the Supabase migration through the CLI, and implement the manual Guardian API boundary.
+Implementation and verification complete; hosted migration and application deployment remain the rollout gate for real collection.
+
+## 2026-08-10 Community Website Analytics
+
+- [x] Phase 1 — Inspect the Community admin shell, routing, permissions, current analytics state, and production deployment.
+- [x] Phase 2 — Confirm anonymous collection, compare Vercel/Supabase/hybrid approaches, and select Supabase-first collection.
+- [x] Phase 3 — Approve architecture, dashboard, security, verification, and configurable reporting-start-date behavior.
+- [x] Phase 4 — Write and commit the approved design document.
+- [x] Phase 5 — Write the exact implementation plan and inspect current Supabase/UI integration points.
+- [x] Phase 6 — Implement database schema, collection/query APIs, public tracker, admin route, dashboard, and settings.
+- [x] Phase 7 — Run focused tests, typecheck, build, browser verification, and document rollout requirements.
+
+### Errors
+
+- The first design-document commit attempt could not create `.git/index.lock` in the sandbox; the narrowly scoped elevated retry succeeded as commit `18dd471`.
+- The brainstorming skill requested an unavailable `writing-plans` skill; use `planning-with-files` as the documented fallback.
+- `npx ui-skills categories` completed without returning category data, matching earlier repository attempts; use the approved Community design system and existing analytical dependencies as the narrow UI fallback.
+- The `better-icons` executable is not installed globally. Used its documented Iconify API fallback; the first compound query returned no candidates, and the focused Lucide `chart` query succeeded.
+- A combined `rg` command used a backtick-bearing pattern inside a double-quoted zsh command and failed with `unmatched \"`; retry with simpler fixed patterns and separate file reads.
+- The first combined implementation-plan patch expected the Current Phase line after the phase checklist, but the file stores it before the checklist; no file changed, so create the plan and update planning files in separate exact-context patches.
+- The next task-plan status patch reused the intended future Current Phase text instead of the current file text; update the current phase and checklist in separate exact hunks.
+- The first focused UI/API run passed 21/22 tests and both app/backend typechecks. The only failure used `fireEvent.click` on a Radix dropdown trigger, which did not open the portalled menu in JSDOM; switch the test to the component's pointer interaction or assert the permission branch through a controlled mock.
+- Radix `pointerDown` also remained closed in this JSDOM environment. Stop simulating the library internals; mock the dropdown primitives in the CommunityChrome unit test and assert that the permission-gated item is rendered.
+- Focused tests reached 22/22, but targeted ESLint rejected the explicit control-character range in the path regex (`no-control-regex`). Replace that regex branch with a character-code check; behavior stays unchanged.
+- The parallel full-suite/build/typecheck orchestration yielded before long-running commands completed and did not preserve their session IDs in the condensed output. Do not infer completion; rerun build and full tests serially with explicit session polling.
+- A sandboxed `ps` process check was denied by the environment, so process-state verification must use the command session itself rather than OS process inspection.
+- The `agent-browser` binary required by the verification skill is not installed, and no dev server was initially listening on 5173. Started Vite, completed the verification through the controlled in-app browser fallback, then stopped the server cleanly.
+- The in-app browser's read-only evaluation sandbox does not expose page storage, so a direct browser read of the tracker session key returned null even though the page had no runtime errors. Tracker storage/event behavior remains covered by focused component/service tests; browser verification covered public rendering, console errors, and the administrator-route auth boundary.
 
 ## 2026-08-09 Manual Guardian + Redis Rollout
 

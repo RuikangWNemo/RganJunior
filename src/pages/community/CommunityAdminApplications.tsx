@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import ManualGuardianReviewPanel from '@/components/community/ManualGuardianReviewPanel';
@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
 import { isManualGuardianFlow } from '@/lib/guardianFlow';
 import { listAdminIdentityLabels, listSignupIdentityOptions } from '@/services/community-identities';
+import { subscribeToApplicationReviewChanges } from '@/services/community-realtime';
 import { listMembershipApplications, requestMembershipApplicationChanges, reviewMembershipApplication, reviewMinorIdentity } from '@/services/memberships';
 
 type ReviewIdentityOption = {
@@ -33,10 +34,13 @@ export default function CommunityAdminApplications() {
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState<{ message: string; showDashboard: boolean } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const loadRequestIdRef = useRef(0);
+  const refreshTimerRef = useRef<number | null>(null);
   const canManagePeople = permissions.includes('people.manage');
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  const load = useCallback(async (background = false) => {
+    const requestId = ++loadRequestIdRef.current;
+    if (!background) setLoading(true);
     try {
       const [nextApplications, nextIdentityOptions] = await Promise.all([
         listMembershipApplications([
@@ -49,6 +53,7 @@ export default function CommunityAdminApplications() {
           ? listAdminIdentityLabels().then((labels) => labels.filter((label) => label.is_active))
           : listSignupIdentityOptions(),
       ]);
+      if (requestId !== loadRequestIdRef.current) return;
       setApplications(nextApplications);
       setIdentityOptions(nextIdentityOptions);
       setIdentitySelections((current) => {
@@ -63,16 +68,38 @@ export default function CommunityAdminApplications() {
         });
         return next;
       });
+      setError(null);
     } catch (readError) {
+      if (requestId !== loadRequestIdRef.current) return;
       setError(readError instanceof Error ? readError.message : t('申请列表读取失败。', 'Could not load membership applications.'));
     } finally {
-      setLoading(false);
+      if (requestId === loadRequestIdRef.current) setLoading(false);
     }
   }, [canManagePeople, t]);
 
   useEffect(() => {
     void load();
   }, [load]);
+
+  const scheduleRefresh = useCallback(() => {
+    if (refreshTimerRef.current !== null) window.clearTimeout(refreshTimerRef.current);
+    refreshTimerRef.current = window.setTimeout(() => {
+      refreshTimerRef.current = null;
+      void load(true);
+    }, 120);
+  }, [load]);
+
+  useEffect(() => {
+    const subscription = subscribeToApplicationReviewChanges(scheduleRefresh);
+    window.addEventListener('focus', scheduleRefresh);
+    window.addEventListener('online', scheduleRefresh);
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('focus', scheduleRefresh);
+      window.removeEventListener('online', scheduleRefresh);
+      if (refreshTimerRef.current !== null) window.clearTimeout(refreshTimerRef.current);
+    };
+  }, [scheduleRefresh]);
 
   const act = async (id: number, action: 'approve' | 'reject' | 'changes') => {
     if (busyApplicationId !== null) return;
@@ -163,6 +190,17 @@ export default function CommunityAdminApplications() {
           return (
             <article key={application.id} className="rounded-[1.4rem] border border-[hsl(var(--community-forest)/0.11)] bg-white/55 p-5">
               <div className="flex flex-wrap items-start justify-between gap-3"><div><h2 className="font-serif text-2xl">{application.nature_name || application.display_name || application.username}</h2><p className="mt-1 text-xs text-muted-foreground">#{application.id} · {status(application.status)}</p></div><div className="flex flex-wrap gap-2 text-xs"><span className="rounded-full bg-secondary px-3 py-1">{application.age_band || 'masked'}</span><span className="rounded-full bg-secondary px-3 py-1">{t('监护', 'guardian')}: {application.guardian_consent_status || 'masked'}</span><span className="rounded-full bg-secondary px-3 py-1">{t('身份', 'identity')}: {application.identity_verification_status || 'masked'}</span></div></div>
+              <section className="mt-4 rounded-2xl border border-[hsl(var(--community-forest)/0.1)] bg-[hsl(var(--community-paper-deep)/0.44)] p-4" aria-label={t('申请内容', 'Application answers')}>
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[hsl(var(--community-orange))]">{t('申请理由', 'Reason for joining')}</p>
+                <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[hsl(var(--community-forest))]">{application.motivation}</p>
+                {application.hopes || application.contribution || application.additional_info ? (
+                  <dl className="mt-4 grid gap-4 border-t border-[hsl(var(--community-forest)/0.09)] pt-4 md:grid-cols-2">
+                    {application.hopes ? <div><dt className="text-xs font-semibold text-[hsl(var(--community-forest)/0.55)]">{t('希望获得', 'Hopes to find')}</dt><dd className="mt-1 whitespace-pre-wrap text-sm leading-6">{application.hopes}</dd></div> : null}
+                    {application.contribution ? <div><dt className="text-xs font-semibold text-[hsl(var(--community-forest)/0.55)]">{t('参与与分享', 'Participation and contribution')}</dt><dd className="mt-1 whitespace-pre-wrap text-sm leading-6">{application.contribution}</dd></div> : null}
+                    {application.additional_info ? <div className="md:col-span-2"><dt className="text-xs font-semibold text-[hsl(var(--community-forest)/0.55)]">{t('其他说明', 'Additional information')}</dt><dd className="mt-1 whitespace-pre-wrap text-sm leading-6">{application.additional_info}</dd></div> : null}
+                  </dl>
+                ) : null}
+              </section>
               <div className="mt-4 rounded-2xl border border-primary/10 bg-primary/[0.04] p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary/60">{t('星球身份确认', 'Planet identity confirmation')}</p>

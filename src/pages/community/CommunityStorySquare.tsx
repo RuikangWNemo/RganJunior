@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ArrowUpRight, BookOpenText, ChevronDown, Newspaper, Search, Sparkles, Tag } from 'lucide-react';
+import { ArrowUpRight, BookOpenText, ChevronDown, FileCheck2, Search, Sparkles, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import villageIllustration from '@/assets/village-illustration.webp';
@@ -11,6 +11,7 @@ import {
   communitySecondaryButtonClass,
 } from '@/components/community/CommunitySurface';
 import { useCommunityUi } from '@/lib/communityUi';
+import { useAuth } from '@/contexts/AuthContext';
 import { getSupabaseClient } from '@/lib/supabase/client';
 import {
   listArticleCategories,
@@ -38,7 +39,11 @@ function noteCover(note: CommunitySquareFieldNote) {
 }
 
 export default function CommunityStorySquare() {
+  const { permissions } = useAuth();
   const { lang, t, formatDate } = useCommunityUi();
+  const canManageEditorial = permissions.some((permission) => (
+    ['field_notes.review', 'field_notes.approve', 'field_notes.publish'].includes(permission)
+  ));
   const [notes, setNotes] = useState<Awaited<ReturnType<typeof listCommunitySquareFieldNotes>>>([]);
   const [categories, setCategories] = useState<Awaited<ReturnType<typeof listArticleCategories>>>([]);
   const [loading, setLoading] = useState(true);
@@ -102,7 +107,12 @@ export default function CommunityStorySquare() {
       title={t('从彼此的故事里，看见更多可能。', 'Discover what becomes possible through each other’s stories.')}
       description={t('这里收集社群成员愿意公开分享的观察、行动与成长。', 'A living collection of observations, action, and growth shared publicly by community members.')}
       width="wide"
-      action={<Link to="/community/stories" className={`${communitySecondaryButtonClass} gap-2`}><BookOpenText className="size-4" />{t('管理我的文章', 'My stories')}</Link>}
+      action={(
+        <div className="flex flex-wrap gap-2">
+          {canManageEditorial ? <Link to="/community/admin/field-notes" className={`${communitySecondaryButtonClass} gap-2`}><FileCheck2 className="size-4" />{t('管理发布与精选', 'Manage publishing')}</Link> : null}
+          <Link to="/community/stories" className={`${communitySecondaryButtonClass} gap-2`}><BookOpenText className="size-4" />{t('管理我的文章', 'My stories')}</Link>
+        </div>
+      )}
     >
       {loading ? <CommunityLoadingState label={t('正在铺开文章广场…', 'Opening the story square…')} variant="cards" /> : null}
       {!loading && error ? <CommunityErrorState message={error} onRetry={() => void load()} /> : null}

@@ -5,6 +5,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import CommunityStorySquare from './CommunityStorySquare';
 
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuth: () => ({ permissions: ['field_notes.publish'] }),
+}));
+
 const listSquare = vi.fn();
 const listCategories = vi.fn();
 
@@ -56,6 +60,7 @@ describe('CommunityStorySquare', () => {
     expect(await screen.findByRole('heading', { name: '一棵树的四季' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '外婆的茶厨房' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '管理我的文章' })).toHaveAttribute('href', '/community/stories');
+    expect(screen.getByRole('link', { name: '管理发布与精选' })).toHaveAttribute('href', '/community/admin/field-notes');
     expect(screen.getByRole('link', { name: '阅读这篇文章' })).toHaveAttribute('href', '/field-notes/tree-seasons');
   });
 

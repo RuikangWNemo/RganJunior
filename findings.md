@@ -1,5 +1,53 @@
 # Findings
 
+## 2026-08-10 Community Website Analytics
+
+- `.codegraph/` is absent, so repository discovery used direct file inspection.
+- The project is Vite + React and already depends on Supabase, TanStack Query, Recharts, and the Community Chrome design system.
+- Existing administrator routes use permission guards, `CommunitySurface`, bilingual Community copy, and server/RPC service boundaries.
+- No analytics client, page-view schema, or website-analytics service currently exists in the repository.
+- Production HTML and JavaScript do not load Vercel Web Analytics. The current `/_vercel/insights/script.js` request resolves to the SPA HTML rewrite rather than an analytics script.
+- Vercel Web Analytics requires dashboard enablement, client instrumentation, and redeployment before data begins collecting; historical data cannot be reconstructed.
+- Vercel added a public Web Analytics query API in May 2026, but the user selected a Supabase-first implementation because the requested live-presence and effective-engagement metrics need a controlled first-party event model.
+- The approved privacy boundary excludes names, email, account IDs, raw IP addresses, complete referrer URLs, arbitrary query parameters, Community routes, and private content.
+- Collection is continuous after deployment. The configurable enable/reporting date changes the historical reporting baseline only; it never pauses collection or deletes data.
+- Current-online and recent-activity panels are independent of the reporting start date.
+- The approved design is committed at `docs/plans/2026-08-10-community-website-analytics-design.md` in commit `18dd471`.
+- The current Supabase guidance requires RLS on exposed tables, explicit grants, strict control of `SECURITY DEFINER` functions, and current changelog/documentation verification before schema work.
+- The UI Skills CLI returned no category content. The approved existing Community Chrome/Surface system, Recharts dependency, and accessible local state patterns are the implementation fallback.
+- Server code already provides user-scoped and secret Supabase clients, `requirePermission`, no-store JSON responses, body compaction, request IP/origin helpers, and persistent private-schema rate limiting.
+- The existing rate limiter hashes keys with Guardian-specific secrets. Analytics uses a domain-separated HMAC helper keyed by the already required server-only Supabase secret, so it is not coupled to Guardian configuration and stores no raw IP address.
+- Existing permissions are seeded through `public.permissions` and assigned to Admin/Super Admin roles. The analytics migration and seed must add `analytics.read` and `analytics.manage` idempotently.
+- The private audit writer records `auth.uid()`. Reporting-date changes should be made through the authenticated user-scoped client/RPC so the actor is recorded automatically.
+- Public collection should use the server-only Supabase client and private-schema RPCs; browser clients should receive no table grants.
+- Current Supabase documentation confirms grants and RLS are separate controls, function execution must be explicitly granted, and `SECURITY DEFINER` helpers belong outside exposed schemas.
+- Supabase Cron uses `pg_cron` and can run a cleanup function on a schedule, but enabling the extension is a separate hosted operation. The migration should provide idempotent cleanup/rollup functions without assuming Cron is already enabled.
+- Client services can reuse the persisted Supabase browser session only to obtain the access token; the server remains authoritative by validating it with `auth.getUser` through `requirePermission`.
+- The existing Vitest setup already includes API TypeScript tests and React/JSDOM tests; API handlers have a reusable response-harness pattern.
+- The August 2026 Supabase changelog shows no relevant blocker. The applicable change is October enforcement of explicit Data API exposure for new public tables; analytics will use private tables and explicit RPC grants. Node 20 support ended, while this project already targets Node 24.
+- The project already includes the shadcn-style chart wrapper over Recharts with accessible styling hooks; no new chart dependency is needed.
+- `CommunityAdminIdentities` provides the closest local dashboard precedent: parallel loading, branded KPI cards, explicit loading/error/empty states, responsive grids, and bilingual copy.
+- Navigation icons currently use Lucide. The analytics entry should select a Lucide-compatible line icon through Better Icons and continue importing it from the existing `lucide-react` package.
+- Better Icons/Iconify returned the existing Lucide `chart-line` candidate. It matches the current navigation stroke style and avoids adding or synchronizing an SVG asset.
+- Authenticated frontend services already retrieve the current browser session and send its access token to protected Community API routes; the analytics admin service can follow that exact boundary.
+- Public-site tracking belongs in `Layout` or a small child mounted there because it already receives router location and cleanly separates Community from public routes.
+- `CommunityAdminIdentities.test.tsx` is the closest page-test pattern for asynchronous statistics and settings interactions.
+- Generated Supabase RPC types are maintained in `src/lib/supabase/database.types.ts`; new public wrappers must be added there if hosted type generation is unavailable during local implementation.
+- The existing Community CSS provides the page frame, content surface, responsive shell, and focus styling. Analytics should add only page-specific metric/chart/table styles.
+- An authenticated Supabase MCP surface is available for the linked `rganjunior` project (`sronjswselrxewaqfcar`), which is active and running Postgres 17.6. A combined migration + regression transaction can therefore be executed with an explicit final rollback.
+- Postgres best-practice review confirms the analytics foreign key is indexed, common equality-plus-time queries use composite indexes, application roles have only RPC execution, and the migration/test validation uses short transactions with explicit timeouts.
+- React best-practice review confirms the tracker uses versioned minimal session storage, transient timing values outside React state, one globally mounted listener set with cleanup, and primitive route dependencies. The dashboard retains state only for visible loading/stale/settings UI.
+- The required `agent-browser` CLI is unavailable in this workspace. Browser verification must use the installed Codex browser/Chrome control surface while following the same load/content/overlay/console/responsive checklist.
+- Installed Supabase CLI is v2.67.1. It supports `migration new` but predates the documented `db query`/`db advisors` minimums, so schema execution may need the repository's established linked-database fallback.
+- The CLI created `supabase/migrations/20260810022104_website_analytics.sql`; do not rename or invent a timestamp.
+- The database can satisfy 90-day retention without a hosted scheduler by atomically claiming one cleanup per UTC day on the settings singleton during the first recorded page view.
+- Client-generated page-view UUIDs make page-view delivery idempotent and let engagement heartbeats update the correct record without returning identifiers from the public API.
+- Existing database tests use stable UUID fixtures, JWT claim helpers, role switching, and transaction rollback; analytics coverage should follow this established pattern.
+- The completed dashboard keeps current-online and recent anonymous activity independent of the reporting start date, while today summaries, trends, popular pages, and source reports clamp to that date. Changing the date never mutates or deletes collected events.
+- The local migration and complete pgTAP analytics regression passed twice against linked Postgres 17 inside explicit rollback transactions, so no hosted analytics tables, permissions, or data currently exist.
+- Local Vite cannot execute the deployed Vercel API functions, and the hosted migration is intentionally unapplied. Real statistics will begin only after applying `20260810022104_website_analytics.sql` and deploying the matching API/tracker/admin code; no fake historical data is seeded.
+- Controlled browser verification found the public site renders normally without error logs and unauthenticated `/community/admin/analytics` access redirects to `/community/auth`.
+
 ## 2026-08-09 Approved Manual Guardian + Redis Rollout
 
 ### Approved behavior

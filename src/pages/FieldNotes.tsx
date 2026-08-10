@@ -8,7 +8,12 @@ import {
   type ExplorerDimension,
 } from '@/components/field-notes/FieldNoteExplorer';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { localFieldNotesRepository } from '@/services/field-notes/publicRepository';
+import {
+  fieldNotesRepository,
+  filterPublishedNotes,
+  peopleFromPublishedNotes,
+  topicsFromPublishedNotes,
+} from '@/services/field-notes/publicRepository';
 
 export default function FieldNotes() {
   const { lang, t } = useLanguage();
@@ -21,31 +26,9 @@ export default function FieldNotes() {
   const personSlug = searchParams.get('person') ?? '';
   const topicSlug = searchParams.get('topic') ?? '';
 
-  const featuredQuery = useQuery({
-    queryKey: ['field-notes', 'featured', lang],
-    queryFn: () => localFieldNotesRepository.listPublishedNotes({ language: lang, featuredOnly: true }),
-    enabled: !isAll,
-  });
-  const notesQuery = useQuery({
-    queryKey: ['field-notes', 'public', lang, deferredSearch, personSlug, topicSlug],
-    queryFn: () => localFieldNotesRepository.listPublishedNotes({
-      language: lang,
-      search: deferredSearch,
-      personSlug: personSlug || undefined,
-      topicSlug: topicSlug || undefined,
-    }),
-  });
   const allNotesQuery = useQuery({
-    queryKey: ['field-notes', 'counts', lang],
-    queryFn: () => localFieldNotesRepository.listPublishedNotes({ language: lang }),
-  });
-  const peopleQuery = useQuery({
-    queryKey: ['field-notes', 'people'],
-    queryFn: () => localFieldNotesRepository.listPublicPeople(),
-  });
-  const topicsQuery = useQuery({
-    queryKey: ['field-notes', 'topics'],
-    queryFn: () => localFieldNotesRepository.listActiveTopics(),
+    queryKey: ['field-notes', 'public', lang],
+    queryFn: () => fieldNotesRepository.listPublishedNotes({ language: lang }),
   });
 
   const updateParams = (changes: Record<string, string | null>) => {
@@ -63,11 +46,16 @@ export default function FieldNotes() {
     setSearchParams(next, { replace: true });
   };
 
-  const featured = featuredQuery.data ?? [];
-  const notes = notesQuery.data ?? [];
   const allNotes = allNotesQuery.data ?? [];
-  const people = peopleQuery.data ?? [];
-  const topics = topicsQuery.data ?? [];
+  const featured = filterPublishedNotes(allNotes, { language: lang, featuredOnly: true });
+  const notes = filterPublishedNotes(allNotes, {
+    language: lang,
+    search: deferredSearch,
+    personSlug: personSlug || undefined,
+    topicSlug: topicSlug || undefined,
+  });
+  const people = peopleFromPublishedNotes(allNotes);
+  const topics = topicsFromPublishedNotes(allNotes);
 
   return (
     <div className="field-notes-page pt-20">
@@ -94,8 +82,8 @@ export default function FieldNotes() {
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border/75 pt-5">
             <p className="max-w-3xl text-xs leading-6 text-muted-foreground">
               {t(
-                '这里汇集内容样稿与经过审核、正式公开的社群文章。',
-                'This archive brings together editorial samples and reviewed community stories published for everyone.',
+                '这里只展示作者真实提交、经过审核并正式公开的社群文章。',
+                'Only real community stories submitted by their authors, reviewed, and published for everyone appear here.',
               )}
             </p>
             <nav className="flex gap-5 text-sm" aria-label={t('田野笔记栏目', 'Field Notes sections')}>
@@ -134,7 +122,7 @@ export default function FieldNotes() {
               </Link>
             </div>
 
-            {featuredQuery.isPending ? (
+            {allNotesQuery.isPending ? (
               <div className="grid animate-pulse gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.65fr)]">
                 <div>
                   <div className="aspect-[16/10] rounded-lg bg-secondary" />
@@ -145,6 +133,11 @@ export default function FieldNotes() {
                   <div className="h-52 rounded-lg bg-secondary" />
                 </div>
               </div>
+            ) : allNotesQuery.isError ? (
+              <div className="rounded-lg border border-border bg-card/50 px-6 py-12 text-center" role="alert">
+                <p className="font-serif text-2xl text-foreground">{t('精选文章暂时没有加载出来', 'Featured stories could not be loaded')}</p>
+                <button type="button" className="mt-5 min-h-11 text-sm font-medium text-primary" onClick={() => void allNotesQuery.refetch()}>{t('重新加载', 'Try again')}</button>
+              </div>
             ) : featured.length ? (
               <div className="grid gap-14 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.65fr)] lg:gap-12">
                 <FieldNoteCard note={featured[0]} variant="lead" />
@@ -154,7 +147,12 @@ export default function FieldNotes() {
                   ))}
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <div className="rounded-lg border border-dashed border-border bg-card/40 px-6 py-12 text-center">
+                <h3 className="font-serif text-2xl text-foreground">{t('本期精选正在准备中', 'The next featured selection is being prepared')}</h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">{t('管理员精选真实发布文章后，它们会出现在这里。', 'Real published stories will appear here after an editor features them.')}</p>
+              </div>
+            )}
           </div>
         </section>
       ) : null}
@@ -178,8 +176,8 @@ export default function FieldNotes() {
             search={search}
             personSlug={personSlug}
             topicSlug={topicSlug}
-            isLoading={notesQuery.isPending || allNotesQuery.isPending || peopleQuery.isPending || topicsQuery.isPending}
-            hasError={notesQuery.isError || allNotesQuery.isError || peopleQuery.isError || topicsQuery.isError}
+            isLoading={allNotesQuery.isPending}
+            hasError={allNotesQuery.isError}
             compact={isAll}
             onDimensionChange={(nextDimension) => updateParams({
               browse: nextDimension === 'topics' ? 'topics' : null,
@@ -190,14 +188,7 @@ export default function FieldNotes() {
             onPersonChange={(slug) => updateParams({ person: slug || null, topic: null })}
             onTopicChange={(slug) => updateParams({ topic: slug || null, person: null })}
             onClear={clearFilters}
-            onRetry={() => {
-              void Promise.all([
-                notesQuery.refetch(),
-                allNotesQuery.refetch(),
-                peopleQuery.refetch(),
-                topicsQuery.refetch(),
-              ]);
-            }}
+            onRetry={() => void allNotesQuery.refetch()}
           />
         </div>
       </section>

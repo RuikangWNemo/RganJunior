@@ -17,7 +17,7 @@ type BusyAction = 'profile' | 'email' | 'passwordCode' | 'password' | null;
 
 export default function CommunitySettings() {
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, refreshCommunity, signOut } = useAuth();
   const { t } = useCommunityUi();
   const [form, setForm] = useState({ displayName: '', fullNamePrivate: '', nameZh: '', nameEn: '', natureName: '', bio: '', city: '', region: '', country: '', profileVisibility: 'private' as ProfileVisibility, showRealName: false, allowMessages: true });
   const [accountEmail, setAccountEmail] = useState(user?.email || '');
@@ -61,7 +61,7 @@ export default function CommunitySettings() {
   const saveProfile = async (event: FormEvent) => {
     event.preventDefault();
     setBusyAction('profile'); setError(null); setNotice(null);
-    try { await updateMyCommunityProfile(form); setNotice(t('主页设置已保存。', 'Profile settings saved.')); }
+    try { await updateMyCommunityProfile(form); await refreshCommunity(); setNotice(t('主页设置已保存。', 'Profile settings saved.')); }
     catch (saveError) { setError(saveError instanceof Error ? saveError.message : t('保存失败。', 'Could not save your profile.')); }
     finally { setBusyAction(null); }
   };

@@ -13,6 +13,7 @@ vi.mock('./ui/TargetCursor', () => ({ default: () => null }));
 vi.mock('./community/CommunityChrome', () => ({
   default: ({ children }: { children: React.ReactNode }) => <div data-testid="community-chrome">{children}</div>,
 }));
+vi.mock('./WebsiteAnalyticsTracker', () => ({ default: () => null }));
 
 describe('Layout route transitions', () => {
   beforeEach(() => {

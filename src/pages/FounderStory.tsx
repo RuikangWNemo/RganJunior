@@ -135,27 +135,28 @@ export default function FounderStory() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <div className="overflow-hidden pt-20">
-      <header className="border-b border-border/80">
-        <div className="container mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[minmax(0,0.92fr)_minmax(25rem,0.78fr)] lg:items-center lg:gap-16 lg:px-8 lg:py-24">
+    <div className={`founder-story-page founder-story-page--${lang}`}>
+      <header className="founder-story-hero">
+        <div className="founder-story-shell founder-story-hero__layout">
           <motion.div
+            className="founder-story-hero__copy"
             initial={reducedMotion ? false : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="text-xs tracking-[0.18em] text-primary/75">
+            <p className="founder-story-eyebrow">
               {t('发起人故事 / STORY', 'STORY / 发起人故事')}
             </p>
-            <h1 className="mt-6 max-w-[10ch] text-balance font-serif text-5xl leading-[1.08] tracking-[-0.035em] text-foreground sm:text-6xl lg:text-7xl">
+            <h1 className="founder-story-hero__title">
               {t('Nate 的阿柑少年故事', "Nate's R-Gan Junior Story")}
             </h1>
-            <p className="mt-7 max-w-xl text-lg leading-9 text-foreground/72 md:text-xl md:leading-10">
+            <p className="founder-story-hero__lead">
               {t(
                 '从一个想找朋友来村里玩的孩子，到邀请更多青少年走进真实世界。',
                 'From a kid who simply wanted friends to visit the village, to someone inviting more young people into the real world.',
               )}
             </p>
-            <div className="mt-10 max-w-xl border-l-2 border-accent pl-5 text-sm leading-8 text-muted-foreground md:text-base">
+            <div className="founder-story-hero__origin">
               {t(
                 '2020 年，11 岁的 Nate 随家人从上海搬到铁牛村。阿柑少年，就从他的孤独、好奇和一次次真实行动中慢慢长出来。',
                 "In 2020, eleven-year-old Nate moved from Shanghai to Tieniu Village. R-Gan Junior slowly grew from his loneliness, curiosity, and each real step he took.",
@@ -164,22 +165,21 @@ export default function FounderStory() {
           </motion.div>
 
           <motion.figure
-            className="relative mx-auto w-full max-w-lg lg:max-w-none"
+            className="founder-story-hero__portrait"
             initial={reducedMotion ? false : { opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: reducedMotion ? 0 : 0.72, delay: reducedMotion ? 0 : 0.08 }}
           >
-            <div className="aspect-[4/5] overflow-hidden bg-secondary/50">
+            <div className="founder-story-image-frame">
               <img
                 src={nateFounderPhoto}
                 alt={t('阿柑少年发起人 Nate 的肖像', "Portrait of Nate, founder of R-Gan Junior")}
                 width="1067"
                 height="1600"
                 loading="eager"
-                className="h-full w-full object-cover object-center"
               />
             </div>
-            <figcaption className="mt-3 flex items-center justify-between gap-4 text-xs text-muted-foreground">
+            <figcaption>
               <span>Nate Shi</span>
               <span>{t('阿柑少年计划发起人', "Founder of R-Gan Junior")}</span>
             </figcaption>
@@ -187,70 +187,66 @@ export default function FounderStory() {
         </div>
       </header>
 
-      <main>
-        <section aria-labelledby="founder-story-timeline" className="container mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
-          <Reveal className="max-w-3xl">
-            <p className="text-xs tracking-[0.18em] text-primary/70">{t('一路走来', 'THE JOURNEY')}</p>
-            <h2 id="founder-story-timeline" className="mt-5 text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
+      <div className="founder-story-content">
+        <section aria-labelledby="founder-story-timeline" className="founder-story-journey">
+          <div className="founder-story-shell">
+            <Reveal className="founder-story-section-heading">
+              <p className="founder-story-eyebrow">{t('一路走来', 'THE JOURNEY')}</p>
+              <h2 id="founder-story-timeline">
               {t('一个想法，怎样在生活里慢慢长大', 'How an idea slowly grew through life')}
-            </h2>
-          </Reveal>
+              </h2>
+            </Reveal>
 
-          <div className="mt-14 md:mt-20">
-            {storyMoments.map((moment, index) => (
-              <Reveal key={`${moment.date}-${moment.phase.zh}`} delay={index === 0 ? 0.04 : 0}>
-                <article className="grid gap-6 border-t border-border py-10 md:py-14 lg:grid-cols-[8rem_minmax(0,0.9fr)_minmax(18rem,0.78fr)] lg:gap-12">
-                  <div>
-                    <time className="font-serif text-xl text-primary md:text-2xl">{moment.date}</time>
-                    <p className="mt-2 text-xs leading-5 text-muted-foreground">{pickLocalized(moment.phase, lang)}</p>
-                  </div>
-                  <div className="lg:pt-1">
-                    <h3 className="text-balance font-serif text-3xl leading-tight text-foreground md:text-4xl">
-                      {pickLocalized(moment.title, lang)}
-                    </h3>
-                    <p className="mt-5 max-w-xl text-sm leading-8 text-foreground/70 md:text-base md:leading-8">
-                      {pickLocalized(moment.body, lang)}
-                    </p>
-                  </div>
-                  <figure className="overflow-hidden bg-secondary/45">
-                    <img
-                      src={moment.image}
-                      alt={pickLocalized(moment.imageAlt, lang)}
-                      width={moment.imageWidth}
-                      height={moment.imageHeight}
-                      loading="lazy"
-                      className="aspect-[4/3] h-full w-full object-cover transition duration-700 ease-out hover:scale-[1.025] motion-reduce:transition-none"
-                      style={{ objectPosition: moment.imagePosition }}
-                    />
-                  </figure>
-                </article>
-              </Reveal>
-            ))}
+            <div className="founder-story-journey__moments">
+              {storyMoments.map((moment, index) => (
+                <Reveal key={`${moment.date}-${moment.phase.zh}`} delay={index === 0 ? 0.04 : 0}>
+                  <article className={`founder-story-moment founder-story-moment--${index + 1}`}>
+                    <div className="founder-story-moment__meta">
+                      <time>{moment.date}</time>
+                      <p>{pickLocalized(moment.phase, lang)}</p>
+                    </div>
+                    <div className="founder-story-moment__copy">
+                      <h3>{pickLocalized(moment.title, lang)}</h3>
+                      <p>{pickLocalized(moment.body, lang)}</p>
+                    </div>
+                    <figure className="founder-story-moment__visual">
+                      <img
+                        src={moment.image}
+                        alt={pickLocalized(moment.imageAlt, lang)}
+                        width={moment.imageWidth}
+                        height={moment.imageHeight}
+                        loading="lazy"
+                        style={{ objectPosition: moment.imagePosition }}
+                      />
+                    </figure>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="bg-primary text-primary-foreground" aria-labelledby="community-support-title">
-          <div className="container mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 md:py-28 lg:grid-cols-[minmax(20rem,0.82fr)_minmax(0,1fr)] lg:items-center lg:gap-20 lg:px-8">
-            <Reveal>
-              <figure className="overflow-hidden bg-primary-foreground/10">
+        <section className="founder-story-community" aria-labelledby="community-support-title">
+          <div className="founder-story-shell founder-story-community__layout">
+            <Reveal className="founder-story-community__visual">
+              <figure>
                 <img
                   src="/stories/it-takes-a-village/images/image-005.webp"
                   alt={t('在铁牛村共同生活的阿柑青年合照', 'R-Gan Junior community members living together in Tieniu Village')}
                   width="1080"
                   height="720"
                   loading="lazy"
-                  className="aspect-[4/3] h-full w-full object-cover"
                 />
               </figure>
             </Reveal>
-            <Reveal delay={0.08}>
-              <p className="text-xs tracking-[0.18em] text-primary-foreground/60">
+            <Reveal className="founder-story-community__copy" delay={0.08}>
+              <p className="founder-story-eyebrow">
                 {t('一个少年背后的一整个社区', 'A WHOLE COMMUNITY BEHIND ONE YOUNG PERSON')}
               </p>
-              <h2 id="community-support-title" className="mt-5 max-w-[12ch] text-balance font-serif text-4xl leading-tight md:text-5xl">
+              <h2 id="community-support-title">
                 {t('这不是一个人长出来的故事', 'This story did not grow from one person alone')}
               </h2>
-              <p className="mt-7 max-w-2xl text-base leading-9 text-primary-foreground/76 md:text-lg md:leading-10">
+              <p>
                 {t(
                   'Nate 对土地、食物和社区的理解，来自麦昆塔社区和阿柑青年多年的生活与陪伴。他们在村里种植、做饭，照顾土地，也照顾身边的人；后来，又陪着少年们做调研、办采摘节，把一个小小的想法托举成真实行动。',
                   "Nate's understanding of land, food, and community grew through years of daily life with the Quinta community and R-Gan Junior community members. They farmed, cooked, cared for the land and one another—and later stood beside the teenagers as they learned to research, organize, and act.",
@@ -260,62 +256,56 @@ export default function FounderStory() {
           </div>
         </section>
 
-        <section className="container mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8" aria-labelledby="action-continuation-title">
-          <Reveal className="grid gap-7 md:grid-cols-[minmax(0,0.88fr)_minmax(0,1fr)] md:items-end md:gap-16">
-            <div>
-              <p className="text-xs tracking-[0.18em] text-primary/70">{t('从自己到更多人', 'FROM ONE JOURNEY TO MANY')}</p>
-              <h2 id="action-continuation-title" className="mt-5 text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
-                {t('把自己得到的，再传给更多人', 'Passing forward what he received')}
-              </h2>
-            </div>
-            <p className="max-w-2xl text-sm leading-8 text-muted-foreground md:text-base">
-              {t(
-                '先走进自然和生活，找到自己的感受，也遇见同行的伙伴；再把一次相遇变成长久的行动；最后，从真实问题出发，用研究和实践回应土地与社区。',
-                'First, enter nature and daily life, recover your senses, and meet people to walk beside. Then let one encounter become sustained action. Finally, begin with real questions and respond to the land and community through research and practice.',
-              )}
-            </p>
-          </Reveal>
+        <section className="founder-story-continuation" aria-labelledby="action-continuation-title">
+          <div className="founder-story-shell">
+            <Reveal className="founder-story-continuation__heading">
+              <div>
+                <p className="founder-story-eyebrow">{t('从自己到更多人', 'FROM ONE JOURNEY TO MANY')}</p>
+                <h2 id="action-continuation-title">
+                  {t('把自己得到的，再传给更多人', 'Passing forward what he received')}
+                </h2>
+              </div>
+              <p>
+                {t(
+                  '先走进自然和生活，找到自己的感受，也遇见同行的伙伴；再把一次相遇变成长久的行动；最后，从真实问题出发，用研究和实践回应土地与社区。',
+                  'First, enter nature and daily life, recover your senses, and meet people to walk beside. Then let one encounter become sustained action. Finally, begin with real questions and respond to the land and community through research and practice.',
+                )}
+              </p>
+            </Reveal>
 
-          <div className="mt-14 grid gap-8 md:mt-20 md:grid-cols-3 md:gap-10">
-            {actionContinuations.map((item, index) => (
-              <Reveal key={item.title.zh} delay={index * 0.06}>
-                <article className="border-t border-primary/35 pt-6">
-                  <span className="text-xs tabular-nums text-primary/65">0{index + 1}</span>
-                  <h3 className="mt-4 font-serif text-2xl text-foreground md:text-3xl">{pickLocalized(item.title, lang)}</h3>
-                  <p className="mt-4 text-sm leading-8 text-muted-foreground">{pickLocalized(item.body, lang)}</p>
-                </article>
-              </Reveal>
-            ))}
+            <div className="founder-story-continuation__grid">
+              {actionContinuations.map((item, index) => (
+                <Reveal key={item.title.zh} delay={index * 0.06}>
+                  <article>
+                    <span>0{index + 1}</span>
+                    <h3>{pickLocalized(item.title, lang)}</h3>
+                    <p>{pickLocalized(item.body, lang)}</p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="border-t border-border bg-card/45">
-          <div className="container mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:py-20 lg:px-8">
-            <div>
-              <p className="text-xs tracking-[0.18em] text-primary/70">{t('继续阅读', 'KEEP READING')}</p>
-              <h2 className="mt-4 max-w-2xl text-balance font-serif text-3xl leading-tight text-foreground md:text-4xl">
-                {t('故事还在真实世界里继续', 'The story continues in the real world')}
-              </h2>
-            </div>
-            <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-              <Link
-                to="/voices/it-takes-a-village"
-                className="cursor-target inline-flex min-h-12 items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition duration-300 hover:bg-primary/90"
-              >
+        <section className="founder-story-closing">
+          <div className="founder-story-shell founder-story-closing__layout">
+            <Reveal className="founder-story-closing__copy">
+              <p className="founder-story-eyebrow">{t('继续阅读', 'KEEP READING')}</p>
+              <h2>{t('故事还在真实世界里继续', 'The story continues in the real world')}</h2>
+            </Reveal>
+            <Reveal className="founder-story-closing__actions" delay={0.06}>
+              <Link to="/voices/it-takes-a-village" className="founder-story-action founder-story-action--primary cursor-target">
                 {t('阅读 Nate 的完整自述', "Read Nate's full story")}
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                <ArrowRight aria-hidden="true" />
               </Link>
-              <Link
-                to="/programs"
-                className="cursor-target inline-flex min-h-12 items-center gap-2 px-4 py-3 text-sm text-primary transition-colors hover:text-primary/70"
-              >
-                {t('查看三个项目', 'Explore the three programs')}
-                <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              <Link to="/programs" className="founder-story-action founder-story-action--secondary cursor-target">
+                {t('查看四个项目', 'Explore the four programs')}
+                <ArrowRight aria-hidden="true" />
               </Link>
-            </div>
+            </Reveal>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

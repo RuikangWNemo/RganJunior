@@ -1,18 +1,10 @@
 import communityMascot from '@/assets/mascot-wide.png';
 import villageIllustration from '@/assets/village-illustration.webp';
-import {
-  fieldNotePeople,
-  fieldNotes,
-  fieldNoteTopics,
-  getFieldNotePerson,
-  getFieldNoteTopic,
-  type FieldNote,
-  type FieldNotePerson,
-  type FieldNoteTopic,
-} from '@/content/fieldNotes';
 import { pickLocalized, type SiteLanguage } from '@/lib/brand';
 import { getSupabaseClient } from '@/lib/supabase/client';
 import { getFieldNoteBySlug, listPublishedFieldNotes } from '@/services/field-notes';
+import { refreshStoredMediaUrls } from '@/services/media';
+import type { FieldNote, FieldNotePerson, FieldNoteTopic } from '@/types/field-notes';
 
 export interface FieldNoteQuery {
   language: SiteLanguage;
@@ -25,27 +17,20 @@ export interface FieldNoteQuery {
 export interface FieldNoteRepository {
   listPublishedNotes(query: FieldNoteQuery): Promise<FieldNote[]>;
   getPublishedNoteBySlug(slug: string): Promise<FieldNote | null>;
-  listPublicPeople(): Promise<FieldNotePerson[]>;
-  listActiveTopics(): Promise<FieldNoteTopic[]>;
 }
 
 type PublicNoteRecord = Record<string, unknown>;
-const useLivePublishedNotes = import.meta.env.MODE !== 'test';
 
 function normalizeSearch(value: string): string {
   return value.trim().toLocaleLowerCase();
 }
 
 function noteAuthors(note: FieldNote): FieldNotePerson[] {
-  return note.authors ?? note.authorSlugs
-    .map(getFieldNotePerson)
-    .filter((person): person is FieldNotePerson => Boolean(person));
+  return note.authors;
 }
 
 function noteTopics(note: FieldNote): FieldNoteTopic[] {
-  return note.topics ?? note.topicSlugs
-    .map(getFieldNoteTopic)
-    .filter((topic): topic is FieldNoteTopic => Boolean(topic));
+  return note.topics;
 }
 
 function buildSearchText(note: FieldNote, language: SiteLanguage): string {
@@ -103,19 +88,26 @@ function mappedAuthors(record: PublicNoteRecord): FieldNotePerson[] {
         zh: String(person.nature_name || person.display_name || '社群作者'),
         en: String(person.nature_name || person.display_name || 'Community author'),
       },
-      identity: 'collaborator',
       identityLabel: { zh: '社群作者', en: 'Community author' },
       introduction: { zh: '', en: '' },
       avatar: communityMascot,
     }));
-  return authors.length ? authors : [{
-    slug: 'rgan-community',
-    name: { zh: '阿柑少年社群', en: "R-Gan Junior Community" },
-    identity: 'collaborator',
-    identityLabel: { zh: '社群作者', en: 'Community author' },
-    introduction: { zh: '', en: '' },
-    avatar: communityMascot,
-  }];
+  return authors;
+}
+
+async function resolvedContentHtml(record: PublicNoteRecord) {
+  const assets = nestedRecords(record.field_note_media)
+    .map((row) => asRecord(row.media_assets))
+    .filter((asset): asset is PublicNoteRecord => Boolean(asset))
+    .map((asset) => ({
+      storage_bucket: String(asset.storage_bucket ?? ''),
+      storage_path: String(asset.storage_path ?? ''),
+    }))
+    .filter((asset) => asset.storage_bucket && asset.storage_path);
+  return refreshStoredMediaUrls(
+    typeof record.content_html === 'string' ? record.content_html : undefined,
+    assets,
+  );
 }
 
 function mappedTopics(record: PublicNoteRecord): FieldNoteTopic[] {
@@ -157,14 +149,13 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
     topicSlugs: topics.map((topic) => topic.slug),
     publishedAt,
     readingMinutes: Math.max(1, Math.ceil((language === 'zh' ? plainText.length : plainText.split(/\s+/).length) / (language === 'zh' ? 420 : 220))),
-    featuredRank: record.featured === true ? 10 : undefined,
+    featuredRank: record.featured === true ? 1 : undefined,
     cover: await mediaUrl(record),
     coverAlt: { zh: title, en: title },
-    body: [],
-    contentHtml: typeof record.content_html === 'string' ? record.content_html : undefined,
+    contentHtml: await resolvedContentHtml(record),
+    plainContent: plainText,
     authors,
     topics,
-    preview: false,
   };
 }
 
@@ -174,7 +165,7 @@ async function databaseNotes(language?: SiteLanguage): Promise<FieldNote[]> {
   return mapped.filter((note): note is FieldNote => Boolean(note));
 }
 
-function applyQuery(notes: FieldNote[], query: FieldNoteQuery): FieldNote[] {
+export function filterPublishedNotes(notes: FieldNote[], query: FieldNoteQuery): FieldNote[] {
   const search = normalizeSearch(query.search ?? '');
   const matches = notes.filter((note) => {
     if (query.featuredOnly && !note.featuredRank) return false;
@@ -189,37 +180,24 @@ function applyQuery(notes: FieldNote[], query: FieldNoteQuery): FieldNote[] {
   return sortNotes(matches);
 }
 
-export const localFieldNotesRepository: FieldNoteRepository = {
+export function peopleFromPublishedNotes(notes: FieldNote[]): FieldNotePerson[] {
+  const people = new Map<string, FieldNotePerson>();
+  notes.forEach((note) => note.authors.forEach((person) => people.set(person.slug, person)));
+  return [...people.values()].sort((left, right) => left.name.zh.localeCompare(right.name.zh, 'zh-CN'));
+}
+
+export function topicsFromPublishedNotes(notes: FieldNote[]): FieldNoteTopic[] {
+  const topics = new Map<string, FieldNoteTopic>();
+  notes.forEach((note) => note.topics.forEach((topic) => topics.set(topic.slug, topic)));
+  return [...topics.values()].sort((left, right) => left.name.zh.localeCompare(right.name.zh, 'zh-CN'));
+}
+
+export const fieldNotesRepository: FieldNoteRepository = {
   async listPublishedNotes(query) {
-    let liveNotes: FieldNote[] = [];
-    if (useLivePublishedNotes) {
-      try {
-        liveNotes = await databaseNotes(query.language);
-      } catch (error) {
-        console.warn('Published Field Notes are temporarily using the local fallback.', error);
-      }
-    }
-    const liveSlugs = new Set(liveNotes.map((note) => note.slug));
-    return applyQuery([...liveNotes, ...fieldNotes.filter((note) => !liveSlugs.has(note.slug))], query);
+    return filterPublishedNotes(await databaseNotes(query.language), query);
   },
 
   async getPublishedNoteBySlug(slug) {
-    if (useLivePublishedNotes) {
-      try {
-        const live = await mapDatabaseNote(await getFieldNoteBySlug(slug));
-        if (live) return live;
-      } catch (error) {
-        console.warn('Published Field Note is temporarily using the local fallback.', error);
-      }
-    }
-    return fieldNotes.find((note) => note.slug === slug) ?? null;
-  },
-
-  async listPublicPeople() {
-    return fieldNotePeople;
-  },
-
-  async listActiveTopics() {
-    return fieldNoteTopics;
+    return mapDatabaseNote(await getFieldNoteBySlug(slug));
   },
 };

@@ -8,6 +8,7 @@ import MascotCompanion from './MascotCompanion';
 import SmoothScrollDamping from './SmoothScrollDamping';
 import TargetCursor from './ui/TargetCursor';
 import CommunityChrome from './community/CommunityChrome';
+import WebsiteAnalyticsTracker from './WebsiteAnalyticsTracker';
 
 const routeShellVariants = {
   initial: (isHome: boolean) => ({
@@ -104,6 +105,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className={`min-h-screen flex flex-col ${isCommunityRoute ? 'community-route-shell' : ''}`}>
+      {!isCommunityRoute ? <WebsiteAnalyticsTracker /> : null}
       {!isCommunityRoute && <SmoothScrollDamping />}
       <BrandHead />
       {isCommunityRoute ? (

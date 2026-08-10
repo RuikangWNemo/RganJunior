@@ -9,6 +9,7 @@ const { authMocks, profileMocks } = vi.hoisted(() => ({
   authMocks: {
     EMAIL_OTP_LENGTH: 8,
     reauthenticate: vi.fn(),
+    refreshCommunity: vi.fn(),
     signOut: vi.fn(),
     updateEmail: vi.fn(),
     updatePassword: vi.fn(),
@@ -22,6 +23,7 @@ const { authMocks, profileMocks } = vi.hoisted(() => ({
 vi.mock('@/contexts/AuthContext', () => ({
   useAuth: () => ({
     user: { email: 'member@example.com' },
+    refreshCommunity: authMocks.refreshCommunity,
     signOut: authMocks.signOut,
   }),
 }));
@@ -47,8 +49,20 @@ describe('CommunitySettings password security', () => {
     profileMocks.getMyCommunityProfile.mockResolvedValue(null);
     profileMocks.updateMyCommunityProfile.mockResolvedValue({});
     authMocks.reauthenticate.mockResolvedValue({});
+    authMocks.refreshCommunity.mockResolvedValue(undefined);
     authMocks.updateEmail.mockResolvedValue({});
     authMocks.updatePassword.mockResolvedValue({});
+  });
+
+  it('refreshes shared community state after saving the profile', async () => {
+    renderSettings();
+
+    fireEvent.change(await screen.findByLabelText('显示名'), { target: { value: '山风伙伴' } });
+    fireEvent.click(screen.getByRole('button', { name: '保存主页设置' }));
+
+    await waitFor(() => expect(profileMocks.updateMyCommunityProfile).toHaveBeenCalledTimes(1));
+    expect(authMocks.refreshCommunity).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('status')).toHaveTextContent('主页设置已保存。');
   });
 
   it('requires an emailed nonce and matching password confirmation', async () => {

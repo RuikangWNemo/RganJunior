@@ -1,5 +1,39 @@
 # Progress
 
+## 2026-08-10 Community Website Analytics
+
+- Inspected the application router, Community shell/chrome, administrator surfaces, route metadata, permission guards, current services, migration permissions, repository state, and production analytics footprint.
+- Confirmed with the user that all statistics remain anonymous.
+- Compared Supabase-first, Vercel-only, and hybrid analytics architectures; the user selected Supabase-first.
+- Received approval for the collection/data architecture, administrator dashboard, security/error/testing design, and continuously collected data with a configurable reporting start date.
+- Wrote and committed `docs/plans/2026-08-10-community-website-analytics-design.md` as commit `18dd471` without staging unrelated worktree changes.
+- The requested `writing-plans` skill is unavailable, so `planning-with-files` is the implementation-planning fallback.
+- Current work: inspect exact database/API/frontend integration points, select the narrow UI guidance, and write the file-level implementation plan before product code changes.
+- Read the Supabase skill and security checklist. The UI Skills CLI again returned no usable category output, so implementation will follow the already approved Community design language.
+- Located the reusable server auth, secret client, no-store response, audit, permission, and persistent rate-limit primitives. Analytics can extend these rather than introducing a second API framework.
+- Verified current Supabase RLS, API-security, Cron, and session guidance from official documentation. Cleanup will be migration-ready without silently enabling a hosted Cron module.
+- Reviewed the current Supabase changelog and local chart/admin patterns. No new runtime/chart library is required.
+- Selected Lucide `ChartLine` for the administrator navigation through the Better Icons/Iconify index.
+- Mapped the tracker mount, authenticated service pattern, generated RPC type location, dashboard test precedent, and page-specific CSS boundary.
+- Added `docs/plans/2026-08-10-community-website-analytics-implementation-plan.md` with the exact schema, RPC, API, tracker, UI, security, test, and rollout steps. Product implementation is starting.
+- Created the analytics migration through Supabase CLI as `20260810022104_website_analytics.sql`.
+- Drafted the private analytics settings/session/page-view schema, permissions, idempotent collection RPC, aggregate dashboard RPC, audited reporting-date RPC, retention cleanup, explicit grants, and seed permissions. Database execution is still pending.
+- Added `014_website_analytics.sql` regression coverage for raw-data denial, service recording, replay idempotence, heartbeat boundaries, read/manage separation, report-date clamping, audit attribution, live independence, and 90-day retention. It has not yet been executed.
+- Added privacy/source/device/path helpers and tests, the public/admin analytics service boundary and tests, and a public-only router tracker with 15-second visible-time heartbeats and best-effort beacon flushes. Mounted it in `Layout`; verification is pending.
+- Added the same-origin public collection API with bot filtering, HMAC IP rate-limit keys, strict event parsing, and service-role recording; added the permission-checked administrator API for aggregate reads and audited settings changes. API tests are drafted but not yet run.
+- Added generated RPC types, the bilingual administrator analytics dashboard, live/traffic/source/page/activity/settings panels, the `analytics.read` route guard, Community navigation metadata, and `ChartLine` admin links in both shell and account menu. Verification is pending.
+- First focused verification: app and backend/API TypeScript pass; 21/22 tests pass. The sole failure is the Radix account-menu test interaction, not product rendering. Recharts also emits expected zero-size warnings in JSDOM only.
+- Replaced the brittle Radix-interaction unit test with a controlled primitive mock; the CommunityChrome analytics-permission test now passes.
+- Discovered the authenticated Supabase MCP connection for the active linked project. Database migration/test rollback validation is now available.
+- Executed the complete analytics migration plus `014_website_analytics.sql` against linked Postgres 17 inside `BEGIN`/`ROLLBACK` with bounded lock/statement timeouts. All assertions passed and no hosted schema or data change was retained.
+- Completed the Supabase Postgres and React best-practices review. The current indexes, privilege boundary, storage versioning, listener cleanup, and transient timing model align with the selected rules; no structural refactor is required yet.
+- Focused verification now passes 22/22 tests. Targeted ESLint has one localized helper error (`no-control-regex`), while chart-size messages are JSDOM-only warnings.
+- Replaced the control-character regex with an equivalent character-code guard; targeted analytics ESLint now passes.
+- Full verification passes: 76 Vitest files / 271 tests, app and backend/API TypeScript, targeted analytics ESLint, production Vite build, and `git diff --check`. The only emitted messages are existing React Router future warnings, Recharts' JSDOM size warning, stale Browserslist data, a PostCSS plugin warning, and the existing large-chunk build notice.
+- Re-ran the complete migration plus `014_website_analytics.sql` rollback suite after the final database/index review; all assertions pass and the linked project remains unchanged.
+- Verified the public site in the controlled in-app browser with no error-level console entries. Direct unauthenticated navigation to `/community/admin/analytics` resolves to `/community/auth`, confirming the route guard.
+- Implementation is complete locally. The production rollout remains intentionally separate: apply the analytics migration and deploy the matching code together, then verify the first genuine public visit appears. No sample or synthetic analytics rows were created.
+
 ## 2026-08-09 Manual Guardian + Redis Rollout
 
 - Production is live from commit `a2d8e47` at `https://www.rganjunior.org`.

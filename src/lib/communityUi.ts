@@ -13,6 +13,8 @@ export const COMMUNITY_UI = {
   applications: { zh: '申请审核', en: 'Applications' },
   identities: { zh: '身份与星球', en: 'Identities & planets' },
   reports: { zh: '举报处理', en: 'Reports' },
+  editorialDesk: { zh: '文章审核台', en: 'Editorial desk' },
+  websiteAnalytics: { zh: '网站统计', en: 'Website analytics' },
   retry: { zh: '重新加载', en: 'Try again' },
   loading: { zh: '正在加载…', en: 'Loading…' },
   noResults: { zh: '这里暂时还没有内容。', en: 'There is nothing here yet.' },

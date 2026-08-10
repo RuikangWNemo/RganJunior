@@ -206,8 +206,8 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   },
   "/voices": {
     title: {
-      zh: "伙伴之声",
-      en: "Partner Voices",
+      zh: "伙伴故事",
+      en: "Partner Stories",
     },
     description: {
       zh: "阅读阿柑少年发起人与伙伴们关于土地、茶、厨房、科技和真实成长的故事。",

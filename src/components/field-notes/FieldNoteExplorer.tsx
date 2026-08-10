@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import type { FieldNote, FieldNotePerson, FieldNoteTopic } from '@/content/fieldNotes';
+import type { FieldNote, FieldNotePerson, FieldNoteTopic } from '@/types/field-notes';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { FieldNoteCard } from './FieldNoteCard';
@@ -266,17 +266,23 @@ export function FieldNoteExplorer({
         </div>
       ) : (
         <div className="py-20 text-center">
-          <h3 className="font-serif text-2xl text-foreground">{t('暂时没有匹配的文章', 'No matching articles yet')}</h3>
+          <h3 className="font-serif text-2xl text-foreground">
+            {hasFilters ? t('暂时没有匹配的文章', 'No matching articles yet') : t('还没有正式发布的文章', 'No stories have been published yet')}
+          </h3>
           <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted-foreground">
-            {t('换一个人物、题材或关键词，再看看这片档案。', 'Try another person, topic, or keyword to explore the archive again.')}
+            {hasFilters
+              ? t('换一个人物、题材或关键词，再看看这片档案。', 'Try another person, topic, or keyword to explore the archive again.')
+              : t('真实投稿经过审核并公开发布后，会出现在这里。', 'Real submissions will appear here after review and public publication.')}
           </p>
-          <button
-            type="button"
-            onClick={onClear}
-            className="mt-6 min-h-11 rounded-lg border border-primary/35 px-5 text-sm font-medium text-primary transition hover:bg-primary/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {t('查看全部文章', 'View all articles')}
-          </button>
+          {hasFilters ? (
+            <button
+              type="button"
+              onClick={onClear}
+              className="mt-6 min-h-11 rounded-lg border border-primary/35 px-5 text-sm font-medium text-primary transition hover:bg-primary/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {t('查看全部文章', 'View all articles')}
+            </button>
+          ) : null}
         </div>
       )}
     </div>

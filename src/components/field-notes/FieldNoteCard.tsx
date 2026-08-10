@@ -1,12 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import {
-  getFieldNotePerson,
-  getFieldNoteTopic,
-  type FieldNote,
-  type FieldNotePerson,
-  type FieldNoteTopic,
-} from '@/content/fieldNotes';
+import type { FieldNote } from '@/types/field-notes';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
@@ -17,20 +11,6 @@ function formatDate(date: string, language: 'zh' | 'en') {
     month: 'short',
     day: 'numeric',
   }).format(new Date(`${date}T00:00:00`));
-}
-
-function resolveAuthors(note: FieldNote): FieldNotePerson[] {
-  if (note.authors) return note.authors;
-  return note.authorSlugs
-    .map(getFieldNotePerson)
-    .filter((person): person is FieldNotePerson => Boolean(person));
-}
-
-function resolveTopics(note: FieldNote): FieldNoteTopic[] {
-  if (note.topics) return note.topics;
-  return note.topicSlugs
-    .map(getFieldNoteTopic)
-    .filter((topic): topic is FieldNoteTopic => Boolean(topic));
 }
 
 interface FieldNoteCardProps {
@@ -47,8 +27,8 @@ export function FieldNoteCard({
   className,
 }: FieldNoteCardProps) {
   const { lang, t } = useLanguage();
-  const authors = resolveAuthors(note);
-  const topics = resolveTopics(note);
+  const authors = note.authors;
+  const topics = note.topics;
   const title = pickLocalized(note.title, lang);
   const href = `/field-notes/${note.slug}`;
   const meta = (

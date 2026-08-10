@@ -10,6 +10,7 @@ import Layout from "@/components/Layout";
 import CommunityShell from "@/components/community/CommunityShell";
 import {
   CommunityRequireAuth,
+  CommunityRequireAnyPermission,
   CommunityRequireMember,
   CommunityRequirePermission,
   CommunitySmartEntry,
@@ -23,7 +24,6 @@ import ProgramDetail from "./pages/ProgramDetail";
 import FounderStory from "./pages/FounderStory";
 import JoinUs from "./pages/JoinUs";
 import JoinApply from "./pages/JoinApply";
-import Voices from "./pages/Voices";
 import VoiceArticle from "./pages/VoiceArticle";
 import FieldNotes from "./pages/FieldNotes";
 import FieldNoteArticle from "./pages/FieldNoteArticle";
@@ -48,6 +48,8 @@ import CommunitySettings from "./pages/community/CommunitySettings";
 import CommunityAdminApplications from "./pages/community/CommunityAdminApplications";
 import CommunityAdminIdentities from "./pages/community/CommunityAdminIdentities";
 import CommunityAdminReports from "./pages/community/CommunityAdminReports";
+import CommunityAdminFieldNotes from "./pages/community/CommunityAdminFieldNotes";
+import CommunityAdminAnalytics from "./pages/community/CommunityAdminAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -92,7 +94,7 @@ const App = () => (
               <Route path="/field-notes/:slug" element={<FieldNoteArticle />} />
               <Route path="/impact" element={<Impact />} />
               <Route path="/impact/awards" element={<ImpactAwards />} />
-              <Route path="/voices" element={<Voices />} />
+              <Route path="/voices" element={<Navigate to="/about#team" replace />} />
               <Route path="/voices/:slug" element={<VoiceArticle />} />
               <Route path="/join" element={<JoinUs />} />
               <Route path="/join/apply" element={<JoinApply />} />
@@ -115,6 +117,12 @@ const App = () => (
                 </Route>
                 <Route element={<CommunityRequirePermission permission="messages.moderate" />}>
                   <Route path="/community/admin/reports" element={<div className="community-page-frame"><CommunityAdminReports /></div>} />
+                </Route>
+                <Route element={<CommunityRequireAnyPermission permissions={['field_notes.review', 'field_notes.approve', 'field_notes.publish']} />}>
+                  <Route path="/community/admin/field-notes" element={<div className="community-page-frame"><CommunityAdminFieldNotes /></div>} />
+                </Route>
+                <Route element={<CommunityRequirePermission permission="analytics.read" />}>
+                  <Route path="/community/admin/analytics" element={<div className="community-page-frame"><CommunityAdminAnalytics /></div>} />
                 </Route>
 
                 <Route element={<CommunityRequireMember />}>

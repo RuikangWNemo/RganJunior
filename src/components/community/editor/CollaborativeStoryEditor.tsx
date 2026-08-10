@@ -125,12 +125,12 @@ function RoomEditor({
     extensions: access.canComment
       ? [CommentsExtension({ threadStore, resolveUsers: userStore })]
       : [],
-    ...(access.canManageCollaboration
+    ...(access.canWrite
       ? { uploadFile: (file: File) => uploadFieldNoteMedia(noteId, file) }
       : {}),
   }), [
     access.canComment,
-    access.canManageCollaboration,
+    access.canWrite,
     access.user.displayName,
     access.user.id,
     document,

@@ -15,6 +15,7 @@ import {
   subscribeToAuthChanges,
 } from '@/services/auth';
 import { getMyCommunityState, type CommunityState } from '@/services/community-state';
+import { subscribeToMyCommunityChanges } from '@/services/community-realtime';
 import { getMyPermissions } from '@/services/permissions';
 
 type AuthContextValue = {
@@ -99,6 +100,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       subscription?.unsubscribe();
     };
   }, [loadCommunity]);
+
+  useEffect(() => {
+    const userId = session?.user.id;
+    if (!userId) return;
+
+    const refresh = () => {
+      void refreshCommunity().catch(() => {
+        // The context exposes refresh failures through its error state.
+      });
+    };
+    const subscription = subscribeToMyCommunityChanges(userId, refresh);
+    window.addEventListener('focus', refresh);
+    window.addEventListener('online', refresh);
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('focus', refresh);
+      window.removeEventListener('online', refresh);
+    };
+  }, [refreshCommunity, session?.user.id]);
 
   const signOut = useCallback(async () => {
     await signOutService();

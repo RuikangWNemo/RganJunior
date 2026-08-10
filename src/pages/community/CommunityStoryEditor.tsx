@@ -13,6 +13,7 @@ import {
   Cloud,
   CloudOff,
   History,
+  ImagePlus,
   Loader2,
   LockKeyhole,
   Save,
@@ -368,6 +369,12 @@ export default function CommunityStoryEditor() {
             disabled={!editable}
             maxLength={240}
           />
+          {editable ? (
+            <p className="mx-auto mb-2 flex w-full max-w-[54rem] items-center gap-2 px-4 text-xs leading-5 text-[hsl(var(--community-forest)/0.5)] sm:px-8">
+              <ImagePlus className="size-4 shrink-0" aria-hidden="true" />
+              {t('在正文空行点击左侧“＋”，选择图片即可上传照片（JPG、PNG、WebP 或 GIF，最大 10 MB）。', 'On an empty line, choose Image from the + menu to upload a photo (JPG, PNG, WebP, or GIF, up to 10 MB).')}
+            </p>
+          ) : null}
           <Suspense fallback={<CommunityLoadingState label={t('正在加载高级编辑器…', 'Loading the advanced editor…')} />}>
             <CollaborativeStoryEditor
               key={`${existingId}-${editable ? 'write' : 'read'}`}

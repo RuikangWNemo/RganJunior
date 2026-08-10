@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { BookOpenText, ClipboardCheck, Home, MessageCircle, Newspaper, Settings, ShieldCheck, Sparkles, Tags, Users } from 'lucide-react';
+import { BookOpenText, ChartLine, ClipboardCheck, FileCheck2, Home, MessageCircle, Newspaper, Settings, ShieldCheck, Sparkles, Tags, Users } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
@@ -26,9 +26,11 @@ export default function CommunityShell() {
   const { permissions } = useAuth();
   const { t, copy } = useCommunityUi();
   const adminLinks = [
+    permissions.some((permission) => ['field_notes.review', 'field_notes.approve', 'field_notes.publish'].includes(permission)) ? { to: '/community/admin/field-notes', label: copy('editorialDesk'), icon: FileCheck2 } : null,
     permissions.includes('memberships.review') ? { to: '/community/admin/applications', label: copy('applications'), icon: ClipboardCheck } : null,
     permissions.includes('people.manage') ? { to: '/community/admin/identities', label: copy('identities'), icon: Tags } : null,
     permissions.includes('messages.moderate') ? { to: '/community/admin/reports', label: copy('reports'), icon: ShieldCheck } : null,
+    permissions.includes('analytics.read') ? { to: '/community/admin/analytics', label: copy('websiteAnalytics'), icon: ChartLine } : null,
   ].filter(Boolean) as Array<{ to: string; label: string; icon: typeof ClipboardCheck }>;
 
   return (

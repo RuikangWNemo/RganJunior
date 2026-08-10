@@ -2,16 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, Clock } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { FieldNoteCard } from '@/components/field-notes/FieldNoteCard';
-import {
-  getFieldNotePerson,
-  getFieldNoteTopic,
-  type FieldNoteBlock,
-  type FieldNotePerson,
-  type FieldNoteTopic,
-} from '@/content/fieldNotes';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
-import { localFieldNotesRepository } from '@/services/field-notes/publicRepository';
+import { fieldNotesRepository } from '@/services/field-notes/publicRepository';
 import NotFound from './NotFound';
 
 function formatDate(date: string, language: 'zh' | 'en') {
@@ -22,58 +15,16 @@ function formatDate(date: string, language: 'zh' | 'en') {
   }).format(new Date(`${date}T00:00:00`));
 }
 
-function FieldNoteBodyBlock({ block }: { block: FieldNoteBlock }) {
-  const { lang } = useLanguage();
-
-  if (block.type === 'heading') {
-    return <h2 className="mt-14 font-serif text-2xl leading-9 text-foreground md:text-3xl">{pickLocalized(block.text, lang)}</h2>;
-  }
-
-  if (block.type === 'paragraph') {
-    return <p>{pickLocalized(block.text, lang)}</p>;
-  }
-
-  if (block.type === 'quote') {
-    return (
-      <blockquote className="my-12 border-l-2 border-primary/45 pl-6 font-serif text-xl leading-9 text-foreground/80 md:text-2xl md:leading-10">
-        <p>{pickLocalized(block.text, lang)}</p>
-        {block.attribution ? (
-          <footer className="mt-4 font-sans text-sm leading-6 text-muted-foreground">
-            {pickLocalized(block.attribution, lang)}
-          </footer>
-        ) : null}
-      </blockquote>
-    );
-  }
-
-  if (block.type === 'list') {
-    return (
-      <ul className="my-8 list-disc space-y-3 pl-6 marker:text-primary">
-        {block.items.map((item) => (
-          <li key={item.zh}>{pickLocalized(item, lang)}</li>
-        ))}
-      </ul>
-    );
-  }
-
-  return (
-    <aside className="my-10 rounded-lg border border-primary/25 bg-primary/[0.055] p-6 md:p-8">
-      <p className="text-sm font-medium text-primary">{pickLocalized(block.prompt, lang)}</p>
-      <p className="mt-4 font-serif text-xl leading-9 text-foreground">{pickLocalized(block.response, lang)}</p>
-    </aside>
-  );
-}
-
 export default function FieldNoteArticle() {
   const { slug } = useParams<{ slug: string }>();
   const { lang, t } = useLanguage();
   const noteQuery = useQuery({
     queryKey: ['field-notes', 'article', slug],
-    queryFn: () => localFieldNotesRepository.getPublishedNoteBySlug(slug ?? ''),
+    queryFn: () => fieldNotesRepository.getPublishedNoteBySlug(slug ?? ''),
   });
   const relatedQuery = useQuery({
     queryKey: ['field-notes', 'related', slug, lang],
-    queryFn: () => localFieldNotesRepository.listPublishedNotes({ language: lang }),
+    queryFn: () => fieldNotesRepository.listPublishedNotes({ language: lang }),
   });
 
   if (noteQuery.isPending) {
@@ -106,12 +57,8 @@ export default function FieldNoteArticle() {
   const note = noteQuery.data;
   if (!note) return <NotFound />;
 
-  const authors = note.authors ?? note.authorSlugs
-    .map(getFieldNotePerson)
-    .filter((person): person is FieldNotePerson => Boolean(person));
-  const topics = note.topics ?? note.topicSlugs
-    .map(getFieldNoteTopic)
-    .filter((topic): topic is FieldNoteTopic => Boolean(topic));
+  const authors = note.authors;
+  const topics = note.topics;
   const related = (relatedQuery.data ?? [])
     .filter((candidate) => candidate.slug !== note.slug)
     .filter((candidate) => (
@@ -181,22 +128,10 @@ export default function FieldNoteArticle() {
         </div>
 
         <div className="container mx-auto max-w-[46rem] px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          {note.preview ? (
-            <aside className="mb-12 border-l-2 border-primary/35 pl-5 text-sm leading-7 text-muted-foreground">
-              {t(
-                '这是一篇用于前台验收的内容样稿。正式接入后将替换为作者提交并经编辑审核的版本。',
-                'This is sample copy for frontend review. It will be replaced by an author submission reviewed by an editor after integration.',
-              )}
-            </aside>
-          ) : null}
           {note.contentHtml ? (
             <div className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: note.contentHtml }} />
           ) : (
-            <div className="field-note-prose text-[1.0625rem] leading-[2.05] text-foreground/85">
-              {note.body.map((block, index) => (
-                <FieldNoteBodyBlock key={`${block.type}-${index}`} block={block} />
-              ))}
-            </div>
+            <div className="field-note-prose whitespace-pre-wrap text-[1.0625rem] leading-[2.05] text-foreground/85">{note.plainContent}</div>
           )}
 
           <div className="mt-16 border-t border-border pt-8">

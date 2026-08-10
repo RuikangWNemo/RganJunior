@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -12,6 +12,8 @@ const {
   reviewMembershipApplication,
   reviewMinorIdentity,
   listAdminIdentityLabels,
+  subscribeToApplicationReviewChanges,
+  unsubscribeFromApplicationReviewChanges,
 } = vi.hoisted(() => ({
   listMembershipApplications: vi.fn(),
   refreshCommunity: vi.fn(),
@@ -19,7 +21,11 @@ const {
   reviewMembershipApplication: vi.fn(),
   reviewMinorIdentity: vi.fn(),
   listAdminIdentityLabels: vi.fn(),
+  subscribeToApplicationReviewChanges: vi.fn(),
+  unsubscribeFromApplicationReviewChanges: vi.fn(),
 }));
+
+let applicationChangeCallback: (() => void) | undefined;
 
 vi.mock('@/contexts/AuthContext', () => ({
   useAuth: () => ({
@@ -32,6 +38,10 @@ vi.mock('@/contexts/AuthContext', () => ({
 vi.mock('@/services/community-identities', () => ({
   listAdminIdentityLabels,
   listSignupIdentityOptions: vi.fn(),
+}));
+
+vi.mock('@/services/community-realtime', () => ({
+  subscribeToApplicationReviewChanges,
 }));
 
 vi.mock('@/services/memberships', () => ({
@@ -53,6 +63,10 @@ const application = {
   identity_verification_status: 'not_required',
   declared_primary_identity_slug: 'participant',
   declared_secondary_identity_slugs: ['parent-guardian'],
+  motivation: '想和伙伴一起长期学习，也愿意分享自己的自然观察。',
+  hopes: '认识可以一起行动的朋友。',
+  contribution: '每月分享一次观察记录。',
+  additional_info: null,
 };
 
 const identityLabels = [
@@ -79,6 +93,40 @@ describe('CommunityAdminApplications', () => {
     reviewMembershipApplication.mockResolvedValue(undefined);
     reviewMinorIdentity.mockResolvedValue(undefined);
     listAdminIdentityLabels.mockResolvedValue(identityLabels);
+    applicationChangeCallback = undefined;
+    subscribeToApplicationReviewChanges.mockImplementation((callback: () => void) => {
+      applicationChangeCallback = callback;
+      return { unsubscribe: unsubscribeFromApplicationReviewChanges };
+    });
+  });
+
+  it('shows the application reason and reloads when a realtime change arrives', async () => {
+    const nextApplication = {
+      ...application,
+      id: 27,
+      user_id: 'new-applicant',
+      username: 'new_friend',
+      display_name: '新伙伴',
+      nature_name: '溪流',
+      motivation: '想参与长期共学。',
+    };
+    listMembershipApplications
+      .mockResolvedValueOnce([application])
+      .mockResolvedValueOnce([nextApplication, application]);
+
+    const { unmount } = renderApplications();
+
+    expect(await screen.findByText('想和伙伴一起长期学习，也愿意分享自己的自然观察。')).toBeInTheDocument();
+    expect(screen.getByText('认识可以一起行动的朋友。')).toBeInTheDocument();
+    expect(applicationChangeCallback).toBeTypeOf('function');
+
+    act(() => applicationChangeCallback?.());
+
+    expect(await screen.findByRole('heading', { name: '溪流' })).toBeInTheDocument();
+    expect(listMembershipApplications).toHaveBeenCalledTimes(2);
+
+    unmount();
+    expect(unsubscribeFromApplicationReviewChanges).toHaveBeenCalledTimes(1);
   });
 
   it('locks duplicate review actions, refreshes state, and preserves approval feedback', async () => {

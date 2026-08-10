@@ -1998,6 +1998,10 @@ export type Database = {
           meeting_url: string
         }[]
       }
+      get_website_analytics_dashboard: {
+        Args: { target_range?: string }
+        Returns: Json
+      }
       has_permission: { Args: { permission_key: string }; Returns: boolean }
       initialize_field_note_collab_document_server: {
         Args: {
@@ -2170,13 +2174,17 @@ export type Database = {
           page_size?: number
         }
         Returns: {
+          additional_info: string | null
           age_band: string
           assigned_reviewer_id: string
+          contribution: string | null
           created_at: string
           display_name: string
           guardian_consent_status: string
+          hopes: string | null
           id: number
           identity_verification_status: string
+          motivation: string
           nature_name: string
           status: string
           submitted_at: string
@@ -2285,6 +2293,23 @@ export type Database = {
           target_verification_method: string
         }
         Returns: number
+      }
+      record_website_analytics_event_server: {
+        Args: {
+          target_device_category?: string
+          target_engaged_seconds?: number
+          target_event_type: string
+          target_language?: string
+          target_path: string
+          target_referrer_host?: string
+          target_session_id: string
+          target_source_category: string
+          target_utm_campaign?: string
+          target_utm_medium?: string
+          target_utm_source?: string
+          target_view_id: string
+        }
+        Returns: boolean
       }
       remove_growth_media: {
         Args: { target_growth_record_id: number; target_media_asset_id: number }
@@ -2404,6 +2429,10 @@ export type Database = {
       set_role_permissions: {
         Args: { permission_keys: string[]; target_role_id: number }
         Returns: undefined
+      }
+      set_website_analytics_reporting_start_date: {
+        Args: { target_date: string }
+        Returns: Json
       }
       store_field_note_collab_document_server: {
         Args: {

@@ -2,10 +2,6 @@ import { createRef } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import {
-  HOME_INTRO_STORAGE_KEY,
-  HOME_INTRO_VERSION,
-} from '@/lib/homeIntro';
 import HeroMascotStage from './HeroMascotStage';
 
 vi.mock('@/hooks/useHeroMotion', () => ({
@@ -37,14 +33,13 @@ describe('HeroMascotStage community tooltip', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     localStorage.setItem('rgan-lang', 'zh');
-    localStorage.setItem(
-      HOME_INTRO_STORAGE_KEY,
-      JSON.stringify({
-        version: HOME_INTRO_VERSION,
-        lastVisitedAt: Date.now(),
-        lastCompletedAt: Date.now(),
-      }),
-    );
+  });
+
+  it('renders the main homepage mascot immediately on a first visit', () => {
+    renderMascotStage();
+
+    expect(screen.getByRole('link', { name: '在新窗口进入阿柑少年社群' })).toBeInTheDocument();
+    expect(document.querySelector('[data-splash-screen]')).not.toBeInTheDocument();
   });
 
   afterEach(() => {

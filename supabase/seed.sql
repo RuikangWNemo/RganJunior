@@ -51,7 +51,9 @@ values
   ('practice.host', 'Host and control practice sessions', false),
   ('moderation.manage', 'Manage community reports and restrictions', true),
   ('notifications.manage', 'Manage community notifications', false),
-  ('field_notes.publish_own', 'Publish approved owned Field Notes', false)
+  ('field_notes.publish_own', 'Publish approved owned Field Notes', false),
+  ('analytics.read', 'Read aggregate anonymous website analytics', false),
+  ('analytics.manage', 'Manage website analytics reporting settings', true)
 on conflict (permission_key) do update
 set description = excluded.description,
     is_sensitive = excluded.is_sensitive,

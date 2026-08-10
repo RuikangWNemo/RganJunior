@@ -1,15 +1,16 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import CommunityShell from './CommunityShell';
 
-vi.mock('@/contexts/AuthContext', () => ({
-  useAuth: () => ({ permissions: [] }),
-}));
+const authState = vi.hoisted(() => ({ permissions: [] as string[] }));
+
+vi.mock('@/contexts/AuthContext', () => ({ useAuth: () => authState }));
 
 describe('CommunityShell', () => {
+  beforeEach(() => { authState.permissions = []; });
   it('uses five labeled primary destinations on mobile and keeps settings in desktop navigation', () => {
     render(
       <MemoryRouter initialEntries={['/community']}>
@@ -53,5 +54,17 @@ describe('CommunityShell', () => {
 
     expect(screen.getByText('Square page')).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: '社群导航' })).toBe(desktopNavigation);
+  });
+
+  it('shows website analytics only to administrators with analytics read permission', () => {
+    authState.permissions = ['analytics.read'];
+    render(
+      <MemoryRouter initialEntries={['/community']}>
+        <LanguageProvider initialLanguage="zh">
+          <Routes><Route path="/community" element={<CommunityShell />}><Route index element={<p>Dashboard</p>} /></Route></Routes>
+        </LanguageProvider>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole('link', { name: '网站统计' })).toHaveAttribute('href', '/community/admin/analytics');
   });
 });

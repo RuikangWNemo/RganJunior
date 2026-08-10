@@ -202,6 +202,9 @@ select pg_temp.assert_true(
     select count(*) = 1
       and bool_and(age_band = 'adult_18_plus')
       and bool_and(guardian_consent_status = 'not_required')
+      and bool_and(motivation = '希望和伙伴一起长期练习。')
+      and bool_and(hopes = '学习如何照顾自己与他人。')
+      and bool_and(contribution = '愿意分享自然观察。')
     from public.list_membership_applications(
       array['submitted']::text[],
       20,
@@ -210,7 +213,7 @@ select pg_temp.assert_true(
     )
     where id = current_setting('test.membership_adult_application_id')::bigint
   ),
-  'an administrator sees the submitted application and permitted safety fields'
+  'an administrator sees the submitted application, its reason, and permitted safety fields'
 );
 
 select public.request_application_changes(
