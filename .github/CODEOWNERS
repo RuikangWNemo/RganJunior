@@ -1,0 +1,7 @@
+# 当前仓库负责人。第二位协作者的 GitHub 用户名确认后，将其加入每一行。
+# 在此之前不要启用“Require review from Code Owners”；双人互审由 main 的 1 人批准规则保证。
+
+* @RuikangWNemo
+/api/ @RuikangWNemo
+/supabase/ @RuikangWNemo
+/.github/ @RuikangWNemo
