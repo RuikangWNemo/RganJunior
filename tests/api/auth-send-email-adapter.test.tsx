@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import handler from './send-email.js';
+import handler from '../../api/auth/send-email.js';
 
 afterEach(() => {
   vi.unstubAllEnvs();
