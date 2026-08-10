@@ -1,6 +1,6 @@
 # 参与 RganJunior 开发
 
-RganJunior 当前采用双人互审工作流。完整规范见 [双人协作规范](docs/collaboration/two-person-workflow.md)。
+RganJunior 当前采用双人互审工作流。完整规范见 [双人协作规范](docs/collaboration/two-person-workflow.md)，Preview、生产部署、数据库迁移、环境变量和回滚操作统一见 [完整生产发布手册](docs/collaboration/production-release-runbook.md)。
 
 ## 最短流程
 
@@ -10,7 +10,8 @@ RganJunior 当前采用双人互审工作流。完整规范见 [双人协作规�
 4. 尽早建立 Draft Pull Request。
 5. 由另一名协作者审查并批准。
 6. CI 和 Vercel Preview 通过后 Squash Merge。
-7. 确认生产部署成功，关闭 Issue。
+7. 合并后等待 `main` CI 和 Deploy Hook，由发布者确认 Vercel Production 为 Ready。
+8. 按发布手册完成生产冒烟测试，记录结果并关闭 Issue。
 
 ## 分支
 
@@ -36,6 +37,16 @@ npm run build
 ```
 
 数据库测试只能针对 Staging 项目运行。执行 `npm run supabase:test:remote` 前必须确认 Supabase CLI 没有链接 Production。
+
+## 发布
+
+- 普通生产发布只走 `PR -> main CI -> Deploy production -> Vercel Deploy Hook`。
+- 合作者不需要 Vercel 项目席位，也不需要管理员重复或冒充提交。
+- GitHub 部署 Job 成功只表示 Vercel 已接受请求；必须继续确认 Production Deployment 为 Ready。
+- 手动重建、Rollback、Promote、Supabase Production Migration 和 Secret 轮换只由管理员执行。
+- 数据库变更拆成兼容 Migration PR、应用启用 PR，以及必要时的清理 PR。
+
+执行任何生产操作前阅读 [完整生产发布手册](docs/collaboration/production-release-runbook.md)。
 
 ## 安全和隐私
 

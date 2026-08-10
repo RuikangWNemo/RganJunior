@@ -4,12 +4,20 @@ A bilingual Vite + React website for `阿柑少年 / R'gan Junior`, backed by Su
 
 ## Runtime
 
-Use Node.js 22 or newer. Supabase JS 2.110+ no longer supports Node.js 20.
+Use Node.js 24, matching `package.json` and GitHub CI.
 
 ```bash
 nvm use
-npm install
+npm ci
 ```
+
+## Collaboration and releases
+
+- Start with [CONTRIBUTING.md](CONTRIBUTING.md) for the shortest contribution path.
+- Read the [two-person workflow](docs/collaboration/two-person-workflow.md) for branch, review, data, and security rules.
+- Follow the [production release runbook](docs/collaboration/production-release-runbook.md) for Preview, Deploy Hook, Supabase migrations, environment variables, rollback, and incident handling.
+
+The release runbook is the single source of truth for production operations. Never place Deploy Hook URLs, API keys, passwords, or real user data in GitHub files, Issues, Pull Requests, logs, or screenshots.
 
 ## Development
 
@@ -78,8 +86,10 @@ All schema changes belong in `supabase/migrations/`. Create a migration with the
 ```bash
 supabase migration new descriptive_name
 supabase db push --dry-run
-supabase db push --include-seed
+supabase db push
 ```
+
+Use `--include-seed` only for an explicitly confirmed development or Staging project. Never seed Production. Database releases must follow the staged procedure in the [production release runbook](docs/collaboration/production-release-runbook.md#6-数据库变更的发布链路).
 
 `supabase/seed.sql` is idempotent and provides:
 
@@ -91,7 +101,7 @@ Do not edit the production schema only through the Dashboard. Every schema chang
 
 ### Remote database tests
 
-The authorization suite runs in a transaction and rolls back all test users and content:
+The authorization suite runs in a transaction and rolls back all test users and content. Run it only after confirming the CLI is linked to Staging, never Production:
 
 ```bash
 npm run supabase:test:remote
@@ -101,12 +111,14 @@ It covers registration triggers, public/private RLS, profile isolation, role esc
 
 ### Generate TypeScript types
 
-After every schema change:
+After Production already contains the schema change, regenerate the committed types with:
 
 ```bash
 npm run supabase:types
 npm run typecheck
 ```
+
+`npm run supabase:types` reads the Production project ref. For an unpublished Migration, first apply it to Staging and generate types from that Staging ref as described in the [production release runbook](docs/collaboration/production-release-runbook.md#62-staging-验证).
 
 `npm run typecheck` validates the generated database types, backend services, and Vercel helpers. `npm run typecheck:app` additionally checks the complete existing frontend.
 

@@ -166,7 +166,9 @@ Pull Request 应当：
 - 所有审查对话已解决；
 - 数据库/环境变量步骤已完成或有明确发布顺序。
 
-使用 **Squash and merge**。合并后删除功能分支，确认 Vercel Production Deployment 成功，再将 Issue 关闭为 `Done`。
+使用 **Squash and merge**。合并后，`main` CI 成功才会由 GitHub Actions 调用 Vercel Deploy Hook。GitHub 部署 Job 成功只表示 Vercel 接受了构建请求；发布者仍须确认 Vercel Production 为 **Ready** 并完成生产冒烟测试，再将 Issue 关闭为 `Done`。
+
+`main` 的 Vercel Git 自动部署已关闭，非 `main` 分支的 Preview 保持开启。合作者无需 Vercel 项目席位，也禁止管理员通过重复或冒充提交改变 Git 作者。标准发布、手动重建、数据库顺序、回滚和故障处理统一遵循 [完整生产发布手册](production-release-runbook.md)。
 
 ## 12. 数据库和 Supabase
 
@@ -175,17 +177,19 @@ Pull Request 应当：
 1. 创建 `supabase/migrations/*`；
 2. 禁止只在 Supabase Dashboard 修改生产结构；
 3. 更新并提交 `src/lib/supabase/database.types.ts`；
-4. 在 Staging 项目运行数据库测试；
+4. 在明确确认的 Staging 项目运行数据库测试；
 5. 在 PR 中记录迁移顺序、兼容性和回退方案；
 6. 获得另一人明确批准后才能进入 Production。
 
 当前 `npm run supabase:test:remote` 会访问已链接的远程项目，不纳入公共 CI。执行前必须确认 CLI 链接的是 Staging，而不是 Production。
 
+Production Migration 由管理员单人串行执行，必须先运行 `supabase db push --dry-run`；Production 永远不使用 `--include-seed`。数据库和应用发布使用“扩展—启用—清理”多 PR 顺序，详见 [完整生产发布手册](production-release-runbook.md#6-数据库变更的发布链路)。
+
 破坏性数据库变更使用“扩展—迁移—清理”方式：先增加兼容结构，部署兼容代码，最后在单独 PR 中移除旧结构。
 
 ## 13. 环境变量和外部服务
 
-- Local 和 Vercel Preview 使用 Staging Supabase。
+- Local 和 Vercel Preview 应使用开发或 Staging 配置，不得使用 Production 服务端 Secret。
 - Production 使用独立的 Supabase、Resend 和 Redis 配置。
 - Production Secret 只由仓库/平台管理员维护。
 - 变量名称和占位符写入 `.env.example`，真实值只保存在平台 Secret 中。
@@ -233,4 +237,4 @@ Pull Request 应当：
 - Block deletions；
 - 只启用 Squash Merge。
 
-`@RuikangWNemo` 和 `@gps-china` 已列入 `.github/CODEOWNERS`。等待 `@gps-china` 接受仓库邀请后，再启用 **Require review from Code Owners**。
+`@RuikangWNemo` 和 `@gps-china` 已列入 `.github/CODEOWNERS`，`@gps-china` 已接受仓库邀请。启用 **Require review from Code Owners** 后，两人按任务轮换作者与审查者。
