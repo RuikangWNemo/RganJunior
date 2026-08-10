@@ -233,4 +233,4 @@ Pull Request 应当：
 - Block deletions；
 - 只启用 Squash Merge。
 
-在第二位合作者的 GitHub 用户名加入 `.github/CODEOWNERS` 之前，不要启用 **Require review from Code Owners**。
+`@RuikangWNemo` 和 `@gps-china` 已列入 `.github/CODEOWNERS`。等待 `@gps-china` 接受仓库邀请后，再启用 **Require review from Code Owners**。
