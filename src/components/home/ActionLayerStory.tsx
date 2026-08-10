@@ -11,12 +11,18 @@ const actionVerbs: Record<ActionLayerId, { zh: string; en: string }> = {
   'urban-rural': { zh: '行动', en: 'Act' },
 };
 
+const programAnchors: Record<ActionLayerId, string> = {
+  mountain: 'life-experience-camp',
+  field: 'public-projects',
+  'urban-rural': 'action-group',
+};
+
 function LineItem({ layer }: { layer: ActionLayerContent }) {
   const { lang } = useLanguage();
 
   return (
     <Link
-      to={`/actions#${layer.id}`}
+      to={`/programs#${programAnchors[layer.id]}`}
       aria-label={`${layer.order} ${pickLocalized(layer.title, lang)}`}
       className="home-action-row group grid min-w-0 gap-5 border-t border-border py-6 outline-none transition-[background-color,border-color,transform] duration-500 hover:border-primary/30 hover:bg-secondary/35 focus-visible:bg-secondary/35 focus-visible:ring-2 focus-visible:ring-primary/25 sm:grid-cols-[8rem_minmax(0,1fr)] sm:items-start sm:px-4 md:py-7"
     >
@@ -76,10 +82,10 @@ export default function ActionLayerStory() {
               )}
             </p>
             <Link
-              to="/actions"
+              to="/programs"
               className="cursor-target mt-8 inline-flex items-center text-sm font-medium text-primary transition-organic hover:text-foreground"
             >
-              {t('查看行动现场', 'View the action field')}
+              {t('查看项目', 'View programs')}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </ScrollProgressReveal>

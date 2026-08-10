@@ -17,59 +17,63 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
     <div className="home-hero-copy relative z-20 order-2 w-full min-w-0 max-w-full lg:order-2 lg:max-w-4xl">
       <h1
         aria-label={brandName}
-        className="home-hero-title animate-fade-in-up-apple text-foreground"
+        className="home-hero-title animate-fade-in-up-apple"
       >
-        <BrandWordmark aria-hidden="true" className="home-hero-wordmark" />
+        <BrandWordmark language={lang} aria-hidden="true" className="home-hero-wordmark" />
       </h1>
 
       <p
-        className="home-hero-subtitle animate-fade-in-up-apple mt-4 max-w-3xl text-balance font-serif text-[1.45rem] leading-tight text-foreground/78 sm:mt-5 sm:text-3xl lg:text-[2.25rem]"
+        aria-label={t(
+          '回归自然、生活与真实世界，长出内在的力量',
+          'Return to nature, everyday life, and the real world. Grow strength from within.',
+        )}
+        className={`home-hero-subtitle home-hero-subtitle--${lang} animate-fade-in-up-apple mt-4 max-w-3xl text-balance font-serif text-[1.45rem] leading-tight sm:mt-5 sm:text-3xl lg:text-[2.25rem]`}
         style={{ animationDelay: '0.08s' }}
       >
-        {t('在真实社区中探索、研究、行动', 'Exploring, researching, and acting in real communities')}
+        {lang === 'zh' ? (
+          <>
+            <span className="home-hero-subtitle__line">回归自然、生活与真实世界，</span>
+            <span className="home-hero-subtitle__line">长出内在的力量</span>
+          </>
+        ) : (
+          <>
+            <span className="home-hero-subtitle__line">Return to nature, everyday life,</span>{' '}
+            <span className="home-hero-subtitle__line">and the real world. Grow strength from within.</span>
+          </>
+        )}
       </p>
 
       <p
-        className="home-hero-keywords animate-fade-in-up-apple mt-5 max-w-full whitespace-normal break-words text-xs font-semibold uppercase leading-6 tracking-[0.14em] text-primary sm:mt-6 sm:text-base sm:tracking-[0.22em]"
+        className="home-hero-body animate-fade-in-up-apple mt-5 max-w-[21.5rem] border-l pl-4 text-sm leading-7 sm:mt-7 sm:max-w-2xl sm:pl-5 sm:text-base"
         style={{ animationDelay: '0.16s' }}
       >
-        <span className="block sm:inline">{t('山野', 'Mountain')}</span>
-        <span className="mx-2 hidden sm:inline">·</span>
-        <span className="block sm:inline">{t('田野', 'Field')}</span>
-        <span className="mx-2 hidden sm:inline">·</span>
-        <span className="block sm:inline">{t('城乡', 'Urban-Rural')}</span>
-      </p>
-
-      <p
-        className="home-hero-body animate-fade-in-up-apple mt-5 max-w-[21.5rem] border-l border-primary/30 pl-4 text-sm font-medium leading-7 text-foreground/88 sm:mt-7 sm:max-w-xl sm:pl-5 sm:text-base"
-        style={{ animationDelay: '0.2s' }}
-      >
         {t(
-          '从铁牛村出发，让青少年回到自然、走进社区，在真实关系中重新认识自己、土地与社会。',
-          'Starting from Tieniu Village, young people return to nature and enter communities, rediscovering themselves, land, and society through real relationships.'
+          '一个从铁牛村长出来的青少年真实生活与公共行动计划。我们通过自然、食物、茶、运动、社群共创和可持续生活实践，陪伴青少年连接自己、他人、土地和未来。',
+          "A real-life and public-action programme for young people, grown in Tieniu Village. Through nature, food, tea, movement, co-creation, and sustainable living, we reconnect young people with themselves, others, the land, and the future.",
         )}
       </p>
 
       <div
         className="home-hero-actions animate-fade-in-up-apple mt-7 flex flex-col items-start gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4"
-        style={{ animationDelay: '0.28s' }}
+        style={{ animationDelay: '0.24s' }}
       >
         <Button
-          onClick={onJoin}
-          className="home-hero-button btn-apple cursor-target w-full max-w-[17rem] sm:w-auto"
+          asChild
+          variant="outline"
+          className="home-hero-button home-hero-button--outline btn-apple cursor-target w-full sm:w-auto"
         >
-          {t('加入我们', 'Join Us')}
-          <ArrowRight className="ml-2" size={18} />
+          <Link to="/programs">
+            {t('了解项目', 'Explore programs')}
+          </Link>
         </Button>
 
-        <Link to="/actions" className="w-full max-w-[17rem] sm:w-auto">
-          <Button
-            variant="outline"
-            className="home-hero-button btn-apple cursor-target w-full border-primary/15 bg-background/70 hover:border-primary/30 sm:w-auto"
-          >
-            {t('了解我们的行动', 'Explore Our Action')}
-          </Button>
-        </Link>
+        <Button
+          onClick={onJoin}
+          className="home-hero-button home-hero-button--primary btn-apple cursor-target w-full sm:w-auto"
+        >
+          {t('加入下一期', 'Join the next camp')}
+          <ArrowRight className="ml-2" size={18} />
+        </Button>
       </div>
     </div>
   );

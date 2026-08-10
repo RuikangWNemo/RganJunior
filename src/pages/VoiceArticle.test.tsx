@@ -32,7 +32,10 @@ describe('VoiceArticle', () => {
       'href',
       'https://mp.weixin.qq.com/s/wBHWZw3OASCSjO-9GMrmjg'
     );
-    expect(screen.getByRole('link', { name: '返回伙伴之声' })).toHaveAttribute('href', '/voices');
+    expect(screen.getAllByRole('link', { name: '返回我们的团队' })).toHaveLength(2);
+    screen.getAllByRole('link', { name: '返回我们的团队' }).forEach((link) => {
+      expect(link).toHaveAttribute('href', '/about#team');
+    });
     expect(container.querySelector('.voice-article-page--growth-story')).toBeInTheDocument();
     expect(container.querySelector('.article-media-frame')).toBeInTheDocument();
     expect(container.querySelector('.article-media-frame--portrait')).toBeInTheDocument();

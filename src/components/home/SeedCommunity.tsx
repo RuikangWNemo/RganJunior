@@ -22,23 +22,28 @@ export default function SeedCommunity() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.65, ease: 'easeOut' }}
-            className="relative z-20 max-w-2xl lg:max-w-[38rem]"
+            className="seed-community__copy relative z-20 max-w-2xl lg:max-w-[38rem]"
           >
-            <p className="seed-community-kicker text-xs uppercase tracking-[0.28em] text-forest-foreground/65">
+            <p className="seed-community-kicker">
               {t('种子社群', 'Seed Community')}
             </p>
-            <h2 className="mt-6 text-balance font-serif text-4xl leading-[1.16] text-forest-foreground sm:text-5xl md:text-6xl">
-              {t(
-                '成为阿柑少年、家长或伙伴。',
-                "Become an R'gan youth, parent, or partner."
-              )}
-            </h2>
-            <p className="mt-6 max-w-lg text-pretty text-base leading-8 text-forest-foreground/70 sm:text-lg">
-              {t(
-                '种下一段长期同行的关系，一起走进真实世界。',
-                'Plant a lasting relationship and step into the real world together.'
-              )}
-            </p>
+            <div className="seed-community__headline-stack mt-6">
+              <h2 className={`seed-community__title seed-community__title--${lang}`}>
+                {lang === 'zh' ? (
+                  '成为阿柑少年、家长或伙伴。'
+                ) : (
+                  <>
+                    Become an <span className="whitespace-nowrap">R-Gan</span> Junior, parent, or partner.
+                  </>
+                )}
+              </h2>
+              <p className={`seed-community__lead seed-community__lead--${lang} mt-6 max-w-lg`}>
+                {t(
+                  '种下一段长期同行的关系，一起走进真实世界。',
+                  'Plant a lasting relationship and step into the real world together.'
+                )}
+              </p>
+            </div>
 
             <div className="relative mt-8 h-40 max-w-xl sm:mt-10 sm:h-44" aria-label={t('加入身份', 'Ways to join')}>
               <svg
@@ -74,7 +79,7 @@ export default function SeedCommunity() {
                       ease: 'easeOut',
                     }}
                     className={cn(
-                      'absolute flex items-center gap-2.5 whitespace-nowrap text-sm font-medium text-forest-foreground sm:text-base',
+                      'seed-community__role absolute flex items-center gap-2.5 whitespace-nowrap text-forest-foreground',
                       role.className
                     )}
                   >
@@ -87,9 +92,9 @@ export default function SeedCommunity() {
 
             <Link
               to="/join"
-              className="cursor-target group/join mt-4 inline-flex min-h-14 items-center gap-4 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-[#ff6a1f] focus-visible:ring-offset-4 focus-visible:ring-offset-forest sm:mt-6"
+              className="seed-community__entry cursor-target group/join mt-4 inline-flex min-h-14 items-center gap-4 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-[#ff6a1f] focus-visible:ring-offset-4 focus-visible:ring-offset-forest sm:mt-6"
             >
-              <span className="border-b border-forest-foreground/35 pb-1 text-base font-medium transition-colors duration-200 group-hover/join:border-[#ff6a1f] group-focus-visible/join:border-[#ff6a1f] sm:text-lg">
+              <span className="seed-community__entry-label border-b border-forest-foreground/35 pb-1 font-medium transition-colors duration-200 group-hover/join:border-[#ff6a1f] group-focus-visible/join:border-[#ff6a1f]">
                 {t('进入加入入口', 'Enter the Join Page')}
               </span>
               <span className="flex size-12 items-center justify-center rounded-full bg-[#ff6a1f] text-white shadow-sm" aria-hidden="true">

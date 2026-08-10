@@ -2,7 +2,21 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  },
+  "functions": {
+    "api/community/field-note-collaboration.ts": {
+      "maxDuration": 300
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/join",
+      "destination": "/api/action-inquiry?form=join"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

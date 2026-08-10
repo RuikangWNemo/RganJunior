@@ -1,0 +1,151 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter, useLocation } from 'react-router-dom';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import type { CommunityPerson } from '@/services/people';
+import CommunityPeople from './CommunityPeople';
+
+const people = [
+  {
+    id: 11,
+    slug: 'orange',
+    display_name: '橘子',
+    nature_name: '小橘',
+    name_zh: null,
+    name_en: null,
+    bio: '喜欢记录土地与食物。',
+    city: '成都',
+    region: '四川',
+    country: '中国',
+    avatar_media_id: null,
+    joined_at: '2026-08-01',
+    profile_visibility: 'members',
+    primary_identity_slug: 'participant',
+    primary_identity_name_zh: '参与者',
+    primary_identity_name_en: 'Participant',
+    primary_identity_color: '#E9C979',
+    primary_planet_slug: 'youth',
+    identity_labels: [{ slug: 'participant', nameZh: '参与者', nameEn: 'Participant', color: '#E9C979', planetSlug: 'youth', isPrimary: true }],
+    planet_slugs: ['youth'],
+  },
+  {
+    id: 22,
+    slug: 'pine',
+    display_name: '松松',
+    nature_name: null,
+    name_zh: null,
+    name_en: 'Pine',
+    bio: '关心自然与社区行动。',
+    city: '上海',
+    region: null,
+    country: '中国',
+    avatar_media_id: null,
+    joined_at: '2026-08-02',
+    profile_visibility: 'members',
+    primary_identity_slug: 'youth-co-creator',
+    primary_identity_name_zh: '青年共创伙伴',
+    primary_identity_name_en: 'Youth Co-creator',
+    primary_identity_color: '#F2B35D',
+    primary_planet_slug: 'youth',
+    identity_labels: [
+      { slug: 'youth-co-creator', nameZh: '青年共创伙伴', nameEn: 'Youth Co-creator', color: '#F2B35D', planetSlug: 'youth', isPrimary: true },
+      { slug: 'adult-support', nameZh: '成人支持团队', nameEn: 'Adult Support Team', color: '#72B18A', planetSlug: 'support', isPrimary: false },
+    ],
+    planet_slugs: ['support', 'youth'],
+  },
+] as unknown as CommunityPerson[];
+
+const {
+  listCommunityPeople,
+  getMyCommunityProfile,
+  createDirectConversationWithPerson,
+} = vi.hoisted(() => ({
+  listCommunityPeople: vi.fn(),
+  getMyCommunityProfile: vi.fn(),
+  createDirectConversationWithPerson: vi.fn(),
+}));
+
+vi.mock('framer-motion', () => ({ useReducedMotion: () => false }));
+vi.mock('@/services/people', async () => ({ listCommunityPeople }));
+vi.mock('@/services/community-profile', () => ({ getMyCommunityProfile }));
+vi.mock('@/services/messages', () => ({ createDirectConversationWithPerson }));
+vi.mock('@/components/community/CommunityPeoplePlanet', () => ({
+  default: ({ onSelect }: { onSelect: (personId: number) => void }) => (
+    <button type="button" data-testid="people-planet" onClick={() => onSelect(22)}>Select Pine on planet</button>
+  ),
+}));
+
+function LocationProbe() {
+  const location = useLocation();
+  return <output data-testid="location">{`${location.pathname}${location.search}`}</output>;
+}
+
+describe('CommunityPeople planet plaza', () => {
+  beforeEach(() => {
+    listCommunityPeople.mockReset().mockResolvedValue(people);
+    getMyCommunityProfile.mockReset().mockResolvedValue({ person_id: 11 });
+    createDirectConversationWithPerson.mockReset().mockResolvedValue('conversation-22');
+  });
+
+  it('opens in planet mode and keeps the accessible people index synchronized', async () => {
+    render(
+      <MemoryRouter initialEntries={['/community/people']}>
+        <LanguageProvider initialLanguage="zh">
+          <CommunityPeople />
+        </LanguageProvider>
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByTestId('people-planet')).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: '阿柑少年圈 2' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByText('1 位重叠伙伴')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '星球' })).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.click(screen.getByRole('button', { name: '松松' }));
+    expect(screen.getByRole('heading', { name: '松松' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '松松' })).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.click(screen.getByRole('button', { name: '名单' }));
+    expect(screen.queryByTestId('people-planet')).not.toBeInTheDocument();
+    expect(screen.getByText('喜欢记录土地与食物。')).toBeInTheDocument();
+  });
+
+  it('keeps all three planets connected while switching the focused directory', async () => {
+    render(
+      <MemoryRouter initialEntries={['/community/people']}>
+        <LanguageProvider initialLanguage="zh">
+          <CommunityPeople />
+          <LocationProbe />
+        </LanguageProvider>
+      </MemoryRouter>,
+    );
+
+    await screen.findByTestId('people-planet');
+    fireEvent.click(screen.getByRole('tab', { name: '成人支持团队 1' }));
+
+    expect(screen.getByRole('tab', { name: '成人支持团队 1' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByTestId('location')).toHaveTextContent('/community/people?planet=support');
+    fireEvent.click(screen.getByRole('button', { name: '名单' }));
+    expect(screen.getByText('关心自然与社区行动。')).toBeInTheDocument();
+    expect(screen.queryByText('喜欢记录土地与食物。')).not.toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: '家长守护团 0' })).toBeInTheDocument();
+  });
+
+  it('reuses the existing message flow from the selected person panel', async () => {
+    render(
+      <MemoryRouter initialEntries={['/community/people']}>
+        <LanguageProvider initialLanguage="zh">
+          <CommunityPeople />
+          <LocationProbe />
+        </LanguageProvider>
+      </MemoryRouter>,
+    );
+
+    fireEvent.click(await screen.findByTestId('people-planet'));
+    fireEvent.click(screen.getByRole('button', { name: '发一条消息' }));
+
+    await waitFor(() => expect(createDirectConversationWithPerson).toHaveBeenCalledWith(22));
+    expect(screen.getByTestId('location')).toHaveTextContent('/community/messages?conversation=conversation-22');
+  });
+});

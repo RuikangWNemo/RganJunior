@@ -164,7 +164,6 @@ export default function HomePhotoScroll() {
                   distance={36}
                   scale={false}
                   blur={false}
-                  delay={0.04 * index}
                 >
                   <PhotoFigure photo={photo} index={index + 1} />
                 </ScrollProgressReveal>

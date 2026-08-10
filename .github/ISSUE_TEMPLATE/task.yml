@@ -1,0 +1,92 @@
+name: 工作任务
+description: 用于功能、内容、数据库或工程维护任务
+title: "[Task] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先把目标和验收条件写清楚，再开始开发。一个 Issue 对应一条短分支和一个 Pull Request。
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: 任务类型
+      options:
+        - 功能
+        - 缺陷修复
+        - 内容
+        - 数据库
+        - 工程维护
+        - 文档
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 背景与问题
+      description: 为什么需要做这项工作？目前存在什么问题或机会？
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目标
+      description: 完成后用户或维护者能获得什么结果？
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收条件
+      description: 使用可检查的条件描述完成标准。
+      placeholder: |
+        - [ ] 条件一
+        - [ ] 条件二
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: 范围
+      description: 写明包含的内容，以及明确不包含的内容。
+      placeholder: |
+        包含：
+        - ...
+
+        不包含：
+        - ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: risk
+    attributes:
+      label: 影响范围
+      description: 至少选择一项。
+      options:
+        - label: 涉及用户界面
+        - label: 涉及数据库迁移或 RLS/权限
+        - label: 涉及环境变量或外部服务
+        - label: 涉及认证、未成年人或个人信息
+        - label: 无以上特殊风险
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: 验证方案
+      description: 计划如何测试和人工验证？
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: 依赖与阻塞
+      description: 依赖的 Issue、服务、账号或决策；没有请写“无”。
+    validations:
+      required: true
