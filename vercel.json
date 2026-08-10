@@ -9,6 +9,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/join",
+      "destination": "/api/action-inquiry?form=join"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

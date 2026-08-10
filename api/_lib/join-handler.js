@@ -1,3 +1,4 @@
+// Routed through api/action-inquiry.js so both public forms share one Vercel Function.
 const CONTACT_EMAIL = 'contact@rganjunior.org';
 
 const AUDIENCE_LABELS = {

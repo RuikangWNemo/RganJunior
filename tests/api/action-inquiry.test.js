@@ -39,6 +39,18 @@ afterEach(() => {
 });
 
 describe('action enquiry endpoint', () => {
+  it('routes the existing join endpoint through the shared forms function', async () => {
+    const response = createResponse();
+    await handler({
+      method: 'POST',
+      query: { form: 'join' },
+      body: { audience: 'unknown' },
+    }, response);
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual({ ok: false, code: 'INVALID_AUDIENCE' });
+  });
+
   it('rejects an unknown program before forwarding data', async () => {
     const response = createResponse();
     await handler({ method: 'POST', body: { ...validPayload, program: 'unknown' } }, response);

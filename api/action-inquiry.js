@@ -1,3 +1,5 @@
+import joinHandler from './_lib/join-handler.js';
+
 const CONTACT_EMAIL = 'contact@rganjunior.org';
 
 const PROGRAM_LABELS = {
@@ -189,6 +191,10 @@ async function notifyWebhook(submission) {
 }
 
 export default async function handler(request, response) {
+  if (request.query?.form === 'join') {
+    return joinHandler(request, response);
+  }
+
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
     return sendJson(response, 405, { ok: false, code: 'METHOD_NOT_ALLOWED' });
