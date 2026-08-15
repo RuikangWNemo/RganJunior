@@ -28,13 +28,13 @@ export function RelationshipMap({ relationships }: { relationships: ImpactRelati
       <div
         className="relative mx-auto hidden h-[31rem] max-w-4xl md:block"
         role="img"
-        aria-label={t(`少年与家庭、伙伴、土地和公共行动的关系图。${accessibleSummary}`, `Relationship map connecting young people with family, peers, land, and public action. ${accessibleSummary}`)}
+        aria-label={t(`青少年与家庭、伙伴、土地和公共行动的关系图。${accessibleSummary}`, `Relationship map connecting young people with family, peers, land, and public action. ${accessibleSummary}`)}
       >
         <div className="absolute inset-[13%] rounded-full border border-primary/15" aria-hidden="true" />
         <div className="absolute left-1/2 top-1/2 size-52 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/30 bg-background p-7 text-center shadow-[0_20px_70px_hsl(var(--primary)/0.08)]">
           <div className="flex h-full flex-col items-center justify-center rounded-full bg-primary px-5 text-primary-foreground">
-            <span className="font-serif text-3xl">{t('少年', 'Young person')}</span>
-            <span className="mt-3 text-xs leading-5 text-primary-foreground/70">
+            <span className="font-serif text-4xl">{t('青少年', 'Young person')}</span>
+            <span className="mt-3 text-sm leading-5 text-primary-foreground/70">
               {t('感受、提问、协作、行动', 'Sense, question, collaborate, act')}
             </span>
           </div>
@@ -47,10 +47,10 @@ export function RelationshipMap({ relationships }: { relationships: ImpactRelati
             className={`absolute w-60 ${nodePositions[relationship.id]}`}
           >
             <article className="rounded-2xl border border-border bg-card/95 p-6 shadow-[0_14px_45px_hsl(var(--primary)/0.06)]">
-              <h3 className="font-serif text-2xl text-foreground">
+              <h3 className="font-serif text-2xl text-[#ea6a2a]">
                 {pickLocalized(relationship.title, lang)}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+              <p className="mt-3 text-lg leading-7 text-muted-foreground">
                 {pickLocalized(relationship.description, lang)}
               </p>
             </article>
@@ -68,8 +68,8 @@ export function RelationshipMap({ relationships }: { relationships: ImpactRelati
 
       <div className="md:hidden">
         <div className="mx-auto flex size-40 flex-col items-center justify-center rounded-full bg-primary px-5 text-center text-primary-foreground">
-          <span className="font-serif text-2xl">{t('少年', 'Young person')}</span>
-          <span className="mt-2 text-xs leading-5 text-primary-foreground/70">
+          <span className="font-serif text-2xl">{t('青少年', 'Young person')}</span>
+          <span className="mt-2 text-sm leading-5 text-primary-foreground/70">
             {t('关系从这里展开', 'Relationships begin here')}
           </span>
         </div>
@@ -77,10 +77,10 @@ export function RelationshipMap({ relationships }: { relationships: ImpactRelati
         <div className="space-y-3">
           {relationships.map((relationship) => (
             <article key={relationship.id} className="rounded-2xl border border-border bg-card/80 p-5">
-              <h3 className="font-serif text-xl text-foreground">
+              <h3 className="font-serif text-xl text-[#ea6a2a]">
                 {pickLocalized(relationship.title, lang)}
               </h3>
-              <p className="mt-2 text-sm leading-7 text-muted-foreground">
+              <p className="mt-2 text-lg leading-7 text-muted-foreground">
                 {pickLocalized(relationship.description, lang)}
               </p>
             </article>

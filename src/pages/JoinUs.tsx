@@ -387,6 +387,7 @@ export default function JoinUs() {
             transition={{ duration: prefersReducedMotion ? 0 : 1.1, delay: 0.3, ease: 'easeOut' }}
           />
         </svg>
+
       </section>
 
       <SeedCommunityStage

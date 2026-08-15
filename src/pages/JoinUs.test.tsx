@@ -24,7 +24,7 @@ describe('JoinUs', () => {
     vi.useRealTimers();
   });
 
-  it('renders a minimal cover and one continuous identity path', () => {
+  it('keeps decorative paths in the structure for visually hidden presentation', () => {
     const { container } = renderJoinUs();
     const primaryJoinLink = screen.getByRole('link', { name: '立即加入' });
 
@@ -43,15 +43,9 @@ describe('JoinUs', () => {
     expect(screen.getByRole('button', { name: '了解成为阿柑少年' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '了解成为阿柑家长' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '了解成为合作伙伴' })).toBeInTheDocument();
+    expect(container.querySelector('.join-editorial-cover__thread')).toHaveAttribute('aria-hidden', 'true');
+    expect(container.querySelectorAll('.join-editorial-path')).toHaveLength(2);
     expect(container.querySelectorAll('.join-editorial-path path')).toHaveLength(4);
-    expect(container.querySelector('.join-editorial-path--desktop path')).toHaveAttribute(
-      'd',
-      'M 42 300 C 190 300 218 88 425 108 S 650 360 936 214'
-    );
-    expect(container.querySelector('.join-editorial-path--desktop .join-editorial-path__base')).toHaveAttribute(
-      'opacity',
-      '0.9'
-    );
     expect(container.querySelector('.join-editorial-guide__prompt-arc')).toHaveAttribute('aria-hidden', 'true');
     expect(container.querySelectorAll('.join-editorial-guide__prompt-arc textPath')).toHaveLength(2);
     expect(container.querySelector('.join-editorial-guide__prompt-arc textPath')).toHaveTextContent(

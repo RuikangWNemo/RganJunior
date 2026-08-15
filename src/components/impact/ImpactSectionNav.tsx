@@ -13,7 +13,7 @@ export function ImpactSectionNav() {
   return (
     <nav
       aria-label={t('Impact 栏目', 'Impact sections')}
-      className="flex flex-wrap items-center gap-x-7 gap-y-2 text-sm"
+      className="flex flex-wrap items-center gap-x-7 gap-y-2 text-lg"
     >
       {items.map((item) => {
         const isActive = location.pathname === item.path;

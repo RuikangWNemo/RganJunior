@@ -45,27 +45,10 @@ export default function SeedCommunity() {
               </p>
             </div>
 
-            <div className="relative mt-8 h-40 max-w-xl sm:mt-10 sm:h-44" aria-label={t('加入身份', 'Ways to join')}>
-              <svg
-                viewBox="0 0 600 150"
-                preserveAspectRatio="none"
-                className="pointer-events-none absolute inset-0 size-full overflow-visible text-[#ff6a1f]"
-                aria-hidden="true"
-              >
-                <motion.path
-                  d="M 12 92 C 118 92 130 28 250 34 S 420 112 588 68"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                  initial={prefersReducedMotion ? false : { pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 0.72 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: prefersReducedMotion ? 0 : 0.9, delay: 0.18, ease: 'easeOut' }}
-                />
-              </svg>
-
+            <div
+              className="seed-community__roles relative mt-8 h-40 max-w-xl sm:mt-10 sm:h-44"
+              aria-label={t('加入身份', 'Ways to join')}
+            >
               <ul>
                 {communityRoles.map((role, index) => (
                   <motion.li
@@ -83,7 +66,7 @@ export default function SeedCommunity() {
                       role.className
                     )}
                   >
-                    <span className="size-3 rounded-full border-2 border-forest bg-[#ff6a1f] shadow-sm" aria-hidden="true" />
+                    <span className="seed-community__fruit" aria-hidden="true" />
                     <span>{t(role.zh, role.en)}</span>
                   </motion.li>
                 ))}

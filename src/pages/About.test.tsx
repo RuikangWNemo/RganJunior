@@ -65,7 +65,7 @@ describe('About editorial content system', () => {
       [...(team?.querySelectorAll('.about-v2-team-group__header h3') ?? [])].map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(['发起人', '青少年共创伙伴', '成人支持团队｜麦昆塔教育', '家长守护团']);
+    ).toEqual(['发起人', '青少年共创伙伴', '支持团队｜麦昆塔教育', '家长守护团']);
     expect(
       [...(team?.querySelector('.about-v2-team-groups')?.children ?? [])].map(
         (section) => section.getAttribute('aria-labelledby'),
@@ -100,11 +100,11 @@ describe('About editorial content system', () => {
       '/voices/tea-kitchen-and-summer',
     ]);
 
-    const adultRoster = screen.getByLabelText('成人支持团队成员名录');
+    const adultRoster = screen.getByLabelText('支持团队成员名录');
     expect(within(adultRoster).getAllByRole('article')).toHaveLength(6);
     expect(within(adultRoster).getAllByRole('img')).toHaveLength(6);
     expect(within(adultRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
-      '/images/about/adult-support/adult-support-01.webp',
+      '/images/about/adult-support/zhao-jing.jpg',
       '/images/about/adult-support/adult-support-02.webp',
       '/images/about/adult-support/adult-support-05.webp',
       '/images/about/adult-support/adult-support-06.webp',
@@ -112,7 +112,15 @@ describe('About editorial content system', () => {
       '/images/about/adult-support/adult-support-08.webp',
     ]);
     expect(within(adultRoster).getAllByRole('img').every((image) => image.getAttribute('loading') === 'lazy')).toBe(true);
-    expect(within(adultRoster).getAllByText('？？？')).toHaveLength(12);
+    expect(within(adultRoster).getAllByRole('heading', { level: 4 }).map((heading) => heading.textContent)).toEqual([
+      '赵璟',
+      '贺超超',
+      '秋鹭',
+      '王睿康',
+      '邓老师',
+      '知予',
+    ]);
+    expect(within(adultRoster).getAllByText('？？？')).toHaveLength(6);
 
     expect(within(team as HTMLElement).getByText('参与共创，也支持每一次活动真实发生。')).toBeInTheDocument();
     const parentGuardianRoster = screen.getByLabelText('家长守护团成员名录');
@@ -243,7 +251,7 @@ describe('About editorial content system', () => {
   it('keeps the remaining requested groups in user-controlled carousels', () => {
     renderAbout();
 
-    expect(screen.queryByRole('region', { name: '青少年与成人支持团队轮播' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: '青少年与支持团队轮播' })).not.toBeInTheDocument();
 
     const directionCarousel = screen.getByRole('region', { name: '青少年共创方向轮播' });
     fireEvent.click(within(directionCarousel).getByRole('button', { name: '查看生活体验设计' }));
@@ -271,7 +279,7 @@ describe('About editorial content system', () => {
     const reels = methodCarousel.querySelectorAll('.about-method-photo-reel');
 
     expect(reels).toHaveLength(4);
-    expect([...reels].map((reel) => reel.querySelectorAll('img').length)).toEqual([5, 6, 7, 9]);
+    expect([...reels].map((reel) => reel.querySelectorAll('img').length)).toEqual([5, 6, 8, 8]);
     expect(
       [...reels].every((reel) => reel.parentElement?.firstElementChild === reel),
     ).toBe(true);
@@ -280,8 +288,20 @@ describe('About editorial content system', () => {
     ).toEqual([
       '/images/about/methods/01/01-shared-life.webp',
       '/images/about/methods/02/01-community-visit.webp',
-      '/images/about/methods/03/01-issue-workshop.webp',
+      '/images/about/methods/03/00-tieniu-aerial-overview.jpg',
       '/images/about/methods/04/01-youth-led-moment.webp',
+    ]);
+    expect(
+      [...reels[2].querySelectorAll('img')].map((image) => image.getAttribute('src')),
+    ).toEqual([
+      '/images/about/methods/03/00-tieniu-aerial-overview.jpg',
+      '/images/about/methods/03/06-shared-research.webp',
+      '/images/about/methods/03/07-group-reflection.webp',
+      '/images/about/methods/03/04-field-inquiry.webp',
+      '/images/about/methods/03/05-public-question.webp',
+      '/images/about/methods/03/01-issue-workshop.webp',
+      '/images/about/methods/03/03-farming-practice.webp',
+      '/images/about/methods/03/02-local-conversation.webp',
     ]);
     expect(within(methodCarousel).getByRole('region', { name: '真实生活照片轮播' })).toBeInTheDocument();
   });
@@ -295,8 +315,8 @@ describe('About editorial content system', () => {
       const cycles = [
         { title: '真实生活', photoCount: 5, nextTitle: '真实社区' },
         { title: '真实社区', photoCount: 6, nextTitle: '真实议题' },
-        { title: '真实议题', photoCount: 7, nextTitle: '青少年主理' },
-        { title: '青少年主理', photoCount: 9, nextTitle: '真实生活' },
+        { title: '真实议题', photoCount: 8, nextTitle: '青少年主理' },
+        { title: '青少年主理', photoCount: 8, nextTitle: '真实生活' },
       ];
 
       cycles.forEach(({ title, photoCount, nextTitle }) => {

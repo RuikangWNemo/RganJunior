@@ -36,14 +36,14 @@ export default function Impact() {
     return (
       <div className="container mx-auto flex min-h-[70dvh] max-w-3xl items-center px-4 pt-20 sm:px-6 lg:px-8">
         <div className="w-full rounded-2xl border border-border bg-card p-8 text-center md:p-12">
-          <h1 className="font-serif text-3xl text-foreground">{t('暂时无法读取影响记录', 'Impact records are temporarily unavailable')}</h1>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
+          <h1 className="font-serif text-4xl text-foreground">{t('暂时无法读取影响记录', 'Impact records are temporarily unavailable')}</h1>
+          <p className="mx-auto mt-4 max-w-xl text-lg leading-7 text-muted-foreground">
             {t('请稍后重试。页面不会用示例数字替代缺失数据。', 'Please try again later. Missing data will not be replaced with sample numbers.')}
           </p>
           <button
             type="button"
             onClick={() => void impactQuery.refetch()}
-            className="mt-7 min-h-11 rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90 active:translate-y-px"
+            className="mt-7 min-h-11 rounded-lg bg-primary px-5 py-3 text-lg font-medium text-primary-foreground transition hover:bg-primary/90 active:translate-y-px"
           >
             {t('重新读取', 'Try again')}
           </button>
@@ -60,16 +60,24 @@ export default function Impact() {
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/75 py-3">
             <ImpactSectionNav />
-            <p className="text-xs leading-5 text-muted-foreground">
+            <p className="text-sm leading-5 text-muted-foreground">
               {t(`资料核验日期：${snapshot.verifiedAt}`, `Records verified: ${snapshot.verifiedAt}`)}
             </p>
           </div>
 
           <div className="grid gap-10 py-14 sm:py-16 md:py-20 lg:grid-cols-[minmax(0,0.82fr)_minmax(26rem,1.18fr)] lg:items-center lg:gap-16 lg:py-24">
             <div>
-              <p className="text-xs tracking-[0.18em] text-primary/75">{t('IMPACT / 影响', 'IMPACT / 影响')}</p>
-              <h1 className="mt-5 max-w-[9ch] text-balance font-serif text-5xl leading-[1.08] tracking-[-0.035em] text-foreground sm:text-6xl lg:text-7xl">
-                {t('影响，发生在关系里', 'Impact grows through relationships')}
+              <p className="text-lg tracking-[0.18em] text-primary/75">{t('IMPACT / 影响', 'IMPACT / 影响')}</p>
+              <h1
+                aria-label={t('影响，发生在关系里', 'Impact grows through relationships')}
+                className="mt-5 max-w-[9ch] text-balance font-serif text-[3.375rem] leading-[1.08] tracking-[-0.035em] text-[#ea6a2a]"
+              >
+                {lang === 'zh' ? (
+                  <span aria-hidden="true">
+                    <span className="block">影响，</span>
+                    <span className="block whitespace-nowrap">发生在关系里</span>
+                  </span>
+                ) : 'Impact grows through relationships'}
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-foreground/72 md:text-lg md:leading-9">
                 {t(
@@ -90,7 +98,7 @@ export default function Impact() {
                   className="aspect-[16/11] h-full w-full object-cover object-center"
                 />
               </div>
-              <figcaption className="mt-3 text-xs leading-5 text-muted-foreground">
+              <figcaption className="mt-3 text-sm leading-5 text-muted-foreground">
                 {t('再生设计国际生态营，2024 年 5 月', 'Regenerative Design Eco Camp, May 2024')}
               </figcaption>
             </figure>
@@ -102,10 +110,10 @@ export default function Impact() {
         <section className="border-b border-border/80 py-16 md:py-24" aria-labelledby="impact-evidence-title">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <ImpactReveal className="max-w-3xl">
-              <h2 id="impact-evidence-title" className="text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
+              <h2 id="impact-evidence-title" className="text-balance font-serif text-4xl leading-tight text-[#ea6a2a]">
                 {t('先呈现可以核验的数字', 'Begin with numbers that can be verified')}
               </h2>
-              <p className="mt-5 max-w-2xl text-sm leading-8 text-muted-foreground md:text-base">
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
                 {t(
                   '当前只展示已有项目记录支持的数据。活动总数、独立家庭数、年龄分布和城市来源将在数据库形成统一口径后接入。',
                   'Only source-backed project data is shown now. Activity totals, unique families, age distribution, and cities will be connected after the database establishes consistent definitions.',
@@ -117,14 +125,14 @@ export default function Impact() {
               {snapshot.metrics.map((metric, index) => (
                 <ImpactReveal key={metric.id} delay={index * 0.04} className="h-full">
                   <article className="h-full border-border px-0 py-8 sm:px-6 sm:[&:nth-child(odd)]:border-r lg:border-r lg:px-7 lg:[&:last-child]:border-r-0">
-                    <p className="font-serif text-5xl tracking-[-0.04em] text-primary md:text-6xl">{metric.value}</p>
-                    <h3 className="mt-4 text-sm font-medium leading-6 text-foreground">
+                    <p className="font-serif text-5xl tracking-[-0.04em] text-primary md:text-[3.375rem]">{metric.value}</p>
+                    <h3 className="mt-4 text-lg font-medium leading-6 text-foreground">
                       {pickLocalized(metric.label, lang)}
                     </h3>
-                    <p className="mt-4 text-xs leading-6 text-muted-foreground">
+                    <p className="mt-4 text-sm leading-6 text-muted-foreground">
                       {pickLocalized(metric.detail, lang)}
                     </p>
-                    <p className="mt-5 text-[11px] leading-5 text-primary/70">
+                    <p className="mt-5 text-xs leading-5 text-primary/70">
                       {metric.observedAt} {pickLocalized(metric.sourceLabel, lang)}
                     </p>
                   </article>
@@ -137,10 +145,19 @@ export default function Impact() {
         <section className="bg-primary/[0.035] py-20 md:py-28" aria-labelledby="impact-relationships-title">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <ImpactReveal className="mx-auto max-w-3xl text-center">
-              <h2 id="impact-relationships-title" className="text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
-                {t('一个人的成长，从来不只发生在一个人身上', 'One person never grows alone')}
+              <h2
+                id="impact-relationships-title"
+                aria-label={t('一个孩子的成长，需要一整个村庄的托举', 'A child needs a whole village to grow')}
+                className="text-balance font-serif text-4xl leading-tight text-[#ea6a2a] md:text-[3.375rem]"
+              >
+                {lang === 'zh' ? (
+                  <span aria-hidden="true">
+                    <span className="block">一个孩子的成长，</span>
+                    <span className="block">需要一整个村庄的托举</span>
+                  </span>
+                ) : 'A child needs a whole village to grow'}
               </h2>
-              <p className="mx-auto mt-5 max-w-2xl text-sm leading-8 text-muted-foreground md:text-base">
+              <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
                 {t(
                   '我们把影响理解为关系的变化：少年与家庭、伙伴、土地和公共生活开始形成新的连接。',
                   'We understand impact as change in relationships, connecting young people with family, peers, land, and public life.',
@@ -157,16 +174,25 @@ export default function Impact() {
           <div className="container mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)] lg:gap-20 lg:px-8">
             <ImpactReveal>
               <div className="lg:sticky lg:top-28">
-                <h2 id="growth-records-title" className="text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
-                  {t('把变化放回时间里', 'Put change back into time')}
+                <h2
+                  id="growth-records-title"
+                  aria-label={t('把变化放回时间里', 'Put change back into time')}
+                  className="text-balance font-serif text-4xl leading-tight text-[#ea6a2a] md:text-5xl"
+                >
+                  {lang === 'zh' ? (
+                    <span aria-hidden="true">
+                      <span className="block">把变化</span>
+                      <span className="block">放回时间里</span>
+                    </span>
+                  ) : 'Put change back into time'}
                 </h2>
-                <p className="mt-5 text-sm leading-8 text-muted-foreground md:text-base">
+                <p className="mt-5 text-lg leading-8 text-muted-foreground">
                   {t(
                     '未来的成长记录将围绕真实参与时间展开。加入前后的照片、本人表达和家长反馈，只在明确授权后公开。',
                     'Future growth records will follow real participation over time. Before-and-after photos, first-person reflection, and parent feedback will appear only with clear consent.',
                   )}
                 </p>
-                <div className="mt-8 rounded-2xl border border-primary/20 bg-primary/[0.045] p-5 text-xs leading-6 text-primary/80">
+                <div className="mt-8 rounded-2xl border border-primary/20 bg-primary/[0.045] p-5 text-sm leading-6 text-primary/80">
                   {t(
                     '当前状态：页面结构已就绪，等待社群身份、成长记录与公开授权数据接入。',
                     'Current status: the page structure is ready for community identity, growth records, and public-consent data.',
@@ -181,20 +207,20 @@ export default function Impact() {
                   <article className="rounded-2xl border border-border bg-card/70 p-6 md:p-8">
                     <div className="grid gap-7 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] md:items-start">
                       <div>
-                        <p className="text-xs text-primary/70">
-                          {track.id === 'youth' ? t('少年成长记录', 'Youth growth record') : t('家庭观察记录', 'Family observation record')}
+                        <p className="text-lg text-primary/70">
+                          {track.id === 'youth' ? t('青少年记录', 'Youth growth record') : t('家庭观察记录', 'Family observation record')}
                         </p>
-                        <h3 className="mt-3 font-serif text-3xl text-foreground md:text-4xl">
+                        <h3 className="mt-3 font-serif text-4xl text-[#ea6a2a]">
                           {pickLocalized(track.title, lang)}
                         </h3>
                       </div>
                       <div>
-                        <p className="text-sm leading-8 text-muted-foreground">
+                        <p className="text-lg leading-8 text-muted-foreground">
                           {pickLocalized(track.intro, lang)}
                         </p>
                         <ul className="mt-6 grid gap-3 sm:grid-cols-3" aria-label={pickLocalized(track.title, lang)}>
                           {track.observationFields.map((field) => (
-                            <li key={field.zh} className="rounded-xl bg-secondary/55 px-4 py-4 text-xs leading-6 text-foreground/78">
+                            <li key={field.zh} className="rounded-xl bg-secondary/55 px-4 py-4 text-sm leading-6 text-foreground/78">
                               {pickLocalized(field, lang)}
                             </li>
                           ))}
@@ -210,11 +236,11 @@ export default function Impact() {
 
         <section className="py-20 md:py-28" aria-labelledby="impact-actions-title">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <ImpactReveal className="max-w-3xl">
-              <h2 id="impact-actions-title" className="text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
+            <ImpactReveal className="max-w-none">
+              <h2 id="impact-actions-title" className="text-balance font-serif text-4xl leading-tight text-[#ea6a2a] md:text-5xl">
                 {t('孩子带走的，是可以继续的小行动', 'Young people take home actions they can continue')}
               </h2>
-              <p className="mt-5 max-w-2xl text-sm leading-8 text-muted-foreground md:text-base">
+              <p className="mt-5 max-w-none text-lg leading-8 text-muted-foreground md:whitespace-nowrap">
                 {t(
                   '以下行动均来自已有现场资料。它们不是完整统计，而是数据库接入前可以核验的行动类型。',
                   'Each action below comes from existing field material. They are verified action types, not a complete statistical total.',
@@ -245,9 +271,9 @@ export default function Impact() {
                         />
                       </div>
                       <figcaption className="mt-5">
-                        <h3 className="font-serif text-2xl text-foreground md:text-3xl">{pickLocalized(action.title, lang)}</h3>
-                        <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{pickLocalized(action.description, lang)}</p>
-                        <p className="mt-3 text-xs text-primary/65">{pickLocalized(action.dateLabel, lang)}</p>
+                        <h3 className="font-serif text-2xl text-foreground md:text-4xl">{pickLocalized(action.title, lang)}</h3>
+                        <p className="mt-3 max-w-xl text-lg leading-7 text-muted-foreground">{pickLocalized(action.description, lang)}</p>
+                        <p className="mt-3 text-sm text-primary/65">{pickLocalized(action.dateLabel, lang)}</p>
                       </figcaption>
                     </figure>
                   </ImpactReveal>
@@ -260,10 +286,10 @@ export default function Impact() {
         <section className="border-y border-border/80 bg-card/35 py-20 md:py-28" aria-labelledby="three-month-title">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <ImpactReveal className="max-w-3xl">
-              <h2 id="three-month-title" className="text-balance font-serif text-4xl leading-tight text-foreground md:text-5xl">
+              <h2 id="three-month-title" className="text-balance font-serif text-4xl leading-tight text-[#ea6a2a] md:text-5xl">
                 {t('三个月，让一次相遇继续发生', 'Three months let one encounter continue')}
               </h2>
-              <p className="mt-5 max-w-2xl text-sm leading-8 text-muted-foreground md:text-base">
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
                 {t(
                   '这是行动小组已经确定的持续机制。具体日期和参与数据将在每个周期确认后接入。',
                   'This is the established rhythm of the Action Group. Dates and participation data will be connected after each cycle is confirmed.',
@@ -277,8 +303,8 @@ export default function Impact() {
                 <ImpactReveal key={item.id} delay={index * 0.06} className={index === 1 ? 'md:pt-10' : index === 2 ? 'md:pt-20' : ''}>
                   <article className="relative rounded-2xl border border-border bg-background p-6 md:min-h-60 md:p-7">
                     <span className="absolute left-6 top-0 size-2.5 -translate-y-1/2 rounded-full bg-primary ring-4 ring-background" aria-hidden="true" />
-                    <h3 className="font-serif text-2xl text-foreground md:text-3xl">{pickLocalized(item.title, lang)}</h3>
-                    <p className="mt-4 text-sm leading-8 text-muted-foreground">{pickLocalized(item.description, lang)}</p>
+                    <h3 className="font-serif text-2xl text-[#ea6a2a] md:text-4xl">{pickLocalized(item.title, lang)}</h3>
+                    <p className="mt-4 text-lg leading-8 text-muted-foreground">{pickLocalized(item.description, lang)}</p>
                   </article>
                 </ImpactReveal>
               ))}
@@ -289,16 +315,16 @@ export default function Impact() {
         <section className="py-16 md:py-20">
           <div className="container mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center lg:px-8">
             <div>
-              <h2 className="max-w-2xl text-balance font-serif text-3xl leading-tight text-foreground md:text-4xl">
+              <h2 className="max-w-2xl text-balance font-serif text-4xl leading-tight text-[#ea6a2a]">
                 {t('成果需要被看见，也需要保留来路', 'Outcomes should be visible, together with their evidence')}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
+              <p className="mt-4 max-w-2xl text-lg leading-7 text-muted-foreground">
                 {t('查看竞赛、论文发表与论坛记录，以及它们对应的现场资料。', 'See competition, publication, and forum records together with their source material.')}
               </p>
             </div>
             <Link
               to="/impact/awards"
-              className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:bg-primary/90 active:translate-y-px"
+              className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-primary px-5 py-3 text-lg font-medium text-primary-foreground transition hover:bg-primary/90 active:translate-y-px"
             >
               {t('查看获奖情况', 'View recognition')}
               <ArrowRight aria-hidden="true" className="size-4" />

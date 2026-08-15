@@ -5,6 +5,13 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
 
+const chineseProgramTitleLines: Record<ActionProgramOption['id'], readonly [string, string]> = {
+  'life-experience-camp': ['阿柑少年', '生活体验营'],
+  'life-co-creation-camp': ['阿柑少年', '生活共创营'],
+  'action-group': ['阿柑少年', '行动小组'],
+  'public-projects': ['青少年', '研究计划'],
+};
+
 export default function ProgramOverviewEntry({
   program,
   index,
@@ -13,6 +20,7 @@ export default function ProgramOverviewEntry({
   index: number;
 }) {
   const { lang, t } = useLanguage();
+  const localizedTitle = pickLocalized(program.title, lang);
 
   return (
     <section
@@ -30,8 +38,15 @@ export default function ProgramOverviewEntry({
           <h2
             id={`${program.id}-title`}
             className="text-balance"
+            aria-label={localizedTitle}
           >
-            {pickLocalized(program.title, lang)}
+            {lang === 'zh' ? (
+              <span aria-hidden="true">
+                {chineseProgramTitleLines[program.id].map((line) => (
+                  <span key={line} className="programs-editorial-title-line">{line}</span>
+                ))}
+              </span>
+            ) : localizedTitle}
           </h2>
           <p className="program-overview-entry__subtitle text-balance">
             {pickLocalized(program.subtitle, lang)}
@@ -41,7 +56,7 @@ export default function ProgramOverviewEntry({
           </p>
           <Link
             to={program.detailPath}
-            aria-label={`${t('查看项目详情', 'View program details')}：${pickLocalized(program.title, lang)}`}
+            aria-label={`${t('查看项目详情', 'View program details')}：${localizedTitle}`}
             className="program-overview-entry__link cursor-target"
           >
             {t('查看项目详情', 'View program details')}

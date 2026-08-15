@@ -32,13 +32,14 @@ export const aboutMethodPhotoGroups: readonly (readonly AboutMethodPhoto[])[] = 
     photo('/images/about/methods/02/06-community-connection.webp', 1920, 1282, '青少年与成人伙伴在共创空间合影', 'Young people and adult partners gathering in a co-creation space'),
   ],
   [
-    photo('/images/about/methods/03/01-issue-workshop.webp', 1080, 973, '茶席上的植物、花朵与观察记录', 'Plants, flowers, and observation notes arranged on a tea table'),
-    photo('/images/about/methods/03/02-local-conversation.webp', 1280, 1920, '伙伴从地方食物与调味中观察生活议题', 'A participant exploring everyday questions through local food and flavors', 'center 48%'),
-    photo('/images/about/methods/03/03-farming-practice.webp', 1280, 1920, '伙伴们在田地里一起进行农耕实践', 'Participants working together during a farming practice', 'center 48%'),
-    photo('/images/about/methods/03/04-field-inquiry.webp', 1440, 1920, '茶山与农田构成的真实研究现场', 'Tea fields and farmland forming a real-world research site', 'center 52%'),
-    photo('/images/about/methods/03/05-public-question.webp', 1440, 1920, '茶树新叶呈现生态农业的细节', 'New tea leaves revealing the details of ecological agriculture', 'center 50%'),
+    photo('/images/about/methods/03/00-tieniu-aerial-overview.jpg', 2400, 1341, '铁牛村及周边柑橘园、水塘、村落与远山的鸟瞰全景', 'Aerial panorama of Tieniu Village, citrus orchards, ponds, homes, and distant mountains'),
     photo('/images/about/methods/03/06-shared-research.webp', 1080, 720, '柑橘树与果实成为田野观察对象', 'Citrus trees and fruit becoming subjects of field observation'),
     photo('/images/about/methods/03/07-group-reflection.webp', 1920, 1080, '云雾、茶山与社区构成相互连接的生态现场', 'Clouds, tea mountains, and community forming an interconnected ecological site'),
+    photo('/images/about/methods/03/04-field-inquiry.webp', 1440, 1920, '茶山与农田构成的真实研究现场', 'Tea fields and farmland forming a real-world research site', 'center 52%'),
+    photo('/images/about/methods/03/05-public-question.webp', 1440, 1920, '茶树新叶呈现生态农业的细节', 'New tea leaves revealing the details of ecological agriculture', 'center 50%'),
+    photo('/images/about/methods/03/01-issue-workshop.webp', 1080, 973, '茶席上的植物、花朵与观察记录', 'Plants, flowers, and observation notes arranged on a tea table'),
+    photo('/images/about/methods/03/03-farming-practice.webp', 1280, 1920, '伙伴们在田地里一起进行农耕实践', 'Participants working together during a farming practice', 'center 48%'),
+    photo('/images/about/methods/03/02-local-conversation.webp', 1280, 1920, '伙伴从地方食物与调味中观察生活议题', 'A participant exploring everyday questions through local food and flavors', 'center 48%'),
   ],
   [
     photo('/images/about/methods/04/01-youth-led-moment.webp', 1920, 1281, '青少年向伙伴展示自己的观察记录', 'A young person presenting their observations to the group'),
@@ -48,7 +49,6 @@ export const aboutMethodPhotoGroups: readonly (readonly AboutMethodPhoto[])[] = 
     photo('/images/about/methods/04/05-tea-harvest.webp', 1920, 1280, '青少年背着工具走向茶山实践现场', 'Young people carrying their tools toward a tea-field practice'),
     photo('/images/about/methods/04/06-co-creation-one.webp', 1920, 1282, '青少年趴在地板上记录小组讨论', 'Young people documenting their group discussion on the floor'),
     photo('/images/about/methods/04/07-co-creation-two.webp', 1920, 1280, '青少年用物件和图卡共同梳理议题', 'Young people mapping an issue together with objects and cards'),
-    photo('/images/about/methods/04/08-farming-action.webp', 1280, 1920, '青少年在田地里观察并参与劳作', 'Young people observing and taking part in work in the field', 'center 46%'),
     photo('/images/about/methods/04/09-closing-reflection.webp', 1920, 1281, '青少年一起完成一顿饭的烹饪', 'Young people cooking a shared meal together'),
   ],
 ] as const;

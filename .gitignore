@@ -28,3 +28,4 @@ __pycache__/
 *.backup
 dev.log
 server.log
+.codex-feishu-drafts/

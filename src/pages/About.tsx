@@ -99,13 +99,13 @@ const youthPartners: readonly YouthPartner[] = [
   },
 ];
 
-const adultTeamPhotos = [
-  '/images/about/adult-support/adult-support-01.webp',
-  '/images/about/adult-support/adult-support-02.webp',
-  '/images/about/adult-support/adult-support-05.webp',
-  '/images/about/adult-support/adult-support-06.webp',
-  '/images/about/adult-support/adult-support-07.webp',
-  '/images/about/adult-support/adult-support-08.webp',
+const supportTeamMembers = [
+  { photo: '/images/about/adult-support/zhao-jing.jpg', name: { zh: '赵璟', en: 'Zhao Jing' } },
+  { photo: '/images/about/adult-support/adult-support-02.webp', name: { zh: '贺超超', en: 'He Chaochao' } },
+  { photo: '/images/about/adult-support/adult-support-05.webp', name: { zh: '秋鹭', en: 'Qiu Lu' } },
+  { photo: '/images/about/adult-support/adult-support-06.webp', name: { zh: '王睿康', en: 'Wang Ruikang' } },
+  { photo: '/images/about/adult-support/adult-support-07.webp', name: { zh: '邓老师', en: 'Teacher Deng' } },
+  { photo: '/images/about/adult-support/adult-support-08.webp', name: { zh: '知予', en: 'Zhiyu' } },
 ] as const;
 
 const parentGuardianPhotos = [
@@ -382,7 +382,7 @@ function ChapterHeader({
   index: string;
   eyebrow: string;
   title: string;
-  intro: string;
+  intro?: string;
 }) {
   return (
     <header className="about-v2-section__header">
@@ -391,7 +391,7 @@ function ChapterHeader({
         <p>{eyebrow}</p>
       </div>
       <h2>{title}</h2>
-      <p>{intro}</p>
+      {intro && <p>{intro}</p>}
     </header>
   );
 }
@@ -664,37 +664,31 @@ export default function About() {
               <section className="about-v2-team-group" aria-labelledby="team-adult-title">
                 <header className="about-v2-team-group__header">
                   <span aria-hidden="true">03</span>
-                  <h3 id="team-adult-title">{t('成人支持团队｜麦昆塔教育', 'Adult Support Team | Maquinta Education')}</h3>
+                  <h3 id="team-adult-title">{t('支持团队｜麦昆塔教育', 'Support Team | Maquinta Education')}</h3>
                 </header>
 
                 <article className="about-v2-adult-support">
                   <div>
-                    <h4>{t('让青少年站到前面，成人把真实世界托稳。', 'Young people step forward while adults hold the real-world foundation steady.')}</h4>
+                    <h4>{t('让青少年站到前面，我们把真实世界托稳。', 'Young people step forward while we hold the real-world foundation steady.')}</h4>
                     <p>
                       {t(
-                        '麦昆塔社区教育板块是阿柑少年的孵化与支持平台。成人团队提供真实场景、生活支持、安全保障、课程设计、家长沟通和运营托底，让青少年可以站到前面，在真实世界中学习合作、表达与承担。',
-                        "Maquinta's community education practice incubates and supports R-Gan Junior. The adult team provides real settings, daily-life support, safeguarding, program design, parent communication, and operational foundations so young people can step forward and learn collaboration, expression, and responsibility in the real world.",
+                        '麦昆塔社区教育板块是阿柑少年的孵化与支持平台。团队负责提供真实场景、生活支持、安全保障、课程设计、家长沟通和运营托底，让青少年可以站到前面，在真实世界中学习合作、表达与承担。',
+                        "Maquinta's community education practice incubates and supports R-Gan Junior. The team is responsible for providing real settings, daily-life support, safeguarding, program design, parent communication, and operational foundations so young people can step forward and learn collaboration, expression, and responsibility in the real world.",
                       )}
                     </p>
                   </div>
                 </article>
 
-                <div className="about-v2-adult-roster" aria-label={t('成人支持团队成员名录', 'Adult support team member directory')}>
-                  {adultTeamPhotos.map((photo, index) => (
+                <div className="about-v2-adult-roster" aria-label={t('支持团队成员名录', 'Support team member directory')}>
+                  {supportTeamMembers.map((member) => (
                     <article
-                      key={photo}
-                      aria-label={t(
-                        `成人支持团队成员 ${index + 1} 档案`,
-                        `Adult support team member ${index + 1} profile`,
-                      )}
+                      key={member.photo}
+                      aria-label={t(`${member.name.zh} 档案`, `${member.name.en} profile`)}
                     >
                       <figure>
                         <img
-                          src={photo}
-                          alt={t(
-                            `成人支持团队成员 ${index + 1}`,
-                            `Adult support team member ${index + 1}`,
-                          )}
+                          src={member.photo}
+                          alt={t(member.name.zh, member.name.en)}
                           width="1067"
                           height="1600"
                           loading="lazy"
@@ -702,7 +696,7 @@ export default function About() {
                         />
                       </figure>
                       <div>
-                        <h4>？？？</h4>
+                        <h4>{t(member.name.zh, member.name.en)}</h4>
                         <p>？？？</p>
                       </div>
                     </article>
@@ -740,10 +734,6 @@ export default function About() {
               index="2.2"
               eyebrow={t('真正的成长发生在很多地方', 'Growth Happens in Many Places')}
               title={t('我们相信这些简单的事', 'What We Believe')}
-              intro={t(
-                '我们希望青少年走进自然、生活和社区，重新感受自己的身体，认识食物与土地，也在真实问题中练习观察、表达、合作和行动。',
-                'We invite young people into nature, everyday life, and community—to feel their bodies again, understand food and land, and practise observation, expression, collaboration, and action through real questions.',
-              )}
             />
 
             <AboutManualCarousel
@@ -833,8 +823,8 @@ export default function About() {
               eyebrow={t('一座社区大本营，三片生态试验田', 'One Community Home Base, Three Ecological Field Sites')}
               title={t('我们的真实场域', 'Our Living Labs')}
               intro={t(
-                '阿柑少年的成长，扎根于麦昆塔社区长期生活与产业实践形成的真实场域。这些地方不是活动背景，而是孩子走进自然、食物、劳动、产业和真实生活的入口。',
-                "R-Gan Junior is rooted in real places shaped by Maquinta's long-term community life and livelihood practices. These places are not activity backdrops; they are entry points into nature, food, work, local industry, and everyday life.",
+                '阿柑少年的成长，扎根于麦昆塔社区长期生活与产业实践形成的真实场域。',
+                "R-Gan Junior is rooted in real places shaped by Maquinta's long-term community life and livelihood practices.",
               )}
             />
 

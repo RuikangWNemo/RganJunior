@@ -1,15 +1,22 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ProgramInvitation() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
+
+  const title = t('从真实生活出发，走向共创与行动', 'From real life toward co-creation and action');
 
   return (
     <header className="programs-editorial-intro">
       <div className="programs-editorial-shell programs-editorial-intro__layout">
         <div className="programs-editorial-intro__hero">
           <div className="programs-editorial-intro__copy">
-            <h1 className="text-balance">
-              {t('从真实生活出发，走向共创与行动', 'From real life toward co-creation and action')}
+            <h1 className="text-balance" aria-label={title}>
+              {lang === 'zh' ? (
+                <span aria-hidden="true">
+                  <span className="programs-editorial-title-line">从真实生活出发，</span>
+                  <span className="programs-editorial-title-line">走向共创与行动</span>
+                </span>
+              ) : title}
             </h1>
 
             <div className="programs-editorial-intro__story">

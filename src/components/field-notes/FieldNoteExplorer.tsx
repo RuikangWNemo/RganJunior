@@ -83,7 +83,7 @@ export function FieldNoteExplorer({
                   role="tab"
                   aria-selected={selected}
                   onClick={() => onDimensionChange(item)}
-                  className={`relative min-h-11 pb-2 text-base transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background ${
+                  className={`relative min-h-11 pb-2 text-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background ${
                     selected ? 'font-medium text-primary' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -107,7 +107,7 @@ export function FieldNoteExplorer({
         </div>
 
         <div>
-          <label htmlFor="field-note-search" className="mb-2 block text-sm font-medium text-foreground">
+          <label htmlFor="field-note-search" className="mb-2 block text-lg font-medium text-foreground">
             {t('搜索文章或人物', 'Search articles or people')}
           </label>
           <div className="relative">
@@ -154,8 +154,8 @@ export function FieldNoteExplorer({
                     : 'border-border bg-card/45 text-muted-foreground hover:border-primary/30 hover:text-foreground'
                 }`}
               >
-                <span className="text-sm font-medium">{t('全部人物', 'All people')}</span>
-                <span className="mt-1 text-xs">{t(`${allNotes.length} 篇`, `${allNotes.length} articles`)}</span>
+                <span className="text-lg font-medium">{t('全部人物', 'All people')}</span>
+                <span className="mt-1 text-lg">{t(`${allNotes.length} 篇`, `${allNotes.length} articles`)}</span>
               </button>
               {people.map((person) => {
                 const selected = personSlug === person.slug;
@@ -245,13 +245,13 @@ export function FieldNoteExplorer({
       {hasError ? (
         <div className="py-20 text-center" role="alert">
           <h3 className="font-serif text-2xl text-foreground">{t('文章暂时没有加载出来', 'The articles could not be loaded')}</h3>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-md text-lg leading-8 text-muted-foreground">
             {t('请稍后再试。你的搜索与筛选条件会保留。', 'Please try again. Your search and filters will be preserved.')}
           </p>
           <button
             type="button"
             onClick={onRetry}
-            className="mt-6 min-h-11 rounded-lg border border-primary/35 px-5 text-sm font-medium text-primary transition hover:bg-primary/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="mt-6 min-h-11 rounded-lg border border-primary/35 px-5 text-lg font-medium text-primary transition hover:bg-primary/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {t('重新加载', 'Try again')}
           </button>

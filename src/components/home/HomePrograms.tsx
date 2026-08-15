@@ -54,9 +54,15 @@ export default function HomePrograms() {
           renderSlide={(program, index, active) => (
             <article className="home-programs-carousel__panel">
               <div className="home-programs-carousel__copy">
-                <p>{pickLocalized(program.duration, lang)}</p>
+                {program.duration && (
+                  <p className="home-programs-carousel__duration">
+                    {pickLocalized(program.duration, lang)}
+                  </p>
+                )}
                 <h3>{pickLocalized(program.title, lang)}</h3>
-                <p>{pickLocalized(program.body, lang)}</p>
+                <p className="home-programs-carousel__body">
+                  {pickLocalized(program.body, lang)}
+                </p>
                 <Link
                   to={program.href}
                   tabIndex={active ? 0 : -1}

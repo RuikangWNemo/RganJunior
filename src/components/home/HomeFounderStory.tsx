@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import nateFounderPhoto from '@/assets/nate-founder.jpg';
+import nateFounderPhoto from '@/assets/nate-founder-portrait.jpg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import HomeReveal from './HomeReveal';
 
@@ -15,8 +15,8 @@ export default function HomeFounderStory() {
             <img
               src={nateFounderPhoto}
               alt={t('阿柑少年发起人 Nate 的肖像', "Portrait of Nate, founder of R-Gan Junior")}
-              width="1067"
-              height="1600"
+              width="4564"
+              height="6846"
               loading="lazy"
               decoding="async"
             />

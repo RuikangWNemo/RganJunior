@@ -41,9 +41,9 @@ export const actionPrograms: ActionProgramOption[] = [
       "A two-day, one-night introduction to nature, work, and everyday life in Tieniu Village for young people and families meeting R-Gan Junior for the first time.",
     ),
     image: {
-      src: '/stories/summer-co-creation-camp-invitation/images/image-004.webp',
-      width: 1080,
-      height: 721,
+      src: '/images/programs/life-experience-camp-feet.png',
+      width: 1536,
+      height: 1024,
       alt: text('两位青少年在铁牛村菜园里体验劳动', 'Two young people working in a Tieniu Village garden'),
     },
     seoDescription: text(
@@ -64,10 +64,10 @@ export const actionPrograms: ActionProgramOption[] = [
       'Across five days and four nights, young people and families build trust through team tasks, low-carbon living, and co-creation, turning shared life into real responsibility.',
     ),
     image: {
-      src: '/stories/summer-co-creation-camp-invitation/images/image-020.webp',
-      width: 1080,
-      height: 810,
-      alt: text('青少年和家庭围坐在一起喝茶交流', 'Young people and families sitting together for tea and conversation'),
+      src: '/images/programs/life-co-creation-camp.jpg',
+      width: 5552,
+      height: 3701,
+      alt: text('生活共创营伙伴们围绕自然创作成果合影', 'Life Co-creation Camp participants gathered around a collaborative nature artwork'),
     },
     seoDescription: text(
       '了解阿柑少年五天四夜生活共创营的共同生活、小队任务、议题共创、安全照护、费用和常见问题。',
@@ -83,20 +83,20 @@ export const actionPrograms: ActionProgramOption[] = [
     title: text('阿柑少年行动小组', "R-Gan Junior Action Group"),
     subtitle: text('共同探索，耕耘社群', 'Explore together and cultivate community'),
     summary: text(
-      '以三个月为一个行动周期，把营地中的相遇带回日常。伙伴通过共学、家庭实践、主题行动和分享，持续耕耘彼此支持的社群。',
+      '在一定时长的周期内，把营地中的相遇带回日常。伙伴通过共学、家庭实践、主题行动和分享，持续耕耘彼此支持的社群。',
       'Over a three-month cycle, participants carry camp relationships into daily life through shared learning, family practice, themed action, and reflection.',
     ),
     image: {
-      src: '/stories/summer-co-creation-camp-invitation/images/image-016.webp',
-      width: 1080,
-      height: 500,
-      alt: text('阿柑少年伙伴围绕不同主题分组共创', "R-Gan Junior participants co-creating in theme groups"),
+      src: '/images/programs/action-group.jpg',
+      width: 5346,
+      height: 3564,
+      alt: text('行动小组伙伴们带着竹篮走在山林道路上', 'Action Group participants walking along a mountain road with bamboo baskets'),
     },
     seoDescription: text(
       '了解阿柑少年行动小组三个月的持续行动路径、线上共学、家庭实践、线下共创和常见问题。',
       "Learn about the R-Gan Junior Action Group's three-month pathway, online learning, family practice, in-person co-creation, and frequently asked questions.",
     ),
-    meta: text('持续 3 个月', 'A 3-month cycle'),
+    meta: text('营后持续', 'Continues after camp'),
   },
   {
     id: 'public-projects',
@@ -106,20 +106,20 @@ export const actionPrograms: ActionProgramOption[] = [
     title: text('青少年研究计划', 'Youth Research Programme'),
     subtitle: text('齐心协力，回馈社会', 'Work together and give back'),
     summary: text(
-      '面向高年级青少年，围绕土地、家庭和公共生活中的真实议题开展访谈、问卷、田野记录与写作，形成自己的公共思考。',
+      '面对感兴趣的青少年，围绕土地、家庭和公共生活中的真实议题开展访谈、问卷、田野记录与写作，形成自己的公共思考。',
       'For older students, the programme explores real questions about land, family, and public life through interviews, surveys, field notes, and writing.',
     ),
     image: {
-      src: '/archive/elements/photos/academic-forum/s16-ctb-poster-presentation.jpg',
-      width: 1080,
-      height: 720,
-      alt: text('阿柑少年在论坛展示可持续农业研究成果', "R-Gan Junior presenting sustainable agriculture research at a forum"),
+      src: '/images/programs/youth-research-programme.jpg',
+      width: 3168,
+      height: 2113,
+      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', 'Youth Research Programme team presenting their work at the CTB Research and Innovation Forum'),
     },
     seoDescription: text(
       '了解阿柑少年青少年研究计划的议题方向、研究方法、田野实践、公共成果、合作方式和常见问题。',
       "Learn about R-Gan Junior's Youth Research Programme, including topics, methods, fieldwork, public outcomes, collaboration, and frequently asked questions.",
     ),
-    meta: text('面向高年级', 'For older students'),
+    meta: text('面对感兴趣的同学', 'For interested students'),
   },
 ];
 

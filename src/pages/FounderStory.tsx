@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import nateFounderPhoto from '@/assets/nate-founder.jpg';
+import nateFounderPhoto from '@/assets/nate-founder-story-sunset.jpg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized, type LocalizedText } from '@/lib/brand';
 
@@ -48,7 +48,7 @@ const storyMoments: StoryMoment[] = [
     imageHeight: 721,
   },
   {
-    date: '2023—2024',
+    date: '2023 — 2024',
     phase: text('阿柑少年 2.0', "R-Gan Junior 2.0"),
     title: text('从一个想法，变成一次行动', 'An idea becomes a real action'),
     body: text(
@@ -82,11 +82,11 @@ const storyMoments: StoryMoment[] = [
       'Nate 与伙伴们发起生活共创营，邀请更多青少年进入森林、田野和社区。从一个人的成长项目，到可以一起生活、发现问题并继续行动的青少年产品，阿柑少年走向了新的阶段。',
       "Nate and his partners created the Life Co-creation Camp, inviting more young people into forests, fields, and community life. What began as one person's growth project became a youth experience for living together, finding real questions, and continuing to act.",
     ),
-    image: '/stories/summer-co-creation-camp-invitation/cover.jpg',
+    image: '/stories/it-takes-a-village/images/founder-story-camp-2026.jpg',
     imageAlt: text('阿柑少年生活共创营发起人站在菜园中', "R-Gan Junior Life Co-creation Camp initiators in a garden"),
-    imageWidth: 1280,
-    imageHeight: 545,
-    imagePosition: 'center 48%',
+    imageWidth: 5168,
+    imageHeight: 3448,
+    imagePosition: 'center bottom',
   },
 ];
 
@@ -147,8 +147,18 @@ export default function FounderStory() {
             <p className="founder-story-eyebrow">
               {t('发起人故事 / STORY', 'STORY / 发起人故事')}
             </p>
-            <h1 className="founder-story-hero__title">
-              {t('Nate 的阿柑少年故事', "Nate's R-Gan Junior Story")}
+            <h1
+              className="founder-story-hero__title"
+              aria-label={t('Nate的阿柑少年故事', "Nate's R-Gan Junior Story")}
+            >
+              {lang === 'zh' ? (
+                <>
+                  <span className="founder-story-hero__title-line">Nate的</span>
+                  <span className="founder-story-hero__title-line">阿柑少年故事</span>
+                </>
+              ) : (
+                "Nate's R-Gan Junior Story"
+              )}
             </h1>
             <p className="founder-story-hero__lead">
               {t(
@@ -174,8 +184,8 @@ export default function FounderStory() {
               <img
                 src={nateFounderPhoto}
                 alt={t('阿柑少年发起人 Nate 的肖像', "Portrait of Nate, founder of R-Gan Junior")}
-                width="1067"
-                height="1600"
+                width="6569"
+                height="4379"
                 loading="eager"
               />
             </div>
@@ -192,8 +202,18 @@ export default function FounderStory() {
           <div className="founder-story-shell">
             <Reveal className="founder-story-section-heading">
               <p className="founder-story-eyebrow">{t('一路走来', 'THE JOURNEY')}</p>
-              <h2 id="founder-story-timeline">
-              {t('一个想法，怎样在生活里慢慢长大', 'How an idea slowly grew through life')}
+              <h2
+                id="founder-story-timeline"
+                aria-label={t('一个想法，怎样在生活里慢慢长大', 'How an idea slowly grew through life')}
+              >
+                {lang === 'zh' ? (
+                  <>
+                    <span className="founder-story-copy-line">一个想法，</span>
+                    <span className="founder-story-copy-line">怎样在生活里慢慢长大</span>
+                  </>
+                ) : (
+                  'How an idea slowly grew through life'
+                )}
               </h2>
             </Reveal>
 
@@ -206,7 +226,16 @@ export default function FounderStory() {
                       <p>{pickLocalized(moment.phase, lang)}</p>
                     </div>
                     <div className="founder-story-moment__copy">
-                      <h3>{pickLocalized(moment.title, lang)}</h3>
+                      <h3 aria-label={pickLocalized(moment.title, lang)}>
+                        {lang === 'zh' && index === 4 ? (
+                          <>
+                            <span className="founder-story-copy-line">把自己的经历，</span>
+                            <span className="founder-story-copy-line">变成给同龄人的邀请</span>
+                          </>
+                        ) : (
+                          pickLocalized(moment.title, lang)
+                        )}
+                      </h3>
                       <p>{pickLocalized(moment.body, lang)}</p>
                     </div>
                     <figure className="founder-story-moment__visual">
@@ -243,8 +272,18 @@ export default function FounderStory() {
               <p className="founder-story-eyebrow">
                 {t('一个少年背后的一整个社区', 'A WHOLE COMMUNITY BEHIND ONE YOUNG PERSON')}
               </p>
-              <h2 id="community-support-title">
-                {t('这不是一个人长出来的故事', 'This story did not grow from one person alone')}
+              <h2
+                id="community-support-title"
+                aria-label={t('这不是一个人长出来的故事', 'This story did not grow from one person alone')}
+              >
+                {lang === 'zh' ? (
+                  <>
+                    <span className="founder-story-community__title-line">这不是</span>
+                    <span className="founder-story-community__title-line">一个人长出来的故事</span>
+                  </>
+                ) : (
+                  'This story did not grow from one person alone'
+                )}
               </h2>
               <p>
                 {t(
@@ -261,8 +300,18 @@ export default function FounderStory() {
             <Reveal className="founder-story-continuation__heading">
               <div>
                 <p className="founder-story-eyebrow">{t('从自己到更多人', 'FROM ONE JOURNEY TO MANY')}</p>
-                <h2 id="action-continuation-title">
-                  {t('把自己得到的，再传给更多人', 'Passing forward what he received')}
+                <h2
+                  id="action-continuation-title"
+                  aria-label={t('把自己得到的，再传递给更多人', 'Passing forward what he received')}
+                >
+                  {lang === 'zh' ? (
+                    <>
+                      <span className="founder-story-copy-line">把自己得到的，</span>
+                      <span className="founder-story-copy-line">再传递给更多人</span>
+                    </>
+                  ) : (
+                    'Passing forward what he received'
+                  )}
                 </h2>
               </div>
               <p>

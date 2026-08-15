@@ -23,11 +23,14 @@ describe('FounderStory', () => {
   it('tells Nate’s story as a concise five-part journey', () => {
     const { container } = renderStory();
 
-    expect(screen.getByRole('heading', { name: 'Nate 的阿柑少年故事' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Nate的阿柑少年故事' })).toBeInTheDocument();
     expect(screen.getByRole('region', { name: '一个想法，怎样在生活里慢慢长大' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '我只是想找朋友来村里玩' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '从热闹之后，回到更深的生活' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '把自己的经历，变成给同龄人的邀请' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '把自己得到的，再传递给更多人' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '故事还在真实世界里继续' })).toBeInTheDocument();
+    expect(screen.getByText('2023 — 2024')).toBeInTheDocument();
     expect(container.querySelector('.founder-story-page')).toHaveClass('founder-story-page--zh');
     expect(container.querySelectorAll('.founder-story-moment')).toHaveLength(5);
     expect(container.querySelector('.founder-story-hero__portrait img')).toHaveAttribute('src', expect.stringContaining('nate-founder'));

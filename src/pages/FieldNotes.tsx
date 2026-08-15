@@ -61,9 +61,9 @@ export default function FieldNotes() {
     <div className="field-notes-page pt-20">
       <header className="border-b border-border/80 pb-12 pt-14 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
             <div className="max-w-4xl">
-              <h1 className="text-balance font-serif text-5xl leading-[1.08] text-foreground sm:text-6xl lg:text-7xl">
+              <h1 className="text-balance font-serif text-5xl leading-[1.08] text-[#ea6a2a] sm:text-6xl lg:text-7xl">
                 {isAll ? t('全部文章', 'All Field Notes') : t('田野笔记', 'Field Notes')}
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg md:leading-9">
@@ -73,14 +73,14 @@ export default function FieldNotes() {
               </p>
             </div>
             <div className="border-l border-primary/30 pl-6">
-              <p className="font-serif text-xl leading-8 text-foreground">
+              <p className="font-serif text-lg leading-8 text-foreground lg:whitespace-nowrap">
                 {t('经验先发生，理解随后慢慢长出来。', 'Experience happens first. Understanding grows afterward.')}
               </p>
             </div>
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border/75 pt-5">
-            <p className="max-w-3xl text-xs leading-6 text-muted-foreground">
+            <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
               {t(
                 '这里只展示作者真实提交、经过审核并正式公开的社群文章。',
                 'Only real community stories submitted by their authors, reviewed, and published for everyone appear here.',
@@ -110,7 +110,7 @@ export default function FieldNotes() {
         <section className="py-16 md:py-24" aria-labelledby="featured-field-notes">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 flex items-end justify-between gap-6">
-              <h2 id="featured-field-notes" className="font-serif text-3xl text-foreground md:text-4xl">
+              <h2 id="featured-field-notes" className="font-serif text-3xl text-[#ea6a2a] md:text-4xl">
                 {t('本期精选', 'Featured this time')}
               </h2>
               <Link
@@ -163,7 +163,7 @@ export default function FieldNotes() {
       >
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 max-w-2xl">
-            <h2 id="field-note-archive" className="font-serif text-3xl text-foreground md:text-4xl">
+            <h2 id="field-note-archive" className="font-serif text-3xl text-[#ea6a2a] md:text-4xl">
               {isAll ? t('文章档案', 'Article archive') : t('沿着人物与题材继续', 'Continue through people and topics')}
             </h2>
           </div>
