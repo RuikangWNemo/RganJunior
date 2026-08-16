@@ -1,9 +1,10 @@
 /// <reference types="node" />
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const stylesheet = readFileSync(resolve(process.cwd(), 'src/index.css'), 'utf8');
+const documentTemplate = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8');
 
 const fontFaceFor = (family: string) => {
   const fontFaces: string[] = stylesheet.match(/@font-face\s*\{[^}]+\}/g) ?? [];
@@ -44,7 +45,27 @@ describe('handwriting glyph routing', () => {
     expect(hanPatchFontFace).toContain('U+4EB2'); // 亲
     expect(hanPatchFontFace).toContain('U+5706'); // 圆
     expect(stylesheet).toContain(
-      "'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Handwriting'",
+      "'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Critical', 'Qiaoqiaohua Handwriting Full'",
     );
+  });
+
+  it('loads the small critical subset first and keeps the complete font as a missing-glyph fallback', () => {
+    const criticalFontFace = fontFaceFor('Qiaoqiaohua Critical');
+    const fullFontFace = fontFaceFor('Qiaoqiaohua Handwriting Full');
+    const criticalPath = resolve(process.cwd(), 'public/fonts/qiaoqiaohua-critical-v1.woff2');
+    const fullPath = resolve(process.cwd(), 'public/fonts/qiaoqiaohua-handwriting-full-v1.woff2');
+
+    expect(criticalFontFace).toContain('/fonts/qiaoqiaohua-critical-v1.woff2');
+    expect(fullFontFace).toContain('/fonts/qiaoqiaohua-handwriting-full-v1.woff2');
+    expect(criticalFontFace).toContain('font-display: swap');
+    expect(fullFontFace).toContain('font-display: swap');
+    expect(stylesheet.indexOf("'Qiaoqiaohua Critical'")).toBeLessThan(
+      stylesheet.indexOf("'Qiaoqiaohua Handwriting Full'"),
+    );
+    expect(statSync(criticalPath).size).toBeLessThan(statSync(fullPath).size / 10);
+    expect(documentTemplate).toContain('rel="preload"');
+    expect(documentTemplate).toContain('/fonts/qiaoqiaohua-critical-v1.woff2');
+    expect(documentTemplate).not.toContain('qiaoqiaohua-handwriting-full-v1.woff2');
+    expect(stylesheet).not.toContain('fonts.googleapis.com');
   });
 });

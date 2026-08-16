@@ -168,6 +168,10 @@ export default function HeroMascotStage({ sectionRef }: HeroMascotStageProps) {
               <img
                 src={mascotFull}
                 alt={mascotAlt}
+                width={1557}
+                height={1629}
+                loading="eager"
+                decoding="async"
                 className="home-hero-mascot-image w-full"
                 draggable={false}
               />

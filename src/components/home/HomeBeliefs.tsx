@@ -13,6 +13,8 @@ export default function HomeBeliefs() {
           <figure>
             <img
               src={homeBeliefFeatureImage.src}
+              srcSet={homeBeliefFeatureImage.srcSet}
+              sizes={homeBeliefFeatureImage.sizes}
               alt={pickLocalized(homeBeliefFeatureImage.alt, lang)}
               width={homeBeliefFeatureImage.width}
               height={homeBeliefFeatureImage.height}

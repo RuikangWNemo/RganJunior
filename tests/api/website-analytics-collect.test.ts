@@ -35,6 +35,17 @@ const validEvent = {
   engagedSeconds: 0,
 };
 
+const validVital = {
+  ...validEvent,
+  eventType: 'web_vital',
+  metricName: 'LCP',
+  metricValue: 2300,
+  metricRating: 'good',
+  navigationType: 'navigate',
+  effectiveConnectionType: '4g',
+};
+delete (validVital as Partial<typeof validEvent>).engagedSeconds;
+
 describe('website analytics collection API', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -75,6 +86,32 @@ describe('website analytics collection API', () => {
     await handler({ method: 'POST', headers: {}, body: { ...validEvent, path: '/community/settings' } } as never, response);
     expect(result()).toEqual({ statusCode: 400, body: { ok: false, code: 'INVALID_WEBSITE_ANALYTICS_EVENT' } });
     expect(createSecretSupabaseClient).not.toHaveBeenCalled();
+  });
+
+  it('records only bounded Core Web Vitals through the dedicated aggregate source', async () => {
+    const { response, result } = responseHarness();
+    await handler({
+      method: 'POST',
+      headers: {
+        origin: 'https://www.rganjunior.org',
+        'user-agent': 'Mozilla/5.0',
+        'x-forwarded-for': '203.0.113.24',
+      },
+      body: validVital,
+    } as never, response);
+
+    expect(result()).toEqual({ statusCode: 202, body: { ok: true } });
+    expect(rpc).toHaveBeenNthCalledWith(2, 'record_website_analytics_web_vital_server', {
+      target_session_id: validVital.sessionId,
+      target_view_id: validVital.viewId,
+      target_path: '/about',
+      target_metric_name: 'LCP',
+      target_metric_value: 2300,
+      target_rating: 'good',
+      target_navigation_type: 'navigate',
+      target_effective_connection_type: '4g',
+    });
+    expect(JSON.stringify(rpc.mock.calls)).not.toContain('203.0.113.24');
   });
 
   it('ignores obvious automated clients without writing an event', async () => {

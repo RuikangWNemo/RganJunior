@@ -2002,6 +2002,10 @@ export type Database = {
         Args: { target_range?: string }
         Returns: Json
       }
+      get_website_analytics_web_vitals: {
+        Args: { target_range?: string }
+        Returns: Json
+      }
       has_permission: { Args: { permission_key: string }; Returns: boolean }
       initialize_field_note_collab_document_server: {
         Args: {
@@ -2307,6 +2311,19 @@ export type Database = {
           target_utm_campaign?: string
           target_utm_medium?: string
           target_utm_source?: string
+          target_view_id: string
+        }
+        Returns: boolean
+      }
+      record_website_analytics_web_vital_server: {
+        Args: {
+          target_effective_connection_type: string
+          target_metric_name: string
+          target_metric_value: number
+          target_navigation_type: string
+          target_path: string
+          target_rating: string
+          target_session_id: string
           target_view_id: string
         }
         Returns: boolean

@@ -8,13 +8,25 @@ import WebsiteAnalyticsTracker from './WebsiteAnalyticsTracker';
 const mocks = vi.hoisted(() => ({
   beaconWebsiteAnalyticsEvent: vi.fn().mockReturnValue(true),
   sendWebsiteAnalyticsEvent: vi.fn().mockResolvedValue(undefined),
+  observeWebVitals: vi.fn(),
 }));
 
-vi.mock('@/services/website-analytics', () => mocks);
+vi.mock('@/services/website-analytics/public', () => mocks);
+vi.mock('@/lib/webVitals', () => ({ observeWebVitals: mocks.observeWebVitals }));
 
 describe('WebsiteAnalyticsTracker', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.observeWebVitals.mockImplementation((report: (metric: unknown) => void) => {
+      report({
+        name: 'LCP',
+        value: 2300,
+        rating: 'good',
+        navigationType: 'navigate',
+        effectiveConnectionType: '4g',
+      });
+      return vi.fn();
+    });
     window.sessionStorage.clear();
     let nextId = 1;
     vi.spyOn(window.crypto, 'randomUUID').mockImplementation(() => (
@@ -28,12 +40,20 @@ describe('WebsiteAnalyticsTracker', () => {
         <LanguageProvider initialLanguage="zh"><WebsiteAnalyticsTracker /></LanguageProvider>
       </MemoryRouter>,
     );
-    await waitFor(() => expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledTimes(2));
     expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledWith(expect.objectContaining({
       eventType: 'page_view',
       path: '/field-notes',
       sourceCategory: 'campaign',
       utmSource: 'newsletter',
+    }));
+    expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledWith(expect.objectContaining({
+      eventType: 'web_vital',
+      path: '/field-notes',
+      metricName: 'LCP',
+      metricValue: 2300,
+      metricRating: 'good',
+      effectiveConnectionType: '4g',
     }));
     expect(JSON.stringify(mocks.sendWebsiteAnalyticsEvent.mock.calls)).not.toContain('private@example.test');
   });

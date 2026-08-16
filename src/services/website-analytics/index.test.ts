@@ -3,9 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getSupabaseClient } from '@/lib/supabase/client';
 import {
   getWebsiteAnalyticsDashboard,
-  sendWebsiteAnalyticsEvent,
   setWebsiteAnalyticsReportingStartDate,
 } from './index';
+import { sendWebsiteAnalyticsEvent } from './public';
 
 vi.mock('@/lib/supabase/client', () => ({ getSupabaseClient: vi.fn() }));
 
@@ -24,6 +24,7 @@ const dashboard = {
   popularPages: [],
   sources: [],
   recentActivity: [],
+  webVitals: [],
 };
 
 describe('website analytics service', () => {

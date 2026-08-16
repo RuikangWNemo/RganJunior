@@ -1,13 +1,36 @@
 # Task Plan
 
 ## Goal
-Build a privacy-preserving, real-data website analytics system for the Community administrator interface, including continuous anonymous collection, configurable reporting start date, live activity, traffic, engagement time, popular pages, and acquisition sources.
+Reduce cold-load delays for public-site fonts, photographs, JavaScript, and CSS while preserving the complete handwriting font as an on-demand fallback for future content.
 
 ## Current Request
-Implement the approved Supabase-first anonymous website analytics design without disturbing existing uncommitted website work.
+Implement the approved five-part loading optimization: critical handwriting subset plus complete fallback, responsive/compressed homepage images, route-level code splitting, durable asset caching, and privacy-preserving real-user performance monitoring.
 
 ## Current Phase
-Implementation and verification complete; hosted migration and application deployment remain the rollout gate for real collection.
+Implementation and local verification are complete; Supabase migration-first rollout, application deployment, and final Cloudflare header verification remain.
+
+## 2026-08-16 Cold-load Performance Optimization
+
+- [x] Phase 1 — Audit production bundles, font/image sizes, loading attributes, and live cache headers.
+- [x] Phase 2 — Confirm the two-level font fallback and approve image, code-splitting, cache, and RUM work.
+- [x] Phase 3 — Save the approved design and exact implementation plan.
+- [x] Phase 4 — Generate the critical font subset and responsive/compressed homepage images.
+- [x] Phase 5 — Split public and Community routes and remove Community/Auth code from the public startup path.
+- [x] Phase 6 — Add version-aware cache headers and privacy-preserving Core Web Vitals collection.
+- [x] Phase 7 — Run focused tests, typecheck, build-size comparison, browser verification, and document remaining deployment checks.
+
+### Errors
+
+- `npx ui-skills categories` again produced no category output and remained running; it was interrupted and the approved project UI conventions are the fallback.
+- The required brainstorming follow-on `writing-plans` skill is unavailable; `planning-with-files` is the documented substitute.
+- The first combined planning/design patch expected `# Progress Log`, but the repository uses `# Progress`; patch verification stopped the entire write. Split subsequent updates by file and exact header.
+- The first performance-asset build stopped before image generation because FontTools could not decode the WOFF2 source without the Python Brotli extension. Inspect existing WOFF2 tools/original font sources before considering a scoped dependency install.
+- The first RUM typecheck found `PerformanceNavigationTiming.activationStart` missing from the repository's DOM typings, and one service test expected the pre-RUM dashboard shape without the schema-defaulted `webVitals: []`. Use a narrow optional interface extension and update the fixture expectation.
+- Full ESLint was first run concurrently with Vite build and tried to read a Vite timestamp module after Vite removed it. This is a verification race, not a source lint result; rerun ESLint alone after build completion.
+- The `agent-browser` binary required by the dev-server verification skill is unavailable. Use the controlled in-app browser fallback and retain server-terminal evidence.
+- The first sandboxed Vite preview could not bind localhost (`EPERM`); the narrowly approved local-listen retry succeeded. The failed error-page tab was replaced rather than reused.
+- The in-app browser does not support `networkidle` in this backend and its read-only evaluation scope omits Resource Timing. Used `load`/bounded waits plus the supported page-assets inventory, DOM checks, screenshots, and console logs.
+- A post-build reload completed before the browser's load waiter attached and timed out. Direct DOM/currentSrc/resource/log checks proved the new build was active, so the same wait was not repeated.
 
 ## 2026-08-10 Community Website Analytics
 

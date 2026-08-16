@@ -85,6 +85,10 @@ select pg_temp.expect_error(
   'anonymous visitors cannot read raw analytics sessions'
 );
 select pg_temp.expect_error(
+  'select * from private.website_analytics_web_vitals',
+  'anonymous visitors cannot read raw Core Web Vitals'
+);
+select pg_temp.expect_error(
   'select public.get_website_analytics_dashboard(''7d'')',
   'anonymous visitors cannot call the analytics dashboard'
 );
@@ -138,6 +142,48 @@ select pg_temp.assert_true(
     0
   ),
   'replayed page-view UUIDs are idempotent'
+);
+
+select pg_temp.assert_true(
+  public.record_website_analytics_web_vital_server(
+    'e2000000-0000-0000-0000-000000000001',
+    'e3000000-0000-0000-0000-000000000001',
+    '/about',
+    'LCP',
+    2300,
+    'good',
+    'navigate',
+    '4g'
+  ),
+  'the service role records a bounded anonymous LCP sample'
+);
+
+select pg_temp.assert_true(
+  public.record_website_analytics_web_vital_server(
+    'e2000000-0000-0000-0000-000000000001',
+    'e3000000-0000-0000-0000-000000000001',
+    '/about',
+    'CLS',
+    0.08,
+    'good',
+    'navigate',
+    '4g'
+  ),
+  'the service role records a bounded anonymous CLS sample'
+);
+
+select pg_temp.expect_error(
+  $$select public.record_website_analytics_web_vital_server(
+    'e2000000-0000-0000-0000-000000000001',
+    'e3000000-0000-0000-0000-000000000001',
+    '/about',
+    'memory',
+    500,
+    'good',
+    'navigate',
+    '4g'
+  )$$,
+  'the service rejects fingerprint-shaped arbitrary performance metrics'
 );
 
 select pg_temp.assert_true(
@@ -205,6 +251,11 @@ select pg_temp.assert_true(
     select engaged_seconds = 20
     from private.website_analytics_page_views
     where view_id = 'e3000000-0000-0000-0000-000000000001'
+  )
+  and (
+    select count(*) = 2
+    from private.website_analytics_web_vitals
+    where view_id = 'e3000000-0000-0000-0000-000000000001'
   ),
   'idempotent views and capped engagement produce the expected totals'
 );
@@ -218,6 +269,12 @@ select pg_temp.assert_true(
   (public.get_website_analytics_dashboard('7d')->'summary'->>'viewsToday')::integer = 1
   and (public.get_website_analytics_dashboard('7d')->'summary'->>'activeNow')::integer = 1,
   'the read-only role receives aggregate traffic and live counts'
+);
+select pg_temp.assert_true(
+  jsonb_array_length(public.get_website_analytics_web_vitals('7d')) = 2
+  and public.get_website_analytics_web_vitals('7d')->0->>'name' = 'LCP'
+  and (public.get_website_analytics_web_vitals('7d')->0->>'p75')::numeric = 2300,
+  'the read-only role receives aggregate-only Core Web Vitals'
 );
 select pg_temp.expect_error(
   $$select public.set_website_analytics_reporting_start_date(current_date + 1)$$,

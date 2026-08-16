@@ -30,6 +30,10 @@ const dashboard = {
   popularPages: [{ path: '/about', views: 68, sessions: 40, averageEngagedSeconds: 82, share: 53.1 }],
   sources: [{ category: 'search' as const, label: 'www.baidu.com', views: 70, sessions: 39 }],
   recentActivity: [{ occurredAt: '2026-08-10T01:58:00.000Z', path: '/about', sourceCategory: 'search' as const, referrerHost: 'www.baidu.com', deviceCategory: 'mobile' as const, engagedSeconds: 45 }],
+  webVitals: [
+    { name: 'LCP' as const, p75: 2300, goodRatio: 78.4, samples: 64 },
+    { name: 'CLS' as const, p75: 0.08, goodRatio: 88.2, samples: 61 },
+  ],
 };
 
 describe('CommunityAdminAnalytics', () => {
@@ -48,6 +52,9 @@ describe('CommunityAdminAnalytics', () => {
     expect(await screen.findByRole('heading', { name: '此刻与今天' })).toBeInTheDocument();
     expect(screen.getByText('128')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '访问趋势' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '真实用户加载体验' })).toBeInTheDocument();
+    expect(screen.getByText('2,300 ms')).toBeInTheDocument();
+    expect(screen.getByText('0.080')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '热门页面' })).toBeInTheDocument();
     expect(screen.getByText('www.baidu.com')).toBeInTheDocument();
     expect(screen.getByText(/网站始终匿名采集/)).toBeInTheDocument();

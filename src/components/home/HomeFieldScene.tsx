@@ -107,6 +107,9 @@ function HomeSceneReel() {
     if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
   };
 
+  const previousIndex = (activeIndex - 1 + homeSceneImages.length) % homeSceneImages.length;
+  const nextIndex = (activeIndex + 1) % homeSceneImages.length;
+
   return (
     <div
       ref={reelRef}
@@ -128,6 +131,7 @@ function HomeSceneReel() {
         <div className="home-scene-reel__track">
           {homeSceneImages.map((image, index) => {
             const active = index === activeIndex;
+            const shouldLoad = active || index === previousIndex || index === nextIndex;
             return (
               <div
                 key={image.src}
@@ -140,17 +144,21 @@ function HomeSceneReel() {
                 onClick={() => {
                   if (!active) selectPhoto(index);
                 }}
-              >
+                >
                 <figure>
-                  <img
-                    src={image.src}
-                    alt={pickLocalized(image.alt, lang)}
-                    width={image.width}
-                    height={image.height}
-                    loading={index < 3 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    style={{ objectPosition: image.position }}
-                  />
+                  {shouldLoad ? (
+                    <img
+                      src={image.src}
+                      srcSet={image.srcSet}
+                      sizes={image.sizes}
+                      alt={pickLocalized(image.alt, lang)}
+                      width={image.width}
+                      height={image.height}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ objectPosition: image.position }}
+                    />
+                  ) : <span className="home-scene-reel__image-placeholder" aria-hidden="true" />}
                   {active ? (
                     <div className="home-scene-reel__hit-zones">
                       <button

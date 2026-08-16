@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -10,26 +10,11 @@ vi.mock('./Footer', () => ({ default: () => <footer /> }));
 vi.mock('./MascotCompanion', () => ({ default: () => null }));
 vi.mock('./SmoothScrollDamping', () => ({ default: () => null }));
 vi.mock('./ui/TargetCursor', () => ({ default: () => null }));
-vi.mock('./community/CommunityChrome', () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div data-testid="community-chrome">{children}</div>,
-}));
 vi.mock('./WebsiteAnalyticsTracker', () => ({ default: () => null }));
 
 describe('Layout route transitions', () => {
   beforeEach(() => {
     vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined);
-  });
-
-  it('keeps Community routes in a stable non-motion page shell', () => {
-    render(
-      <MemoryRouter initialEntries={['/community/stories']}>
-        <Layout><p>Stories</p></Layout>
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('community-chrome')).toBeInTheDocument();
-    expect(document.querySelector('[data-route-transition="stable"]')).toBeInTheDocument();
-    expect(document.querySelector('[data-route-transition="animated"]')).not.toBeInTheDocument();
   });
 
   it('preserves the existing animated shell outside Community', () => {

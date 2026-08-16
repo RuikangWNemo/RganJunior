@@ -2,6 +2,8 @@ import type { LocalizedText } from '@/lib/brand';
 
 export type HomeImage = {
   src: string;
+  srcSet?: string;
+  sizes?: string;
   width: number;
   height: number;
   alt: LocalizedText;
@@ -24,6 +26,12 @@ export type HomeProgram = {
 };
 
 const text = (zh: string, en: string): LocalizedText => ({ zh, en });
+
+const responsiveHomeScene = (src: string) => ({
+  src: `${src.slice(0, -5)}-1280.webp`,
+  srcSet: `${src.slice(0, -5)}-640.webp 640w, ${src.slice(0, -5)}-1280.webp 1280w`,
+  sizes: '(max-width: 767px) 100vw, min(100vw, 1280px)',
+});
 
 export const homeBeliefs: HomeBelief[] = [
   {
@@ -74,7 +82,9 @@ export const homeBeliefs: HomeBelief[] = [
 ];
 
 export const homeBeliefFeatureImage: HomeImage = {
-  src: '/images/home/belief-field-gardening.png',
+  src: '/images/home/belief-field-gardening-1280.webp',
+  srcSet: '/images/home/belief-field-gardening-640.webp 640w, /images/home/belief-field-gardening-1280.webp 1280w',
+  sizes: '(max-width: 767px) calc(100vw - 2rem), (max-width: 1279px) calc(100vw - 4rem), 42vw',
   width: 1536,
   height: 1024,
   alt: text('青少年和伙伴在田野中一起劳动与学习', 'Young people and partners working and learning together in the field'),
@@ -92,6 +102,8 @@ export const homePrograms: HomeProgram[] = [
     href: '/programs/life-experience-camp',
     image: {
       src: '/stories/summer-co-creation-camp-invitation/images/image-004.webp',
+      srcSet: '/stories/summer-co-creation-camp-invitation/images/image-004-640.webp 640w, /stories/summer-co-creation-camp-invitation/images/image-004.webp 1080w',
+      sizes: '(max-width: 767px) calc(100vw - 4rem), 56vw',
       width: 1080,
       height: 721,
       alt: text('两位青少年在铁牛村菜园里体验劳动', 'Two young people working in a Tieniu Village garden'),
@@ -107,7 +119,9 @@ export const homePrograms: HomeProgram[] = [
     ),
     href: '/programs/life-co-creation-camp',
     image: {
-      src: '/images/programs/life-co-creation-camp.jpg',
+      src: '/images/programs/life-co-creation-camp-1280.webp',
+      srcSet: '/images/programs/life-co-creation-camp-640.webp 640w, /images/programs/life-co-creation-camp-1280.webp 1280w',
+      sizes: '(max-width: 767px) calc(100vw - 4rem), 56vw',
       width: 5552,
       height: 3701,
       alt: text('生活共创营伙伴们围绕自然创作成果合影', 'Life Co-creation Camp participants gathered around a collaborative nature artwork'),
@@ -122,7 +136,9 @@ export const homePrograms: HomeProgram[] = [
     ),
     href: '/programs/action-group',
     image: {
-      src: '/images/programs/action-group.jpg',
+      src: '/images/programs/action-group-1280.webp',
+      srcSet: '/images/programs/action-group-640.webp 640w, /images/programs/action-group-1280.webp 1280w',
+      sizes: '(max-width: 767px) calc(100vw - 4rem), 56vw',
       width: 5346,
       height: 3564,
       alt: text('行动小组伙伴们带着竹篮走在山林道路上', 'Action Group participants walking along a mountain road with bamboo baskets'),
@@ -137,7 +153,9 @@ export const homePrograms: HomeProgram[] = [
     ),
     href: '/programs/public-projects',
     image: {
-      src: '/images/programs/youth-research-programme.jpg',
+      src: '/images/programs/youth-research-programme-1280.webp',
+      srcSet: '/images/programs/youth-research-programme-640.webp 640w, /images/programs/youth-research-programme-1280.webp 1280w',
+      sizes: '(max-width: 767px) calc(100vw - 4rem), 56vw',
       width: 3168,
       height: 2113,
       alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', 'Youth Research Programme team presenting their work at the CTB Research and Innovation Forum'),
@@ -148,63 +166,63 @@ export const homePrograms: HomeProgram[] = [
 
 export const homeSceneImages: HomeImage[] = [
   {
-    src: '/images/home/life-camp-01-arrival-road.webp',
+    ...responsiveHomeScene('/images/home/life-camp-01-arrival-road.webp'),
     width: 1920,
     height: 1440,
     alt: text('车队沿着林间小路驶入南宝山', 'A small convoy arriving in Nanbaoshan along a forest road'),
     position: 'center 50%',
   },
   {
-    src: '/images/home/life-camp-02-forest-circle.webp',
+    ...responsiveHomeScene('/images/home/life-camp-02-forest-circle.webp'),
     width: 1920,
     height: 1280,
     alt: text('青少年在森林里围坐交流', 'Young people gathering and talking in the forest'),
     position: 'center 57%',
   },
   {
-    src: '/images/home/life-camp-03-basketball.webp',
+    ...responsiveHomeScene('/images/home/life-camp-03-basketball.webp'),
     width: 1920,
     height: 1281,
     alt: text('青少年在山林球场上一起打篮球', 'Young people playing basketball together on a court in the mountains'),
     position: 'center 47%',
   },
   {
-    src: '/images/home/life-camp-04-forest-tea.webp',
+    ...responsiveHomeScene('/images/home/life-camp-04-forest-tea.webp'),
     width: 1920,
     height: 1280,
     alt: text('小队徒步后坐在林间喝茶休息', 'The group resting and sharing tea during a forest hike'),
     position: 'center 52%',
   },
   {
-    src: '/images/home/life-camp-05-tea-craft.webp',
+    ...responsiveHomeScene('/images/home/life-camp-05-tea-craft.webp'),
     width: 1920,
     height: 1441,
     alt: text('青少年在茶厂里一起学习制茶', 'Young people learning to make tea together at the tea workshop'),
     position: 'center 50%',
   },
   {
-    src: '/images/home/life-camp-06-indoor-co-creation.webp',
+    ...responsiveHomeScene('/images/home/life-camp-06-indoor-co-creation.webp'),
     width: 1920,
     height: 1280,
     alt: text('青少年在室内聆听分享并共同创作', 'Young people listening and creating together indoors'),
     position: 'center 52%',
   },
   {
-    src: '/images/home/life-camp-07-tea-field.webp',
+    ...responsiveHomeScene('/images/home/life-camp-07-tea-field.webp'),
     width: 1920,
     height: 1280,
     alt: text('青少年与陪伴者在茶山上观察茶树', 'A young person and mentor observing tea plants on the mountain'),
     position: 'center 51%',
   },
   {
-    src: '/images/home/life-camp-08-tea-harvest.webp',
+    ...responsiveHomeScene('/images/home/life-camp-08-tea-harvest.webp'),
     width: 1920,
     height: 1280,
     alt: text('青少年完成采茶后在茶厂合影', 'Young people posing together with their tea harvest'),
     position: 'center 53%',
   },
   {
-    src: '/images/home/life-camp-09-closing-gathering.webp',
+    ...responsiveHomeScene('/images/home/life-camp-09-closing-gathering.webp'),
     width: 1920,
     height: 1280,
     alt: text('生活共创营的青少年与家庭在收官时合影', 'Young people and families gathering for a closing photograph'),

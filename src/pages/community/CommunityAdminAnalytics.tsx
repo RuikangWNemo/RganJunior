@@ -5,6 +5,7 @@ import {
   ChartLine,
   Clock3,
   Eye,
+  Gauge,
   RefreshCw,
   Route,
   Signal,
@@ -34,6 +35,7 @@ import {
   type AnalyticsDashboard,
   type AnalyticsRange,
   type AnalyticsSourceCategory,
+  type WebVitalName,
 } from '@/lib/websiteAnalytics';
 import {
   getWebsiteAnalyticsDashboard,
@@ -53,6 +55,14 @@ const sourceLabels: Record<AnalyticsSourceCategory, { zh: string; en: string }> 
   social: { zh: '社交媒体', en: 'Social' },
   referral: { zh: '外部链接', en: 'Referral' },
   campaign: { zh: '推广活动', en: 'Campaign' },
+};
+
+const webVitalLabels: Record<WebVitalName, { zh: string; en: string }> = {
+  LCP: { zh: '最大内容绘制', en: 'Largest Contentful Paint' },
+  CLS: { zh: '累积布局偏移', en: 'Cumulative Layout Shift' },
+  INP: { zh: '交互到下一次绘制', en: 'Interaction to Next Paint' },
+  FCP: { zh: '首次内容绘制', en: 'First Contentful Paint' },
+  TTFB: { zh: '首字节时间', en: 'Time to First Byte' },
 };
 
 const chartConfig = {
@@ -148,6 +158,10 @@ export default function CommunityAdminAnalytics() {
     ? { hour: '2-digit', minute: '2-digit' }
     : { month: 'short', day: 'numeric' }).format(new Date(value));
 
+  const formatWebVital = (name: WebVitalName, value: number) => (
+    name === 'CLS' ? value.toFixed(3) : `${number.format(Math.round(value))} ms`
+  );
+
   return (
     <CommunitySurface
       eyebrow="Website pulse"
@@ -191,6 +205,36 @@ export default function CommunityAdminAnalytics() {
               <MetricCard icon={UsersRound} label={t('今日访问会话', 'Sessions today')} value={number.format(dashboard.summary.sessionsToday)} note={t('短期匿名浏览会话', 'Short-lived anonymous visits')} />
               <MetricCard icon={Clock3} label={t('平均有效停留', 'Average engagement')} value={formatEngagedSeconds(dashboard.summary.averageEngagedSecondsToday, lang)} note={t('仅计算页面可见且聚焦的时间', 'Visible and focused time only')} />
             </div>
+          </section>
+
+          <section aria-labelledby="analytics-performance-title" className="rounded-[1.45rem] border border-primary/10 bg-white/45 p-4 sm:p-6">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary"><Gauge className="size-5" aria-hidden="true" /></span>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary/50">Real-user performance</p>
+                  <h2 id="analytics-performance-title" className="font-serif text-2xl text-primary">{t('真实用户加载体验', 'Real-user loading experience')}</h2>
+                </div>
+              </div>
+              <p className="max-w-md text-xs leading-6 text-foreground/45">{t('仅显示匿名聚合的第 75 百分位、优秀占比和样本数，不保留可识别访问明细。', 'Anonymous aggregates only: p75, good share, and sample count. No identifiable visit details are retained.')}</p>
+            </div>
+            {dashboard.webVitals.length ? (
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                {dashboard.webVitals.map((metric) => (
+                  <article key={metric.name} className="rounded-2xl border border-primary/[0.09] bg-white/65 p-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <strong className="font-serif text-lg text-primary">{metric.name}</strong>
+                      <span className="rounded-full bg-emerald-500/10 px-2 py-1 text-[0.66rem] font-semibold text-emerald-700">{number.format(metric.goodRatio)}% good</span>
+                    </div>
+                    <p className="mt-4 text-2xl font-semibold tabular-nums text-primary">{formatWebVital(metric.name, metric.p75)}</p>
+                    <p className="mt-1 text-xs text-foreground/50">p75 · {webVitalLabels[metric.name][lang]}</p>
+                    <p className="mt-3 text-[0.7rem] text-foreground/40">{t(`${metric.samples} 个匿名样本`, `${metric.samples} anonymous samples`)}</p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-5"><CommunityEmptyState title={t('等待首次真实用户性能数据', 'Awaiting the first real-user performance sample')} description={t('部署后，支持 PerformanceObserver 的公开页面访问会逐步形成这里的聚合指标。', 'After deployment, supported public-page visits will gradually populate these aggregates.')} /></div>
+            )}
           </section>
 
           <section aria-labelledby="analytics-trend-title" className="rounded-[1.45rem] border border-primary/10 bg-white/45 p-4 sm:p-6">

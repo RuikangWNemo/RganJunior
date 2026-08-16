@@ -70,20 +70,31 @@ export default async function handler(request: ApiRequest, response: ApiResponse
     }
 
     const event = parsed.data;
-    const { error } = await client.rpc('record_website_analytics_event_server', {
-      target_event_type: event.eventType,
-      target_session_id: event.sessionId,
-      target_view_id: event.viewId,
-      target_path: event.path,
-      target_source_category: event.sourceCategory,
-      target_referrer_host: event.referrerHost || undefined,
-      target_utm_source: event.utmSource || undefined,
-      target_utm_medium: event.utmMedium || undefined,
-      target_utm_campaign: event.utmCampaign || undefined,
-      target_device_category: event.deviceCategory,
-      target_language: event.language,
-      target_engaged_seconds: event.engagedSeconds,
-    });
+    const { error } = event.eventType === 'web_vital'
+      ? await client.rpc('record_website_analytics_web_vital_server', {
+          target_session_id: event.sessionId,
+          target_view_id: event.viewId,
+          target_path: event.path,
+          target_metric_name: event.metricName,
+          target_metric_value: event.metricValue,
+          target_rating: event.metricRating,
+          target_navigation_type: event.navigationType,
+          target_effective_connection_type: event.effectiveConnectionType,
+        })
+      : await client.rpc('record_website_analytics_event_server', {
+          target_event_type: event.eventType,
+          target_session_id: event.sessionId,
+          target_view_id: event.viewId,
+          target_path: event.path,
+          target_source_category: event.sourceCategory,
+          target_referrer_host: event.referrerHost || undefined,
+          target_utm_source: event.utmSource || undefined,
+          target_utm_medium: event.utmMedium || undefined,
+          target_utm_campaign: event.utmCampaign || undefined,
+          target_device_category: event.deviceCategory,
+          target_language: event.language,
+          target_engaged_seconds: event.engagedSeconds,
+        });
     if (error) throw error;
     return sendJson(response, 202, { ok: true });
   } catch (error) {

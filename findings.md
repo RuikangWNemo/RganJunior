@@ -1,5 +1,33 @@
 # Findings
 
+## 2026-08-16 Cold-load Performance Optimization
+
+- The complete `qiaoqiaohua-handwriting.woff2` is 6,236,124 bytes and is the global Chinese body/heading font. It has no unicode range, so any Chinese text can trigger the complete download.
+- The approved font architecture uses distinct families: a generated critical subset first and the complete font second. Missing glyphs fall through to the complete family, preserving handwriting for future content without loading 6.24 MB on current homepage visits.
+- Production CSS begins with a render-blocking Google Fonts `@import`; remove this external dependency and rely on same-origin handwriting assets plus system Chinese fallbacks.
+- The local production build currently emits a 2.01 MB main JavaScript bundle (615.56 KB gzip) and 421.95 KB main CSS bundle (68.41 KB gzip). `App.tsx` synchronously imports every public and Community route.
+- The homepage scene carousel marks three below-fold 1920 px images eager; those three total 1,740,432 bytes. The first programme image adds 147,218 bytes.
+- Homepage imagery has no `srcset` or `picture` usage. Several lazy homepage assets are 1.5–3.2 MB and can still be fetched early because inactive carousel slides remain mounted near the viewport.
+- Live HTML, hashed JS/CSS, fonts, and images currently return `Cache-Control: public, max-age=14400, must-revalidate`; hashed build assets should be immutable and fonts should use versioned filenames before long-lived caching.
+- Existing anonymous website analytics already provides the collection path. Core Web Vitals should extend that privacy-preserving event model rather than introduce another vendor or identifier.
+- The existing event schema is a strict union-shaped object limited to `page_view` and `engagement`; adding `web_vital` requires a discriminated schema or nullable metric fields, collector validation/RPC changes, and focused privacy tests.
+- `WebsiteAnalyticsTracker` already owns one anonymous session ID and one route-scoped view ID, making it the correct lifecycle boundary for Web Vitals. Community paths are rejected by `normalizeAnalyticsPath` before collection.
+- `Layout` currently owns both public and Community shells; route splitting should move the stable Community shell and its tests into the lazy Community entry while simplifying `Layout` to public routes only.
+- `HomeFadeCarousel` renders every slide and is shared by Home Programs and About. Its generic render callback can expose a `shouldLoad` flag for only active/adjacent media without changing slide semantics.
+- `HomeFieldScene` already gives each `figure` a fixed height and hides inactive figures in the editorial layout, so unloaded slides can use a request-free placeholder without layout shift.
+- Repository state was clean at task start; `.codegraph/` is absent. FontTools 4.61.0 and `cwebp` are available locally for deterministic asset generation.
+- The generated critical handwriting subset is 101 KB with 497 cmap entries versus 6.24 MB and 45,221 cmap entries in the complete fallback font.
+- Generated 640px homepage scene images are 30–86 KB each and 1280px candidates are 71–281 KB. The converted belief image is 72/202 KB instead of the 3.2 MB PNG; the founder portrait is 27/78 KB instead of the 1.5 MB JPEG.
+- Route splitting reduced the main production JavaScript from 2.01 MB / 615.56 KB gzip to 722.51 KB / 241.02 KB gzip (about 61% less compressed transfer). Community now loads as a separate 196.28 KB gzip chunk.
+- Main CSS remains 68.43 KB gzip because the global stylesheet still contains all Community selectors; this is a secondary optimization opportunity after the approved work, not a blocker for the current large font/JS/image gains.
+- The existing analytics database keys page views by `view_id`, so Web Vitals can use `(view_id, metric_name)` as an idempotent key and a foreign key with cascade retention rather than introducing another visitor identifier.
+- No dedicated collector API unit test currently exists. New RUM coverage must therefore include schema/tracker/service/dashboard tests plus SQL regression; collector branching can be covered with a focused handler test if the existing API mock primitives are practical.
+- Browser cold-load evidence showed lazy-loading still fetched content within Chromium's look-ahead distance. With active/adjacent mounting this was bounded, but high-DPR selection still chose explicit 1920/4K candidates. Cap homepage scene/program candidates at the generated 1280 WebP to guarantee the optimized transfer even when loaded early.
+- Final browser evidence: Chinese homepage requested only `qiaoqiaohua-critical-v1.woff2` plus Tanuki and did not request the complete font; About Chinese requested `qiaoqiaohua-handwriting-full-v1.woff2`, proving missing-glyph fallback.
+- Homepage loaded one main script and no Community chunk. About navigation added only its route chunks; `/community/auth` loaded `CommunityRoutes` and rendered the stable Community/Auth shell.
+- Browser DOM showed 3 mounted scene images and 6 request-free placeholders. Actual `currentSrc` values for scene/program photographs were capped at generated 1280 WebP files after the final candidate adjustment.
+- Home, About, and Community Auth had meaningful content, no framework error overlay, and no warning/error console logs in production preview.
+
 ## 2026-08-10 Community Website Analytics
 
 - `.codegraph/` is absent, so repository discovery used direct file inspection.
