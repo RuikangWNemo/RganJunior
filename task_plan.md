@@ -4,10 +4,17 @@
 Reduce cold-load delays for public-site fonts, photographs, JavaScript, and CSS while preserving the complete handwriting font as an on-demand fallback for future content.
 
 ## Current Request
-Implement the approved five-part loading optimization: critical handwriting subset plus complete fallback, responsive/compressed homepage images, route-level code splitting, durable asset caching, and privacy-preserving real-user performance monitoring.
+Finalize PR #6, apply every pending committed migration before the application, merge the verified branch into `main`, deploy to Vercel Production, and verify the public site, cache headers, analytics, and runtime health.
 
 ## Current Phase
-Implementation and local verification are complete; Supabase migration-first rollout, application deployment, and final Cloudflare header verification remain.
+Production database rollout is complete and verified; the exact PR head is being prepared for merge and Vercel Production deployment.
+
+## 2026-08-16 Cold-load Production Rollout
+
+- [x] Phase 1 — Confirm clean Git state, PR #6 scope, review state, checks, and deploy target.
+- [x] Phase 2 — Apply and verify all three pending Supabase migrations in timestamp order; run security/performance advisors.
+- [ ] Phase 3 — Merge PR #6 to `main` and deploy the exact merged commit to Vercel Production. **In progress**
+- [ ] Phase 4 — Verify production routes, font/image/cache behavior, analytics write path, and runtime errors.
 
 ## 2026-08-16 Cold-load Performance Optimization
 
@@ -20,6 +27,15 @@ Implementation and local verification are complete; Supabase migration-first rol
 - [x] Phase 7 — Run focused tests, typecheck, build-size comparison, browser verification, and document remaining deployment checks.
 
 ### Errors
+
+- The first post-migration connector verification batched concurrent multi-statement/special-privilege SQL and returned `INVALID_ARGUMENT` for both smoke and metadata calls; migration history and Advisors still succeeded. Retry with simple single read-only metadata queries, and defer end-to-end writes to the deployed API path.
+- The first Supabase CLI authorization opened Chrome but the browser profile was not signed in and redirected to the Supabase sign-in page; check the other available browser session before asking the user to authenticate.
+- The linked Supabase CLI cannot list or push remote migrations because no CLI access token is present; use the authenticated Supabase connector and verify its tracked migration records after each apply.
+- A second multi-file planning patch again included an invalid trailing hunk marker and wrote nothing; switch to one patch per file for rollout logging.
+- The bounded Supabase changelog `curl` could not resolve `supabase.com` inside the sandbox; current migration guidance was obtained from the authenticated Supabase documentation connector instead.
+- The Vercel connector can identify the linked project but listing team deployments returns 403 for the `rganjuniors-projects` scope; use the Ready Git-integrated Preview, GitHub deployment status, and public production verification without relinking or exposing a token.
+- The first production-rollout findings patch contained an invalid multi-file hunk separator and wrote nothing; retry with exact independent file hunks.
+- Direct web-tool opens of the Supabase changelog and migration guide failed because the Markdown endpoints were rejected/unsupported; use the Supabase documentation connector and a bounded official changelog fetch instead.
 
 - `npx ui-skills categories` again produced no category output and remained running; it was interrupted and the approved project UI conventions are the fallback.
 - The required brainstorming follow-on `writing-plans` skill is unavailable; `planning-with-files` is the documented substitute.

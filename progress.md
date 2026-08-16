@@ -1,5 +1,28 @@
 # Progress
 
+## 2026-08-16 — Cold-load production rollout
+
+- User authorized final PR confirmation, migration-first deployment, and production verification.
+- Local branch `codex/cold-load-performance` is clean and matches `origin/codex/cold-load-performance` at `fea11be`.
+- PR #6 exists as a draft; hosted checks, Supabase migration state, and Vercel project/deployment state are being inspected before any production mutation.
+- Vercel linkage resolves to the expected `rgan-junior-roots-main` Vite project with `npm run build`, `dist`, and Node 24.x cloud settings.
+- Current Supabase guidance confirms remote schema changes should be deployed from committed migration files and tracked in migration history; this rollout will apply the committed Web Vitals migration once and verify its recorded state.
+- PR #6 is open, draft, mergeable, and still points at exact head `fea11be`; GitHub Actions CI run 9 completed successfully.
+- The PR's Vercel Preview is Ready.
+- Supabase project `rganjunior` is `ACTIVE_HEALTHY`, but remote migration history stops at `20260809092359`; both the base website analytics migration and the Web Vitals extension are absent and must be applied in timestamp order.
+- Local migration order also contains pending `20260810022751_community_realtime_application_review.sql` between the analytics base and Web Vitals migration. It is already committed on `origin/main`, so its schema state and safety must be verified before applying all pending migrations.
+- Read-only hosted schema checks confirm the analytics tables/RPCs, Web Vitals table/RPC, realtime broadcast triggers, and realtime policy are all absent. The migration history reflects the actual schema; this is not a history-only mismatch.
+- Supabase CLI device authorization initially waited because the connected Chrome profile was not signed into Supabase; the alternate browser session was checked without inspecting credentials or session storage.
+- Supabase CLI device authorization completed through the existing signed-in Supabase session.
+- `supabase migration list --linked` shows exact local/remote alignment through `20260809092359` and only three pending versions: `20260810022104`, `20260810022751`, and `20260816122500`.
+- `supabase db push --dry-run --linked` confirmed it would apply exactly those three files in timestamp order and nothing else.
+- Production `supabase db push --linked --yes` completed successfully for all three migrations. The only notice was the expected first-time `drop policy if exists` skip before creating the realtime policy.
+- Post-push migration listing confirms local and remote versions now match through `20260816122500`.
+- Security Advisor reports only the pre-existing project setting for leaked-password protection; it found no new table/RLS/function warning from these migrations.
+- Performance Advisor reports informational existing unindexed/unused indexes and the newly created analytics indexes as unused before traffic, which is expected immediately after creation.
+- Simple hosted metadata checks confirm all three analytics tables, the Web Vitals table, the Community realtime trigger, and the realtime read policy now exist.
+- Function ACL checks confirm only `service_role` can write page views/Web Vitals, `anon` cannot call the write or aggregate RPCs, and `authenticated` retains permission-gated aggregate access.
+
 ## 2026-08-16 Cold-load Performance Optimization
 
 - Completed source/build/live-header audit and received approval for all five optimization areas.

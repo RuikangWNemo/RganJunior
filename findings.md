@@ -1,5 +1,22 @@
 # Findings
 
+## 2026-08-16 — Cold-load production rollout
+
+- The approved atomic order is database migration and verification first, then merge/deploy the matching application commit, then production smoke/cache/runtime checks.
+- The repository is linked to Vercel through `.vercel/project.json`; Vercel CLI 54.12.2 and Supabase CLI 2.67.1 are installed.
+- Supabase and Vercel connectors are available, so hosted reads and controlled mutations should prefer those purpose-built integrations over exposing credentials in shell commands.
+- The linked Vercel project is a root-level Vite deployment using `npm run build`, `dist`, and Node 24.x; production should target this existing project rather than creating or relinking anything.
+- Official Supabase migration guidance requires migration-file history to remain synchronized and recommends one coordinated remote migration push at a time.
+- PR #6 is mergeable with successful CI and a Ready Vercel Preview; its exact head is `fea11be39b5e071b043ec2ff976f5597319fdc7b`.
+- Hosted Supabase migration history has not applied `20260810022104_website_analytics.sql`, so `20260816122500_website_analytics_web_vitals.sql` cannot be safely applied alone. The rollout must include every pending committed migration in timestamp order after confirming no unrelated pending schema change.
+- The complete local pending set is currently `20260810022104_website_analytics.sql`, `20260810022751_community_realtime_application_review.sql`, and `20260816122500_website_analytics_web_vitals.sql`. A normal migration push would apply all three; verify whether the realtime migration's effects already exist before making production changes.
+- Hosted schema inspection confirms all three migrations are genuinely unapplied. The existing membership-application RPC is present, while the realtime policy/triggers are not, matching the expected pre-`20260810022751` state.
+- The local Supabase CLI lacks an access token. Official Supabase MCP guidance states `apply_migration` is the tracked DDL path, but its generated version behavior must be verified against `list_migrations` so repository history does not silently drift.
+- Official device authorization restored the CLI path, avoiding MCP-generated migration versions. The linked dry-run proves the production push will preserve all three repository timestamps and apply no unrelated migration.
+- The migration push succeeded atomically in repository order. No statement failed and no repair or history rewrite was needed.
+- Migration history is fully aligned after the push. Supabase Security Advisor introduced no schema-security finding; the remaining leaked-password warning is a separate Auth project setting. Newly created analytics indexes appear as unused only because production traffic has not reached them yet.
+- Hosted object and ACL verification matches the intended security boundary: raw tables remain private/RLS-protected, server writes are service-role only, anonymous aggregate access is denied, and the authenticated aggregate RPC remains available for its internal permission check.
+
 ## 2026-08-16 Cold-load Performance Optimization
 
 - The complete `qiaoqiaohua-handwriting.woff2` is 6,236,124 bytes and is the global Chinese body/heading font. It has no unicode range, so any Chinese text can trigger the complete download.
