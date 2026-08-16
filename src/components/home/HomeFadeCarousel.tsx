@@ -19,7 +19,7 @@ type CarouselControls = {
 
 type HomeFadeCarouselProps<T> = {
   items: readonly T[];
-  renderSlide: (item: T, index: number, active: boolean) => ReactNode;
+  renderSlide: (item: T, index: number, active: boolean, shouldLoad: boolean) => ReactNode;
   renderNavigation?: (controls: CarouselControls) => ReactNode;
   ariaLabel: string;
   previousLabel: string;
@@ -128,6 +128,8 @@ export default function HomeFadeCarousel<T>({
   };
 
   const navigation = renderNavigation?.({ activeIndex, goTo });
+  const previousIndex = (activeIndex - 1 + items.length) % items.length;
+  const nextIndex = (activeIndex + 1) % items.length;
 
   return (
     <div
@@ -154,6 +156,7 @@ export default function HomeFadeCarousel<T>({
         <div className="home-fade-carousel__slides">
           {items.map((item, index) => {
             const active = index === activeIndex;
+            const shouldLoad = active || index === previousIndex || index === nextIndex;
             return (
               <div
                 key={index}
@@ -161,7 +164,7 @@ export default function HomeFadeCarousel<T>({
                 data-active={active ? 'true' : 'false'}
                 aria-hidden={!active}
               >
-                {renderSlide(item, index, active)}
+                {renderSlide(item, index, active, shouldLoad)}
               </div>
             );
           })}

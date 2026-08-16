@@ -40,11 +40,19 @@ export default async function handler(request: ApiRequest, response: ApiResponse
       if (!analyticsRanges.includes(range as (typeof analyticsRanges)[number])) {
         return sendJson(response, 400, { ok: false, code: 'INVALID_ANALYTICS_RANGE' });
       }
-      const { data, error } = await context.supabase.rpc('get_website_analytics_dashboard', {
-        target_range: range,
+      const [dashboardResult, webVitalsResult] = await Promise.all([
+        context.supabase.rpc('get_website_analytics_dashboard', { target_range: range }),
+        context.supabase.rpc('get_website_analytics_web_vitals', { target_range: range }),
+      ]);
+      if (dashboardResult.error) throw dashboardResult.error;
+      if (webVitalsResult.error) throw webVitalsResult.error;
+      if (!dashboardResult.data || typeof dashboardResult.data !== 'object' || Array.isArray(dashboardResult.data)) {
+        throw new Error('WEBSITE_ANALYTICS_INVALID_RESPONSE');
+      }
+      const parsed = analyticsDashboardSchema.safeParse({
+        ...dashboardResult.data,
+        webVitals: webVitalsResult.data,
       });
-      if (error) throw error;
-      const parsed = analyticsDashboardSchema.safeParse(data);
       if (!parsed.success) throw new Error('WEBSITE_ANALYTICS_INVALID_RESPONSE');
       return sendJson(response, 200, { ok: true, dashboard: parsed.data });
     }

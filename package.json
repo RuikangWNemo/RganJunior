@@ -7,6 +7,7 @@
     "node": "24.x"
   },
   "scripts": {
+    "assets:performance": "node scripts/build-performance-assets.mjs",
     "dev": "vite",
     "dev:collab": "tsx scripts/community-collaboration-server.ts",
     "prebuild": "npm run build:auth-email-runtime",

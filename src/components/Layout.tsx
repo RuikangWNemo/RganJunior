@@ -7,7 +7,6 @@ import Footer from './Footer';
 import MascotCompanion from './MascotCompanion';
 import SmoothScrollDamping from './SmoothScrollDamping';
 import TargetCursor from './ui/TargetCursor';
-import CommunityChrome from './community/CommunityChrome';
 import WebsiteAnalyticsTracker from './WebsiteAnalyticsTracker';
 
 const routeShellVariants = {
@@ -44,7 +43,6 @@ export default function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const reducedMotion = useReducedMotion();
   const isHome = location.pathname === '/';
-  const isCommunityRoute = location.pathname.startsWith('/community');
   const isEditorialRoute =
     location.pathname.startsWith('/about') ||
     location.pathname === '/story' ||
@@ -54,8 +52,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const showMascotCompanion =
     !isHome &&
     !isEditorialRoute &&
-    location.pathname !== '/join' &&
-    !isCommunityRoute;
+    location.pathname !== '/join';
 
   useEffect(() => {
     if (!location.hash) {
@@ -78,13 +75,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     return () => window.clearTimeout(timeoutId);
   }, [location.pathname, location.hash, reducedMotion]);
 
-  const routeContent = isCommunityRoute ? (
-    <div className="route-stage flex-1">
-      <main className="route-page-shell community-route-page-shell flex-1" data-route-transition="stable">
-        {children}
-      </main>
-    </div>
-  ) : (
+  const routeContent = (
     <div className="route-stage flex-1">
       <AnimatePresence initial={false} mode="popLayout">
         <motion.main
@@ -104,21 +95,15 @@ export default function Layout({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className={`min-h-screen flex flex-col ${isCommunityRoute ? 'community-route-shell' : ''}`}>
-      {!isCommunityRoute ? <WebsiteAnalyticsTracker /> : null}
-      {!isCommunityRoute && <SmoothScrollDamping />}
+    <div className="min-h-screen flex flex-col">
+      <WebsiteAnalyticsTracker />
+      <SmoothScrollDamping />
       <BrandHead />
-      {isCommunityRoute ? (
-        <CommunityChrome>{routeContent}</CommunityChrome>
-      ) : (
-        <>
-          <Navbar hideLogo={isHome} />
-          {routeContent}
-          <Footer />
-          {showMascotCompanion && <MascotCompanion />}
-          <TargetCursor spinDuration={2.6} hideDefaultCursor={false} parallaxOn />
-        </>
-      )}
+      <Navbar hideLogo={isHome} />
+      {routeContent}
+      <Footer />
+      {showMascotCompanion && <MascotCompanion />}
+      <TargetCursor spinDuration={2.6} hideDefaultCursor={false} parallaxOn />
     </div>
   );
 }

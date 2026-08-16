@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
-
 @font-face {
   font-family: 'TanukiMagic Web';
   src: url('/fonts/tanuki-magic-latin.woff2') format('woff2');
@@ -43,7 +41,7 @@
   --community-forest-soft: 143 20% 34%;
   --community-orange: 22 78% 49%;
   --community-amber: 37 84% 57%;
-  --community-display: 'Noto Serif SC', 'TanukiMagic Web', serif;
+  --community-display: 'TanukiMagic Web', 'Qiaoqiaohua Critical', 'Qiaoqiaohua Handwriting Full', 'Songti SC', 'STSong', serif;
 }
 
 .community-route-shell {
@@ -2579,8 +2577,16 @@
 }
 
 @font-face {
-  font-family: 'Qiaoqiaohua Handwriting';
-  src: url('/fonts/qiaoqiaohua-handwriting.woff2') format('woff2');
+  font-family: 'Qiaoqiaohua Critical';
+  src: url('/fonts/qiaoqiaohua-critical-v1.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Qiaoqiaohua Handwriting Full';
+  src: url('/fonts/qiaoqiaohua-handwriting-full-v1.woff2') format('woff2');
   font-style: normal;
   font-weight: 300;
   font-display: swap;
@@ -2592,8 +2598,8 @@
 
 @layer base {
   :root {
-    --font-handwriting-sans: 'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Handwriting', 'Noto Sans SC', 'Inter', system-ui, sans-serif;
-    --font-handwriting-serif: 'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Handwriting', 'Noto Serif SC', 'Georgia', serif;
+    --font-handwriting-sans: 'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Critical', 'Qiaoqiaohua Handwriting Full', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+    --font-handwriting-serif: 'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Critical', 'Qiaoqiaohua Handwriting Full', 'Songti SC', 'STSong', 'Georgia', serif;
     --home-hero-orange: 20 82% 54%;
     --home-hero-action-orange: var(--home-hero-orange);
     --home-hero-action-orange-hover: var(--home-hero-orange);
@@ -7318,6 +7324,12 @@
   filter: saturate(0.92) contrast(1.03);
   transform: translateZ(0) scale(1.01);
   transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-scene-reel__image-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .home-scene-reel__slide[data-active='true']:hover img {

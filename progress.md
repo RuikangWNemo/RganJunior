@@ -1,5 +1,52 @@
 # Progress
 
+## 2026-08-16 — Cold-load production rollout
+
+- User authorized final PR confirmation, migration-first deployment, and production verification.
+- Local branch `codex/cold-load-performance` is clean and matches `origin/codex/cold-load-performance` at `fea11be`.
+- PR #6 exists as a draft; hosted checks, Supabase migration state, and Vercel project/deployment state are being inspected before any production mutation.
+- Vercel linkage resolves to the expected `rgan-junior-roots-main` Vite project with `npm run build`, `dist`, and Node 24.x cloud settings.
+- Current Supabase guidance confirms remote schema changes should be deployed from committed migration files and tracked in migration history; this rollout will apply the committed Web Vitals migration once and verify its recorded state.
+- PR #6 is open, draft, mergeable, and still points at exact head `fea11be`; GitHub Actions CI run 9 completed successfully.
+- The PR's Vercel Preview is Ready.
+- Supabase project `rganjunior` is `ACTIVE_HEALTHY`, but remote migration history stops at `20260809092359`; both the base website analytics migration and the Web Vitals extension are absent and must be applied in timestamp order.
+- Local migration order also contains pending `20260810022751_community_realtime_application_review.sql` between the analytics base and Web Vitals migration. It is already committed on `origin/main`, so its schema state and safety must be verified before applying all pending migrations.
+- Read-only hosted schema checks confirm the analytics tables/RPCs, Web Vitals table/RPC, realtime broadcast triggers, and realtime policy are all absent. The migration history reflects the actual schema; this is not a history-only mismatch.
+- Supabase CLI device authorization initially waited because the connected Chrome profile was not signed into Supabase; the alternate browser session was checked without inspecting credentials or session storage.
+- Supabase CLI device authorization completed through the existing signed-in Supabase session.
+- `supabase migration list --linked` shows exact local/remote alignment through `20260809092359` and only three pending versions: `20260810022104`, `20260810022751`, and `20260816122500`.
+- `supabase db push --dry-run --linked` confirmed it would apply exactly those three files in timestamp order and nothing else.
+- Production `supabase db push --linked --yes` completed successfully for all three migrations. The only notice was the expected first-time `drop policy if exists` skip before creating the realtime policy.
+- Post-push migration listing confirms local and remote versions now match through `20260816122500`.
+- Security Advisor reports only the pre-existing project setting for leaked-password protection; it found no new table/RLS/function warning from these migrations.
+- Performance Advisor reports informational existing unindexed/unused indexes and the newly created analytics indexes as unused before traffic, which is expected immediately after creation.
+- Simple hosted metadata checks confirm all three analytics tables, the Web Vitals table, the Community realtime trigger, and the realtime read policy now exist.
+- Function ACL checks confirm only `service_role` can write page views/Web Vitals, `anon` cannot call the write or aggregate RPCs, and `authenticated` retains permission-gated aggregate access.
+
+## 2026-08-16 Cold-load Performance Optimization
+
+- Completed source/build/live-header audit and received approval for all five optimization areas.
+- Recorded the font constraint: current-page subset first, complete handwriting font on demand for any missing or future glyph.
+- Selected homepage-scoped critical glyph extraction, two responsive WebP widths for large homepage photographs, route-level `React.lazy`, scoped Community providers, Vercel cache headers, and first-party Web Vitals events.
+- Confirmed clean Git state, no CodeGraph index, available FontTools/cwebp tooling, and the recurring unusable `ui-skills` category command.
+- First combined planning/design patch failed atomically because the progress-file header was stale; split the updates and continued without repeating the same write.
+- Committed the approved design alone as `b53c646` (`docs: design cold-load performance optimization`).
+- Inspected the current strict analytics event schema, tracker lifecycle, collector/admin split, database RPC surface, and `Layout` Community/public test boundary before writing the implementation plan.
+- Added `docs/plans/2026-08-16-cold-load-performance-implementation-plan.md` with exact asset, font, image, routing, cache, RUM, test, rollout, and rollback steps. Product implementation is starting.
+- Added the deterministic performance-asset generator and versioned the complete font filename. Its first run stopped at WOFF2 decoding because the local FontTools Python lacks Brotli; no generated images were written because font generation runs first.
+- Installed Brotli only under `/private/tmp/rgan-font-brotli`, generated the 101 KB critical subset and responsive WebP variants, then connected the two-level font stack, critical preload, responsive sources, lazy loading, and active/adjacent carousel mounting.
+- Font routing and homepage focused tests pass (7/7); application TypeScript and `git diff --check` also pass after the asset integration.
+- Split all non-home public routes with `React.lazy`, moved the complete Auth/Community route tree into `CommunityRoutes.tsx`, simplified public `Layout`, and separated the anonymous analytics sender from the Supabase-backed administrator service.
+- Added immutable `/assets` and versioned-font caching plus stale-while-revalidate public image caching in `vercel.json`; added static regression coverage that excludes HTML/catch-all immutable rules.
+- Route/cache focused tests pass (9/9), application TypeScript passes, and an intermediate production build succeeds. Main JS is now 241.02 KB gzip versus the 615.56 KB baseline; Community is a separate 196.28 KB gzip chunk.
+- Added privacy-bounded LCP/CLS/INP/FCP/TTFB collection, a private cascade-retained Supabase table and service/admin RPCs, aggregate admin API merging, p75/good-ratio/sample UI, database types, and SQL/API/component regression coverage.
+- RUM app/API typechecks pass and 21 focused tests pass. The React best-practices review kept route and feature-level dynamic imports, first-navigation-only observer setup, and reduced repeated carousel work.
+- Full Vitest passes 279/279 and the complete production build succeeds at 242.35 KB gzip main JS. The parallel full-lint run hit a transient Vite timestamp-file race and will be rerun serially; `agent-browser` is absent, so browser verification will use the app-controlled fallback.
+- Serial full ESLint completes with 0 errors and 9 pre-existing Fast Refresh warnings; Hero focused tests and `git diff --check` pass after removing the React 18-only fetch-priority warning.
+- Browser production-preview verification passed for Home, About navigation, Community Auth, route chunks, responsive `currentSrc`, critical-font-only Chinese home, complete-font missing-glyph fallback, DOM content, framework overlays, and console errors.
+- Final production build main JS is 726.49 KB / 242.28 KB gzip versus the 2.01 MB / 615.56 KB gzip baseline. Main CSS is 68.49 KB gzip. Critical font is 103,564 bytes versus the 6,236,124-byte complete fallback.
+- Local implementation is complete. Do not deploy the app before applying `20260816122500_website_analytics_web_vitals.sql`; after deployment, verify Vercel/Cloudflare final cache headers and incoming aggregate samples.
+
 ## 2026-08-10 Community Website Analytics
 
 - Inspected the application router, Community shell/chrome, administrator surfaces, route metadata, permission guards, current services, migration permissions, repository state, and production analytics footprint.

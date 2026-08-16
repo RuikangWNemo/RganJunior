@@ -9,6 +9,11 @@ export type AnalyticsRange = (typeof analyticsRanges)[number];
 export type AnalyticsSourceCategory = 'direct' | 'search' | 'social' | 'referral' | 'campaign';
 export type AnalyticsDeviceCategory = 'desktop' | 'tablet' | 'mobile' | 'unknown';
 export type AnalyticsLanguage = 'zh' | 'en' | 'other';
+export const webVitalNames = ['LCP', 'CLS', 'INP', 'FCP', 'TTFB'] as const;
+export type WebVitalName = (typeof webVitalNames)[number];
+export type WebVitalRating = 'good' | 'needs-improvement' | 'poor';
+export type AnalyticsNavigationType = 'navigate' | 'reload' | 'back_forward' | 'prerender' | 'other';
+export type AnalyticsConnectionType = 'slow-2g' | '2g' | '3g' | '4g' | 'unknown';
 
 const searchHosts = [
   'baidu.com',
@@ -128,8 +133,7 @@ export function isAnalyticsBot(userAgent: string) {
 
 const nullableShortText = (maxLength: number) => z.string().trim().min(1).max(maxLength).nullable();
 
-export const websiteAnalyticsEventSchema = z.object({
-  eventType: z.enum(['page_view', 'engagement']),
+const websiteAnalyticsEventBaseSchema = z.object({
   sessionId: z.string().uuid(),
   viewId: z.string().uuid(),
   path: z.string().min(1).max(300),
@@ -140,16 +144,37 @@ export const websiteAnalyticsEventSchema = z.object({
   utmCampaign: nullableShortText(120),
   deviceCategory: z.enum(['desktop', 'tablet', 'mobile', 'unknown']),
   language: z.enum(['zh', 'en', 'other']),
-  engagedSeconds: z.number().int().min(0).max(30),
 }).strict().superRefine((event, context) => {
   if (normalizeAnalyticsPath(event.path) !== event.path) {
     context.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid public analytics path', path: ['path'] });
   }
-  if (event.eventType === 'page_view' && event.engagedSeconds !== 0) {
-    context.addIssue({ code: z.ZodIssueCode.custom, message: 'Page views cannot include engagement', path: ['engagedSeconds'] });
-  }
-  if (event.eventType === 'engagement' && event.engagedSeconds < 1) {
-    context.addIssue({ code: z.ZodIssueCode.custom, message: 'Engagement must be positive', path: ['engagedSeconds'] });
+});
+
+const websiteAnalyticsSharedShape = websiteAnalyticsEventBaseSchema.innerType().shape;
+
+export const websiteAnalyticsEventSchema = z.discriminatedUnion('eventType', [
+  z.object({
+    ...websiteAnalyticsSharedShape,
+    eventType: z.literal('page_view'),
+    engagedSeconds: z.literal(0),
+  }).strict(),
+  z.object({
+    ...websiteAnalyticsSharedShape,
+    eventType: z.literal('engagement'),
+    engagedSeconds: z.number().int().min(1).max(30),
+  }).strict(),
+  z.object({
+    ...websiteAnalyticsSharedShape,
+    eventType: z.literal('web_vital'),
+    metricName: z.enum(webVitalNames),
+    metricValue: z.number().finite().min(0).max(120_000),
+    metricRating: z.enum(['good', 'needs-improvement', 'poor']),
+    navigationType: z.enum(['navigate', 'reload', 'back_forward', 'prerender', 'other']),
+    effectiveConnectionType: z.enum(['slow-2g', '2g', '3g', '4g', 'unknown']),
+  }).strict(),
+]).superRefine((event, context) => {
+  if (normalizeAnalyticsPath(event.path) !== event.path) {
+    context.addIssue({ code: z.ZodIssueCode.custom, message: 'Invalid public analytics path', path: ['path'] });
   }
 });
 
@@ -199,6 +224,12 @@ export const analyticsDashboardSchema = z.object({
     deviceCategory: z.enum(['desktop', 'tablet', 'mobile', 'unknown']),
     engagedSeconds: z.number().int().nonnegative(),
   })),
+  webVitals: z.array(z.object({
+    name: z.enum(webVitalNames),
+    p75: z.number().nonnegative(),
+    goodRatio: z.number().min(0).max(100),
+    samples: z.number().int().nonnegative(),
+  })).default([]),
 });
 
 export type AnalyticsDashboard = z.infer<typeof analyticsDashboardSchema>;

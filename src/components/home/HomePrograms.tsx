@@ -51,7 +51,7 @@ export default function HomePrograms() {
               ))}
             </div>
           )}
-          renderSlide={(program, index, active) => (
+          renderSlide={(program, _index, active, shouldLoad) => (
             <article className="home-programs-carousel__panel">
               <div className="home-programs-carousel__copy">
                 {program.duration && (
@@ -74,15 +74,19 @@ export default function HomePrograms() {
               </div>
               {program.image && (
                 <figure>
-                  <img
-                    src={program.image.src}
-                    alt={pickLocalized(program.image.alt, lang)}
-                    width={program.image.width}
-                    height={program.image.height}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    style={{ objectPosition: program.image.position }}
-                  />
+                  {shouldLoad ? (
+                    <img
+                      src={program.image.src}
+                      srcSet={program.image.srcSet}
+                      sizes={program.image.sizes}
+                      alt={pickLocalized(program.image.alt, lang)}
+                      width={program.image.width}
+                      height={program.image.height}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ objectPosition: program.image.position }}
+                    />
+                  ) : null}
                 </figure>
               )}
             </article>

@@ -60,4 +60,30 @@ describe('website analytics privacy helpers', () => {
     expect(websiteAnalyticsEventSchema.safeParse({ ...base, path: '/community' }).success).toBe(false);
     expect(websiteAnalyticsEventSchema.safeParse({ ...base, engagedSeconds: 31 }).success).toBe(false);
   });
+
+  it('accepts only coarse bounded Core Web Vitals', () => {
+    const vital = {
+      eventType: 'web_vital' as const,
+      sessionId: 'e2000000-0000-4000-8000-000000000001',
+      viewId: 'e3000000-0000-4000-8000-000000000001',
+      path: '/about',
+      sourceCategory: 'direct' as const,
+      referrerHost: null,
+      utmSource: null,
+      utmMedium: null,
+      utmCampaign: null,
+      deviceCategory: 'mobile' as const,
+      language: 'zh' as const,
+      metricName: 'LCP' as const,
+      metricValue: 2300,
+      metricRating: 'good' as const,
+      navigationType: 'navigate' as const,
+      effectiveConnectionType: '4g' as const,
+    };
+
+    expect(websiteAnalyticsEventSchema.safeParse(vital).success).toBe(true);
+    expect(websiteAnalyticsEventSchema.safeParse({ ...vital, metricName: 'memory' }).success).toBe(false);
+    expect(websiteAnalyticsEventSchema.safeParse({ ...vital, metricValue: 120_001 }).success).toBe(false);
+    expect(websiteAnalyticsEventSchema.safeParse({ ...vital, query: 'private=value' }).success).toBe(false);
+  });
 });

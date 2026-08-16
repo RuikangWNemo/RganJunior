@@ -90,6 +90,10 @@ describe('homepage editorial refresh', () => {
     const { container } = renderIndex();
 
     expect(screen.getByRole('img', { name: '车队沿着林间小路驶入南宝山' })).toBeInTheDocument();
+    const firstScene = screen.getByRole('img', { name: '车队沿着林间小路驶入南宝山' });
+    expect(firstScene).toHaveAttribute('loading', 'lazy');
+    expect(firstScene).toHaveAttribute('srcset', expect.stringContaining('life-camp-01-arrival-road-640.webp 640w'));
+    expect(container.querySelectorAll('.home-scene-reel__image-placeholder')).toHaveLength(6);
     const rightPreview = screen.getByAltText('青少年在森林里围坐交流');
     fireEvent.click(rightPreview);
     expect(rightPreview.closest('.home-scene-reel__slide')).toHaveAttribute('data-active', 'true');
@@ -114,6 +118,9 @@ describe('homepage editorial refresh', () => {
     expect(screen.getByRole('button', { name: '查看青少年研究计划' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '上一个项目' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '下一个项目' })).not.toBeInTheDocument();
+    const activeProgramImage = screen.getByRole('img', { name: '两位青少年在铁牛村菜园里体验劳动' });
+    expect(activeProgramImage).toHaveAttribute('loading', 'lazy');
+    expect(activeProgramImage).toHaveAttribute('srcset', expect.stringContaining('image-004-640.webp 640w'));
   });
 
   it('keeps the English field headline and camp data localized', () => {

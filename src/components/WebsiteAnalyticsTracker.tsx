@@ -14,10 +14,11 @@ import {
   type AnalyticsAcquisition,
   type WebsiteAnalyticsEvent,
 } from '@/lib/websiteAnalytics';
+import { observeWebVitals } from '@/lib/webVitals';
 import {
   beaconWebsiteAnalyticsEvent,
   sendWebsiteAnalyticsEvent,
-} from '@/services/website-analytics';
+} from '@/services/website-analytics/public';
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -66,6 +67,7 @@ export default function WebsiteAnalyticsTracker() {
   const location = useLocation();
   const { lang } = useLanguage();
   const languageRef = useRef(lang);
+  const performanceRecordedRef = useRef(false);
   languageRef.current = lang;
 
   useEffect(() => {
@@ -82,13 +84,33 @@ export default function WebsiteAnalyticsTracker() {
       ...acquisition,
       deviceCategory: analyticsDeviceCategory(window.navigator.userAgent),
       language: analyticsLanguage(languageRef.current),
-    } satisfies Omit<WebsiteAnalyticsEvent, 'eventType' | 'engagedSeconds'>;
+    };
 
-    void sendWebsiteAnalyticsEvent({
+    const pageViewReady = sendWebsiteAnalyticsEvent({
       ...shared,
       eventType: 'page_view',
       engagedSeconds: 0,
-    }).catch(() => undefined);
+    }).then(() => true).catch(() => false);
+
+    const stopVitals = performanceRecordedRef.current
+      ? undefined
+      : observeWebVitals((metric) => {
+          const event: WebsiteAnalyticsEvent = {
+            ...shared,
+            eventType: 'web_vital',
+            metricName: metric.name,
+            metricValue: metric.value,
+            metricRating: metric.rating,
+            navigationType: metric.navigationType,
+            effectiveConnectionType: metric.effectiveConnectionType,
+          };
+          void pageViewReady.then((ready) => {
+            if (!ready) return;
+            if (document.visibilityState === 'hidden' && beaconWebsiteAnalyticsEvent(event)) return;
+            void sendWebsiteAnalyticsEvent(event).catch(() => undefined);
+          });
+        });
+    performanceRecordedRef.current = true;
 
     let active = document.visibilityState === 'visible' && document.hasFocus();
     let lastMark = window.performance.now();
@@ -130,6 +152,7 @@ export default function WebsiteAnalyticsTracker() {
 
     return () => {
       window.clearInterval(intervalId);
+      stopVitals?.();
       flush(true);
       active = false;
       document.removeEventListener('visibilitychange', handleVisibility);

@@ -38,6 +38,9 @@ const dashboard = {
   sources: [],
   recentActivity: [],
 };
+const webVitals = [
+  { name: 'LCP', p75: 2300, goodRatio: 78.4, samples: 64 },
+];
 
 describe('Community website analytics API', () => {
   beforeEach(() => {
@@ -46,11 +49,16 @@ describe('Community website analytics API', () => {
   });
 
   it('checks read permission and returns a strict aggregate payload', async () => {
-    rpc.mockResolvedValue({ data: dashboard, error: null });
+    rpc.mockImplementation((name: string) => Promise.resolve(
+      name === 'get_website_analytics_dashboard'
+        ? { data: dashboard, error: null }
+        : { data: webVitals, error: null },
+    ));
     const { response, result } = responseHarness();
     await handler({ method: 'POST', headers: { authorization: 'Bearer test' }, body: { action: 'dashboard', range: '7d' } } as never, response);
-    expect(result()).toEqual({ statusCode: 200, body: { ok: true, dashboard } });
+    expect(result()).toEqual({ statusCode: 200, body: { ok: true, dashboard: { ...dashboard, webVitals } } });
     expect(requirePermission).toHaveBeenCalledWith(expect.anything(), 'analytics.read');
+    expect(rpc).toHaveBeenCalledWith('get_website_analytics_web_vitals', { target_range: '7d' });
   });
 
   it('requires manage permission for reporting-date changes', async () => {
