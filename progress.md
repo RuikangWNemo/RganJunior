@@ -646,3 +646,33 @@
 - Connected to the available authenticated browser surface and confirmed the workflow must keep copied API keys out of tool output and chat while allowing the user-authorized local/Vercel configuration.
 - Completed the browser-control safety/readiness check; dashboard interactions will use visible DOM state and avoid emitting secret values.
 - Selected the user's available Chrome profile as the next authenticated surface after the in-app browser lacked a Supabase session.
+
+# 2026-08-24 Community Membership Authorization System
+
+- Started discovery for the requested Community authorization-system completion.
+- Loaded and followed the brainstorming and file-planning workflows; implementation is gated on a short design review and user approval.
+- Confirmed the worktree was clean and CodeGraph is not available in this repository.
+- Created a scoped discovery/design/implementation/verification plan while preserving prior project history.
+- Located the existing RBAC schema, permission services, admin routes, seed-role definitions, and database authorization tests.
+- Confirmed the major missing product surface is member/role administration, while core mutation RPC wrappers already exist.
+- Reviewed the RBAC tables, privilege computation, audit triggers, seeded role matrix, and existing super-admin invariants.
+- Reviewed role mutation implementations, RLS exposure, audit-log access, and the existing authorization regression tests.
+- Located existing membership suspend/restore flows and identified the missing consolidated member/account-role read model.
+- Completed read-only discovery. The remaining product decision is whether administrator appointment is super-admin-only or delegable to ordinary admins.
+- User confirmed super-admin-only administrator appointment and a backend-first implementation sequence.
+- User approved the full backend-first design.
+- Saved the approved design to `docs/plans/2026-08-24-community-membership-authorization-design.md`.
+- Committed the approved design as `ee9dca3`.
+- Created the backend-first implementation plan after confirming current Supabase docs, CLI capabilities, remote migration alignment, and baseline security advisors.
+- Created the generated Community access-management migration and focused database regression test.
+- Remote transaction compile check passed for the migration; corrected the test to verify audit output through its authorized RPC instead of the private table.
+- Full migration-plus-regression test passed in a remote rollback transaction.
+- Applied remote migration `20260824060239_community_access_management`, reran its rollback-safe regression test successfully, and reviewed security/performance advisors.
+- Applied and verified remote migration `20260824060455_community_access_cursor_index`; local and remote migration filenames are aligned.
+- Added authoritative generated RPC types, typed authorization/member service wrappers, membership suspend/restore wrappers, and six passing service tests.
+- Built the Community access-management page, route, navigation, responsive roster, role controls, membership actions, super-admin governance, permission matrix, audit view, and confirmation/error states.
+- Applied and verified `20260824062512_community_access_role_invariants`, closing direct baseline-role and membership-workflow bypasses.
+- Focused frontend/service/navigation verification passes: 5 files and 18 tests, app typecheck, and scoped ESLint.
+- Full project verification passes: 81 test files / 291 tests, backend/API and app typechecks, lint with no errors, and production build.
+- Browser verification passed for unauthenticated route protection, meaningful rendering, console/error-overlay health, and 1280px/390px no-overflow behavior.
+- Reviewed the final worktree: no whitespace errors, no secret/service-role references in changed implementation files, and local migration names match remote history.

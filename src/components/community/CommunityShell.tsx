@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { BookOpenText, ChartLine, ClipboardCheck, FileCheck2, Home, MessageCircle, Newspaper, Settings, ShieldCheck, Sparkles, Tags, Users } from 'lucide-react';
+import { BookOpenText, ChartLine, ClipboardCheck, FileCheck2, Home, KeyRound, MessageCircle, Newspaper, Settings, ShieldCheck, Sparkles, Tags, Users } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
@@ -26,6 +26,7 @@ export default function CommunityShell() {
   const { permissions } = useAuth();
   const { t, copy } = useCommunityUi();
   const adminLinks = [
+    permissions.some((permission) => ['users.read', 'users.manage', 'memberships.manage', 'roles.read', 'role_assignments.manage'].includes(permission)) ? { to: '/community/admin/access', label: copy('accessControl'), icon: KeyRound } : null,
     permissions.some((permission) => ['field_notes.review', 'field_notes.approve', 'field_notes.publish'].includes(permission)) ? { to: '/community/admin/field-notes', label: copy('editorialDesk'), icon: FileCheck2 } : null,
     permissions.includes('memberships.review') ? { to: '/community/admin/applications', label: copy('applications'), icon: ClipboardCheck } : null,
     permissions.includes('people.manage') ? { to: '/community/admin/identities', label: copy('identities'), icon: Tags } : null,

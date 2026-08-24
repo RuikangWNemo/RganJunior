@@ -118,3 +118,18 @@ export async function reviewMinorIdentity(
   throwIfSupabaseError(error, 'MINOR_IDENTITY_REVIEW_FAILED');
   return data;
 }
+
+export async function suspendCommunityMembership(userId: string, reason: string) {
+  const { error } = await getSupabaseClient().rpc('suspend_community_membership', {
+    target_user_id: userId,
+    target_reason: reason,
+  });
+  throwIfSupabaseError(error, 'COMMUNITY_MEMBERSHIP_SUSPEND_FAILED');
+}
+
+export async function restoreCommunityMembership(userId: string) {
+  const { error } = await getSupabaseClient().rpc('restore_community_membership', {
+    target_user_id: userId,
+  });
+  throwIfSupabaseError(error, 'COMMUNITY_MEMBERSHIP_RESTORE_FAILED');
+}

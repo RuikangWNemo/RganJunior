@@ -67,4 +67,16 @@ describe('CommunityShell', () => {
     );
     expect(screen.getByRole('link', { name: '网站统计' })).toHaveAttribute('href', '/community/admin/analytics');
   });
+
+  it('shows member access administration for the relevant permission family', () => {
+    authState.permissions = ['users.read'];
+    render(
+      <MemoryRouter initialEntries={['/community']}>
+        <LanguageProvider initialLanguage="zh">
+          <Routes><Route path="/community" element={<CommunityShell />}><Route index element={<p>Dashboard</p>} /></Route></Routes>
+        </LanguageProvider>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole('link', { name: '会员与授权' })).toHaveAttribute('href', '/community/admin/access');
+  });
 });

@@ -23,4 +23,10 @@ describe('getCommunityRouteMeta', () => {
     expect(getCommunityRouteMeta('/community/application').back?.to).toBe('/');
     expect(getCommunityRouteMeta('/community/guardian-consent').back?.to).toBe('/community/application');
   });
+
+  it('keeps access administration connected to the Community home', () => {
+    const access = getCommunityRouteMeta('/community/admin/access');
+    expect(access.back?.to).toBe('/community');
+    expect(access.crumbs.map((crumb) => crumb.label.en)).toEqual(['Community', 'Admin', 'Members & access']);
+  });
 });

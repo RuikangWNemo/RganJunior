@@ -1929,6 +1929,13 @@ export type Database = {
           updated_at: string
         }[]
       }
+      get_my_authorization_context: {
+        Args: never
+        Returns: {
+          is_super_admin: boolean
+          role_slugs: string[]
+        }[]
+      }
       get_my_community_profile: {
         Args: never
         Returns: {
@@ -2030,6 +2037,41 @@ export type Database = {
       join_practice_session: {
         Args: { target_session_id: number }
         Returns: string
+      }
+      list_community_access_roles: {
+        Args: never
+        Returns: {
+          description: string
+          id: number
+          is_active: boolean
+          is_reserved: boolean
+          is_system: boolean
+          name: string
+          permissions: Json
+          slug: string
+        }[]
+      }
+      list_community_access_users: {
+        Args: {
+          before_registered_at?: string
+          before_user_id?: string
+          membership_statuses?: string[]
+          page_size?: number
+          role_slugs?: string[]
+          search_query?: string
+        }
+        Returns: {
+          account_status: string
+          display_name: string
+          member_since: string
+          membership_status: string
+          registered_at: string
+          role_assignments: Json
+          suspended_at: string
+          suspension_reason: string
+          user_id: string
+          username: string
+        }[]
       }
       list_community_identity_labels_admin: {
         Args: never

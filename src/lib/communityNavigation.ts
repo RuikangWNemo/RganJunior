@@ -35,6 +35,7 @@ const labels = {
   identities: { zh: '身份与星球', en: 'Identities & planets' },
   reports: { zh: '举报处理', en: 'Reports' },
   analytics: { zh: '网站统计', en: 'Website analytics' },
+  access: { zh: '会员与授权', en: 'Members & access' },
 } as const satisfies Record<string, LocalizedText>;
 
 const rootCrumb = { to: '/community', label: labels.community };
@@ -93,6 +94,9 @@ export function getCommunityRouteMeta(pathname: string): CommunityRouteMeta {
   }
   if (pathname === '/community/admin/analytics') {
     return { section: labels.analytics, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.admin }, { label: labels.analytics }] };
+  }
+  if (pathname === '/community/admin/access') {
+    return { section: labels.access, back: { to: '/community', label: labels.community }, crumbs: [rootCrumb, { label: labels.admin }, { label: labels.access }] };
   }
 
   return { section: labels.community, crumbs: [{ label: labels.community }] };

@@ -668,3 +668,63 @@
 - Current Vercel guidance supports sensitive variables for Preview/Production and development-variable pulls for local use. Existing `.env.local` must be preserved rather than overwritten wholesale.
 - The selected in-app browser is not authenticated to Supabase and redirects the API Keys URL to the sign-in screen. Because the user did not require a specific browser, try an available Chrome session before requesting manual sign-in.
 - An available Chrome extension session exists for the user's last-used `Ruikang` profile. Use it next because it may already hold the Supabase and Vercel dashboard sessions.
+
+# 2026-08-24 Community Membership Authorization Discovery
+
+- The repository has no `.codegraph/` directory, so CodeGraph is intentionally skipped for this task.
+- The worktree was clean at discovery start; recent commits include the Community release candidate and subsequent public-site refinements.
+- The project is a Vite/React/TypeScript application with a `supabase/` directory and existing Community/server work.
+- Existing root planning files contain prior Community authorization, onboarding, application-status, collaboration, and migration history; this task appends scoped notes rather than overwriting that history.
+- Security target: super-admin role changes and member management must be validated by server/RPC/RLS boundaries, with the UI treated only as an interaction layer.
+- The authorization foundation already exists: `roles`, `permissions`, `role_permissions`, user-role assignment RPCs, `get_my_permissions`, and protected Community routes are present.
+- Database tests already assert two key invariants: an ordinary admin cannot grant `super_admin`, and the final active super admin cannot revoke itself.
+- Seed data defines `admin` and `super_admin`; admin currently receives all defined permissions, while database guards reserve super-admin assignment, system-role changes, and sensitive permission changes.
+- Existing Community admin surfaces cover applications, identities, moderation, field notes, and analytics, but the route map shows no dedicated member/role-administration screen.
+- Existing client services include `memberships` and `permissions`; the next inspection should determine whether the necessary list/assignment RPCs are complete but simply lack UI, or need migration hardening.
+- Existing verification commands include focused Vitest, backend/API and app typechecks, lint, build, and linked Supabase pgTAP tests.
+- `src/services/permissions/index.ts` already wraps role creation, permission replacement, user-role assignment, and role revocation RPCs, but has no role/permission/member listing functions for an administration UI.
+- `src/pages/community/CommunityRoutes.tsx` has protected routes for application review, identities, reports, editorial review, and analytics; no users/members/roles route exists.
+- `CommunityShell` builds admin navigation from granular permissions and likewise has no membership/role-management entry.
+- `AuthContext` refreshes the current user's effective permissions from `get_my_permissions`; role changes for another user can be reflected on focus/realtime if the relevant tables are published, but immediate privilege-change propagation needs explicit verification.
+- Community admin pages currently live outside `CommunityRequireMember`; any authenticated user with the required permission can enter them, which is compatible with permission-first RBAC but should be kept intentional.
+- The RBAC migration defines `roles`, `permissions`, `role_permissions`, and `user_roles`, plus append-only private audit logs and audit triggers.
+- Effective authorization is computed from database role assignments, including expiry; `super_admin` is treated as an all-permissions override.
+- The database already protects immutable system fields and the final-super-admin invariant with triggers, and audit records role/user-role mutations.
+- Seeded roles are `registered_user`, `community_member`, `facilitator`, `editor`, `admin`, and `super_admin`; `admin` and `super_admin` are seeded with all current permissions, but RPC guards restrict sensitive role operations.
+- Relevant dedicated permissions already exist: `users.read`, `users.manage`, `roles.read`, `roles.manage`, `role_assignments.manage`, `memberships.manage`, and `audit.read`.
+- The role mutation RPCs are implemented as private `SECURITY DEFINER` functions behind public `SECURITY INVOKER` wrappers after advisor hardening; they explicitly check `auth.uid()` and permission keys.
+- Only a current super admin may assign/revoke `super_admin` or alter system-role permissions. Ordinary admins may create scoped custom roles and assign roles that do not exceed their own effective permissions.
+- Authorized users can currently select `roles`, `permissions`, `role_permissions`, and `user_roles` through RLS; profiles are available with `users.read`/`users.manage`. This can support read models, but exposing account email or aggregated role data may still need a dedicated RPC.
+- Role assignment/revocation and permission changes are already written to private audit logs readable through `get_audit_logs` with `audit.read`.
+- The pgTAP workflow proves direct self-assignment is blocked, ordinary admins cannot grant super-admin or sensitive custom-role permissions, and the final active super-admin cannot be removed.
+- Membership suspension/restoration is already implemented and pgTAP-tested: suspension removes `community_member`/`facilitator` roles and member-only access; restoration reinstates the member role when eligible.
+- The generated client types expose `suspend_community_membership` and `restore_community_membership`, but `src/services/memberships` does not yet wrap them.
+- `list_community_identity_members_admin` already provides an admin-oriented member lookup for identity management, but it is scoped to members with People/identity records and may not be a complete account-and-role roster.
+- No existing generated RPC provides a single aggregated list of users with membership status and active role assignments; that is likely the main database read-model gap.
+- The existing identity-management page is a useful visual/interaction pattern: searchable member cards, per-row busy state, bilingual copy, inline notices, and reusable Community surface/button/input classes.
+- Existing identity member search only returns active memberships and excludes suspended/registered-only accounts, so it cannot be reused as the sole authorization-management roster.
+- Important hierarchy gap: because seeded `admin` currently has every permission, the existing `assign_user_role` “no extra permissions” rule allows an admin to assign the `admin` role to another user. Only `super_admin` assignment is explicitly reserved. If the desired hierarchy is “only super admins appoint admins,” the database guard must be tightened.
+- The generated types and current migrations confirm the core mutation pieces exist; the likely scoped completion is a consolidated admin read RPC, stricter admin-role assignment rule, client service wrappers, a dedicated authorization page/route/nav item, and regression tests.
+- The user confirmed the strict hierarchy: only super admins appoint/revoke admins. They also explicitly require backend completion before frontend construction.
+- Approved design document committed as `ee9dca3` (`docs: design community authorization system`).
+- The requested `writing-plans` skill is not available in this environment; the equivalent detailed implementation plan is saved under `docs/plans/2026-08-24-community-membership-authorization-implementation.md`.
+- Supabase CLI is 2.67.1. It supports `migration new` and linked pgTAP tests, but it predates CLI `db query`; connected Supabase SQL/advisor tools are available for remote verification.
+- Local and remote migration histories are currently aligned through `20260816122500_website_analytics_web_vitals`.
+- Current official Supabase guidance confirms: default to invoker functions; keep necessary definer functions out of exposed schemas; pin `search_path`; revoke default execution; enable RLS and grant narrowly; avoid mutable user metadata for authorization.
+- Relevant 2026 Supabase breaking changes do not invalidate the proposed function/RLS design. The future public-table Data API exposure change reinforces using explicit RPC grants rather than relying on implicit table exposure.
+- Current remote security advisors report only the pre-existing project-level warning that leaked-password protection is disabled; there are no reported schema security errors before this migration.
+- The generated migration and its focused authorization test pass together inside a remote transaction with a final rollback.
+- The local CLI has no access token for linked push, while the authenticated Supabase connector is available; remote application will use the connector and migration history will be reconciled immediately afterward.
+- Remote migration `20260824060239_community_access_management` applied successfully. Its focused post-apply regression test passes in a rollback transaction.
+- Post-apply security advisors report no new schema issues; the only security warning remains leaked-password protection. Performance advisors report only pre-existing informational findings unrelated to the new RPCs.
+- The roster's `(registered_at, user_id)` keyset order does not yet have a matching composite profile index; add a small follow-up migration instead of altering the already-applied migration.
+- Follow-up migration `20260824060455_community_access_cursor_index` adds the exact composite index required by roster keyset pagination; remote catalog verification confirms the btree definition.
+- Final backend hardening migration `20260824062512_community_access_role_invariants` prevents generic role RPCs from assigning/revoking `registered_user` or `community_member`; registration and membership workflows remain the only mutation paths.
+- The expanded focused database test passes after application, including admin hierarchy, workflow-owned roles, safe projections, ordinary operational roles, super-admin actions, permission configuration, and audit output.
+- Final security advisors still report no schema security findings from this work; the only warning remains the pre-existing Auth leaked-password-protection setting.
+- Remote function-catalog verification confirms every private privilege-bearing function is `SECURITY DEFINER` with an empty search path, every public wrapper is invoker, anonymous execution is denied, and authenticated execution is explicit.
+- React best-practices review confirmed independent reads execute in parallel, filter/effect dependencies are stable, and summary state is derived during render. The 50-row bound does not warrant virtualization.
+- Full verification passes: 81 Vitest files / 291 tests, backend/API typecheck, app typecheck, ESLint with 0 errors and 9 existing Fast Refresh warnings, and production build.
+- Browser verification at 1280px and 390px confirms unauthenticated `/community/admin/access` redirects to `/community/auth`, meaningful content renders, no framework overlay appears, document width equals viewport width, and console error count is zero.
+- Authorized access-page behavior is covered by focused component tests because the browser had no pre-existing signed-in administrator session. Tests prove ordinary admins do not receive appointment controls, super admins can confirm appointments, suspension requires a reason, and permission replacement requires confirmation.
+- Build output retains pre-existing warnings for Node 20 deprecation in future Supabase JS versions, old Browserslist data, a PostCSS plugin missing `from`, and large chunks; none originates from this authorization change.

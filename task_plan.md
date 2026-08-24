@@ -781,3 +781,69 @@ Production database rollout is complete and verified; the exact PR head is being
 - [x] Identify likely files/components to edit
 - [x] Define verification checklist
 - **Status:** complete
+
+# 2026-08-24 Community Membership Authorization System
+
+## Goal
+完善 Community 会员授权系统：超级管理员可安全地授予、调整和撤销管理员权限，并具备完整的会员与管理员管理能力；所有敏感操作必须由服务端/数据库强制校验，而不是只依赖前端隐藏按钮。
+
+## Phases
+
+### Phase 1: Discovery
+- [x] Check repository status and CodeGraph availability
+- [x] Map current Community auth, membership, role, admin UI, API, RPC, and RLS flows
+- [x] Identify existing tests and migration state
+- **Status:** complete
+
+### Phase 2: Design Approval
+- [x] Clarify the intended admin authority boundary with the user
+- [x] Present 2–3 approaches and a recommended design
+- [x] Receive user approval before implementation
+- [x] Save the approved design under `docs/plans/`
+- **Status:** complete
+
+### Phase 3: Implementation
+- [x] Create the detailed implementation plan after design approval
+- [x] Implement database/server authorization changes
+- [x] Implement Community super-admin/admin management UI
+- [x] Add auditability and safe error handling
+- **Status:** complete
+
+### Phase 4: Verification
+- [x] Run focused authorization and UI tests
+- [x] Run typecheck, lint, and production build
+- [x] Verify critical admin flows in a browser
+- **Status:** complete
+
+## Current Decisions
+| Decision | Rationale |
+|----------|-----------|
+| Inspect existing authorization end to end before choosing a schema | This repository already contains substantial Community and Supabase work; the safest design should extend existing contracts |
+| Enforce privileged actions below the UI layer | Hiding controls is not a security boundary |
+| Preserve the clean worktree and existing historical planning notes | Existing files are user-owned project history |
+| Recommend a strict super-admin → admin hierarchy | The current seeded admin has all permissions and can therefore assign the admin role to others; this conflicts with the likely intent that only super admins authorize administrators |
+| Implement and verify the backend before building the frontend | Explicitly confirmed by the user on 2026-08-24 |
+| Use dedicated permission-checked authorization projections | Approved design keeps the frontend decoupled from raw RBAC tables and avoids exposing unnecessary account data |
+| Use cursor pagination and aggregated RPC projections | Current Supabase/Postgres guidance favors bounded keyset pagination and least-privilege function APIs |
+| Keep private definer/public invoker separation | Current official docs require pinned search paths and restricted execution for definer functions; the repository already follows this hardened pattern |
+| Align local migration versions to remote history immediately | The authenticated connector assigned authoritative version `20260824060239` when applying the migration |
+| Keep baseline account/member roles workflow-owned | Direct generic assignment of `registered_user` or `community_member` would bypass registration or membership lifecycle invariants |
+
+## Errors Encountered
+| Error | Attempt | Resolution |
+|-------|---------|------------|
+| `test -d .codegraph` exited 1 | Checked whether CodeGraph indexing is available before source search | `.codegraph/` is absent, so use `rg` and direct source inspection as instructed |
+| Initial combined planning patch missed the actual end of `task_plan.md` | Tried to anchor all three files on a line that only existed in `progress.md` | Read exact file tails and applied separate contextual hunks |
+| Design-document staged diff reported trailing whitespace | Ran `git diff --cached --check` before commit | Removed the Markdown line-ending spaces, then restaged the same design file |
+| Direct Markdown URL fetches returned unsupported content-type | Tried the Supabase skill's `.md` URLs through the web reader | Used official Supabase search/docs results and the connected Supabase docs search instead |
+| First transaction test could not select `private.audit_logs` as `authenticated` | Used a direct private-table assertion for the new assignment audit event | Preserved the private-table boundary and changed the test to the permission-checked `public.get_audit_logs` RPC |
+| Combined audit-test/planning patch used a planning-file context in the SQL file | Tried to update the test and planning log with one incorrectly scoped hunk | Rebuilt the patch with explicit file sections and correct contexts |
+| Supabase CLI linked push dry-run lacked an access token | Ran `supabase db push --linked --dry-run` after transaction verification | Use the authenticated Supabase connector to apply the reviewed migration, then align the local migration filename to the authoritative remote version if needed |
+| Access JSON parser properties did not narrow to string/null | Ran app TypeScript check after adding generated RPC types and service parsers | Copy dynamic JSON properties to local variables before type guards so TypeScript preserves the narrowing |
+| `Json` union remained wider inside `flatMap` after local-variable guards | Re-ran app TypeScript check after the first narrowing adjustment | Keep runtime validation and explicitly cast the already-validated local values to the parser output types |
+| Three access-page tests found duplicate responsive controls | Queried one role/suspension button while both desktop table and mobile cards are mounted and CSS-hidden by viewport | Assert both responsive copies and interact with the first rendered control in jsdom |
+| `ui-skills` and `better-icons` no-install CLIs stalled without output | Tried the required narrow UI/category and icon searches without allowing package installation | Terminated both idle processes; reused the established Community admin patterns and existing semantically appropriate Lucide `KeyRound` icon |
+| Existing remote RBAC test assumes no super administrator already exists | Ran `001_authorization_and_workflow.sql` against the live linked project | Its setup correctly failed with `SUPER_ADMIN_ALREADY_BOOTSTRAPPED`; keep it for clean/local databases and use the new production-safe access test plus the passing membership test for linked verification |
+| `agent-browser` executable is unavailable | Started the required dev-server browser verification | Used the mandatory in-app Browser fallback for route, DOM, screenshots, console, overlay, and responsive checks |
+| In-app Browser does not support the requested `networkidle` wait | Tried the preferred load state once | Switched to supported `domcontentloaded` plus a bounded render wait before inspection |
+| Final planning patch included a historical error-table context that did not match | Tried to update current and historical planning sections in one patch | Read the exact current tails and updated only the scoped 2026-08-24 task sections |
