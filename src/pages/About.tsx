@@ -31,8 +31,8 @@ type LocalizedText = {
 type YouthPartner = {
   key: string;
   name: LocalizedText;
-  identity: LocalizedText;
-  headline: LocalizedText;
+  identity?: LocalizedText;
+  headline?: LocalizedText;
   bio: LocalizedText;
   portrait: {
     src: string;
@@ -52,15 +52,16 @@ const aboutChapters = [
 
 const CHAPTER_SELECTION_LOCK_MS = 900;
 
-const placeholderText = { zh: '？？？', en: '？？？' } as const;
+const pendingPartnerBio = {
+  zh: '伙伴介绍正在整理中，敬请期待。',
+  en: 'Partner profiles are on the way. Stay tuned.',
+} as const;
 
 const youthPartners: readonly YouthPartner[] = [
   {
     key: 'tianshi',
     name: { zh: '张天时', en: 'ZHANG Tianshi' },
-    identity: placeholderText,
-    headline: placeholderText,
-    bio: placeholderText,
+    bio: pendingPartnerBio,
     portrait: {
       src: tianshiPortrait,
       alt: { zh: '张天时在室内茶席旁安静坐着', en: 'ZHANG Tianshi sitting quietly beside an indoor tea table' },
@@ -72,9 +73,7 @@ const youthPartners: readonly YouthPartner[] = [
   {
     key: 'ruorong',
     name: { zh: '陈若容', en: 'Rossie Chen' },
-    identity: placeholderText,
-    headline: placeholderText,
-    bio: placeholderText,
+    bio: pendingPartnerBio,
     portrait: {
       src: rossiePortrait,
       alt: { zh: '陈若容在雨中捧着茶杯', en: 'Rossie Chen holding a teacup in the rain' },
@@ -86,9 +85,7 @@ const youthPartners: readonly YouthPartner[] = [
   {
     key: 'ruoyin',
     name: { zh: '黄若音', en: 'Ruby Huang' },
-    identity: placeholderText,
-    headline: placeholderText,
-    bio: placeholderText,
+    bio: pendingPartnerBio,
     portrait: {
       src: rubyPortrait,
       alt: { zh: '黄若音在书房里拿着绣球花', en: 'Ruby Huang holding a hydrangea in a library' },
@@ -620,9 +617,9 @@ export default function About() {
                         />
                       </figure>
                       <div className="about-v2-partner-roster__copy">
-                        <p className="about-v2-partner-roster__identity">{pickLocalized(partner.identity, lang)}</p>
+                        {partner.identity ? <p className="about-v2-partner-roster__identity">{pickLocalized(partner.identity, lang)}</p> : null}
                         <h4 id={`about-partner-${partner.key}`}>{pickLocalized(partner.name, lang)}</h4>
-                        <h5>{pickLocalized(partner.headline, lang)}</h5>
+                        {partner.headline ? <h5>{pickLocalized(partner.headline, lang)}</h5> : null}
                         <p className="about-v2-partner-roster__bio">{pickLocalized(partner.bio, lang)}</p>
                         <Link to={partner.storyPath}>
                           <span>{t('阅读伙伴故事', 'Read partner story')}</span>
@@ -697,7 +694,7 @@ export default function About() {
                       </figure>
                       <div>
                         <h4>{t(member.name.zh, member.name.en)}</h4>
-                        <p>？？？</p>
+                        <p>{t('敬请期待', 'Coming soon')}</p>
                       </div>
                     </article>
                   ))}

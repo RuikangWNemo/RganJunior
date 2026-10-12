@@ -93,7 +93,8 @@ describe('About editorial content system', () => {
       '陈若容',
       '黄若音',
     ]);
-    expect(within(roster).getAllByText('？？？')).toHaveLength(9);
+    expect(within(roster).getAllByText('伙伴介绍正在整理中，敬请期待。')).toHaveLength(3);
+    expect(within(team as HTMLElement).queryByText(/？{2,}/)).not.toBeInTheDocument();
     expect(within(roster).getAllByRole('link', { name: '阅读伙伴故事' }).map((link) => link.getAttribute('href'))).toEqual([
       '/voices/technology-ecology-stars',
       '/voices/tea-connects-an-american-girl',
@@ -120,7 +121,7 @@ describe('About editorial content system', () => {
       '邓老师',
       '知予',
     ]);
-    expect(within(adultRoster).getAllByText('？？？')).toHaveLength(6);
+    expect(within(adultRoster).getAllByText('敬请期待')).toHaveLength(6);
 
     expect(within(team as HTMLElement).getByText('参与共创，也支持每一次活动真实发生。')).toBeInTheDocument();
     const parentGuardianRoster = screen.getByLabelText('家长守护团成员名录');
@@ -187,7 +188,8 @@ describe('About editorial content system', () => {
     expect(screen.getByRole('heading', { level: 4, name: 'ZHANG Tianshi' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 4, name: 'Rossie Chen' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
-    expect(within(screen.getByLabelText('Youth co-creation partner directory')).getAllByText('？？？')).toHaveLength(9);
+    expect(within(screen.getByLabelText('Youth co-creation partner directory')).getAllByText('Partner profiles are on the way. Stay tuned.')).toHaveLength(3);
+    expect(screen.queryByText(/？{2,}/)).not.toBeInTheDocument();
   });
 
   it('lists all five youth co-creation directions', () => {
