@@ -10,6 +10,7 @@ import Layout from '@/components/Layout';
 import Index from './pages/Index';
 
 const About = lazy(() => import('./pages/About'));
+const GuardianDirectory = lazy(() => import('./pages/GuardianDirectory'));
 const TieniuStory = lazy(() => import('./pages/TieniuStory'));
 const Actions = lazy(() => import('./pages/Actions'));
 const ActionInquiry = lazy(() => import('./pages/ActionInquiry'));
@@ -57,6 +58,8 @@ function PublicRoutes() {
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/about" element={<About />} />
+      <Route path="/about/guardians" element={<GuardianDirectory />} />
+      <Route path="/about/guardians/:memberId" element={<GuardianDirectory />} />
       <Route path="/about/tieniu" element={<TieniuStory />} />
       <Route path="/journey" element={<Navigate to="/about" replace />} />
       <Route path="/field-research" element={<Navigate to="/programs" replace />} />

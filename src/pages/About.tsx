@@ -5,6 +5,7 @@ import AboutManualCarousel from '@/components/about/AboutManualCarousel';
 import AboutMethodPhotoReel from '@/components/about/AboutMethodPhotoReel';
 import LivingLabCard from '@/components/about/LivingLabCard';
 import ParentGuardianReel from '@/components/about/ParentGuardianReel';
+import { guardianMembers } from '@/content/guardians';
 import BrandWordmark from '@/components/BrandWordmark';
 import EditorialSectionNav from '@/components/ui/EditorialSectionNav';
 import { aboutMethodPhotoGroups } from '@/content/aboutMethodPhotos';
@@ -95,27 +96,6 @@ const youthPartners: readonly YouthPartner[] = [
     storyPath: '/voices/tea-kitchen-and-summer',
   },
 ];
-
-const guardianMembers = [
-  { photo: '/images/about/adult-support/zhao-jing.jpg', name: { zh: '赵璟', en: 'Zhao Jing' } },
-  { photo: '/images/about/adult-support/adult-support-02.webp', name: { zh: '贺超超', en: 'He Chaochao' } },
-  { photo: '/images/about/adult-support/adult-support-05.webp', name: { zh: '秋鹭', en: 'Qiu Lu' } },
-  { photo: '/images/about/adult-support/adult-support-06.webp', name: { zh: '王睿康', en: 'Wang Ruikang' } },
-  { photo: '/images/about/adult-support/adult-support-07.webp', name: { zh: '邓老师', en: 'Teacher Deng' } },
-  { photo: '/images/about/adult-support/adult-support-08.webp', name: { zh: '知予', en: 'Zhiyu' } },
-] as const;
-
-const guardianPhotos = [
-  '/images/about/adult-support/adult-support-03.webp',
-  '/images/about/adult-support/adult-support-04.webp',
-  '/images/about/parent-guardian/parent-guardian-03.webp',
-  '/images/about/parent-guardian/parent-guardian-04.webp',
-  '/images/about/parent-guardian/parent-guardian-05.webp',
-  '/images/about/parent-guardian/parent-guardian-06.webp',
-  '/images/about/parent-guardian/parent-guardian-07.webp',
-  '/images/about/parent-guardian/parent-guardian-08.webp',
-  '/images/about/parent-guardian/parent-guardian-09.webp',
-] as const;
 
 const coCreationDirections = [
   {
@@ -676,31 +656,12 @@ export default function About() {
                   </div>
                 </article>
 
-                <div className="about-v2-adult-roster" aria-label={t('守护团成员名录', 'Guardian circle member directory')}>
-                  {guardianMembers.map((member) => (
-                    <article
-                      key={member.photo}
-                      aria-label={t(`${member.name.zh} 档案`, `${member.name.en} profile`)}
-                    >
-                      <figure>
-                        <img
-                          src={member.photo}
-                          alt={t(member.name.zh, member.name.en)}
-                          width="1067"
-                          height="1600"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </figure>
-                      <div>
-                        <h4>{t(member.name.zh, member.name.en)}</h4>
-                        <p>{t('敬请期待', 'Coming soon')}</p>
-                      </div>
-                    </article>
-                  ))}
+                <ParentGuardianReel members={guardianMembers} />
+                <div className="mt-6 flex justify-end">
+                  <Link className="rounded-sm px-2 py-3 text-primary underline underline-offset-4 focus-visible:outline focus-visible:outline-2" to="/about/guardians">
+                    {t('查看全部成员', 'View all members')} <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
-
-                <ParentGuardianReel photos={guardianPhotos} />
               </section>
             </div>
           </div>

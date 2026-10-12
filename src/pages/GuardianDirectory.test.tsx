@@ -1,0 +1,49 @@
+import { fireEvent, render, screen, within } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import GuardianDirectory from './GuardianDirectory';
+
+function renderDirectory(path = '/about/guardians', language: 'zh' | 'en' = 'zh') {
+  return render(
+    <MemoryRouter initialEntries={[path]}>
+      <LanguageProvider initialLanguage={language}>
+        <Routes>
+          <Route path="/about/guardians" element={<GuardianDirectory />} />
+          <Route path="/about/guardians/:memberId" element={<GuardianDirectory />} />
+        </Routes>
+      </LanguageProvider>
+    </MemoryRouter>,
+  );
+}
+
+describe('Guardian directory navigation', () => {
+  it('shows fourteen equal entries, removes He Chaochao, and opens a profile then returns to the directory', () => {
+    renderDirectory();
+    const list = screen.getByLabelText('全部守护团成员');
+    expect(within(list).getAllByRole('link')).toHaveLength(14);
+    expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).not.toContain('/images/about/adult-support/adult-support-02.webp');
+    expect(screen.queryByText(/贺超超|何超超/)).not.toBeInTheDocument();
+    fireEvent.click(within(list).getByRole('link', { name: '查看守护团成员 1 资料' }));
+    expect(screen.getByRole('heading', { level: 1, name: '赵璟' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: '赵璟' })).toHaveAttribute('src', '/images/about/adult-support/zhao-jing.jpg');
+    expect(screen.getByText('敬请期待')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('link', { name: /查看全部成员/ }));
+    expect(screen.getByLabelText('全部守护团成员')).toBeInTheDocument();
+  });
+
+  it('supports direct links for unnamed members in English without inventing biographies', () => {
+    renderDirectory('/about/guardians/guardian-09', 'en');
+    expect(screen.getByRole('heading', { level: 1, name: 'Guardian Circle Member' })).toBeInTheDocument();
+    expect(screen.getByText('Coming soon')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('src', '/images/about/parent-guardian/parent-guardian-09.webp');
+    expect(screen.getByRole('link', { name: /View all members/ })).toHaveAttribute('href', '/about/guardians');
+  });
+
+  it('handles missing or removed member URLs with a way back to the directory', () => {
+    renderDirectory('/about/guardians/he-chaochao');
+    expect(screen.getByRole('heading', { name: '未找到这位成员' })).toBeInTheDocument();
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /查看全部成员/ })).toHaveAttribute('href', '/about/guardians');
+  });
+});
