@@ -148,7 +148,9 @@ describe('About editorial content system', () => {
       'lazy',
       'lazy',
     ]);
-    expect(within(parentGuardianRoster).getAllByText('？？？')).toHaveLength(18);
+    expect(within(parentGuardianRoster).queryByText('？？？')).not.toBeInTheDocument();
+    expect(within(parentGuardianRoster).getAllByText('敬请期待')).toHaveLength(9);
+    expect(within(parentGuardianRoster).getAllByText('成员介绍正在整理中')).toHaveLength(9);
     expect(
       within(screen.getByRole('group', { name: '选择家长守护团成员' })).getAllByRole('button'),
     ).toHaveLength(9);

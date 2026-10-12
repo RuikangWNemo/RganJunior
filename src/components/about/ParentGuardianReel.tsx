@@ -167,8 +167,10 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
                     />
                   </figure>
                   <div className="about-v2-parent-guardian-reel__copy">
-                    <h4>？？？</h4>
-                    <p aria-hidden={!active}>？？？</p>
+                    <h4>{t('敬请期待', 'Coming soon')}</h4>
+                    <p aria-hidden={!active}>
+                      {t('成员介绍正在整理中', 'Member profiles are on the way')}
+                    </p>
                   </div>
                 </button>
               </article>
