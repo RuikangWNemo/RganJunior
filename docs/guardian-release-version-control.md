@@ -5,25 +5,26 @@
 ## 本地整理版
 
 - 分支：`codex/local-refinement-2026-10-12`
-- 整理快照：`d615b6d`；守护团分组合并：`0992ec8`
+- 整理快照：`d615b6d`；守护团分组合并：`0992ec8`；统一轮播与名录：`2321118`
 - 目录：`/Users/hw/Documents/RganJunior/Website/rgan-junior-roots-main`
 - 保留已有“影响”“加入我们”、导航等优化，以及原始成员资料占位，供后续整理。
 
 ## 临时发布版
 
 - 分支：`codex/guardian-coming-soon-2026-10-12`
-- 应用提交：`fcfac79`（包含 `a68d255`、`082a48a`）
+- 应用提交：`57586a8`（包含 `fcfac79`、`a68d255`、`082a48a`）
 - 目录：`/Users/hw/.codex/worktrees/rgan-guardian-release/rgan-junior-roots-main`
 - 基线：原生产提交 `1f3857091baf9169e1106a61c14cb6e3fd1553b3`。
-- 支持团队、家长守护团已统一为“守护团 / Guardian Circle”，原有 15 张成员照片均保留；移除该区域的“麦昆塔教育”表述，继续显示敬请期待 / Coming soon。
+- 支持团队、家长守护团已统一为“守护团 / Guardian Circle”，暂时移除贺超超，剩余 14 张照片使用同一份名单，统一轮播、不分组；移除该区域的“麦昆塔教育”表述，未完善资料继续显示敬请期待 / Coming soon。
+- 新增全部成员页 `/about/guardians` 与个人详情页 `/about/guardians/:memberId`；照片和详情入口可点击；悬停暂停轮播，避免点击时照片移走。
 - 青少年共创伙伴：保留真实姓名、照片和故事入口，移除问号和未填写的身份、标题，显示资料整理说明。
-- 已发布部署：`https://rgan-junior-roots-main-ciewzuwcu-rganjuniors-projects.vercel.app`
-- 部署编号：`dpl_9W3EqeyckdQHmY4PtaYz1QuNrJAp`
-- 发布标签：`release/2026-10-12-guardian-circle`
+- 已发布部署：`https://rgan-junior-roots-main-kioxqju75-rganjuniors-projects.vercel.app`
+- 部署编号：`dpl_4xr2Ymeg1dxW6mGe13BvkCjH6TKB`
+- 发布标签：`release/2026-10-12-guardian-directory`
 - 正式域名：`https://www.rganjunior.org`
-- 上一生产部署：`dpl_D6kgRk4otDLDWymfun7i9wXngCAX`；更早生产部署：`dpl_FrK8HjnV7jNPHQ7AMvjwYciJq5az`。旧发布标签仍保留。
-- 当前状态：已切换正式域名并完成中英文浏览器检查。团队区域问号占位为 0，中文版有 18 处“敬请期待”，当前视口无横向溢出，浏览器错误日志为 0。
-- 验证：11 项相关测试、应用类型检查、局部 ESLint 检查及本机完整 Vercel 生产构建通过。部署含 12 个原有函数；当前部署的 About 页面脚本与本机构建逐字一致；合并后的守护团包含 15 张照片，正式站仅有“发起人”“青少年共创伙伴”“守护团”三个团队标题。此次验证覆盖团队页面展示，不代表全部后台业务流程已重新验证。
+- 上一生产部署：`dpl_9W3EqeyckdQHmY4PtaYz1QuNrJAp`（标签 `release/2026-10-12-guardian-circle`）；更早生产部署：`dpl_D6kgRk4otDLDWymfun7i9wXngCAX`、`dpl_FrK8HjnV7jNPHQ7AMvjwYciJq5az`。旧发布标签仍保留。
+- 当前状态：已切换正式域名。正式站统一轮播有 14 张照片、14 个详情链接；全部成员页有 14 个条目；移除的姓名及照片未出现在展示区域，团队问号占位为 0。正式站名录 → 详情 → 返回名录 → 返回关于页 → 名录入口已核验，浏览器错误日志为 0。
+- 验证：18 项相关测试、应用类型检查、局部 ESLint 检查及本机完整 Vercel 生产构建通过。本机浏览器检查中英文、390px 手机端名录和详情无横向溢出，并验证轮播链接；上传后的 About 与 GuardianDirectory 脚本、详情直达页面与本机构建逐字一致。Vercel 日志确认使用 `.vercel/output` 预构建成品。此次验证覆盖团队展示与成员导航，不代表全部后台业务流程已重新验证。
 
 ## 后续发布约定
 
