@@ -847,3 +847,146 @@ Production database rollout is complete and verified; the exact PR head is being
 | `agent-browser` executable is unavailable | Started the required dev-server browser verification | Used the mandatory in-app Browser fallback for route, DOM, screenshots, console, overlay, and responsive checks |
 | In-app Browser does not support the requested `networkidle` wait | Tried the preferred load state once | Switched to supported `domcontentloaded` plus a bounded render wait before inspection |
 | Final planning patch included a historical error-table context that did not match | Tried to update current and historical planning sections in one patch | Read the exact current tails and updated only the scoped 2026-08-24 task sections |
+
+# 2026-08-25 Join Us Advanced Accordion Refresh
+
+## Goal
+优化公开站点“加入我们 / Ways to Join”页面，补充用户提供的完整内容，以高级、清晰、可访问的折叠交互重组信息，并保持与现有品牌视觉系统一致。
+
+## Phases
+
+### Phase 1: Discovery and Design
+- [x] Confirm CodeGraph availability and repository state
+- [x] Inspect the current Join page, shared public-site styles, tests, and live visual hierarchy
+- [x] Clarify the intended default-open behavior
+- [x] Present 2–3 approaches and receive design approval
+- **Status:** complete
+
+### Phase 2: Design Documentation and Implementation Plan
+- [x] Save the approved design under `docs/plans/`
+- [x] Create a scoped implementation plan
+- **Status:** complete
+
+### Phase 3: Implementation
+- [x] Build the advanced accordion and supporting Join-page content
+- [x] Preserve existing routes, CTA destinations, accessibility, and responsive behavior
+- [x] Add or update focused tests
+- **Status:** complete
+
+### Phase 4: Verification
+- [x] Run focused tests, app typecheck, lint, and production build
+- [x] Verify desktop/mobile appearance and accordion behavior in a browser
+- **Status:** complete
+
+## Current Decisions
+| Decision | Rationale |
+|----------|-----------|
+| Preserve existing project planning history | Root planning files are append-only working memory shared across prior tasks |
+| Treat the supplied Chinese copy as authoritative | The user asked for organization and visual refinement rather than copy reinvention |
+| Gate implementation on a compact design review | The mandatory brainstorming workflow requires approval before code changes |
+| Retain the existing three-identity interaction and add the practical accordion below | The user selected option B; the upper stage will remain emotional/identity-led while the new lower section handles decision-making and conversion |
+| Use an editorial index accordion with “当前参与方式” open by default | The user approved the recommended layout and interaction design on 2026-08-25 |
+| Use an equivalent local implementation plan because `writing-plans` is unavailable | The mandatory brainstorming terminal step names a skill that is not installed in this environment; the scoped plan preserves the intended workflow |
+
+## Errors Encountered
+| Error | Attempt | Resolution |
+|-------|---------|------------|
+| Initial planning append could not find a historical anchor | Tried to patch all three planning files using lines that were not at each file's current end | Read the exact file tails and appended each task section against its real final line |
+| New design document had an extra blank line at EOF | Ran `git diff --cached --check` before committing the approved design | Removed the trailing blank line and restaged only the design document |
+| `npx --no-install ui-skills categories` stalled without output | Attempted the required UI category inspection and polled once | Terminated the idle process; use the narrowest available local context: the existing Radix Accordion wrapper and Join editorial design tokens |
+| `npx --no-install better-icons` stalled without output | Attempted a Lucide plus-circle search after reading the Better Icons skill | Terminated the idle process; reuse the existing Lucide `ChevronDown` supplied by the project Accordion wrapper and rely on numbered steps instead of adding icon assets |
+| New Join guide tests failed before production implementation | Ran the focused suite after adding the intended behavior contract | Expected red phase; implemented the approved accordion structure and styles |
+| Nested FAQ trigger accessible name included its visual index | First post-implementation focused run passed 7/8 tests but could not match the exact question-only name | Marked the decorative FAQ index `aria-hidden` so assistive technology hears only the question |
+| Full test suite reports 2 failures in `Impact.test.tsx` | Ran all 81 test files while an unrelated Impact redesign was concurrently modifying the workspace | Preserve the unrelated work; rely on passing Join 8/8 tests, app typecheck, full lint/build, and report the external suite drift accurately |
+| Parallel verification output was truncated | Ran tests, lint, and build concurrently; the test failure consumed the output budget and hid the other two results | Re-ran full lint and production build as an independent bounded pair and captured explicit passing exit codes |
+
+# 2026-08-25 Community Identities & Planets Compact Redesign
+
+## Goal
+压缩 Community 管理端“身份与星球”的信息长度与操作复杂度，以高级、清晰、可访问的折叠层级保留完整管理能力。
+
+## Phases
+
+### Phase 1: Discovery and Design
+- [x] Confirm repository state and CodeGraph availability
+- [x] Inspect the current identities page, shared Community surfaces, tests, and visual hierarchy
+- [ ] Clarify the preferred default-open behavior
+- [ ] Present 2–3 design approaches and receive approval
+- **Status:** in_progress
+
+### Phase 2: Design Documentation and Implementation Plan
+- [ ] Save the approved design under `docs/plans/`
+- [ ] Create a scoped implementation plan
+- **Status:** pending
+
+### Phase 3: Implementation
+- [ ] Implement the compact identities / planets hierarchy and interaction
+- [ ] Preserve permissions, edit behavior, bilingual copy, and responsive accessibility
+- [ ] Add or update focused tests
+- **Status:** pending
+
+### Phase 4: Verification
+- [ ] Run focused tests, app typecheck, lint, and production build
+- [ ] Verify desktop/mobile appearance and fold behavior in a browser
+- **Status:** pending
+
+## Current Decisions
+| Decision | Rationale |
+|----------|-----------|
+| Preserve existing project planning history | Root planning files are shared append-only working memory |
+| Treat this request as the current active UI task | The newest user instruction targets Community identities / planets specifically |
+| Gate implementation on a compact design review | The mandatory brainstorming workflow requires approval before code changes |
+| Preserve all current data and mutation contracts | The problem is information hierarchy and interaction density, not backend behavior |
+
+## Errors Encountered
+| Error | Attempt | Resolution |
+|-------|---------|------------|
+| None | 1 | — |
+
+# 2026-08-25 Field Notes Content System Refresh
+
+## Goal
+收束并优化“田野笔记 / Field Notes”的前端、后端与 Community 写作流程；以三类笔记组织内容，并在发布时按照作者身份与笔记类别自动归档、筛选和展示。
+
+## Phases
+
+### Phase 1: Discovery and Design
+- [x] Confirm CodeGraph availability, repository state, and prior planning context
+- [ ] Inspect Field Notes pages, Community editor, services, schema, migrations, tests, and current visual system
+- [ ] Clarify the key publishing/classification behavior one decision at a time
+- [ ] Propose 2–3 approaches with trade-offs and recommendation
+- [ ] Present the end-to-end design and receive approval
+- **Status:** in_progress
+
+### Phase 2: Design Documentation and Implementation Plan
+- [ ] Save the approved design under `docs/plans/`
+- [ ] Create a scoped implementation plan
+- **Status:** pending
+
+### Phase 3: Backend and Publishing Workflow
+- [ ] Implement the approved category/identity model and automatic classification rules
+- [ ] Update typed services, generated contracts, migrations, permissions, and focused tests as needed
+- **Status:** pending
+
+### Phase 4: Frontend Experience
+- [ ] Implement the approved public Field Notes information architecture and Community authoring controls
+- [ ] Preserve accessibility, responsive behavior, bilingual content, and existing routes where practical
+- **Status:** pending
+
+### Phase 5: Verification
+- [ ] Run focused tests, typechecks, lint, database verification, and production build
+- [ ] Verify public and authenticated Community flows on desktop and mobile
+- **Status:** pending
+
+## Current Decisions
+| Decision | Rationale |
+|----------|-----------|
+| Treat the supplied Chinese content as the authoritative information architecture | The user requested consolidation and optimization, not a copy rewrite |
+| Keep implementation behind the brainstorming approval gate | The required workflow mandates design approval before code changes |
+| Preserve the existing root planning history and unrelated dirty changes | Planning files are shared, append-only project memory and currently include the interrupted Join task |
+| Model category and author identity as separate dimensions | The request explicitly needs display by both note type and who is recording |
+
+## Errors Encountered
+| Error | Attempt | Resolution |
+|-------|---------|------------|
+| `test -d .codegraph` exited 1 | Checked required CodeGraph availability before source search | `.codegraph/` is absent, so use `rg` and direct source inspection |

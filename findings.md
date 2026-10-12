@@ -728,3 +728,84 @@
 - Browser verification at 1280px and 390px confirms unauthenticated `/community/admin/access` redirects to `/community/auth`, meaningful content renders, no framework overlay appears, document width equals viewport width, and console error count is zero.
 - Authorized access-page behavior is covered by focused component tests because the browser had no pre-existing signed-in administrator session. Tests prove ordinary admins do not receive appointment controls, super admins can confirm appointments, suspension requires a reason, and permission replacement requires confirmation.
 - Build output retains pre-existing warnings for Node 20 deprecation in future Supabase JS versions, old Browserslist data, a PostCSS plugin missing `from`, and large chunks; none originates from this authorization change.
+
+# 2026-08-25 Join Us Advanced Accordion Refresh
+
+- The repository has no `.codegraph/` directory, so source discovery will use `rg` and direct reads.
+- The project is a Vite/React/TypeScript site with Radix Accordion, Framer Motion, Lucide icons, and existing dedicated `JoinUs` tests.
+- Existing root planning files contain substantial prior project history and must be preserved.
+- The user supplied the full Chinese information architecture: audience fit, non-fit expectations, four participation paths, joining steps, six FAQs, contacts, and two CTAs.
+- The current `/join` page is a highly art-directed two-part experience: a cream editorial cover followed by a dark-green Seed Community stage with three identity buttons, a mascot guide, and role-specific side-sheet folios.
+- The current page has strong brand atmosphere but almost none of the practical decision content supplied by the user; the new material should become the primary information architecture rather than being buried inside the existing identity dialogs.
+- Existing CSS already defines the Join palette and brand typography (`#f5f1eb` paper, `#006644` forest, `#ff6a1f` orange, handwritten display faces), so the accordion can look native without introducing a second visual system.
+- Existing tests lock down the identity map and role dialogs. If that surface is replaced or reframed, tests need to shift toward content presence, accessible accordion state, CTA routes, and reduced-motion behavior.
+- The material design decision is whether the current three-identity stage remains as a short visual prelude or is fully replaced by the practical accordion experience.
+- The user chose to retain the existing identity interaction and add the complete advanced accordion below it. The design must therefore reduce duplicated copy and create a deliberate light-to-dark-to-light page rhythm.
+- Previous Join design documents require preserving the role-specific `/join/apply?audience=<id>` routes and the current orange primary CTA inside the green stage. The new information section will complement rather than displace them.
+- The approved solution is an editorial index accordion: sticky introductory column, five numbered single-open sections, “当前参与方式” open by default, a secondary FAQ fold, and graceful “待更新” contact states.
+- The UI Skills category CLI is unavailable in this environment. The safest narrow fallback is already in the repository: `src/components/ui/accordion.tsx` wraps Radix Accordion with keyboard semantics, animated open/close states, and a Lucide chevron.
+- Better Icons CLI is also unavailable. The built-in ChevronDown is sufficient for expansion state and avoids introducing a redundant icon package or custom SVG.
+- `ProgramFaq.tsx` demonstrates the established Accordion composition; the new Join section can reuse it for both the single-open main index and the FAQ sub-list.
+- The final component keeps all static bilingual data at module scope, one controlled string state for the open main section, and one module-level heading helper. React best-practices review found no waterfall, expensive render, effect, or bundle issue.
+- Focused Join tests now pass 8/8; app TypeScript and scoped ESLint also pass.
+- The workspace contains concurrent unrelated planning/design changes, including a staged Impact design document and additional `index.css` edits. They must remain untouched and excluded from any Join-specific staging or handoff claims.
+- Full ESLint passes with 0 errors and 9 existing Fast Refresh warnings; the production build passes with pre-existing Node/Supabase, Browserslist, PostCSS, and chunk-size warnings.
+- The full Vitest suite currently has 80 passing files / 291 passing tests and 1 failing Impact file / 2 failing Impact tests. The failure is caused by concurrent Impact content changes and does not involve Join files; the focused Join suite remains fully green.
+- Desktop browser review at 1280px confirmed the three-part page rhythm, brand palette, sticky introduction, single-open behavior, fit/boundary comparison, and no horizontal overflow. It also caught one Chinese orphan character in the second directory title, now corrected with a wider title column and language-aware wrapping.
+- The desktop title refinement now renders “当前参与方式” on one line at 1280px while preserving `scrollWidth === viewportWidth`.
+- Mobile browser review at 390×844 confirms: both intro actions are 358px wide, all main triggers are 108px tall, sticky positioning correctly becomes static, default ways and FAQ/contact interactions work, and document width stays exactly 390px.
+- Browser interaction proves the appointment anchor sets `#join-contact`, opens the contact chapter, and exposes three pending fields plus the real Pujiang location.
+- The visual contact check also revealed that the existing site footer already publishes `contact@rganjunior.org`; the component should reuse that established address instead of marking email as pending. The existing `/join/apply` route can likewise serve as the participation form contact value.
+- Local source confirms `CONTACT_EMAIL` is the shared footer address and `/join/apply` is the established interest-form route. The contact chapter now uses both real channels; only WeChat / phone remains explicitly pending.
+- Final browser verification reports zero console errors and no Vite/framework overlay. The local server reports only the existing Browserslist and PostCSS warnings.
+- Final Join-focused verification passes after the contact refinement: 8 tests, app TypeScript, scoped ESLint, production build, and scoped whitespace check.
+- The final production build includes the Join page chunk at 23.54 kB (9.25 kB gzip); the new static content did not create a material bundle concern.
+
+# 2026-08-25 Community Identities & Planets Compact Redesign
+
+- The repository has no `.codegraph/` directory, so this task uses `rg` and direct source inspection.
+- The current request targets the Community “身份与星球 / Identities & planets” administration surface and asks for a shorter, less complex, premium folded design.
+- Existing root planning files contain user-owned project history and are being preserved with append-only task notes.
+- Likely implementation surfaces are `src/pages/community/CommunityAdminIdentities.tsx`, its focused tests, shared Community surface components, and scoped Community CSS.
+- Implementation is paused until the current hierarchy is inspected and a compact design is approved per the brainstorming workflow.
+- The current page renders all three large domains simultaneously: 5 overview metrics plus 2 detail groups, every identity label's full bilingual form, and every member's full primary/secondary identity editor.
+- The largest length driver is not the number of sections but eagerly expanded repeated forms. A useful redesign should summarize each label/member into a one-row identity card and reveal one edit panel at a time.
+- The focused test protects the founder self-selection restriction, statistics, missing-primary assignment, and save service call; these contracts can remain unchanged while the visual structure is compressed.
+- The local route redirects to `/community/auth` because the in-app browser has no administrator session. Visual verification of the authorized state will therefore need focused component tests and, after implementation, a mocked/local fixture or authenticated browser if available.
+- Shared Community primitives already provide the editorial green/orange palette, serif headings, card surfaces, and buttons. The redesign should reuse these and avoid introducing a separate dashboard visual language.
+
+# 2026-08-25 Field Notes Content System Refresh
+
+- The repository has no `.codegraph/` directory, so Field Notes discovery will use `rg` and direct source inspection.
+- The worktree already contains user-owned modifications to the shared root planning files from the interrupted Join-page task; preserve them and append scoped Field Notes notes only.
+- The requested information architecture has two independent axes: three note categories (`现场与觉察`, `青年行动实验`, `研究与公共议题`) and three author identities (`Nate`, `阿柑少年伙伴`, `家长/导师/合作者`).
+- The desired publishing behavior is automatic classification in Community authoring, while the public Field Notes experience should expose category-led browsing and identity-aware attribution/filtering.
+- Field Notes is already a substantial subsystem rather than a static page: it has a public index/article reader, Community library/editor/square/admin review, typed services, media handling, collaborative editing APIs, Supabase migrations, and database/component tests.
+- Existing project history includes a Community story-library migration and design that already introduced article categories, tags, author links, visibility states, and the public square. The safest change should extend these contracts instead of creating a parallel content model.
+- The public `/field-notes` page currently has only two editorial modes (`精选文章` and `全部文章`). Its archive explorer browses by individual people or free-form topics; it does not expose the requested three fixed note categories or three identity groups as first-class navigation.
+- The public page already queries a unified repository and derives featured notes, people, and topics client-side, so the new taxonomy can be added without splitting content sources.
+- Community writing currently creates a private draft immediately, then loads a manual primary category, tags, and visibility. Category selection is mandatory only at submit time; author identity is not an explicit editor field.
+- Metadata autosave is already integrated into the collaborative checkpoint flow. Automatic identity/category classification should plug into this metadata boundary rather than the rich-text document model.
+- The editor sidebar has a focused `StoryPublishingSettings` component. It currently renders a generic select populated from `article_categories`, free-form tags, and visibility. This is the natural place to replace the vague category picker with three explanatory category choices and a read-only “以谁的身份记录” classification preview.
+- Metadata is owner-controlled while collaborators may edit only the body. That ownership rule should remain: automatic identity should be derived from the owner/author relationship, not whichever collaborator is typing.
+- The current submit guard checks only that some category is selected. If category becomes auto-suggested, server validation still needs to ensure the final value is one of the canonical three categories before review/publish.
+- The typed service already joins `article_categories` and `field_note_authors` in all public/editorial reads. No new content table is needed; the missing pieces are a canonical taxonomy contract and an author identity projection.
+- `FieldNoteMetadata` currently contains only `categoryId`, `topicIds`, and `visibility`. Category is saved through one RPC; identity is not persisted on the note metadata.
+- Public repository mapping currently discards the joined article category entirely and hardcodes every database author to `社群作者 / Community author`. This is the concrete reason the public UI cannot classify by requested category or identity even though it has author relations.
+- Public filtering supports people and topics only. Extending `FieldNote` with a category slug and author identity-group slug will allow URL-backed category/identity filters without another network layer.
+- The database currently seeds five generic categories (`人物故事`, `在地实践`, `青年行动`, `自然观察`, `项目记录`). The requested structure deliberately collapses these to three broader editorial categories, so migration must map existing rows before deactivating or renaming old categories.
+- A post-insert trigger already links a new note to the creator's `people` row as its author. This gives a trustworthy server-side join point for automatic identity classification.
+- Database submission validation guarantees an active category exists, but allows any active category. The optimized system should either make the three canonical categories the only active choices or validate against an explicit canonical set.
+- `FieldNote` domain types currently omit both primary category and identity group, matching the public mapper gap.
+- Community already has reviewed identity labels and three planet groupings. Existing labels map cleanly to the requested author groups: `rgan-founder` → Nate/发起人笔记; `youth-co-creator` and `participant` → 阿柑少年伙伴/青年观察; `adult-support` and `parent-guardian` → 家长、导师与合作者/陪伴者视角.
+- Identity declarations are stored privately and are reviewed/confirmed; public publishing must project only the safe derived group label, never raw pending declarations or sensitive membership data.
+- A founder override is preferable to using the broad `youth` planet alone, because the founder and youth partners share that planet but need different Field Notes identities.
+- Confirmed person identities are already available through `public.person_identity_labels` and used by a hardened directory projection. The Field Notes backend can reuse the same validity, active-label, and primary-identity rules without exposing private declarations.
+- The current directory projection applies visibility rules suitable for browsing people. Field Note classification should instead compute a minimal recorder-group value server-side and expose only that safe value with an already-public article.
+- The existing three planet slugs are insufficient by themselves because `rgan-founder` and youth contributors both use `youth`; recorder-group mapping must inspect the confirmed identity label slug before falling back to planet.
+- The current explorer has a polished cardless editorial pattern but spends its main navigation on dozens of individual people and free-form tags. The requested page will be clearer if the three fixed categories become the primary browse rail and the three recorder groups become a compact secondary filter.
+- Existing Field Note cards show author names, date, and topic tags. Category and recorder-group labels should replace or precede generic topic clutter in card metadata, while tags remain available for search/refinement.
+- The current featured layout can be retained for actual content, but the new opening narrative and three-category overview need to precede it so the page explains what Field Notes is before asking users to browse.
+- The repository contains enough real imagery for all three category panels: co-creation camp life, youth practice/research, CTB forum and academic discussion assets. These can be reused without introducing fabricated visuals.
+- A real WeChat URL and locally archived camp invitation article are available, along with multiple public story assets. The exact camp “复盘” URL requested is not clearly identifiable from the current repository, so the design should support optional editorial resource links and use a verified existing internal/external link until a more precise URL is supplied.
+- CTB visual evidence and internal content are present; the repository references John Locke writing but no clearly named Nate essay PDF was found in the asset list. External/resource links should therefore be data-driven and gracefully omit unavailable entries rather than render dead placeholders.

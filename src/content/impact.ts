@@ -147,28 +147,30 @@ export const impactSnapshot: ImpactSnapshot = {
   growthTracks: [
     {
       id: 'youth',
-      title: { zh: '孩子的变化', en: 'Changes in young people' },
+      title: { zh: '成长故事', en: 'Growth stories' },
       intro: {
-        zh: '数据库接入后，将按参与时间记录经授权的阶段变化，而不是用一次活动结果替代成长。',
-        en: 'After database connection, consented changes will be recorded over time instead of reducing growth to one activity outcome.',
+        zh: '记录孩子从第一次参加，到后续继续参与中的真实变化。成长不会被一次活动结果概括，而会放回时间和生活里被看见。',
+        en: 'We record real changes from a young person’s first program through the ways they continue participating. Growth is seen over time and in daily life, not reduced to one activity outcome.',
       },
       observationFields: [
-        { zh: '加入时间与参与项目', en: 'Join date and programs' },
-        { zh: '提问、协作与行动记录', en: 'Questions, collaboration, and actions' },
-        { zh: '经授权的阶段照片与本人表达', en: 'Consented photos and first-person reflection' },
+        { zh: '孩子的原话', en: 'The young person’s own words' },
+        { zh: '小队任务', en: 'Team tasks' },
+        { zh: '行动卡', en: 'Action cards' },
+        { zh: '一个被看见的变化', en: 'One change that was noticed' },
+        { zh: '营后愿意继续做的一件小事', en: 'One small action they choose to continue afterward' },
       ],
     },
     {
       id: 'parents',
-      title: { zh: '家长的变化', en: 'Changes in parents' },
+      title: { zh: '家庭观察', en: 'Family observation' },
       intro: {
-        zh: '家长记录将关注陪伴方式、家庭实践和亲子对话，不公开未授权的家庭细节。',
-        en: 'Parent records will focus on care, family practice, and dialogue without exposing unapproved family details.',
+        zh: '记录家长看到的孩子变化，以及家庭愿意如何继续支持。这里呈现观察的方法，不公开未经授权的家庭细节。',
+        en: 'We record the changes families notice and how they are willing to keep supporting their child. This presents the observation method without exposing unapproved family details.',
       },
       observationFields: [
-        { zh: '陪伴与放手方式', en: 'Ways of supporting and letting go' },
-        { zh: '家庭共同实践', en: 'Shared family practice' },
-        { zh: '经授权的反馈与三个月回访', en: 'Consented feedback and three-month follow-up' },
+        { zh: '我看到孩子的一个变化是：', en: 'One change I have seen in my child is:' },
+        { zh: '我最被孩子打动的一点是：', en: 'What moved me most about my child is:' },
+        { zh: '我愿意支持他／她继续做的一件事是：', en: 'One thing I am willing to support them in continuing is:' },
       ],
     },
   ],

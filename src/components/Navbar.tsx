@@ -55,8 +55,8 @@ const fieldNotesSubItems = [
 ];
 
 const impactSubItems = [
-  { path: '/impact', zh: '统计', en: 'Overview' },
-  { path: '/impact/awards', zh: '获奖情况', en: 'Recognition' },
+  { path: '/impact', zh: '影响与记录', en: 'Impact & Records' },
+  { path: '/impact/awards', zh: '外部记录', en: 'Public Records' },
 ];
 
 const MOBILE_NAVIGATION_DELAY_MS = 160;

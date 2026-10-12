@@ -132,7 +132,7 @@ describe('Navbar mobile drawer', () => {
     expect(within(dialog).getByRole('button', { name: '全部文章' })).toHaveAttribute('aria-current', 'location');
   });
 
-  it('places Impact after Field Notes and exposes overview and recognition', async () => {
+  it('places Impact after Field Notes and exposes impact and public records', async () => {
     renderNavbar('/impact/awards');
 
     const fieldNotes = screen.getByRole('link', { name: '田野笔记' });
@@ -141,13 +141,13 @@ describe('Navbar mobile drawer', () => {
     expect(impact).toHaveAttribute('aria-current', 'page');
 
     const desktopMenu = screen.getByRole('menu', { name: '影响次级菜单' });
-    expect(within(desktopMenu).getByRole('menuitem', { name: '统计' })).toHaveAttribute('href', '/impact');
-    expect(within(desktopMenu).getByRole('menuitem', { name: '获奖情况' })).toHaveAttribute('aria-current', 'location');
+    expect(within(desktopMenu).getByRole('menuitem', { name: '影响与记录' })).toHaveAttribute('href', '/impact');
+    expect(within(desktopMenu).getByRole('menuitem', { name: '外部记录' })).toHaveAttribute('aria-current', 'location');
 
     fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
     const dialog = await screen.findByRole('dialog', { name: '网站导航' });
-    expect(within(dialog).getByRole('button', { name: '统计' })).toBeInTheDocument();
-    expect(within(dialog).getByRole('button', { name: '获奖情况' })).toHaveAttribute('aria-current', 'location');
+    expect(within(dialog).getByRole('button', { name: '影响与记录' })).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: '外部记录' })).toHaveAttribute('aria-current', 'location');
   });
 
   it('closes when Escape is pressed', async () => {

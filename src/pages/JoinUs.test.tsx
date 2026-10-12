@@ -73,6 +73,71 @@ describe('JoinUs', () => {
     expect(parents).toHaveAttribute('data-previewed', 'false');
   });
 
+  it('adds a practical joining guide with participation paths open by default', () => {
+    renderJoinUs();
+
+    expect(screen.getByRole('heading', { name: '当前参与方式' })).toBeInTheDocument();
+    expect(screen.getByText('走进自然、生活与真实世界')).toBeInTheDocument();
+
+    const fitTrigger = screen.getByRole('button', { name: /适合谁/ });
+    const waysTrigger = screen.getByRole('button', { name: /当前参与方式/ });
+
+    expect(waysTrigger).toHaveAttribute('aria-expanded', 'true');
+    expect(fitTrigger).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByText('生活体验营')).toBeVisible();
+    expect(screen.getByText('生活共创营')).toBeVisible();
+    expect(screen.getByText('阿柑少年行动小组')).toBeVisible();
+    expect(screen.getByText('青少年研究与公共议题项目')).toBeVisible();
+
+    fireEvent.click(fitTrigger);
+
+    expect(fitTrigger).toHaveAttribute('aria-expanded', 'true');
+    expect(waysTrigger).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getByText('走进自然和乡村生活')).toBeVisible();
+    expect(screen.getByText('旅游打卡')).toBeVisible();
+  });
+
+  it('opens nested questions and exposes clear application actions', () => {
+    renderJoinUs();
+
+    fireEvent.click(screen.getByRole('button', { name: /常见问题/ }));
+    const scheduleQuestion = screen.getByRole('button', {
+      name: '现在没有明确营期，还可以报名吗？',
+    });
+    expect(scheduleQuestion).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.click(scheduleQuestion);
+
+    expect(scheduleQuestion).toHaveAttribute('aria-expanded', 'true');
+    expect(
+      screen.getByText('可以。你可以先提交参与意向，我们会在合适活动开放时联系你。')
+    ).toBeVisible();
+
+    expect(screen.getByRole('link', { name: '提交参与意向' })).toHaveAttribute(
+      'href',
+      '/join/apply'
+    );
+    expect(screen.getByRole('link', { name: '预约沟通' })).toHaveAttribute(
+      'href',
+      '#join-contact'
+    );
+
+    fireEvent.click(screen.getByRole('link', { name: '预约沟通' }));
+
+    expect(screen.getByRole('button', { name: /联系我们/ })).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    );
+    expect(screen.getByRole('link', { name: 'contact@rganjunior.org' })).toHaveAttribute(
+      'href',
+      'mailto:contact@rganjunior.org'
+    );
+    expect(screen.getByRole('link', { name: '在线填写' })).toHaveAttribute(
+      'href',
+      '/join/apply'
+    );
+  });
+
   it('uses the mascot guide to open the matching editorial folio', () => {
     renderJoinUs();
 

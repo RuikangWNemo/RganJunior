@@ -40,7 +40,7 @@ describe('ImpactAwards', () => {
   it('keeps a path back to the impact overview', async () => {
     renderImpactAwards();
 
-    expect(await screen.findByRole('link', { name: '返回统计' })).toHaveAttribute('href', '/impact');
-    expect(screen.getByRole('link', { name: '获奖情况' })).toHaveAttribute('aria-current', 'page');
+    expect(await screen.findByRole('link', { name: '返回影响与记录' })).toHaveAttribute('href', '/impact');
+    expect(screen.getByRole('link', { name: '外部记录' })).toHaveAttribute('aria-current', 'page');
   });
 });

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SeedCommunityStage from '@/components/home/SeedCommunityStage';
+import JoinWaysAccordion from '@/components/join/JoinWaysAccordion';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -585,6 +586,8 @@ export default function JoinUs() {
           </Link>
         </Button>
       </SeedCommunityStage>
+
+      <JoinWaysAccordion />
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent

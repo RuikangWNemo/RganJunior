@@ -676,3 +676,67 @@
 - Full project verification passes: 81 test files / 291 tests, backend/API and app typechecks, lint with no errors, and production build.
 - Browser verification passed for unauthenticated route protection, meaningful rendering, console/error-overlay health, and 1280px/390px no-overflow behavior.
 - Reviewed the final worktree: no whitespace errors, no secret/service-role references in changed implementation files, and local migration names match remote history.
+
+# 2026-08-25 Join Us Advanced Accordion Refresh
+
+- Started discovery and loaded the required brainstorming, UI-routing, and file-planning workflows.
+- Confirmed CodeGraph is unavailable and preserved the existing append-only project planning files.
+- Logged and corrected one planning-file append anchor mismatch.
+- Next: inspect the current Join implementation and shared visual system, then present a compact interaction/design choice for approval before coding.
+- Inspected `JoinUs.tsx`, its focused test suite, and the dedicated Join editorial CSS. Discovery confirms the content gap and identifies the existing palette/type/motion primitives available for a native accordion treatment.
+- Paused implementation at the brainstorming approval gate; awaiting one product-structure decision from the user.
+- The user selected option B: preserve the current identity stage and add the complete accordion experience beneath it.
+- Presented three accordion approaches and received approval for the recommended editorial index design.
+- Saved the approved design to `docs/plans/2026-08-25-join-us-advanced-accordion-design.md`.
+- Pre-commit whitespace review found and removed one extra blank line at the end of the design document.
+- Committed only the approved design document as `049736d` (`docs: design join information accordion`).
+- The brainstorming workflow's requested `writing-plans` skill is unavailable, so created the equivalent scoped implementation plan at `docs/plans/2026-08-25-join-us-advanced-accordion-implementation-plan.md`.
+- UI Skills and Better Icons CLI discovery both stalled and were safely terminated. Selected the existing Radix Accordion wrapper and its Lucide chevron as the minimal, dependency-free fallback.
+- Next: add red-phase Join page tests for the new information architecture before production code changes.
+- Added two Join guide regression tests and confirmed the expected red phase (2 new failures, 6 existing tests passing).
+- Implemented the new typed bilingual Join accordion component, integrated it after the green identity stage, and added the full desktop/mobile editorial styling.
+- The first green-phase run passed 7/8 tests; refined the nested FAQ accessible name by hiding its decorative number from screen readers.
+- Focused Join tests pass 8/8 after the accessibility refinement.
+- React best-practices review passed: static data is hoisted, state is minimal, and no unnecessary effects, memoization, or async work were introduced.
+- `npm run typecheck:app` and scoped ESLint for the changed Join TSX files pass.
+- Detected and preserved concurrent unrelated workspace changes; all further verification and diffs will remain scoped to Join files.
+- Full ESLint passes with 0 errors and 9 existing warnings; production build passes with existing toolchain and chunk-size warnings.
+- Full Vitest completed with 80/81 files passing and 291/293 tests passing. Both failures are in the concurrently edited Impact suite; no Join test failed.
+- Next: start the local site and complete desktop/mobile browser interaction, overflow, console, and visual checks for `/join`.
+- Started Vite at `http://127.0.0.1:5177/`; the browser-verification CLI is unavailable, so used the required in-app Browser fallback.
+- Desktop `/join` renders meaningful content with no framework overlay, five main triggers, the participation section open by default, and `scrollWidth === viewportWidth` at 1280px.
+- Verified main accordion switching in the browser and captured the expanded “适合谁” state. Corrected a visually detected orphan “式” in the “当前参与方式” trigger before mobile verification.
+- Rechecked the title after reload: one line at 1280px, no overflow, and the intended participation chapter remains open by default.
+- Mobile 390×844 checks passed for responsive layout, full-width actions, 108px touch targets, default participation content, nested FAQ expansion, contact-anchor opening, and no framework overlay or horizontal overflow.
+- Browser inspection surfaced an existing published footer email and the live Join application route; refine the contact chapter to use these real channels before final verification.
+- Reused the shared `CONTACT_EMAIL` constant and `/join/apply` route inside the contact chapter, added appropriate mail/form links, and extended the Join regression test to cover contact-anchor opening and both real channels.
+- Re-ran the final focused checks after the contact refinement: Join 8/8, app typecheck, and scoped ESLint all pass.
+- Reloaded the 390px browser view and verified the contact chapter now exposes `mailto:contact@rganjunior.org`, `/join/apply`, one pending WeChat/phone value, the location, no overlay, and no overflow.
+- Browser console error count is zero; Vite terminal output contains only existing Browserslist/PostCSS warnings.
+- Final production build and scoped `git diff --check` pass. No unrelated concurrent files were changed, staged, or committed by this task.
+
+# 2026-08-25 Community Identities & Planets Compact Redesign
+
+- Started discovery and loaded the required brainstorming, UI-routing, and file-planning workflows.
+- Confirmed CodeGraph is unavailable and preserved the existing append-only project planning files.
+- Located the dedicated identities administration page and test suite.
+- Next: inspect the page, shared Community visual primitives, and tests; then present a compact fold-design choice before coding.
+- Completed source-level inspection. The core issue is eager expansion of repeated edit forms, not missing functionality.
+- Confirmed the live local route is access-protected and redirects the unsigned browser to Community sign-in; no mutation was attempted.
+- Ready to clarify default-open behavior before presenting design options.
+
+# 2026-08-25 Field Notes Content System Refresh
+
+- The user superseded the interrupted Join-page implementation request with an end-to-end Field Notes optimization request.
+- Loaded the required brainstorming, UI-routing, and file-planning workflows.
+- Confirmed CodeGraph is unavailable, inspected repository/planning state, and created a scoped discovery-to-verification plan without touching implementation code.
+- Next: inspect the existing Field Notes public page, Community writing flow, data model, and tests before presenting the required design decision.
+- Located the complete Field Notes surface area across public pages/components, Community editor/admin/square, services, collaboration APIs, migrations, and tests.
+- Read the current public index and Community collaborative editor. Confirmed the main gaps are first-class category/identity navigation and server-backed automatic classification during authoring.
+- Inspected the editor's publishing-settings boundary and confirmed owner-derived identity can be shown automatically while keeping body collaboration and author metadata responsibilities separate.
+- Inspected service and public repository mapping. Confirmed categories/authors are already fetched, but category is dropped and author identity is hardcoded during public normalization.
+- Reviewed the existing schema and workflow enforcement. Confirmed category consolidation needs a backward-compatible data migration, while the creator-to-person author trigger can anchor identity classification.
+- Located the existing reviewed identity system and derived the initial mapping from confirmed Community identities to the three requested Field Notes recorder groups.
+- Verified the confirmed identity source and its existing privacy/validity rules. The planned note projection can safely expose only a derived recorder group with public stories.
+- Reviewed the current archive explorer and article cards. Identified a clear UI simplification: categories first, recorder groups second, names/topics as lightweight metadata and search.
+- Audited available photos and evidence links. Confirmed the redesign can use authentic project assets while treating missing requested PDFs/URLs as optional resource slots.
