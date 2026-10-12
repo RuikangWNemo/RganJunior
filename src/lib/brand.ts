@@ -54,6 +54,13 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Learn about the R-Gan Junior team, the Tieniu Village origin, and the whole-person growth path in real communities.",
     },
   },
+  "/about/guardians": {
+    title: { zh: "守护团", en: "Guardian Circle" },
+    description: {
+      zh: "认识陪伴阿柑少年成长的守护团成员，查看成员照片与介绍。",
+      en: "Meet the R-Gan Junior Guardian Circle through member portraits and profiles.",
+    },
+  },
   "/about/tieniu": {
     title: {
       zh: "铁牛村的故事",
@@ -253,6 +260,7 @@ function normalizePathname(pathname: string): string {
 }
 
 function resolveRouteMeta(pathname: string): RouteMeta | undefined {
+  if (pathname.startsWith("/about/guardians/")) return ROUTE_META["/about/guardians"];
   if (pathname.startsWith("/voices/")) {
     return ROUTE_META["/voices"];
   }

@@ -7,17 +7,19 @@ import {
   type KeyboardEvent,
 } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { guardianProfilePath, type GuardianMember } from '@/content/guardians';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const defaultIntervalMs = 2000;
 
 type ParentGuardianReelProps = {
-  photos: readonly string[];
+  members: readonly GuardianMember[];
 };
 
-export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) {
-  const { t } = useLanguage();
+export default function ParentGuardianReel({ members }: ParentGuardianReelProps) {
+  const { t, lang } = useLanguage();
   const reducedMotion = useReducedMotion();
   const reelRef = useRef<HTMLDivElement>(null);
   const [viewportRef, emblaApi] = useEmblaCarousel({
@@ -36,11 +38,11 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
   const [reelVisible, setReelVisible] = useState(true);
 
   const selectProfile = useCallback((index: number) => {
-    if (photos.length === 0) return;
-    const normalizedIndex = (index + photos.length) % photos.length;
+    if (members.length === 0) return;
+    const normalizedIndex = (index + members.length) % members.length;
     setActiveIndex(normalizedIndex);
     emblaApi?.scrollTo(normalizedIndex, Boolean(reducedMotion));
-  }, [emblaApi, photos.length, reducedMotion]);
+  }, [emblaApi, members.length, reducedMotion]);
 
   const selectPrevious = useCallback(() => {
     selectProfile(activeIndex - 1);
@@ -88,12 +90,12 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
       || dragging
       || !pageVisible
       || !reelVisible
-      || photos.length < 2
+      || members.length < 2
     ) return;
 
     const timer = window.setTimeout(selectNext, defaultIntervalMs);
     return () => window.clearTimeout(timer);
-  }, [activeIndex, dragging, focused, hovered, pageVisible, photos.length, reducedMotion, reelVisible, selectNext]);
+  }, [activeIndex, dragging, focused, hovered, pageVisible, members.length, reducedMotion, reelVisible, selectNext]);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'ArrowLeft') {
@@ -128,34 +130,29 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
     >
       <div ref={viewportRef} className="about-v2-parent-guardian-reel__viewport">
         <div className="about-v2-parent-guardian-reel__track">
-          {photos.map((photo, index) => {
+          {members.map((member, index) => {
             const active = index === activeIndex;
             return (
               <article
-                key={photo}
+                key={member.id}
                 className="about-v2-parent-guardian-reel__slide"
                 role="group"
                 aria-roledescription="slide"
-                aria-label={`${index + 1} / ${photos.length}`}
+                aria-label={`${index + 1} / ${members.length}`}
                 data-active={active ? 'true' : 'false'}
-                onMouseEnter={() => {
-                  setHovered(true);
-                  if (!active) selectProfile(index);
-                }}
+                onMouseEnter={() => setHovered(true)}
               >
-                <button
-                  type="button"
+                <Link
+                  to={guardianProfilePath(member)}
                   className="about-v2-parent-guardian-reel__card"
                   aria-label={t(
                     `查看守护团成员 ${index + 1} 资料`,
                     `View guardian circle member ${index + 1} profile`,
                   )}
-                  aria-pressed={active}
-                  onClick={() => selectProfile(index)}
                 >
                   <figure>
                     <img
-                      src={photo}
+                      src={member.photo}
                       alt={t(
                         `守护团成员 ${index + 1}`,
                         `Guardian circle member ${index + 1}`,
@@ -167,10 +164,12 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
                     />
                   </figure>
                   <div className="about-v2-parent-guardian-reel__copy">
-                    <h4>？？？</h4>
-                    <p aria-hidden={!active}>？？？</p>
+                    <h4>{member.name?.[lang] ?? t('敬请期待', 'Coming soon')}</h4>
+                    <p className="!mt-2 !max-h-none !translate-y-0 !opacity-100">
+                      {t('查看详情', 'View profile')} <span aria-hidden="true">→</span>
+                    </p>
                   </div>
-                </button>
+                </Link>
               </article>
             );
           })}
@@ -182,9 +181,9 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
         role="group"
         aria-label={t('选择守护团成员', 'Choose a guardian circle member')}
       >
-        {photos.map((photo, index) => (
+        {members.map((member, index) => (
           <button
-            key={photo}
+            key={member.id}
             type="button"
             aria-label={t(
               `切换到守护团成员 ${index + 1}`,

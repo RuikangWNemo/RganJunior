@@ -99,72 +99,22 @@ describe('About editorial content system', () => {
       '/voices/tea-kitchen-and-summer',
     ]);
 
-    const adultRoster = screen.getByLabelText('守护团成员名录');
-    expect(within(adultRoster).getAllByRole('article')).toHaveLength(6);
-    expect(within(adultRoster).getAllByRole('img')).toHaveLength(6);
-    expect(within(adultRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
-      '/images/about/adult-support/zhao-jing.jpg',
-      '/images/about/adult-support/adult-support-02.webp',
-      '/images/about/adult-support/adult-support-05.webp',
-      '/images/about/adult-support/adult-support-06.webp',
-      '/images/about/adult-support/adult-support-07.webp',
-      '/images/about/adult-support/adult-support-08.webp',
-    ]);
-    expect(within(adultRoster).getAllByRole('img').every((image) => image.getAttribute('loading') === 'lazy')).toBe(true);
-    expect(within(adultRoster).getAllByRole('heading', { level: 4 }).map((heading) => heading.textContent)).toEqual([
-      '赵璟',
-      '贺超超',
-      '秋鹭',
-      '王睿康',
-      '邓老师',
-      '知予',
-    ]);
-    expect(within(adultRoster).getAllByText('？？？')).toHaveLength(6);
-
     const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
-    expect(guardianGroup).toContainElement(adultRoster);
-    expect(guardianGroup).toContainElement(screen.getByLabelText('守护团成员照片'));
-    expect(guardianGroup).not.toHaveTextContent('麦昆塔教育');
-    expect(screen.queryByRole('heading', { name: '家长守护团' })).not.toBeInTheDocument();
-    const parentGuardianRoster = screen.getByLabelText('守护团成员照片');
-    expect(parentGuardianRoster.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(9);
-    expect(parentGuardianRoster).toHaveAttribute('aria-roledescription', 'carousel');
-    expect(within(parentGuardianRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
-      '/images/about/adult-support/adult-support-03.webp',
-      '/images/about/adult-support/adult-support-04.webp',
-      '/images/about/parent-guardian/parent-guardian-03.webp',
-      '/images/about/parent-guardian/parent-guardian-04.webp',
-      '/images/about/parent-guardian/parent-guardian-05.webp',
-      '/images/about/parent-guardian/parent-guardian-06.webp',
-      '/images/about/parent-guardian/parent-guardian-07.webp',
-      '/images/about/parent-guardian/parent-guardian-08.webp',
-      '/images/about/parent-guardian/parent-guardian-09.webp',
-    ]);
-    expect(within(parentGuardianRoster).getAllByRole('img').map((image) => image.getAttribute('loading'))).toEqual([
-      'eager',
-      'eager',
-      'eager',
-      'lazy',
-      'lazy',
-      'lazy',
-      'lazy',
-      'lazy',
-      'lazy',
-    ]);
-    expect(within(parentGuardianRoster).getAllByText('？？？')).toHaveLength(18);
-    expect(
-      within(screen.getByRole('group', { name: '选择守护团成员' })).getAllByRole('button'),
-    ).toHaveLength(9);
-    expect(screen.getByRole('button', { name: '查看守护团成员 1 资料' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    const reel = within(guardianGroup).getByRole('region', { name: '守护团成员照片' });
+    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(14);
+    expect(within(reel).getAllByRole('img')).toHaveLength(14);
+    expect(within(reel).getAllByRole('link')).toHaveLength(14);
+    expect(within(reel).getByText('赵璟')).toBeInTheDocument();
+    expect(within(reel).getByText('知予')).toBeInTheDocument();
+    expect(guardianGroup).not.toHaveTextContent(/麦昆塔教育|贺超超|何超超/);
+    expect(within(reel).getAllByRole('img').map((img) => img.getAttribute('src'))).not.toContain('/images/about/adult-support/adult-support-02.webp');
+    expect(guardianGroup.querySelector('.about-v2-adult-roster')).toBeNull();
+    expect(within(guardianGroup).getByRole('link', { name: /查看全部成员/ })).toHaveAttribute('href', '/about/guardians');
+    expect(within(reel).getByRole('link', { name: '查看守护团成员 1 资料' })).toHaveAttribute('href', '/about/guardians/zhao-jing');
+    expect(within(reel).getByRole('link', { name: '查看守护团成员 14 资料' })).toHaveAttribute('href', '/about/guardians/guardian-09');
+    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 14' }));
+    expect(screen.getByRole('button', { name: '切换到守护团成员 14' })).toHaveAttribute('aria-pressed', 'true');
 
-    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 4' }));
-    expect(screen.getByRole('button', { name: '查看守护团成员 4 资料' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
   });
 
   it('keeps the English brand name together on one title line', () => {
