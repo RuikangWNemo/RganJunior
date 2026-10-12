@@ -28,14 +28,14 @@ describe('ParentGuardianReel', () => {
   it('auto-advances every two seconds', () => {
     renderReel();
 
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 1 资料' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '查看守护团成员 1 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
 
     act(() => vi.advanceTimersByTime(2000));
 
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 2 资料' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '查看守护团成员 2 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
@@ -47,20 +47,20 @@ describe('ParentGuardianReel', () => {
     const secondSlide = container.querySelectorAll('.about-v2-parent-guardian-reel__slide')[1];
 
     fireEvent.mouseEnter(secondSlide);
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 2 资料' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '查看守护团成员 2 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
 
     act(() => vi.advanceTimersByTime(4000));
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 2 资料' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '查看守护团成员 2 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
 
     fireEvent.mouseLeave(reel);
     act(() => vi.advanceTimersByTime(2000));
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 3 资料' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '查看守护团成员 3 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );

@@ -52,7 +52,7 @@ describe('About editorial content system', () => {
     expect(within(title).queryByText('阿柑少年')).not.toBeInTheDocument();
   });
 
-  it('presents the four team groups with youth, adult, and parent placeholder profiles', () => {
+  it('groups all supporting adults and parents in one guardian circle', () => {
     const { container } = renderAbout();
     const team = container.querySelector('#team');
 
@@ -65,7 +65,7 @@ describe('About editorial content system', () => {
       [...(team?.querySelectorAll('.about-v2-team-group__header h3') ?? [])].map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(['发起人', '青少年共创伙伴', '支持团队｜麦昆塔教育', '家长守护团']);
+    ).toEqual(['发起人', '青少年共创伙伴', '守护团']);
     expect(
       [...(team?.querySelector('.about-v2-team-groups')?.children ?? [])].map(
         (section) => section.getAttribute('aria-labelledby'),
@@ -74,8 +74,7 @@ describe('About editorial content system', () => {
       'team-initiator-title',
       'team-youth-title',
       'co-creation-directions-title',
-      'team-adult-title',
-      'team-parent-guardian-title',
+      'team-guardian-title',
     ]);
     expect(screen.queryByAltText('青少年伙伴围绕真实项目记录与共创')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: '阅读 Nate 的发起人故事' })).toHaveAttribute(
@@ -101,7 +100,7 @@ describe('About editorial content system', () => {
       '/voices/tea-kitchen-and-summer',
     ]);
 
-    const adultRoster = screen.getByLabelText('支持团队成员名录');
+    const adultRoster = screen.getByLabelText('守护团成员名录');
     expect(within(adultRoster).getAllByRole('article')).toHaveLength(6);
     expect(within(adultRoster).getAllByRole('img')).toHaveLength(6);
     expect(within(adultRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
@@ -123,8 +122,12 @@ describe('About editorial content system', () => {
     ]);
     expect(within(adultRoster).getAllByText('敬请期待')).toHaveLength(6);
 
-    expect(within(team as HTMLElement).getByText('参与共创，也支持每一次活动真实发生。')).toBeInTheDocument();
-    const parentGuardianRoster = screen.getByLabelText('家长守护团成员名录');
+    const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
+    expect(guardianGroup).toContainElement(adultRoster);
+    expect(guardianGroup).toContainElement(screen.getByLabelText('守护团成员照片'));
+    expect(guardianGroup).not.toHaveTextContent('麦昆塔教育');
+    expect(screen.queryByRole('heading', { name: '家长守护团' })).not.toBeInTheDocument();
+    const parentGuardianRoster = screen.getByLabelText('守护团成员照片');
     expect(parentGuardianRoster.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(9);
     expect(parentGuardianRoster).toHaveAttribute('aria-roledescription', 'carousel');
     expect(within(parentGuardianRoster).getAllByRole('img').map((image) => image.getAttribute('src'))).toEqual([
@@ -153,15 +156,15 @@ describe('About editorial content system', () => {
     expect(within(parentGuardianRoster).getAllByText('敬请期待')).toHaveLength(9);
     expect(within(parentGuardianRoster).getAllByText('成员介绍正在整理中')).toHaveLength(9);
     expect(
-      within(screen.getByRole('group', { name: '选择家长守护团成员' })).getAllByRole('button'),
+      within(screen.getByRole('group', { name: '选择守护团成员' })).getAllByRole('button'),
     ).toHaveLength(9);
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 1 资料' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: '查看守护团成员 1 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
 
-    fireEvent.click(screen.getByRole('button', { name: '切换到家长守护团成员 4' }));
-    expect(screen.getByRole('button', { name: '查看家长守护团成员 4 资料' })).toHaveAttribute(
+    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 4' }));
+    expect(screen.getByRole('button', { name: '查看守护团成员 4 资料' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );

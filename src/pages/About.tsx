@@ -96,7 +96,7 @@ const youthPartners: readonly YouthPartner[] = [
   },
 ];
 
-const supportTeamMembers = [
+const guardianMembers = [
   { photo: '/images/about/adult-support/zhao-jing.jpg', name: { zh: '赵璟', en: 'Zhao Jing' } },
   { photo: '/images/about/adult-support/adult-support-02.webp', name: { zh: '贺超超', en: 'He Chaochao' } },
   { photo: '/images/about/adult-support/adult-support-05.webp', name: { zh: '秋鹭', en: 'Qiu Lu' } },
@@ -105,7 +105,7 @@ const supportTeamMembers = [
   { photo: '/images/about/adult-support/adult-support-08.webp', name: { zh: '知予', en: 'Zhiyu' } },
 ] as const;
 
-const parentGuardianPhotos = [
+const guardianPhotos = [
   '/images/about/adult-support/adult-support-03.webp',
   '/images/about/adult-support/adult-support-04.webp',
   '/images/about/parent-guardian/parent-guardian-03.webp',
@@ -658,10 +658,10 @@ export default function About() {
                 />
               </section>
 
-              <section className="about-v2-team-group" aria-labelledby="team-adult-title">
+              <section className="about-v2-team-group" aria-labelledby="team-guardian-title">
                 <header className="about-v2-team-group__header">
                   <span aria-hidden="true">03</span>
-                  <h3 id="team-adult-title">{t('支持团队｜麦昆塔教育', 'Support Team | Maquinta Education')}</h3>
+                  <h3 id="team-guardian-title">{t('守护团', 'Guardian Circle')}</h3>
                 </header>
 
                 <article className="about-v2-adult-support">
@@ -669,15 +669,15 @@ export default function About() {
                     <h4>{t('让青少年站到前面，我们把真实世界托稳。', 'Young people step forward while we hold the real-world foundation steady.')}</h4>
                     <p>
                       {t(
-                        '麦昆塔社区教育板块是阿柑少年的孵化与支持平台。团队负责提供真实场景、生活支持、安全保障、课程设计、家长沟通和运营托底，让青少年可以站到前面，在真实世界中学习合作、表达与承担。',
-                        "Maquinta's community education practice incubates and supports R-Gan Junior. The team is responsible for providing real settings, daily-life support, safeguarding, program design, parent communication, and operational foundations so young people can step forward and learn collaboration, expression, and responsibility in the real world.",
+                        '守护团汇聚认同阿柑少年理念的伙伴与家长，参与项目与内容共创，并在活动筹备、现场支持、家庭连接和安全陪伴中贡献经验与力量，支持青少年在真实世界中学习、表达与承担。',
+                        "The Guardian Circle brings together partners and parents who share the values of R-Gan Junior. Through co-creation, activity preparation, on-site support, family connections, and safe companionship, they help young people learn, express themselves, and take responsibility in the real world.",
                       )}
                     </p>
                   </div>
                 </article>
 
-                <div className="about-v2-adult-roster" aria-label={t('支持团队成员名录', 'Support team member directory')}>
-                  {supportTeamMembers.map((member) => (
+                <div className="about-v2-adult-roster" aria-label={t('守护团成员名录', 'Guardian circle member directory')}>
+                  {guardianMembers.map((member) => (
                     <article
                       key={member.photo}
                       aria-label={t(`${member.name.zh} 档案`, `${member.name.en} profile`)}
@@ -699,27 +699,8 @@ export default function About() {
                     </article>
                   ))}
                 </div>
-              </section>
 
-              <section className="about-v2-team-group" aria-labelledby="team-parent-guardian-title">
-                <header className="about-v2-team-group__header">
-                  <span aria-hidden="true">04</span>
-                  <h3 id="team-parent-guardian-title">{t('家长守护团', 'Parent Guardian Circle')}</h3>
-                </header>
-
-                <article className="about-v2-adult-support about-v2-parent-guardian-support">
-                  <div>
-                    <h4>{t('参与共创，也支持每一次活动真实发生。', 'Co-create with us and help every activity take shape.')}</h4>
-                    <p>
-                      {t(
-                        '家长守护团欢迎认同阿柑少年理念的家长加入。家长可以参与项目与内容共创，也可以在活动筹备、现场支持、家庭连接和安全陪伴中贡献经验与力量，和青少年、成人团队一起把真实行动托稳。',
-                        'The Parent Guardian Circle welcomes families who share the values of R-Gan Junior. Parents can co-create projects and content, contribute to activity preparation and on-site support, strengthen family connections, and help provide safe companionship alongside young people and the adult team.',
-                      )}
-                    </p>
-                  </div>
-                </article>
-
-                <ParentGuardianReel photos={parentGuardianPhotos} />
+                <ParentGuardianReel photos={guardianPhotos} />
               </section>
             </div>
           </div>

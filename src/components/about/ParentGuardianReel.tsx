@@ -116,7 +116,7 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
       className="about-v2-parent-guardian-reel"
       role="region"
       aria-roledescription="carousel"
-      aria-label={t('家长守护团成员名录', 'Parent guardian circle member directory')}
+      aria-label={t('守护团成员照片', 'Guardian circle member photos')}
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onMouseLeave={() => setHovered(false)}
@@ -147,8 +147,8 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
                   type="button"
                   className="about-v2-parent-guardian-reel__card"
                   aria-label={t(
-                    `查看家长守护团成员 ${index + 1} 资料`,
-                    `View parent guardian circle member ${index + 1} profile`,
+                    `查看守护团成员 ${index + 1} 资料`,
+                    `View guardian circle member ${index + 1} profile`,
                   )}
                   aria-pressed={active}
                   onClick={() => selectProfile(index)}
@@ -157,8 +157,8 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
                     <img
                       src={photo}
                       alt={t(
-                        `家长守护团成员 ${index + 1}`,
-                        `Parent guardian circle member ${index + 1}`,
+                        `守护团成员 ${index + 1}`,
+                        `Guardian circle member ${index + 1}`,
                       )}
                       width="1067"
                       height="1600"
@@ -182,15 +182,15 @@ export default function ParentGuardianReel({ photos }: ParentGuardianReelProps) 
       <div
         className="about-v2-parent-guardian-reel__progress"
         role="group"
-        aria-label={t('选择家长守护团成员', 'Choose a parent guardian circle member')}
+        aria-label={t('选择守护团成员', 'Choose a guardian circle member')}
       >
         {photos.map((photo, index) => (
           <button
             key={photo}
             type="button"
             aria-label={t(
-              `切换到家长守护团成员 ${index + 1}`,
-              `Go to parent guardian circle member ${index + 1}`,
+              `切换到守护团成员 ${index + 1}`,
+              `Go to guardian circle member ${index + 1}`,
             )}
             aria-pressed={index === activeIndex}
             onClick={() => selectProfile(index)}
