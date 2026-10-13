@@ -23,7 +23,7 @@ export default function GuardianDirectory() {
           member ? (
             <article className="mt-10 grid items-start gap-8 md:grid-cols-2 md:gap-16">
               <img
-                className="aspect-[4/5] w-full max-w-md rounded-2xl object-cover"
+                className={`w-full max-w-md rounded-2xl ${member.fullPhotoInProfile ? 'h-auto' : 'aspect-[4/5] object-cover'}`}
                 src={member.photo}
                 alt={member.name?.[lang] ?? t('守护团成员肖像', 'Guardian circle member portrait')}
                 width="1067" height="1600" decoding="async"
@@ -70,12 +70,15 @@ export default function GuardianDirectory() {
                   className="block min-w-0 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                   aria-label={t(`查看守护团成员 ${index + 1} 资料`, `View guardian circle member ${index + 1} profile`)}
                 >
+                  <div className="aspect-[4/5] overflow-hidden rounded-2xl">
                   <img
-                    className="aspect-[4/5] w-full rounded-2xl object-cover"
+                    className="h-full w-full object-cover"
                     src={entry.photo}
+                    style={entry.cardScale ? { transform: `scale(${entry.cardScale})`, transformOrigin: '50% 75%' } : undefined}
                     alt={entry.name?.[lang] ?? t(`守护团成员 ${index + 1}`, `Guardian circle member ${index + 1}`)}
                     width="1067" height="1600" loading={index < 4 ? 'eager' : 'lazy'} decoding="async"
                   />
+                  </div>
                   <h2 className="mt-4 text-xl text-primary">{entry.name?.[lang] ?? t('敬请期待', 'Coming soon')}</h2>
                   <p className="mt-2 text-sm text-muted-foreground">{t('查看详情', 'View profile')} <span aria-hidden="true">→</span></p>
                 </Link>
