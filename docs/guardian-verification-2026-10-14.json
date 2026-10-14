@@ -1,0 +1,22 @@
+{
+  "commit": "706729a928b700bbe86149b4e668454e28d4ff59",
+  "deployment": "dpl_Aq7DqdV4YfcMF2fGxafFZ6BDKhQn",
+  "url": "https://www.rganjunior.org/about/guardians",
+  "verifiedWith": "browser DOM, actual navigation and visual screenshot inspection",
+  "memberCount": 15,
+  "heChaochaoPosition": 2,
+  "zhuoFeiPosition": 14,
+  "zhuoFeiCount": 1,
+  "lastMember": "guardian-09",
+  "portrait": "/images/about/guardians/zhuo-fei-20261014-upright.png",
+  "portraitNaturalDimensions": [
+    1122,
+    1402
+  ],
+  "portraitLoaded": true,
+  "canonicalProfile": "/about/guardians/zhuo-fei",
+  "legacyProfileAlias": "/about/guardians/guardian-08",
+  "legacyProfileVerified": true,
+  "browserErrors": 0,
+  "scope": "Guardian roster, image display, profile navigation; not a complete backend verification."
+}

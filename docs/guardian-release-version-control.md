@@ -1,6 +1,6 @@
 # 团队资料临时发布与本地整理版本
 
-更新：2026-10-14（卓霏去重、回原位置并调正照片）
+更新：2026-10-14（守护团、文章与英文布局统一发布完成）
 
 ## 本地整理版
 
@@ -12,7 +12,7 @@
 ## 临时发布版
 
 - 分支：`codex/guardian-coming-soon-2026-10-12`
-- 待统一发布的应用提交：`2aafeeb`（包含 `a4b8a9a`、`307a37d`、 `a86ad2a`、 `57586a8`、`fcfac79`、`a68d255`、`082a48a`）
+- 当前正式应用提交：`706729a`（包含 `2aafeeb`、 `a4b8a9a`、`307a37d`、 `a86ad2a`、 `57586a8`、`fcfac79`、`a68d255`、`082a48a`）
 - 目录：`/Users/hw/.codex/worktrees/rgan-guardian-release/rgan-junior-roots-main`
 - 基线：原生产提交 `1f3857091baf9169e1106a61c14cb6e3fd1553b3`。
 - 支持团队、家长守护团已统一为“守护团 / Guardian Circle”，保留贺超超，卓霏替换原 `guardian-08` 而非新增重复项，共 15 张照片使用同一份名单，统一轮播、不分组；移除该区域的“麦昆塔教育”表述，未完善资料继续显示敬请期待 / Coming soon。
@@ -20,10 +20,10 @@
 - 青少年共创伙伴：保留真实姓名、照片和故事入口，移除问号和未填写的身份、标题，显示资料整理说明。
 - 守护团单独预构建部署（已被并行文章发布覆盖，非最终正式版本）：`https://rgan-junior-roots-main-n1afu92i1-rganjuniors-projects.vercel.app`
 - 守护团与文章合并预部署（尚未切换正式）：`dpl_6LXsvcN2iiNDsiTD5dcRkzuwF5MS`，`https://rgan-junior-roots-main-dbnrs9x5m-rganjuniors-projects.vercel.app`
-- 当前正式部署仍为文章版：`dpl_ubWZJydKxZoR2JjsnwNw382R4X9Y`，尚未包含卓霏去重。
-- 最终发布标签：待布局任务统一上线后记录。
+- 当前正式部署：`dpl_Aq7DqdV4YfcMF2fGxafFZ6BDKhQn`，`https://rgan-junior-roots-main-n6br35ant-rganjuniors-projects.vercel.app`。已包含卓霏去重、文章功能及英文布局修正。
+- 最终发布标签：`release/2026-10-14-guardian-layout-unified`（指向 `706729a`）。
 - 正式域名：`https://www.rganjunior.org`
-- 上一生产部署：`dpl_5jDmAtpdSTSACncjGZNGS9fnWjgC`（标签 `release/2026-10-14-guardian-roster`）；此前部署：`dpl_qmzkkvryLsvxrkjhmChyE9j5p7rm`（标签 `release/2026-10-13-guardian-portraits`）；此前部署：`dpl_4xr2Ymeg1dxW6mGe13BvkCjH6TKB`（标签 `release/2026-10-12-guardian-directory`）；此前部署：`dpl_9W3EqeyckdQHmY4PtaYz1QuNrJAp`（标签 `release/2026-10-12-guardian-circle`）；更早生产部署：`dpl_D6kgRk4otDLDWymfun7i9wXngCAX`、`dpl_FrK8HjnV7jNPHQ7AMvjwYciJq5az`。旧发布标签仍保留。
+- 上一生产部署：`dpl_ubWZJydKxZoR2JjsnwNw382R4X9Y`（文章发布版）；此前部署：`dpl_5jDmAtpdSTSACncjGZNGS9fnWjgC`（标签 `release/2026-10-14-guardian-roster`）；此前部署：`dpl_qmzkkvryLsvxrkjhmChyE9j5p7rm`（标签 `release/2026-10-13-guardian-portraits`）；此前部署：`dpl_4xr2Ymeg1dxW6mGe13BvkCjH6TKB`（标签 `release/2026-10-12-guardian-directory`）；此前部署：`dpl_9W3EqeyckdQHmY4PtaYz1QuNrJAp`（标签 `release/2026-10-12-guardian-circle`）；更早生产部署：`dpl_D6kgRk4otDLDWymfun7i9wXngCAX`、`dpl_FrK8HjnV7jNPHQ7AMvjwYciJq5az`。旧发布标签仍保留。
 - 10 月 12 日验证记录：已切换正式域名。正式站统一轮播有 14 张照片、14 个详情链接；全部成员页有 14 个条目；移除的姓名及照片未出现在展示区域，团队问号占位为 0。正式站名录 → 详情 → 返回名录 → 返回关于页 → 名录入口已核验，浏览器错误日志为 0。
 - 10 月 12 日验证：18 项相关测试、应用类型检查、局部 ESLint 检查及本机完整 Vercel 生产构建通过。本机浏览器检查中英文、390px 手机端名录和详情无横向溢出，并验证轮播链接；上传后的 About 与 GuardianDirectory 脚本、详情直达页面与本机构建逐字一致。Vercel 日志确认使用 `.vercel/output` 预构建成品。此次验证覆盖团队展示与成员导航，不代表全部后台业务流程已重新验证。
 
@@ -61,10 +61,17 @@
 ## 单一发布者协调
 
 - 用户在任务 `01a133d0-2f7d-7252-991c-5a3debb0e07c` 明确授权两个任务协同处理版本冲突。
-- 统一源码基线：`2aafeeb`，守护团修正加当前线上文章功能。合并版55项相关测试、类型检查、本机生产构建通过；5份上传脚本/照片逐字一致。
+- 统一源码基线：`2aafeeb`，守护团修正加当前线上文章功能。最终已发布源码：`706729a928b700bbe86149b4e668454e28d4ff59`，已合并布局任务提供的20文件补丁，逐一SHA256与其发布清单一致，发布工作区干净。合并版55项相关测试、类型检查、本机生产构建通过；5份上传脚本/照片逐字一致。
 - 由文章/英文布局任务唯一负责加入布局与美式 programs 修正，并完成最终本机构建和正式 promote。本守护团任务不再执行 promote，只负责守护团核验及版本记录。
 - 预部署 `dpl_6LXsvcN2iiNDsiTD5dcRkzuwF5MS` 未包含随后进行的英文布局补丁，不应直接上线。
 - 公开构建配置必须沿用文章正式版的两项 VITE_SUPABASE 值，避免空环境值造成公开文章查询失效；不改服务端私密配置。
+
+## 最终正式站核验
+
+- 统一版本 `706729a` 已由唯一发布任务完成本机预构建上传和 promote；其发布证据保存在 `docs/layout-overflow-2026-10-14/`。1053份源码与其构建副本哈希一致。
+- 守护团任务已独立打开正式站核验：名录恰好15项，贺超超第2、卓霏第14且仅一项、guardian-09第15；相关照片实际加载成功，目视检查卓霏照片端正居中。
+- 实际点击卓霏卡片可进入新详情路径；旧 `guardian-08` 直达链接继续显示同一份卓霏资料和1122×1402的新照片。介绍仍为 Coming soon；本次页面浏览器error日志0。
+- 核验范围为守护团名单、照片和个人导航；其他布局与文章页面由发布任务分别验证，不代表全部后台业务重新验收。本任务在统一发布约定后没有再次部署或 promote。
 
 ## 后续发布约定
 
