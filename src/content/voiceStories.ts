@@ -1,5 +1,6 @@
 import type { LocalizedText } from '@/lib/brand';
 import campInvitationHtml from './voices/summer-co-creation-camp-invitation.html?raw';
+import campInvitationEnglishHtml from './voices/summer-co-creation-camp-invitation.en.html?raw';
 import nateStoryHtml from './voices/it-takes-a-village.html?raw';
 import nateStoryEnglishHtml from './voices/it-takes-a-village.en.html?raw';
 import ruorongStoryHtml from './voices/tea-connects-an-american-girl.html?raw';
@@ -33,29 +34,29 @@ export const voiceStories: VoiceStory[] = [
     slug: 'summer-co-creation-camp-invitation',
     order: 1,
     kind: 'project-letter',
-    kindLabel: { zh: '项目发起信', en: 'Project Letter' },
+    kindLabel: { zh: '项目发起信', en: "A Letter of Invitation" },
     title: {
       zh: '阿柑少年生活共创营｜来自阿柑少年的一份邀请',
       en: "R-Gan Junior Life Co-creation Camp: An Invitation",
     },
     description: {
       zh: '这个暑假，Nate 与天时邀请同龄人走进森林、田野和真实社区，在共同生活中重新理解土地、食物和自己的责任。',
-      en: 'Nate and Tianshi invite their peers into forests, fields, and community life to reconnect with land, food, and responsibility.',
+      en: "This summer, Nate and Tianshi invite their peers into forests, fields, and real communities to gain a fresh understanding of land, food, and their own responsibilities through living together.",
     },
     author: {
       zh: 'Nate、张天时与阿柑少年发起小组',
-      en: "Nate, Tianshi, and the R-Gan Junior initiating group",
+      en: "Nate, Tianshi Zhang, and the R-Gan Junior founding team",
     },
     displayDate: '2026-07-13',
     originalUrl: 'https://mp.weixin.qq.com/s/tR160-ThkMAFroQFxSvtvQ',
     cover: '/stories/summer-co-creation-camp-invitation/cover.jpg',
     coverAlt: {
       zh: '两位少年站在菜园中的阿柑少年生活共创营封面',
-      en: "R-Gan Junior camp cover showing two young people in a garden",
+      en: "R-Gan Junior Life Co-creation Camp cover showing two young people in a garden",
     },
     coverWidth: 1280,
     coverHeight: 545,
-    bodyHtml: { zh: campInvitationHtml, en: campInvitationHtml },
+    bodyHtml: { zh: campInvitationHtml, en: campInvitationEnglishHtml },
   },
   {
     slug: 'it-takes-a-village',
@@ -93,15 +94,15 @@ export const voiceStories: VoiceStory[] = [
     },
     description: {
       zh: '若容从一碗茶和一次次回到中国的经历出发，找到与伙伴共同走进森林、乡村和内心的方式。',
-      en: 'Ruorong traces how tea and repeated returns to China led her toward the forest, the village, and a shared youth community.',
+      en: "Rosie shares how a bowl of tea and repeated visits to China helped her explore forests, village life, and her inner world with others.",
     },
-    author: { zh: '陈若容', en: 'Ruorong Chen' },
+    author: { zh: '陈若容', en: "Rosie Chen" },
     displayDate: '2026-07-16',
     originalUrl: 'https://mp.weixin.qq.com/s/lkxawkrQ-iGeaetu3TClBw',
     cover: '/stories/tea-connects-an-american-girl/cover.jpg',
     coverAlt: {
       zh: '若容张开双臂面对乡村田野的成长故事封面',
-      en: 'Ruorong looking over rural fields with her arms open',
+      en: "Rosie looking over rural fields with her arms open",
     },
     coverWidth: 1280,
     coverHeight: 545,
@@ -118,15 +119,15 @@ export const voiceStories: VoiceStory[] = [
     },
     description: {
       zh: '若音在作茶、下厨和亲近自然的日常里放慢脚步，也邀请更多青少年重新感受生活。',
-      en: 'Ruoyin slows down through tea making, cooking, and time in nature, then invites other young people to do the same.',
+      en: "Ruby slows down through tea making, cooking, and time in nature, then invites other young people to do the same.",
     },
-    author: { zh: '黄若音', en: 'Ruoyin Huang' },
+    author: { zh: '黄若音', en: "Ruby Huang" },
     displayDate: '2026-07-17',
     originalUrl: 'https://mp.weixin.qq.com/s/vGXstVJT7v-E_Y-ymVq6FA',
     cover: '/stories/tea-kitchen-and-summer/cover.jpg',
     coverAlt: {
       zh: '若音在树林中回望镜头的成长故事封面',
-      en: 'Ruoyin looking toward the camera beneath trees',
+      en: "Ruby looking toward the camera beneath trees",
     },
     coverWidth: 1280,
     coverHeight: 544,
@@ -143,7 +144,7 @@ export const voiceStories: VoiceStory[] = [
     },
     description: {
       zh: '张天时希望把科技带回真实生活，把 AI 和数字工具带到土地现场，为阿柑少年提供来自科技与社群的力量。',
-      en: "Tianshi wants to bring technology back into daily life and connect AI, digital tools, land, and R-Gan Junior's community.",
+      en: "Tianshi hopes to bring technology into everyday life and use AI and digital tools in work with the land, contributing to R-Gan Junior through technology and community-building.",
     },
     author: { zh: '张天时', en: 'Tianshi Zhang' },
     displayDate: '2026-07-18',

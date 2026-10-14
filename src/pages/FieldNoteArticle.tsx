@@ -17,7 +17,7 @@ function formatDate(date: string, language: 'zh' | 'en') {
 
 export default function FieldNoteArticle() {
   const { slug } = useParams<{ slug: string }>();
-  const { lang, t } = useLanguage();
+  const { lang, t, setLang } = useLanguage();
   const noteQuery = useQuery({
     queryKey: ['field-notes', 'article', slug],
     queryFn: () => fieldNotesRepository.getPublishedNoteBySlug(slug ?? ''),
@@ -101,6 +101,10 @@ export default function FieldNoteArticle() {
               >
                 {pickLocalized(note.title, lang)}
               </h1>
+              {note.contentHtmlEn ? <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label={t('文章语言', 'Article language')}>
+                <button type="button" aria-pressed={lang === 'zh'} onClick={() => setLang('zh')} className="min-h-11 rounded-full border border-border px-4 text-sm aria-pressed:border-primary aria-pressed:text-primary">中文原文</button>
+                <button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')} className="min-h-11 rounded-full border border-border px-4 text-sm aria-pressed:border-primary aria-pressed:text-primary">English</button>
+              </div> : null}
               <p className="mt-7 max-w-3xl text-base leading-8 text-muted-foreground md:text-lg md:leading-9">
                 {pickLocalized(note.excerpt, lang)}
               </p>
@@ -130,7 +134,7 @@ export default function FieldNoteArticle() {
 
         <div className="container mx-auto max-w-[46rem] px-4 py-14 sm:px-6 md:py-20 lg:px-8">
           {contentHtml ? (
-            <div className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: contentHtml }} />
+            <div lang={lang === 'en' && note.contentHtmlEn ? 'en' : 'zh'} className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: contentHtml }} />
           ) : (
             <div className="field-note-prose whitespace-pre-wrap text-[1.0625rem] leading-[2.05] text-foreground/85">{note.plainContent}</div>
           )}

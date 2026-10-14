@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useDeferredValue } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { FieldNoteCard } from '@/components/field-notes/FieldNoteCard';
+import { FeaturedReader } from '@/components/field-notes/FeaturedReader';
 import {
   FieldNoteExplorer,
   type ExplorerDimension,
@@ -123,15 +123,9 @@ export default function FieldNotes() {
             </div>
 
             {allNotesQuery.isPending ? (
-              <div className="grid animate-pulse gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.65fr)]">
-                <div>
-                  <div className="aspect-[16/10] rounded-lg bg-secondary" />
-                  <div className="mt-7 h-10 w-4/5 rounded bg-secondary" />
-                </div>
-                <div className="space-y-12">
-                  <div className="h-52 rounded-lg bg-secondary" />
-                  <div className="h-52 rounded-lg bg-secondary" />
-                </div>
+              <div className="grid animate-pulse gap-8 md:grid-cols-2" aria-label={t('正在读取精选', 'Loading featured articles')}>
+                <div className="aspect-[4/3] rounded-lg bg-secondary" />
+                <div className="self-center space-y-5"><div className="h-8 w-3/4 bg-secondary" /><div className="h-24 bg-secondary" /></div>
               </div>
             ) : allNotesQuery.isError ? (
               <div className="rounded-lg border border-border bg-card/50 px-6 py-12 text-center" role="alert">
@@ -139,14 +133,7 @@ export default function FieldNotes() {
                 <button type="button" className="mt-5 min-h-11 text-sm font-medium text-primary" onClick={() => void allNotesQuery.refetch()}>{t('重新加载', 'Try again')}</button>
               </div>
             ) : featured.length ? (
-              <div className="grid gap-14 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.65fr)] lg:gap-12">
-                <FieldNoteCard note={featured[0]} variant="lead" />
-                <div className="space-y-10 lg:pt-2">
-                  {featured.slice(1).map((note, index) => (
-                    <FieldNoteCard key={note.slug} note={note} variant="side" index={index + 1} />
-                  ))}
-                </div>
-              </div>
+              <FeaturedReader notes={featured} />
             ) : (
               <div className="rounded-lg border border-dashed border-border bg-card/40 px-6 py-12 text-center">
                 <h3 className="font-serif text-2xl text-foreground">{t('本期精选正在准备中', 'The next featured selection is being prepared')}</h3>

@@ -1,3 +1,4 @@
+import { articleTranslations, articleAuthorNames } from '@/content/articleTranslations';
 import { voiceStories } from '@/content/voiceStories';
 import communityMascot from '@/assets/mascot-wide.png';
 import villageIllustration from '@/assets/village-illustration.webp';
@@ -93,7 +94,7 @@ function mappedAuthors(record: PublicNoteRecord): FieldNotePerson[] {
       slug: String(person.slug ?? 'community-author'),
       name: {
         zh: String(person.nature_name || person.display_name || '社群作者'),
-        en: String(person.nature_name || person.display_name || 'Community author'),
+        en: articleAuthorNames[String(person.nature_name || person.display_name)] || String(person.nature_name || person.display_name || 'Community author'),
       },
       identityLabel: { zh: '社群作者', en: 'Community author' },
       introduction: { zh: '', en: '' },
@@ -147,21 +148,22 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
   const excerpt = String(record.excerpt ?? '').trim();
   const plainText = String(record.content ?? '');
   const original = voiceStories.find((story) => story.slug === slug);
+  const translated = articleTranslations[slug];
   const publishedAt = original?.displayDate || String(record.published_at || record.updated_at || '').slice(0, 10);
 
   return {
     slug,
-    title: { zh: title, en: original?.title.en || title },
-    excerpt: { zh: excerpt, en: original?.description.en || excerpt },
+    title: { zh: title, en: translated?.title || original?.title.en || title },
+    excerpt: { zh: translated?.excerptZh || excerpt, en: translated?.excerpt || original?.description.en || excerpt },
     authorSlugs: authors.map((author) => author.slug),
     topicSlugs: topics.map((topic) => topic.slug),
     publishedAt,
     readingMinutes: Math.max(1, Math.ceil((language === 'zh' ? plainText.length : plainText.split(/\s+/).length) / (language === 'zh' ? 420 : 220))),
     featuredRank: record.featured === true ? 1 : undefined,
     cover: await mediaUrl(record),
-    coverAlt: { zh: title, en: title },
+    coverAlt: { zh: title, en: translated?.title || original?.coverAlt.en || title },
     contentHtml: await resolvedContentHtml(record),
-    contentHtmlEn: original?.bodyHtml.en,
+    contentHtmlEn: translated?.html || original?.bodyHtml.en,
     originalUrl: original?.originalUrl,
     plainContent: plainText,
     authors,

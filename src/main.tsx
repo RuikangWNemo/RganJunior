@@ -4,3 +4,5 @@ import "./index.css";
 import "./styles/content-layout.css";
 
 createRoot(document.getElementById("root")!).render(<App />);
+
+import "./styles/featured-reader.css";
