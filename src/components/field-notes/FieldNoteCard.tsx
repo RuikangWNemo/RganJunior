@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { FieldNote } from '@/types/field-notes';
@@ -56,7 +57,7 @@ export function FieldNoteCard({
           className="cursor-target block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         >
           <div className="overflow-hidden rounded-lg bg-secondary/50">
-            <img
+            <OptimizedImage
               src={note.cover}
               alt={pickLocalized(note.coverAlt, lang)}
               loading="eager"
@@ -101,7 +102,7 @@ export function FieldNoteCard({
             <div className="mt-4">{meta}</div>
           </div>
           <div className="overflow-hidden rounded-lg bg-secondary/50">
-            <img
+            <OptimizedImage
               src={note.cover}
               alt=""
               loading="lazy"
@@ -134,7 +135,7 @@ export function FieldNoteCard({
           </p>
         </div>
         <div className="overflow-hidden rounded-lg bg-secondary/50 sm:order-none">
-          <img
+          <OptimizedImage
             src={note.cover}
             alt=""
             loading="lazy"

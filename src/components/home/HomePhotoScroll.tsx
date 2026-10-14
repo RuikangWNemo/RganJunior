@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
 
@@ -80,7 +81,7 @@ function PhotoFigure({
           featured ? 'aspect-[16/10] lg:aspect-[16/9]' : 'aspect-[4/3]'
         }`}
       >
-        <img
+        <OptimizedImage
           src={photo.src}
           alt={title}
           className="h-full w-full object-cover saturate-[0.9] transition duration-700 ease-out group-hover:scale-[1.025] group-hover:saturate-100"

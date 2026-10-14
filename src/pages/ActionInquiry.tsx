@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowLeft, Mail, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import ActionInquiryForm from '@/components/actions/ActionInquiryForm';
@@ -81,7 +82,7 @@ export default function ActionInquiry() {
             </p>
           )}
           {PUBLIC_CONTACT.wechatQrImage && (
-            <img
+            <OptimizedImage
               src={PUBLIC_CONTACT.wechatQrImage}
               alt={t('阿柑少年项目咨询微信二维码', "R-Gan Junior program inquiry WeChat QR code")}
               width="240"

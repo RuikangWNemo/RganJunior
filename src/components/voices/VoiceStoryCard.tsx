@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { VoiceStory } from '@/content/voiceStories';
@@ -33,7 +34,7 @@ export function VoiceStoryCard({
         aria-label={t(`阅读：${story.title.zh}`, `Read: ${story.title.en}`)}
       >
         <figure className="overflow-hidden rounded-lg bg-secondary/55">
-          <img
+          <OptimizedImage
             src={story.cover}
             alt={pickLocalized(story.coverAlt, lang)}
             width={story.coverWidth}

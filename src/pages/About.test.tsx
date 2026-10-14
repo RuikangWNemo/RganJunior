@@ -1,3 +1,4 @@
+import { getStaticImageProps } from '@/lib/staticImages';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -195,9 +196,9 @@ describe('About editorial content system', () => {
       hidden: true,
     });
 
-    expect(nanbaoshanPhoto).toHaveAttribute('src', '/images/about/nanbaoshan-cloud-forest.webp');
-    expect(jinyuxiPhoto).toHaveAttribute('src', '/images/about/jinyuxi-forest-valley.webp');
-    expect(liboPhoto).toHaveAttribute('src', '/images/about/libo-highland.webp');
+    expect(nanbaoshanPhoto).toHaveAttribute('src', getStaticImageProps('/images/about/nanbaoshan-cloud-forest.webp').src);
+    expect(jinyuxiPhoto).toHaveAttribute('src', getStaticImageProps('/images/about/jinyuxi-forest-valley.webp').src);
+    expect(liboPhoto).toHaveAttribute('src', getStaticImageProps('/images/about/libo-highland.webp').src);
     expect(nanbaoshanPhoto.closest('article')).toHaveClass('about-v2-lab-card--standard');
     expect(jinyuxiPhoto.closest('article')).toHaveClass('about-v2-lab-card--standard');
     expect(liboPhoto.closest('article')).toHaveClass('about-v2-lab-card--standard');
@@ -245,7 +246,7 @@ describe('About editorial content system', () => {
       '/images/about/methods/02/01-community-visit.webp',
       '/images/about/methods/03/00-tieniu-aerial-overview.jpg',
       '/images/about/methods/04/01-youth-led-moment.webp',
-    ]);
+    ].map((src) => getStaticImageProps(src).src));
     expect(
       [...reels[2].querySelectorAll('img')].map((image) => image.getAttribute('src')),
     ).toEqual([
@@ -257,7 +258,7 @@ describe('About editorial content system', () => {
       '/images/about/methods/03/01-issue-workshop.webp',
       '/images/about/methods/03/03-farming-practice.webp',
       '/images/about/methods/03/02-local-conversation.webp',
-    ]);
+    ].map((src) => getStaticImageProps(src).src));
     expect(within(methodCarousel).getByRole('region', { name: '真实生活照片轮播' })).toBeInTheDocument();
   });
 

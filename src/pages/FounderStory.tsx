@@ -1,8 +1,10 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import nateFounderPhoto from '@/assets/nate-founder-story-sunset.jpg';
+import nateFounderPhoto from '@/assets/nate-founder-story-sunset-1280.webp';
+import nateFounderPhotoSmall from '@/assets/nate-founder-story-sunset-640.webp';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized, type LocalizedText } from '@/lib/brand';
 
@@ -181,8 +183,10 @@ export default function FounderStory() {
             transition={{ duration: reducedMotion ? 0 : 0.72, delay: reducedMotion ? 0 : 0.08 }}
           >
             <div className="founder-story-image-frame">
-              <img
+              <OptimizedImage
                 src={nateFounderPhoto}
+                srcSet={`${nateFounderPhotoSmall} 640w, ${nateFounderPhoto} 1280w`}
+                sizes="(max-width: 767px) calc(100vw - 2rem), 50vw"
                 alt={t('阿柑少年发起人 Nate 的肖像', "Portrait of Nate, founder of R-Gan Junior")}
                 width="6569"
                 height="4379"
@@ -239,7 +243,7 @@ export default function FounderStory() {
                       <p>{pickLocalized(moment.body, lang)}</p>
                     </div>
                     <figure className="founder-story-moment__visual">
-                      <img
+                      <OptimizedImage
                         src={moment.image}
                         alt={pickLocalized(moment.imageAlt, lang)}
                         width={moment.imageWidth}
@@ -259,7 +263,7 @@ export default function FounderStory() {
           <div className="founder-story-shell founder-story-community__layout">
             <Reveal className="founder-story-community__visual">
               <figure>
-                <img
+                <OptimizedImage
                   src="/stories/it-takes-a-village/images/image-005.webp"
                   alt={t('在铁牛村共同生活的阿柑青年合照', "R-Gan Youth living together in Tieniu Village")}
                   width="1080"

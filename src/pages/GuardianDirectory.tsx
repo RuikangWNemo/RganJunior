@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link, useParams } from 'react-router-dom';
 import { guardianMembers, guardianProfilePath } from '@/content/guardians';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -22,9 +23,10 @@ export default function GuardianDirectory() {
         {memberId ? (
           member ? (
             <article className="mt-10 grid items-start gap-8 md:grid-cols-2 md:gap-16">
-              <img
+              <OptimizedImage
                 className={`w-full max-w-md rounded-2xl ${member.fullPhotoInProfile ? 'h-auto' : 'aspect-[4/5] object-cover'}`}
                 src={member.photo}
+                    sizes="(max-width: 767px) calc(100vw - 3rem), 448px"
                 alt={member.name?.[lang] ?? t('守护团成员肖像', 'Guardian circle member portrait')}
                 width="1067" height="1600" decoding="async"
               />
@@ -71,9 +73,10 @@ export default function GuardianDirectory() {
                   aria-label={t(`查看守护团成员 ${index + 1} 资料`, `View guardian circle member ${index + 1} profile`)}
                 >
                   <div className="aspect-[4/5] overflow-hidden rounded-2xl">
-                  <img
+                  <OptimizedImage
                     className="h-full w-full object-cover"
                     src={entry.photo}
+                    sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 260px"
                     style={{ objectPosition: entry.cardPosition, ...(entry.cardScale ? { transform: `scale(${entry.cardScale})`, transformOrigin: '50% 75%' } : {}) }}
                     alt={entry.name?.[lang] ?? t(`守护团成员 ${index + 1}`, `Guardian circle member ${index + 1}`)}
                     width="1067" height="1600" loading={index < 4 ? 'eager' : 'lazy'} decoding="async"

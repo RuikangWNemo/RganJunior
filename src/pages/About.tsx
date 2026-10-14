@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
@@ -18,11 +19,12 @@ import {
   readAboutChapterHash,
   type AboutChapterId,
 } from '@/lib/aboutNavigation';
-import aboutTeamPhoto from '@/assets/about-team-photo.jpg';
+import aboutTeamPhoto from '@/assets/about-team-photo-1280.webp';
+import aboutTeamPhotoSmall from '@/assets/about-team-photo-640.webp';
 import nateFounderPhoto from '@/assets/about-team/nate-shi.webp';
 import rossiePortrait from '@/assets/about-team/rossie-chen.webp';
 import rubyPortrait from '@/assets/about-team/ruby-huang.webp';
-import tianshiPortrait from '@/assets/about-team/zhang-tianshi.webp';
+import tianshiPortrait from '@/assets/about-team/zhang-tianshi-640.webp';
 
 type LocalizedText = {
   zh: string;
@@ -470,7 +472,7 @@ export default function About() {
           </div>
 
           <figure className="about-v2-hero__figure">
-            <img
+            <OptimizedImage
               src="/images/s06-linpan-aerial-overview.jpg"
               alt={t('铁牛村林盘、果园、鱼塘与院落的航拍图', 'Aerial view of Tieniu Village, orchards, ponds, and homes')}
               width="2890"
@@ -509,8 +511,10 @@ export default function About() {
               />
 
               <figure className="about-v2-team__intro-figure">
-                <img
+                <OptimizedImage
                   src={aboutTeamPhoto}
+                  srcSet={`${aboutTeamPhotoSmall} 640w, ${aboutTeamPhoto} 1280w`}
+                  sizes="(max-width: 767px) calc(100vw - 2rem), 50vw"
                   alt={t('阿柑少年青少年共创伙伴围坐桌边', "R-Gan Junior Co-creators gathered around a table")}
                   width="1536"
                   height="1024"
@@ -529,7 +533,7 @@ export default function About() {
 
                 <article className="about-v2-founder">
                   <figure>
-                    <img
+                    <OptimizedImage
                       src={nateFounderPhoto}
                       alt={t('阿柑少年发起人 Nate 在书房里静坐', "Nate, Founder of R-Gan Junior, sitting quietly in a reading room")}
                       width="1350"
@@ -588,7 +592,7 @@ export default function About() {
                   {youthPartners.map((partner) => (
                     <article key={partner.key} aria-labelledby={`about-partner-${partner.key}`}>
                       <figure>
-                        <img
+                        <OptimizedImage
                           src={partner.portrait.src}
                           alt={pickLocalized(partner.portrait.alt, lang)}
                           width={partner.portrait.width}
@@ -687,7 +691,7 @@ export default function About() {
               renderSlide={(belief) => (
                 <article key={belief.number}>
                   <figure>
-                    <img
+                    <OptimizedImage
                       src={belief.imageSrc}
                       alt={pickLocalized(belief.imageAlt, lang)}
                       width="560"

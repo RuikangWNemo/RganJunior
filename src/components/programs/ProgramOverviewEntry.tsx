@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { ActionProgramOption } from '@/content/actionPrograms';
@@ -65,7 +66,7 @@ export default function ProgramOverviewEntry({
         </div>
 
         <figure className="program-overview-entry__image">
-          <img
+          <OptimizedImage
             src={program.image.src}
             alt={pickLocalized(program.image.alt, lang)}
             width={program.image.width}

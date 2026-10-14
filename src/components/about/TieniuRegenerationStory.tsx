@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized } from '@/lib/brand';
 
@@ -70,7 +71,7 @@ export default function TieniuRegenerationStory() {
 
       <div className="about-land-repair__problem">
         <figure>
-          <img
+          <OptimizedImage
             src="/archive/elements/photos/site-ecology/s04-soil-root-damage.jpg"
             alt={t('板结土壤与受损根系的现场照片', 'Compacted soil and damaged roots on site')}
             loading="lazy"
@@ -113,7 +114,7 @@ export default function TieniuRegenerationStory() {
         </div>
 
         <figure className="about-land-repair__diagram">
-          <img
+          <OptimizedImage
             src="/archive/elements/graphics/infographics/s05-linpan-biodiversity-restoration-diagram.png"
             alt={t('林盘生物多样性修复前后示意图', 'Diagram comparing Linpan biodiversity before and after restoration')}
             loading="lazy"

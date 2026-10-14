@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -28,7 +29,7 @@ export function FeaturedReader({ notes }: { notes: FieldNote[] }) {
       {notes.map((note) => <TabsContent key={note.slug} value={note.slug} className="featured-reader__panel">
         <div className="featured-reader__stage">
           <Link to={`/field-notes/${note.slug}`} className="featured-reader__image" aria-label={t(`阅读：${note.title.zh}`, `Read: ${note.title.en}`)}>
-            <img src={note.cover} alt={pickLocalized(note.coverAlt, lang)} decoding="async" />
+            <OptimizedImage src={note.cover} alt={pickLocalized(note.coverAlt, lang)} decoding="async" />
           </Link>
           <div className="featured-reader__copy">
             <p className="featured-reader__byline">{note.authors.map((author) => pickLocalized(author.name, lang)).join(' · ')}<span aria-hidden="true"> / </span>{t(`${note.readingMinutes} 分钟阅读`, `${note.readingMinutes} min read`)}</p>

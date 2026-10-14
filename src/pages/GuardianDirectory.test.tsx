@@ -1,3 +1,4 @@
+import { getStaticImageProps } from '@/lib/staticImages';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
@@ -29,7 +30,7 @@ describe('Guardian directory navigation', () => {
     expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).not.toContain('/images/about/parent-guardian/parent-guardian-08.webp');
     fireEvent.click(within(list).getByRole('link', { name: '查看守护团成员 1 资料' }));
     expect(screen.getByRole('heading', { level: 1, name: '赵璟' })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: '赵璟' })).toHaveAttribute('src', '/images/about/adult-support/zhao-jing.jpg');
+    expect(screen.getByRole('img', { name: '赵璟' })).toHaveAttribute('src', getStaticImageProps('/images/about/adult-support/zhao-jing.jpg').src);
     expect(screen.getByText('敬请期待')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('link', { name: /查看全部成员/ }));
     expect(screen.getByLabelText('全部守护团成员')).toBeInTheDocument();
@@ -39,7 +40,7 @@ describe('Guardian directory navigation', () => {
     renderDirectory('/about/guardians/guardian-09', 'en');
     expect(screen.getByRole('heading', { level: 1, name: 'Guardian Circle Member' })).toBeInTheDocument();
     expect(screen.getByText('Coming soon')).toBeInTheDocument();
-    expect(screen.getByRole('img')).toHaveAttribute('src', '/images/about/parent-guardian/parent-guardian-09.webp');
+    expect(screen.getByRole('img')).toHaveAttribute('src', getStaticImageProps('/images/about/parent-guardian/parent-guardian-09.webp').src);
     expect(screen.getByRole('link', { name: /View all members/ })).toHaveAttribute('href', '/about/guardians');
   });
 
@@ -50,7 +51,7 @@ describe('Guardian directory navigation', () => {
   ])('opens the confirmed profile at %s', (id, name, photo) => {
     renderDirectory(`/about/guardians/${id}`);
     expect(screen.getByRole('heading', { level: 1, name })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name })).toHaveAttribute('src', photo);
+    expect(screen.getByRole('img', { name })).toHaveAttribute('src', getStaticImageProps(photo).src);
     expect(screen.getByText('敬请期待')).toBeInTheDocument();
   });
 

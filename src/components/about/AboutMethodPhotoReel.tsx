@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import {
   useCallback,
   useEffect,
@@ -202,7 +203,7 @@ export default function AboutMethodPhotoReel({
                 }}
               >
                 <figure>
-                  <img
+                  <OptimizedImage
                     src={photo.src}
                     alt={pickLocalized(photo.alt, lang)}
                     width={photo.width}

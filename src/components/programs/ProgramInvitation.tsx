@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ProgramInvitation() {
@@ -42,7 +43,7 @@ export default function ProgramInvitation() {
           </div>
 
           <figure className="programs-editorial-intro__photo">
-            <img
+            <OptimizedImage
               src="/images/s06-linpan-aerial-overview.jpg"
               alt={t(
                 '铁牛村林盘、果园、鱼塘与院落的航拍图',

@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link } from 'react-router-dom';
 import TieniuRegenerationStory from '@/components/about/TieniuRegenerationStory';
 import TieniuStoryMap from '@/components/about/TieniuStoryMap';
@@ -49,7 +50,7 @@ export default function TieniuStory() {
             </div>
 
             <figure className="tieniu-story-hero__figure">
-              <img
+              <OptimizedImage
                 src="/images/s06-linpan-aerial-overview.jpg"
                 alt={t('铁牛村林盘、果园、鱼塘和院落的航拍图', 'Aerial view of Tieniu Village, its Linpan landscape, orchards, ponds, and homes')}
                 width="2890"

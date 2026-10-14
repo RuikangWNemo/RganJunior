@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+import { optimizeStaticImageHtml } from '@/lib/staticImages';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, Clock } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
@@ -27,6 +30,11 @@ export default function FieldNoteArticle() {
     queryKey: ['field-notes', 'related', slug, lang],
     queryFn: () => fieldNotesRepository.listPublishedNotes({ language: lang }),
   });
+
+  const rawContentHtml = lang === 'en' && noteQuery.data?.contentHtmlEn
+    ? noteQuery.data.contentHtmlEn
+    : noteQuery.data?.contentHtml;
+  const contentHtml = useMemo(() => optimizeStaticImageHtml(rawContentHtml ?? ''), [rawContentHtml]);
 
   if (noteQuery.isPending) {
     return (
@@ -58,7 +66,6 @@ export default function FieldNoteArticle() {
   const note = noteQuery.data;
   if (!note) return <NotFound />;
 
-  const contentHtml = lang === 'en' && note.contentHtmlEn ? note.contentHtmlEn : note.contentHtml;
   const authors = note.authors;
   const topics = note.topics;
   const related = (relatedQuery.data ?? [])
@@ -125,7 +132,7 @@ export default function FieldNoteArticle() {
 
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <figure className="overflow-hidden rounded-lg bg-secondary/50">
-            <img
+            <OptimizedImage
               src={note.cover}
               alt={pickLocalized(note.coverAlt, lang)}
               className={note.topicSlugs.includes('project-letter') ? 'h-auto w-full' : 'aspect-[16/8] w-full object-cover'}

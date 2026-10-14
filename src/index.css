@@ -9710,7 +9710,8 @@
     min-height: 37rem;
     background:
       linear-gradient(145deg, rgb(0 102 68 / 0.78), rgb(4 52 39 / 0.88)),
-      url('/images/s06-linpan-aerial-overview.jpg') center / cover;
+      /* WebP source: /images/s06-linpan-aerial-overview.jpg */
+      url('/images/optimized/849a0cd8c60f87cf-1280.webp') center / cover;
   }
 
   .about-rgan-philosophy__grid article[data-pillar='vision'],

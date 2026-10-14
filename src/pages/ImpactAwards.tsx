@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ImpactReveal } from '@/components/impact/ImpactReveal';
@@ -44,7 +45,7 @@ function EvidenceRecord({ evidence }: { evidence: ImpactEvidence }) {
       <ImpactReveal>
         <article className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(20rem,0.75fr)] lg:items-center lg:gap-16">
           <div className="grid grid-cols-[minmax(0,1.35fr)_minmax(8rem,0.65fr)] gap-3">
-            <img
+            <OptimizedImage
               src={evidence.image}
               alt={pickLocalized(evidence.imageAlt, lang)}
               width="835"
@@ -53,7 +54,7 @@ function EvidenceRecord({ evidence }: { evidence: ImpactEvidence }) {
               className="aspect-[4/3] h-full w-full rounded-2xl object-cover"
             />
             {evidence.secondaryImage && evidence.secondaryImageAlt ? (
-              <img
+              <OptimizedImage
                 src={evidence.secondaryImage}
                 alt={pickLocalized(evidence.secondaryImageAlt, lang)}
                 width="529"
@@ -75,7 +76,7 @@ function EvidenceRecord({ evidence }: { evidence: ImpactEvidence }) {
         <article className="rounded-2xl bg-primary/[0.045] p-5 sm:p-8 lg:p-12">
           <div className="grid gap-10 lg:grid-cols-[minmax(18rem,0.68fr)_minmax(0,1.32fr)] lg:items-center lg:gap-16">
             <EvidenceCopy evidence={evidence} />
-            <img
+            <OptimizedImage
               src={evidence.image}
               alt={pickLocalized(evidence.imageAlt, lang)}
               width="1920"
@@ -93,7 +94,7 @@ function EvidenceRecord({ evidence }: { evidence: ImpactEvidence }) {
     <ImpactReveal>
       <article>
         <div className="overflow-hidden rounded-2xl border border-border bg-white">
-          <img
+          <OptimizedImage
             src={evidence.image}
             alt={pickLocalized(evidence.imageAlt, lang)}
             width="1920"
@@ -106,7 +107,7 @@ function EvidenceRecord({ evidence }: { evidence: ImpactEvidence }) {
           <EvidenceCopy evidence={evidence} />
           {evidence.secondaryImage && evidence.secondaryImageAlt ? (
             <figure>
-              <img
+              <OptimizedImage
                 src={evidence.secondaryImage}
                 alt={pickLocalized(evidence.secondaryImageAlt, lang)}
                 width="1280"
@@ -155,7 +156,7 @@ export default function ImpactAwards() {
               </p>
             </div>
             <figure>
-              <img
+              <OptimizedImage
                 src="/archive/elements/photos/academic-forum/s16-ctb-award-medal.jpg"
                 alt={t('手中拿着 CTB Most Popular Project 奖牌', 'A CTB Most Popular Project medal held in one hand')}
                 width="529"

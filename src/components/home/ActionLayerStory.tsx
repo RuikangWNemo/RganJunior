@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { actionLayers, type ActionLayerContent, type ActionLayerId } from '@/content/siteContent';
@@ -47,7 +48,7 @@ function LineItem({ layer }: { layer: ActionLayerContent }) {
         </div>
 
         <figure className="min-w-0 overflow-hidden rounded-md border border-border bg-[radial-gradient(circle_at_36%_20%,rgba(255,255,255,0.92),rgba(244,238,218,0.44)_34%,rgba(220,231,204,0.52)_100%)]">
-          <img
+          <OptimizedImage
             src={layer.image.src}
             alt={pickLocalized(layer.image.alt, lang)}
             className="aspect-[16/9] h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.055] group-focus-visible:scale-[1.055] md:aspect-[4/3]"

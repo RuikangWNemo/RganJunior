@@ -1,0 +1,776 @@
+{
+  "/archive/elements/graphics/branding/s25-campus-csa-eco-box-illustration.png": {
+    "src": "/images/optimized/96153853cc724fd5-1280.webp",
+    "srcSet": "/images/optimized/96153853cc724fd5-640.webp 640w, /images/optimized/96153853cc724fd5-1280.webp 1280w, /images/optimized/96153853cc724fd5-1512.webp 1512w",
+    "width": 1512,
+    "height": 2160
+  },
+  "/archive/elements/graphics/infographics/s01-xilai-town-site-map.png": {
+    "src": "/images/optimized/d0ffa12b98128dfe-1280.webp",
+    "srcSet": "/images/optimized/d0ffa12b98128dfe-640.webp 640w, /images/optimized/d0ffa12b98128dfe-1280.webp 1280w, /images/optimized/d0ffa12b98128dfe-1920.webp 1920w",
+    "width": 2476,
+    "height": 1588
+  },
+  "/archive/elements/graphics/infographics/s05-linpan-biodiversity-restoration-diagram.png": {
+    "src": "/images/optimized/522409d81c506337-1280.webp",
+    "srcSet": "/images/optimized/522409d81c506337-640.webp 640w, /images/optimized/522409d81c506337-1280.webp 1280w, /images/optimized/522409d81c506337-1920.webp 1920w",
+    "width": 2318,
+    "height": 1638
+  },
+  "/archive/elements/graphics/infographics/s07-ecological-agri-product-solution-board.png": {
+    "src": "/images/optimized/f561d5b93d4b66c1-1280.webp",
+    "srcSet": "/images/optimized/f561d5b93d4b66c1-640.webp 640w, /images/optimized/f561d5b93d4b66c1-1280.webp 1280w, /images/optimized/f561d5b93d4b66c1-1474.webp 1474w",
+    "width": 1474,
+    "height": 832
+  },
+  "/archive/elements/graphics/publications/s17-ysa-journal-cover-page.png": {
+    "src": "/images/optimized/df2c3e35bfaaab51-980.webp",
+    "srcSet": "/images/optimized/df2c3e35bfaaab51-640.webp 640w, /images/optimized/df2c3e35bfaaab51-980.webp 980w",
+    "width": 980,
+    "height": 1400
+  },
+  "/archive/elements/graphics/publications/s17-ysa-journal-spread.png": {
+    "src": "/images/optimized/317eb84b9e1a7f9d-1280.webp",
+    "srcSet": "/images/optimized/317eb84b9e1a7f9d-640.webp 640w, /images/optimized/317eb84b9e1a7f9d-1280.webp 1280w, /images/optimized/317eb84b9e1a7f9d-1920.webp 1920w",
+    "width": 1990,
+    "height": 1406
+  },
+  "/archive/elements/graphics/publications/s18-claremont-forum-poster.png": {
+    "src": "/images/optimized/e2057d0c1b2ddf56-1280.webp",
+    "srcSet": "/images/optimized/e2057d0c1b2ddf56-640.webp 640w, /images/optimized/e2057d0c1b2ddf56-1280.webp 1280w, /images/optimized/e2057d0c1b2ddf56-1920.webp 1920w",
+    "width": 2176,
+    "height": 1632
+  },
+  "/archive/elements/graphics/publications/s18-claremont-online-forum-screenshot.png": {
+    "src": "/images/optimized/0aa57664bb25d267-1276.webp",
+    "srcSet": "/images/optimized/0aa57664bb25d267-640.webp 640w, /images/optimized/0aa57664bb25d267-1276.webp 1276w",
+    "width": 1276,
+    "height": 574
+  },
+  "/archive/elements/photos/academic-forum/s16-ctb-award-medal.jpg": {
+    "src": "/images/optimized/4433468a8b009af2-529.webp",
+    "srcSet": "/images/optimized/4433468a8b009af2-529.webp 529w",
+    "width": 529,
+    "height": 707
+  },
+  "/archive/elements/photos/academic-forum/s16-ctb-forum-conversation.jpg": {
+    "src": "/images/optimized/d19bafc5c757c97e-835.webp",
+    "srcSet": "/images/optimized/d19bafc5c757c97e-640.webp 640w, /images/optimized/d19bafc5c757c97e-835.webp 835w",
+    "width": 835,
+    "height": 557
+  },
+  "/archive/elements/photos/academic-forum/s16-ctb-forum-team-booth.jpg": {
+    "src": "/images/optimized/d0922947a9186c65-835.webp",
+    "srcSet": "/images/optimized/d0922947a9186c65-640.webp 640w, /images/optimized/d0922947a9186c65-835.webp 835w",
+    "width": 835,
+    "height": 557
+  },
+  "/archive/elements/photos/academic-forum/s16-ctb-poster-presentation.jpg": {
+    "src": "/images/optimized/156c9d8ad991c47c-841.webp",
+    "srcSet": "/images/optimized/156c9d8ad991c47c-640.webp 640w, /images/optimized/156c9d8ad991c47c-841.webp 841w",
+    "width": 841,
+    "height": 561
+  },
+  "/archive/elements/photos/program-activities/s11-community-service-cleanup.jpg": {
+    "src": "/images/optimized/92f8ff4863b14fdd-1280.webp",
+    "srcSet": "/images/optimized/92f8ff4863b14fdd-640.webp 640w, /images/optimized/92f8ff4863b14fdd-1280.webp 1280w, /images/optimized/92f8ff4863b14fdd-1920.webp 1920w",
+    "width": 6489,
+    "height": 4326
+  },
+  "/archive/elements/photos/program-activities/s11-hands-on-making-workshop.jpg": {
+    "src": "/images/optimized/11aae6e1250eac11-1280.webp",
+    "srcSet": "/images/optimized/11aae6e1250eac11-640.webp 640w, /images/optimized/11aae6e1250eac11-1280.webp 1280w, /images/optimized/11aae6e1250eac11-1920.webp 1920w",
+    "width": 3713,
+    "height": 2474
+  },
+  "/archive/elements/photos/program-activities/s11-orchard-field-practice.jpg": {
+    "src": "/images/optimized/14e488c037db7660-1280.webp",
+    "srcSet": "/images/optimized/14e488c037db7660-640.webp 640w, /images/optimized/14e488c037db7660-1280.webp 1280w, /images/optimized/14e488c037db7660-1706.webp 1706w",
+    "width": 1706,
+    "height": 1278
+  },
+  "/archive/elements/photos/program-activities/s11-stage-performance.jpg": {
+    "src": "/images/optimized/1123fe3948a956e3-1280.webp",
+    "srcSet": "/images/optimized/1123fe3948a956e3-640.webp 640w, /images/optimized/1123fe3948a956e3-1280.webp 1280w, /images/optimized/1123fe3948a956e3-1920.webp 1920w",
+    "width": 2876,
+    "height": 1920
+  },
+  "/archive/elements/photos/program-activities/s20-regenerative-design-eco-camp-group.jpg": {
+    "src": "/images/optimized/e2de3d7362b6c6a1-1280.webp",
+    "srcSet": "/images/optimized/e2de3d7362b6c6a1-640.webp 640w, /images/optimized/e2de3d7362b6c6a1-1280.webp 1280w, /images/optimized/e2de3d7362b6c6a1-1920.webp 1920w",
+    "width": 3715,
+    "height": 2477
+  },
+  "/archive/elements/photos/program-activities/s21-tieniu-youth-rural-practice-camp-group.jpg": {
+    "src": "/images/optimized/26ead79be94064da-1280.webp",
+    "srcSet": "/images/optimized/26ead79be94064da-640.webp 640w, /images/optimized/26ead79be94064da-1280.webp 1280w, /images/optimized/26ead79be94064da-1920.webp 1920w",
+    "width": 3709,
+    "height": 2475
+  },
+  "/archive/elements/photos/program-activities/s22-yale-professor-visit-casual.jpg": {
+    "src": "/images/optimized/46b6b43ff0369142-1280.webp",
+    "srcSet": "/images/optimized/46b6b43ff0369142-640.webp 640w, /images/optimized/46b6b43ff0369142-1280.webp 1280w, /images/optimized/46b6b43ff0369142-1920.webp 1920w",
+    "width": 3298,
+    "height": 2473
+  },
+  "/archive/elements/photos/program-activities/s22-yale-professor-visit-portrait.jpg": {
+    "src": "/images/optimized/d8518ea680b12178-1280.webp",
+    "srcSet": "/images/optimized/d8518ea680b12178-640.webp 640w, /images/optimized/d8518ea680b12178-1280.webp 1280w, /images/optimized/d8518ea680b12178-1920.webp 1920w",
+    "width": 3298,
+    "height": 2473
+  },
+  "/archive/elements/photos/program-activities/s23-art-education-delegation-visit.jpg": {
+    "src": "/images/optimized/b03a3266962b1b50-1280.webp",
+    "srcSet": "/images/optimized/b03a3266962b1b50-640.webp 640w, /images/optimized/b03a3266962b1b50-1280.webp 1280w, /images/optimized/b03a3266962b1b50-1907.webp 1907w",
+    "width": 1907,
+    "height": 1279
+  },
+  "/archive/elements/photos/site-ecology/s02-orchard-spraying-scene.jpg": {
+    "src": "/images/optimized/12a7da2be75ebea7-1280.webp",
+    "srcSet": "/images/optimized/12a7da2be75ebea7-640.webp 640w, /images/optimized/12a7da2be75ebea7-1280.webp 1280w, /images/optimized/12a7da2be75ebea7-1920.webp 1920w",
+    "width": 2880,
+    "height": 1612
+  },
+  "/archive/elements/photos/site-ecology/s03-xilai-aerial-view.jpg": {
+    "src": "/images/optimized/99545361c3f8593d-1280.webp",
+    "srcSet": "/images/optimized/99545361c3f8593d-640.webp 640w, /images/optimized/99545361c3f8593d-1280.webp 1280w, /images/optimized/99545361c3f8593d-1920.webp 1920w",
+    "width": 2957,
+    "height": 2218
+  },
+  "/archive/elements/photos/site-ecology/s04-herbicide-ground-cover.jpg": {
+    "src": "/images/optimized/9ac28ed302600f27-1280.webp",
+    "srcSet": "/images/optimized/9ac28ed302600f27-640.webp 640w, /images/optimized/9ac28ed302600f27-1280.webp 1280w, /images/optimized/9ac28ed302600f27-1732.webp 1732w",
+    "width": 1732,
+    "height": 973
+  },
+  "/archive/elements/photos/site-ecology/s04-soil-root-damage.jpg": {
+    "src": "/images/optimized/5fa4505e6def2654-1280.webp",
+    "srcSet": "/images/optimized/5fa4505e6def2654-640.webp 640w, /images/optimized/5fa4505e6def2654-1280.webp 1280w, /images/optimized/5fa4505e6def2654-1471.webp 1471w",
+    "width": 1471,
+    "height": 1103
+  },
+  "/archive/elements/photos/site-ecology/s06-linpan-aerial-overview.jpg": {
+    "src": "/images/optimized/f031e97fe0bde695-1280.webp",
+    "srcSet": "/images/optimized/f031e97fe0bde695-640.webp 640w, /images/optimized/f031e97fe0bde695-1280.webp 1280w, /images/optimized/f031e97fe0bde695-1920.webp 1920w",
+    "width": 2890,
+    "height": 2218
+  },
+  "/archive/elements/photos/site-ecology/s08-eco-buildings-in-orchard.jpg": {
+    "src": "/images/optimized/9b654a08e1a66001-696.webp",
+    "srcSet": "/images/optimized/9b654a08e1a66001-640.webp 640w, /images/optimized/9b654a08e1a66001-696.webp 696w",
+    "width": 696,
+    "height": 522
+  },
+  "/archive/elements/photos/site-ecology/s08-orchard-garden-overview.jpg": {
+    "src": "/images/optimized/6eb17b9dcc168885-696.webp",
+    "srcSet": "/images/optimized/6eb17b9dcc168885-640.webp 640w, /images/optimized/6eb17b9dcc168885-696.webp 696w",
+    "width": 696,
+    "height": 522
+  },
+  "/archive/elements/photos/site-ecology/s09-earthworm-soil-recovery.jpg": {
+    "src": "/images/optimized/53eb3f509ead08d0-741.webp",
+    "srcSet": "/images/optimized/53eb3f509ead08d0-640.webp 640w, /images/optimized/53eb3f509ead08d0-741.webp 741w",
+    "width": 741,
+    "height": 689
+  },
+  "/archive/elements/photos/site-ecology/s09-regenerative-farming-practice.jpg": {
+    "src": "/images/optimized/1ddad73bd3f9f946-1051.webp",
+    "srcSet": "/images/optimized/1ddad73bd3f9f946-640.webp 640w, /images/optimized/1ddad73bd3f9f946-1051.webp 1051w",
+    "width": 1051,
+    "height": 700
+  },
+  "/archive/elements/photos/site-ecology/s09-soil-compaction-closeup.png": {
+    "src": "/images/optimized/77512558b9fd6757-581.webp",
+    "srcSet": "/images/optimized/77512558b9fd6757-581.webp 581w",
+    "width": 581,
+    "height": 685
+  },
+  "/images/about/adult-support/adult-support-06.webp": {
+    "src": "/images/optimized/b80bb881ee3fe7da-1067.webp",
+    "srcSet": "/images/optimized/b80bb881ee3fe7da-640.webp 640w, /images/optimized/b80bb881ee3fe7da-1067.webp 1067w",
+    "width": 1067,
+    "height": 1600
+  },
+  "/images/about/adult-support/zhao-jing.jpg": {
+    "src": "/images/optimized/36a2a072db3d6550-1280.webp",
+    "srcSet": "/images/optimized/36a2a072db3d6550-640.webp 640w, /images/optimized/36a2a072db3d6550-1280.webp 1280w, /images/optimized/36a2a072db3d6550-1920.webp 1920w",
+    "width": 5125,
+    "height": 7687
+  },
+  "/images/about/belief-nature-forest.webp": {
+    "src": "/images/optimized/9b8f41e7993ba62f-1280.webp",
+    "srcSet": "/images/optimized/9b8f41e7993ba62f-640.webp 640w, /images/optimized/9b8f41e7993ba62f-1280.webp 1280w, /images/optimized/9b8f41e7993ba62f-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/belief-real-world-tea-harvest.webp": {
+    "src": "/images/optimized/611a88a3760d4c7d-1280.webp",
+    "srcSet": "/images/optimized/611a88a3760d4c7d-640.webp 640w, /images/optimized/611a88a3760d4c7d-1280.webp 1280w, /images/optimized/611a88a3760d4c7d-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/belief-youth-tea-circle.webp": {
+    "src": "/images/optimized/35052f20f25667e3-1280.webp",
+    "srcSet": "/images/optimized/35052f20f25667e3-640.webp 640w, /images/optimized/35052f20f25667e3-1280.webp 1280w, /images/optimized/35052f20f25667e3-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/guardians/cha-jingling-20261013.jpg": {
+    "src": "/images/optimized/a6d9a0083a6dd0e4-1280.webp",
+    "srcSet": "/images/optimized/a6d9a0083a6dd0e4-640.webp 640w, /images/optimized/a6d9a0083a6dd0e4-1280.webp 1280w, /images/optimized/a6d9a0083a6dd0e4-1920.webp 1920w",
+    "width": 3000,
+    "height": 4000
+  },
+  "/images/about/guardians/da-yumi-20261013.jpg": {
+    "src": "/images/optimized/69a9c44ad4fee57a-1280.webp",
+    "srcSet": "/images/optimized/69a9c44ad4fee57a-640.webp 640w, /images/optimized/69a9c44ad4fee57a-1280.webp 1280w, /images/optimized/69a9c44ad4fee57a-1920.webp 1920w",
+    "width": 3072,
+    "height": 4096
+  },
+  "/images/about/guardians/mulan-20261013.jpg": {
+    "src": "/images/optimized/ce5ab15d7cf1e6ee-1279.webp",
+    "srcSet": "/images/optimized/ce5ab15d7cf1e6ee-640.webp 640w, /images/optimized/ce5ab15d7cf1e6ee-1279.webp 1279w",
+    "width": 1279,
+    "height": 1706
+  },
+  "/images/about/guardians/zhuo-fei-20261014-upright.png": {
+    "src": "/images/optimized/d7bf3e26ae5e769a-1122.webp",
+    "srcSet": "/images/optimized/d7bf3e26ae5e769a-640.webp 640w, /images/optimized/d7bf3e26ae5e769a-1122.webp 1122w",
+    "width": 1122,
+    "height": 1402
+  },
+  "/images/about/jinyuxi-forest-valley.webp": {
+    "src": "/images/optimized/35e02519a30cf2c5-1280.webp",
+    "srcSet": "/images/optimized/35e02519a30cf2c5-640.webp 640w, /images/optimized/35e02519a30cf2c5-1280.webp 1280w, /images/optimized/35e02519a30cf2c5-1448.webp 1448w",
+    "width": 1448,
+    "height": 1086
+  },
+  "/images/about/methods/01/01-shared-life.webp": {
+    "src": "/images/optimized/17e8c722e0ed7874-1280.webp",
+    "srcSet": "/images/optimized/17e8c722e0ed7874-640.webp 640w, /images/optimized/17e8c722e0ed7874-1280.webp 1280w, /images/optimized/17e8c722e0ed7874-1919.webp 1919w",
+    "width": 1919,
+    "height": 1279
+  },
+  "/images/about/methods/01/02-mountain-basketball.webp": {
+    "src": "/images/optimized/1cd374d6fc8729f9-1280.webp",
+    "srcSet": "/images/optimized/1cd374d6fc8729f9-640.webp 640w, /images/optimized/1cd374d6fc8729f9-1280.webp 1280w, /images/optimized/1cd374d6fc8729f9-1920.webp 1920w",
+    "width": 1920,
+    "height": 1281
+  },
+  "/images/about/methods/01/03-cooking-together.webp": {
+    "src": "/images/optimized/fc2586130504883d-1280.webp",
+    "srcSet": "/images/optimized/fc2586130504883d-640.webp 640w, /images/optimized/fc2586130504883d-1280.webp 1280w, /images/optimized/fc2586130504883d-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/methods/02/01-community-visit.webp": {
+    "src": "/images/optimized/4ef463c57fd5b166-1280.webp",
+    "srcSet": "/images/optimized/4ef463c57fd5b166-640.webp 640w, /images/optimized/4ef463c57fd5b166-1280.webp 1280w, /images/optimized/4ef463c57fd5b166-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/methods/02/02-community-field.webp": {
+    "src": "/images/optimized/59e07962f57fb16d-1280.webp",
+    "srcSet": "/images/optimized/59e07962f57fb16d-640.webp 640w, /images/optimized/59e07962f57fb16d-1280.webp 1280w, /images/optimized/59e07962f57fb16d-1920.webp 1920w",
+    "width": 1920,
+    "height": 1284
+  },
+  "/images/about/methods/02/03-community-conversation.webp": {
+    "src": "/images/optimized/98532541a46ff421-1280.webp",
+    "srcSet": "/images/optimized/98532541a46ff421-640.webp 640w, /images/optimized/98532541a46ff421-1280.webp 1280w, /images/optimized/98532541a46ff421-1902.webp 1902w",
+    "width": 1902,
+    "height": 1268
+  },
+  "/images/about/methods/02/04-community-practice.webp": {
+    "src": "/images/optimized/bc5638d4bb3d0e1c-1280.webp",
+    "srcSet": "/images/optimized/bc5638d4bb3d0e1c-640.webp 640w, /images/optimized/bc5638d4bb3d0e1c-1280.webp 1280w, /images/optimized/bc5638d4bb3d0e1c-1920.webp 1920w",
+    "width": 1920,
+    "height": 1281
+  },
+  "/images/about/methods/02/06-community-connection.webp": {
+    "src": "/images/optimized/a23bd26dd028ebe9-1280.webp",
+    "srcSet": "/images/optimized/a23bd26dd028ebe9-640.webp 640w, /images/optimized/a23bd26dd028ebe9-1280.webp 1280w, /images/optimized/a23bd26dd028ebe9-1920.webp 1920w",
+    "width": 1920,
+    "height": 1282
+  },
+  "/images/about/methods/03/00-tieniu-aerial-overview.jpg": {
+    "src": "/images/optimized/30c3e6e03727e2da-1280.webp",
+    "srcSet": "/images/optimized/30c3e6e03727e2da-640.webp 640w, /images/optimized/30c3e6e03727e2da-1280.webp 1280w, /images/optimized/30c3e6e03727e2da-1920.webp 1920w",
+    "width": 2400,
+    "height": 1341
+  },
+  "/images/about/methods/03/01-issue-workshop.webp": {
+    "src": "/images/optimized/f575c82e407f981c-1080.webp",
+    "srcSet": "/images/optimized/f575c82e407f981c-640.webp 640w, /images/optimized/f575c82e407f981c-1080.webp 1080w",
+    "width": 1080,
+    "height": 973
+  },
+  "/images/about/methods/03/03-farming-practice.webp": {
+    "src": "/images/optimized/560e416fcd92690b-1280.webp",
+    "srcSet": "/images/optimized/560e416fcd92690b-640.webp 640w, /images/optimized/560e416fcd92690b-1280.webp 1280w",
+    "width": 1280,
+    "height": 1920
+  },
+  "/images/about/methods/03/04-field-inquiry.webp": {
+    "src": "/images/optimized/c4b78b28462f8f59-1280.webp",
+    "srcSet": "/images/optimized/c4b78b28462f8f59-640.webp 640w, /images/optimized/c4b78b28462f8f59-1280.webp 1280w, /images/optimized/c4b78b28462f8f59-1440.webp 1440w",
+    "width": 1440,
+    "height": 1920
+  },
+  "/images/about/methods/03/07-group-reflection.webp": {
+    "src": "/images/optimized/f4d4a474ef352a5a-1280.webp",
+    "srcSet": "/images/optimized/f4d4a474ef352a5a-640.webp 640w, /images/optimized/f4d4a474ef352a5a-1280.webp 1280w, /images/optimized/f4d4a474ef352a5a-1920.webp 1920w",
+    "width": 1920,
+    "height": 1080
+  },
+  "/images/about/methods/04/01-youth-led-moment.webp": {
+    "src": "/images/optimized/0cd5e29237cb73f8-1280.webp",
+    "srcSet": "/images/optimized/0cd5e29237cb73f8-640.webp 640w, /images/optimized/0cd5e29237cb73f8-1280.webp 1280w, /images/optimized/0cd5e29237cb73f8-1920.webp 1920w",
+    "width": 1920,
+    "height": 1281
+  },
+  "/images/about/methods/04/02-youth-led-team.webp": {
+    "src": "/images/optimized/624860eaa5fb9cff-1280.webp",
+    "srcSet": "/images/optimized/624860eaa5fb9cff-640.webp 640w, /images/optimized/624860eaa5fb9cff-1280.webp 1280w, /images/optimized/624860eaa5fb9cff-1920.webp 1920w",
+    "width": 1920,
+    "height": 1281
+  },
+  "/images/about/methods/04/03-youth-led-action.webp": {
+    "src": "/images/optimized/fd3d285e4092c8b1-1280.webp",
+    "srcSet": "/images/optimized/fd3d285e4092c8b1-640.webp 640w, /images/optimized/fd3d285e4092c8b1-1280.webp 1280w, /images/optimized/fd3d285e4092c8b1-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/methods/04/05-tea-harvest.webp": {
+    "src": "/images/optimized/b6e2cfb816c9741f-1280.webp",
+    "srcSet": "/images/optimized/b6e2cfb816c9741f-640.webp 640w, /images/optimized/b6e2cfb816c9741f-1280.webp 1280w, /images/optimized/b6e2cfb816c9741f-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/methods/04/07-co-creation-two.webp": {
+    "src": "/images/optimized/f77fc50716bf3c9f-1280.webp",
+    "srcSet": "/images/optimized/f77fc50716bf3c9f-640.webp 640w, /images/optimized/f77fc50716bf3c9f-1280.webp 1280w, /images/optimized/f77fc50716bf3c9f-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/about/methods/04/09-closing-reflection.webp": {
+    "src": "/images/optimized/ca2f70de542ea5e4-1280.webp",
+    "srcSet": "/images/optimized/ca2f70de542ea5e4-640.webp 640w, /images/optimized/ca2f70de542ea5e4-1280.webp 1280w, /images/optimized/ca2f70de542ea5e4-1920.webp 1920w",
+    "width": 1920,
+    "height": 1281
+  },
+  "/images/about/nanbaoshan-cloud-forest.webp": {
+    "src": "/images/optimized/6dea8388ca62b3c2-1280.webp",
+    "srcSet": "/images/optimized/6dea8388ca62b3c2-640.webp 640w, /images/optimized/6dea8388ca62b3c2-1280.webp 1280w, /images/optimized/6dea8388ca62b3c2-1800.webp 1800w",
+    "width": 1800,
+    "height": 1200
+  },
+  "/images/about/parent-guardian/parent-guardian-09.webp": {
+    "src": "/images/optimized/b8d99b917220d03e-1064.webp",
+    "srcSet": "/images/optimized/b8d99b917220d03e-640.webp 640w, /images/optimized/b8d99b917220d03e-1064.webp 1064w",
+    "width": 1064,
+    "height": 1330
+  },
+  "/images/home/belief-field-gardening-1280.webp": {
+    "src": "/images/optimized/ce0e306d50023811-1280.webp",
+    "srcSet": "/images/optimized/ce0e306d50023811-640.webp 640w, /images/optimized/ce0e306d50023811-1280.webp 1280w",
+    "width": 1280,
+    "height": 854
+  },
+  "/images/home/life-camp-01-arrival-road.webp": {
+    "src": "/images/optimized/7aeeddf35c8c0a62-1280.webp",
+    "srcSet": "/images/optimized/7aeeddf35c8c0a62-640.webp 640w, /images/optimized/7aeeddf35c8c0a62-1280.webp 1280w, /images/optimized/7aeeddf35c8c0a62-1920.webp 1920w",
+    "width": 1920,
+    "height": 1440
+  },
+  "/images/home/life-camp-02-forest-circle.webp": {
+    "src": "/images/optimized/636df7abc12a761f-1280.webp",
+    "srcSet": "/images/optimized/636df7abc12a761f-640.webp 640w, /images/optimized/636df7abc12a761f-1280.webp 1280w, /images/optimized/636df7abc12a761f-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/home/life-camp-03-basketball.webp": {
+    "src": "/images/optimized/a007bd1526f5ae99-1280.webp",
+    "srcSet": "/images/optimized/a007bd1526f5ae99-640.webp 640w, /images/optimized/a007bd1526f5ae99-1280.webp 1280w, /images/optimized/a007bd1526f5ae99-1920.webp 1920w",
+    "width": 1920,
+    "height": 1281
+  },
+  "/images/home/life-camp-04-forest-tea.webp": {
+    "src": "/images/optimized/2aa54b00adad3626-1280.webp",
+    "srcSet": "/images/optimized/2aa54b00adad3626-640.webp 640w, /images/optimized/2aa54b00adad3626-1280.webp 1280w, /images/optimized/2aa54b00adad3626-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/home/life-camp-05-tea-craft.webp": {
+    "src": "/images/optimized/288ec228739c86f1-1280.webp",
+    "srcSet": "/images/optimized/288ec228739c86f1-640.webp 640w, /images/optimized/288ec228739c86f1-1280.webp 1280w, /images/optimized/288ec228739c86f1-1920.webp 1920w",
+    "width": 1920,
+    "height": 1441
+  },
+  "/images/home/life-camp-06-indoor-co-creation.webp": {
+    "src": "/images/optimized/70168175e9943216-1280.webp",
+    "srcSet": "/images/optimized/70168175e9943216-640.webp 640w, /images/optimized/70168175e9943216-1280.webp 1280w, /images/optimized/70168175e9943216-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/home/life-camp-07-tea-field.webp": {
+    "src": "/images/optimized/f45e3d1c9d46a751-1280.webp",
+    "srcSet": "/images/optimized/f45e3d1c9d46a751-640.webp 640w, /images/optimized/f45e3d1c9d46a751-1280.webp 1280w, /images/optimized/f45e3d1c9d46a751-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/home/life-camp-08-tea-harvest.webp": {
+    "src": "/images/optimized/d51c7a2e07014c63-1280.webp",
+    "srcSet": "/images/optimized/d51c7a2e07014c63-640.webp 640w, /images/optimized/d51c7a2e07014c63-1280.webp 1280w, /images/optimized/d51c7a2e07014c63-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/home/life-camp-09-closing-gathering.webp": {
+    "src": "/images/optimized/c44bba4d0e845e3a-1280.webp",
+    "srcSet": "/images/optimized/c44bba4d0e845e3a-640.webp 640w, /images/optimized/c44bba4d0e845e3a-1280.webp 1280w, /images/optimized/c44bba4d0e845e3a-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280
+  },
+  "/images/programs/action-group-1280.webp": {
+    "src": "/images/optimized/791234b7a2660475-1280.webp",
+    "srcSet": "/images/optimized/791234b7a2660475-640.webp 640w, /images/optimized/791234b7a2660475-1280.webp 1280w",
+    "width": 1280,
+    "height": 854
+  },
+  "/images/programs/action-group.jpg": {
+    "src": "/images/optimized/2429823ca9b4d1f4-1280.webp",
+    "srcSet": "/images/optimized/2429823ca9b4d1f4-640.webp 640w, /images/optimized/2429823ca9b4d1f4-1280.webp 1280w, /images/optimized/2429823ca9b4d1f4-1920.webp 1920w",
+    "width": 5346,
+    "height": 3564
+  },
+  "/images/programs/life-co-creation-camp.jpg": {
+    "src": "/images/optimized/1dcd31a5b99bca8b-1280.webp",
+    "srcSet": "/images/optimized/1dcd31a5b99bca8b-640.webp 640w, /images/optimized/1dcd31a5b99bca8b-1280.webp 1280w, /images/optimized/1dcd31a5b99bca8b-1920.webp 1920w",
+    "width": 5552,
+    "height": 3701
+  },
+  "/images/programs/life-experience-camp-feet.png": {
+    "src": "/images/optimized/52a16d3d832b3b65-1280.webp",
+    "srcSet": "/images/optimized/52a16d3d832b3b65-640.webp 640w, /images/optimized/52a16d3d832b3b65-1280.webp 1280w, /images/optimized/52a16d3d832b3b65-1536.webp 1536w",
+    "width": 1536,
+    "height": 1024
+  },
+  "/images/programs/youth-research-programme.jpg": {
+    "src": "/images/optimized/358751a33f238f35-1280.webp",
+    "srcSet": "/images/optimized/358751a33f238f35-640.webp 640w, /images/optimized/358751a33f238f35-1280.webp 1280w, /images/optimized/358751a33f238f35-1920.webp 1920w",
+    "width": 3168,
+    "height": 2113
+  },
+  "/images/s06-linpan-aerial-overview.jpg": {
+    "src": "/images/optimized/849a0cd8c60f87cf-1280.webp",
+    "srcSet": "/images/optimized/849a0cd8c60f87cf-640.webp 640w, /images/optimized/849a0cd8c60f87cf-1280.webp 1280w, /images/optimized/849a0cd8c60f87cf-1920.webp 1920w",
+    "width": 2890,
+    "height": 2218
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_001.jpg": {
+    "src": "/images/optimized/84be07b0d021d509-1080.webp",
+    "srcSet": "/images/optimized/84be07b0d021d509-640.webp 640w, /images/optimized/84be07b0d021d509-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_002.jpg": {
+    "src": "/images/optimized/922d8c07601e5f0b-1080.webp",
+    "srcSet": "/images/optimized/922d8c07601e5f0b-640.webp 640w, /images/optimized/922d8c07601e5f0b-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_003.jpg": {
+    "src": "/images/optimized/c9893755360cd53c-1080.webp",
+    "srcSet": "/images/optimized/c9893755360cd53c-640.webp 640w, /images/optimized/c9893755360cd53c-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_005.jpg": {
+    "src": "/images/optimized/d9b35a6311866684-1080.webp",
+    "srcSet": "/images/optimized/d9b35a6311866684-640.webp 640w, /images/optimized/d9b35a6311866684-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_006.jpg": {
+    "src": "/images/optimized/8174f1a1dfeca866-1080.webp",
+    "srcSet": "/images/optimized/8174f1a1dfeca866-640.webp 640w, /images/optimized/8174f1a1dfeca866-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_007.jpg": {
+    "src": "/images/optimized/ff983a6c3f78a8b1-1080.webp",
+    "srcSet": "/images/optimized/ff983a6c3f78a8b1-640.webp 640w, /images/optimized/ff983a6c3f78a8b1-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_008.jpg": {
+    "src": "/images/optimized/a4859be42752dea4-1080.webp",
+    "srcSet": "/images/optimized/a4859be42752dea4-640.webp 640w, /images/optimized/a4859be42752dea4-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_009.jpg": {
+    "src": "/images/optimized/f62adfe2c2958a93-1080.webp",
+    "srcSet": "/images/optimized/f62adfe2c2958a93-640.webp 640w, /images/optimized/f62adfe2c2958a93-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_010.jpg": {
+    "src": "/images/optimized/9588876a023ffc5b-1080.webp",
+    "srcSet": "/images/optimized/9588876a023ffc5b-640.webp 640w, /images/optimized/9588876a023ffc5b-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_011.jpg": {
+    "src": "/images/optimized/1a87144dff609082-1080.webp",
+    "srcSet": "/images/optimized/1a87144dff609082-640.webp 640w, /images/optimized/1a87144dff609082-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_012.jpg": {
+    "src": "/images/optimized/da7e288853a6a856-1080.webp",
+    "srcSet": "/images/optimized/da7e288853a6a856-640.webp 640w, /images/optimized/da7e288853a6a856-1080.webp 1080w",
+    "width": 1080,
+    "height": 1619
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_013.jpg": {
+    "src": "/images/optimized/d87d2648c041910d-1080.webp",
+    "srcSet": "/images/optimized/d87d2648c041910d-640.webp 640w, /images/optimized/d87d2648c041910d-1080.webp 1080w",
+    "width": 1080,
+    "height": 1619
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_014.jpg": {
+    "src": "/images/optimized/70c069db89c53d72-1080.webp",
+    "srcSet": "/images/optimized/70c069db89c53d72-640.webp 640w, /images/optimized/70c069db89c53d72-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_015.jpg": {
+    "src": "/images/optimized/314802d2f237d32a-1080.webp",
+    "srcSet": "/images/optimized/314802d2f237d32a-640.webp 640w, /images/optimized/314802d2f237d32a-1080.webp 1080w",
+    "width": 1080,
+    "height": 1619
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_016.jpg": {
+    "src": "/images/optimized/0dccd137f8f83a14-1080.webp",
+    "srcSet": "/images/optimized/0dccd137f8f83a14-640.webp 640w, /images/optimized/0dccd137f8f83a14-1080.webp 1080w",
+    "width": 1080,
+    "height": 1080
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_017.jpg": {
+    "src": "/images/optimized/b15d3a42af5b8baa-1080.webp",
+    "srcSet": "/images/optimized/b15d3a42af5b8baa-640.webp 640w, /images/optimized/b15d3a42af5b8baa-1080.webp 1080w",
+    "width": 1080,
+    "height": 1620
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_018.jpg": {
+    "src": "/images/optimized/f4e01e70900be09b-1080.webp",
+    "srcSet": "/images/optimized/f4e01e70900be09b-640.webp 640w, /images/optimized/f4e01e70900be09b-1080.webp 1080w",
+    "width": 1080,
+    "height": 1080
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_019.jpg": {
+    "src": "/images/optimized/fa17decfc6baccc3-1080.webp",
+    "srcSet": "/images/optimized/fa17decfc6baccc3-640.webp 640w, /images/optimized/fa17decfc6baccc3-1080.webp 1080w",
+    "width": 1080,
+    "height": 1080
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_020.jpg": {
+    "src": "/images/optimized/51a7396a7c22da31-1080.webp",
+    "srcSet": "/images/optimized/51a7396a7c22da31-640.webp 640w, /images/optimized/51a7396a7c22da31-1080.webp 1080w",
+    "width": 1080,
+    "height": 1619
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_021.jpg": {
+    "src": "/images/optimized/0c0f00febf821b5d-1080.webp",
+    "srcSet": "/images/optimized/0c0f00febf821b5d-640.webp 640w, /images/optimized/0c0f00febf821b5d-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_022.jpg": {
+    "src": "/images/optimized/e6a65d9d4896f050-1080.webp",
+    "srcSet": "/images/optimized/e6a65d9d4896f050-640.webp 640w, /images/optimized/e6a65d9d4896f050-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_023.jpg": {
+    "src": "/images/optimized/71402860af79ed24-1080.webp",
+    "srcSet": "/images/optimized/71402860af79ed24-640.webp 640w, /images/optimized/71402860af79ed24-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_024.jpg": {
+    "src": "/images/optimized/c20971ea6ea2006e-1080.webp",
+    "srcSet": "/images/optimized/c20971ea6ea2006e-640.webp 640w, /images/optimized/c20971ea6ea2006e-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_025.jpg": {
+    "src": "/images/optimized/46229095b8540320-1080.webp",
+    "srcSet": "/images/optimized/46229095b8540320-640.webp 640w, /images/optimized/46229095b8540320-1080.webp 1080w",
+    "width": 1080,
+    "height": 721
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_026.jpg": {
+    "src": "/images/optimized/6cf3e45b2a0b94c8-1080.webp",
+    "srcSet": "/images/optimized/6cf3e45b2a0b94c8-640.webp 640w, /images/optimized/6cf3e45b2a0b94c8-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_027.jpg": {
+    "src": "/images/optimized/7e5609937011f621-1080.webp",
+    "srcSet": "/images/optimized/7e5609937011f621-640.webp 640w, /images/optimized/7e5609937011f621-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_028.jpg": {
+    "src": "/images/optimized/86a898500d00240a-1080.webp",
+    "srcSet": "/images/optimized/86a898500d00240a-640.webp 640w, /images/optimized/86a898500d00240a-1080.webp 1080w",
+    "width": 1080,
+    "height": 720
+  },
+  "/stories/believe-and-see-camp-review/images/image_1791870618_029.jpg": {
+    "src": "/images/optimized/412c61898358d9c1-1080.webp",
+    "srcSet": "/images/optimized/412c61898358d9c1-640.webp 640w, /images/optimized/412c61898358d9c1-1080.webp 1080w",
+    "width": 1080,
+    "height": 1620
+  },
+  "/stories/chengzi-camp-letter/images/image_1791870153_007.webp": {
+    "src": "/images/optimized/822ba1317e685af2-1080.webp",
+    "srcSet": "/images/optimized/822ba1317e685af2-640.webp 640w, /images/optimized/822ba1317e685af2-1080.webp 1080w",
+    "width": 1080,
+    "height": 1440
+  },
+  "/stories/chengzi-camp-letter/images/image_1791870153_010.webp": {
+    "src": "/images/optimized/882fd25ec435216c-1080.webp",
+    "srcSet": "/images/optimized/882fd25ec435216c-640.webp 640w, /images/optimized/882fd25ec435216c-1080.webp 1080w",
+    "width": 1080,
+    "height": 1528
+  },
+  "/stories/it-takes-a-village/cover.jpg": {
+    "src": "/images/optimized/632ae6e7845b4971-1280.webp",
+    "srcSet": "/images/optimized/632ae6e7845b4971-640.webp 640w, /images/optimized/632ae6e7845b4971-1280.webp 1280w",
+    "width": 1280,
+    "height": 544
+  },
+  "/stories/it-takes-a-village/images/founder-story-camp-2026.jpg": {
+    "src": "/images/optimized/e8ec49109fda4d77-1280.webp",
+    "srcSet": "/images/optimized/e8ec49109fda4d77-640.webp 640w, /images/optimized/e8ec49109fda4d77-1280.webp 1280w, /images/optimized/e8ec49109fda4d77-1920.webp 1920w",
+    "width": 5168,
+    "height": 3448
+  },
+  "/stories/it-takes-a-village/images/image-004.webp": {
+    "src": "/images/optimized/8bde3fcc1a7c06ac-706.webp",
+    "srcSet": "/images/optimized/8bde3fcc1a7c06ac-640.webp 640w, /images/optimized/8bde3fcc1a7c06ac-706.webp 706w",
+    "width": 706,
+    "height": 1059
+  },
+  "/stories/it-takes-a-village/images/image-006.webp": {
+    "src": "/images/optimized/61d3ba3939b10d7a-1080.webp",
+    "srcSet": "/images/optimized/61d3ba3939b10d7a-640.webp 640w, /images/optimized/61d3ba3939b10d7a-1080.webp 1080w",
+    "width": 1080,
+    "height": 1440
+  },
+  "/stories/it-takes-a-village/images/image-007.webp": {
+    "src": "/images/optimized/949e2f403f11003e-1080.webp",
+    "srcSet": "/images/optimized/949e2f403f11003e-640.webp 640w, /images/optimized/949e2f403f11003e-1080.webp 1080w",
+    "width": 1080,
+    "height": 1650
+  },
+  "/stories/it-takes-a-village/images/image-020.png": {
+    "src": "/images/optimized/3cd6981897d8ae8b-1080.webp",
+    "srcSet": "/images/optimized/3cd6981897d8ae8b-640.webp 640w, /images/optimized/3cd6981897d8ae8b-1080.webp 1080w",
+    "width": 1080,
+    "height": 721
+  },
+  "/stories/it-takes-a-village/images/image-021.webp": {
+    "src": "/images/optimized/3a42653d886ab241-1080.webp",
+    "srcSet": "/images/optimized/3a42653d886ab241-640.webp 640w, /images/optimized/3a42653d886ab241-1080.webp 1080w",
+    "width": 1080,
+    "height": 1440
+  },
+  "/stories/it-takes-a-village/images/image-022.webp": {
+    "src": "/images/optimized/181e974758351e37-1080.webp",
+    "srcSet": "/images/optimized/181e974758351e37-640.webp 640w, /images/optimized/181e974758351e37-1080.webp 1080w",
+    "width": 1080,
+    "height": 1440
+  },
+  "/stories/summer-co-creation-camp-invitation/cover.jpg": {
+    "src": "/images/optimized/3a1d46af6ae039cf-1280.webp",
+    "srcSet": "/images/optimized/3a1d46af6ae039cf-640.webp 640w, /images/optimized/3a1d46af6ae039cf-1280.webp 1280w",
+    "width": 1280,
+    "height": 545
+  },
+  "/stories/summer-co-creation-camp-invitation/images/image-005.png": {
+    "src": "/images/optimized/73b253a3702bad3f-1080.webp",
+    "srcSet": "/images/optimized/73b253a3702bad3f-640.webp 640w, /images/optimized/73b253a3702bad3f-1080.webp 1080w",
+    "width": 1080,
+    "height": 810
+  },
+  "/stories/summer-co-creation-camp-invitation/images/image-009.png": {
+    "src": "/images/optimized/5ca4189c5850972e-1058.webp",
+    "srcSet": "/images/optimized/5ca4189c5850972e-640.webp 640w, /images/optimized/5ca4189c5850972e-1058.webp 1058w",
+    "width": 1058,
+    "height": 1410
+  },
+  "/stories/summer-co-creation-camp-invitation/images/image-011.png": {
+    "src": "/images/optimized/d1267306a0f9f75c-540.webp",
+    "srcSet": "/images/optimized/d1267306a0f9f75c-540.webp 540w",
+    "width": 540,
+    "height": 304
+  },
+  "/stories/summer-co-creation-camp-invitation/images/image-014.png": {
+    "src": "/images/optimized/0de141d43af3d4d2-1080.webp",
+    "srcSet": "/images/optimized/0de141d43af3d4d2-640.webp 640w, /images/optimized/0de141d43af3d4d2-1080.webp 1080w",
+    "width": 1080,
+    "height": 1440
+  },
+  "/stories/tea-connects-an-american-girl/cover.jpg": {
+    "src": "/images/optimized/0560b055c9087f0d-1280.webp",
+    "srcSet": "/images/optimized/0560b055c9087f0d-640.webp 640w, /images/optimized/0560b055c9087f0d-1280.webp 1280w",
+    "width": 1280,
+    "height": 545
+  },
+  "/stories/tea-connects-an-american-girl/images/image-001.webp": {
+    "src": "/images/optimized/e1a5801bbf8ae69d-1080.webp",
+    "srcSet": "/images/optimized/e1a5801bbf8ae69d-640.webp 640w, /images/optimized/e1a5801bbf8ae69d-1080.webp 1080w",
+    "width": 1080,
+    "height": 1439
+  },
+  "/stories/tea-connects-an-american-girl/images/image-008.webp": {
+    "src": "/images/optimized/3bd479be9cbdcab3-1080.webp",
+    "srcSet": "/images/optimized/3bd479be9cbdcab3-640.webp 640w, /images/optimized/3bd479be9cbdcab3-1080.webp 1080w",
+    "width": 1080,
+    "height": 1544
+  },
+  "/stories/tea-connects-an-american-girl/images/image-009.webp": {
+    "src": "/images/optimized/795addfd5667c2f3-1080.webp",
+    "srcSet": "/images/optimized/795addfd5667c2f3-640.webp 640w, /images/optimized/795addfd5667c2f3-1080.webp 1080w",
+    "width": 1080,
+    "height": 1441
+  },
+  "/stories/tea-connects-an-american-girl/images/image-012.webp": {
+    "src": "/images/optimized/ed6f0ac2c44b8b7f-1080.webp",
+    "srcSet": "/images/optimized/ed6f0ac2c44b8b7f-640.webp 640w, /images/optimized/ed6f0ac2c44b8b7f-1080.webp 1080w",
+    "width": 1080,
+    "height": 1440
+  },
+  "/stories/tea-kitchen-and-summer/cover.jpg": {
+    "src": "/images/optimized/74d13a07b2432a63-1280.webp",
+    "srcSet": "/images/optimized/74d13a07b2432a63-640.webp 640w, /images/optimized/74d13a07b2432a63-1280.webp 1280w",
+    "width": 1280,
+    "height": 544
+  },
+  "/stories/technology-ecology-stars/cover.jpg": {
+    "src": "/images/optimized/5bfd7ad7e1f6cc83-1280.webp",
+    "srcSet": "/images/optimized/5bfd7ad7e1f6cc83-640.webp 640w, /images/optimized/5bfd7ad7e1f6cc83-1280.webp 1280w",
+    "width": 1280,
+    "height": 545
+  },
+  "/stories/technology-ecology-stars/images/image-011.webp": {
+    "src": "/images/optimized/130b7965b62dfb89-1080.webp",
+    "srcSet": "/images/optimized/130b7965b62dfb89-640.webp 640w, /images/optimized/130b7965b62dfb89-1080.webp 1080w",
+    "width": 1080,
+    "height": 1619
+  }
+}

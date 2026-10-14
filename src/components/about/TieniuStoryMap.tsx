@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useEffect, useRef, useState } from 'react';
 import { LocateFixed, MapPin } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -291,7 +292,7 @@ export default function TieniuStoryMap() {
           <div ref={mapContainerRef} className="tieniu-place-story__live-map" aria-hidden={!showLiveMap} />
           {!showLiveMap && (
             <div className="tieniu-place-story__fallback">
-              <img
+              <OptimizedImage
                 src="/archive/elements/graphics/infographics/s01-xilai-town-site-map.png"
                 alt={t('西来镇、铁牛村与西来站的位置地图', 'Map showing Xilai Town, Tieniu Village, and Xilai Station')}
               />

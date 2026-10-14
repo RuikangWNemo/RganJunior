@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -89,7 +90,7 @@ export default function Impact() {
 
             <figure>
               <div className="overflow-hidden rounded-2xl bg-secondary/45">
-                <img
+                <OptimizedImage
                   src="/archive/elements/photos/program-activities/s20-regenerative-design-eco-camp-group.jpg"
                   alt={t('再生设计国际生态营参与者在山林场域合影', 'Participants in the regenerative design eco camp gathering in a mountain setting')}
                   width="1920"
@@ -261,7 +262,7 @@ export default function Impact() {
                   <ImpactReveal key={action.id} delay={(index % 2) * 0.05} className={layoutClass}>
                     <figure>
                       <div className="overflow-hidden rounded-2xl bg-secondary/45">
-                        <img
+                        <OptimizedImage
                           src={action.image}
                           alt={pickLocalized(action.imageAlt, lang)}
                           width="1280"

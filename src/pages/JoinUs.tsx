@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -171,7 +172,7 @@ function StaticJoinCard({
       <span className="join-static-lanyard__pin" aria-hidden="true" />
       <span className="join-static-lanyard__cord" aria-hidden="true" />
       <div className="join-static-lanyard__card">
-        <img src={visual.card} alt={pickLocalized(visual.cardAlt, lang)} />
+        <OptimizedImage src={visual.card} alt={pickLocalized(visual.cardAlt, lang)} />
         <span className="join-static-lanyard__identity">{title}</span>
         <span className="join-static-lanyard__eyebrow">{subtitle}</span>
       </div>
@@ -198,7 +199,7 @@ function MobileJoinIdentityCard({
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="join-mobile-card__image">
-        <img src={visual.card} alt="" />
+        <OptimizedImage src={visual.card} alt="" />
       </div>
       <div className="min-w-0">
         <p className="join-mobile-card__eyebrow">{subtitle}</p>
