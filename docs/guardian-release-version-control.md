@@ -87,3 +87,10 @@
 - 正式域名已核验：英文主句及Life Immersion Camp更新、五位作者本人照片成功加载，橙子筛选正确，七篇文章保留。
 - 上一正式部署：`dpl_NVzonfJkCY6KNWhyXfF2NVuJzNNV`，提交 `0ae0b4c`；可回退。
 - 源码清单与验证见 `docs/translation-avatar-release-2026-10-14/`。本地整理版继续保留未发布页面优化，发布不运行远端构建或数据库写入。
+
+## 10 月 14 日三类入口与联合邀请信
+
+- 最新正式版应用提交 `a8cb91b`，部署 `dpl_J7j8K4td3nu8YKMumUddHqVqFyZg`，标签 `release/2026-10-14-join-roles-invitation`。
+- 首页和加入页统一三类及小橘子；联合邀请信增加双头像、短人物入口名和专属列表卡片，正文保留完整署名和封面。
+- 上一版本 `629614c` / `dpl_3rT93CBPYK8oQkSNvjdgFeQbqsET` 可用于回退。验证记录见 `docs/join-invitation-release-2026-10-14/`。
+- 与图片优化任务协调后，仅本任务发布；主目录已精确合并本次增量并保留其未发布的图片优化。后续发布必须基于a8cb91b或更新版。
