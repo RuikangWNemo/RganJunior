@@ -2,6 +2,7 @@ import type { LocalizedText } from '@/lib/brand';
 
 export type GuardianMember = {
   id: string;
+  aliases?: readonly string[];
   photo: string;
   name?: LocalizedText;
   bio?: LocalizedText;
@@ -26,9 +27,8 @@ export const guardianMembers: readonly GuardianMember[] = [
   { id: 'guardian-05', photo: '/images/about/guardians/mulan-20261013.jpg', name: { zh: '木兰', en: 'Mulan' }, cardScale: 1.25, fullPhotoInProfile: true },
   { id: 'guardian-06', photo: '/images/about/parent-guardian/parent-guardian-06.webp' },
   { id: 'guardian-07', photo: '/images/about/parent-guardian/parent-guardian-07.webp' },
-  { id: 'guardian-08', photo: '/images/about/parent-guardian/parent-guardian-08.webp' },
+  { id: 'zhuo-fei', aliases: ['guardian-08'], photo: '/images/about/guardians/zhuo-fei-20261014-upright.png', name: { zh: '卓霏', en: 'Zhuo Fei' }, cardPosition: '50% 50%', fullPhotoInProfile: true },
   { id: 'guardian-09', photo: '/images/about/parent-guardian/parent-guardian-09.webp' },
-  { id: 'zhuo-fei', photo: '/images/about/guardians/zhuo-fei-20261014.png', name: { zh: '卓霏', en: 'Zhuo Fei' }, cardPosition: '63% 50%', fullPhotoInProfile: true },
 ];
 
 export function guardianProfilePath(member: GuardianMember) {
