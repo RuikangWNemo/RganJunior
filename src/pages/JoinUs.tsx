@@ -43,7 +43,7 @@ const identityVisuals: Record<JoinAudienceId, JoinIdentityVisual> = {
     card: '/images/join/youth-card.webp',
     cardAlt: {
       zh: '成为阿柑少年的悬挂卡片插图',
-      en: "Hanging card illustration for R-Gan Junior youth",
+      en: "Hanging card illustration for joining R-Gan Junior",
     },
   },
   'join-parents': {
@@ -68,8 +68,8 @@ const identityPathItems: JoinIdentityEditorial[] = [
   {
     id: 'join-youth',
     issue: '01',
-    code: 'YOUTH',
-    label: { zh: '阿柑少年', en: 'Youth' },
+    code: 'R-Gan Junior',
+    label: { zh: '阿柑少年', en: "R-Gan Junior" },
     hint: { zh: '带着问题，走进真实世界', en: 'Carry a question into the real world' },
     guide: { zh: '我想去真实世界看看', en: 'I want to explore the real world' },
   },
@@ -79,7 +79,7 @@ const identityPathItems: JoinIdentityEditorial[] = [
     code: 'PARENTS',
     label: { zh: '家长', en: 'Parents' },
     hint: { zh: '在陪伴与边界之间同行', en: 'Walk together with care and boundaries' },
-    guide: { zh: '我正在陪伴一个孩子', en: 'I am accompanying a young person' },
+    guide: { zh: '我正在陪伴一个孩子', en: "I am supporting a child as they grow" },
   },
   {
     id: 'join-partners',
@@ -87,7 +87,7 @@ const identityPathItems: JoinIdentityEditorial[] = [
     code: 'PARTNERS',
     label: { zh: '伙伴', en: 'Partners' },
     hint: { zh: '把资源与能力变成共同行动', en: 'Turn resources and skills into shared action' },
-    guide: { zh: '我有资源或能力想共创', en: 'I have resources or skills to co-create' },
+    guide: { zh: '我有资源或能力想共创', en: "I have resources or skills to contribute" },
   },
 ];
 
@@ -323,13 +323,13 @@ export default function JoinUs() {
           aria-expanded={guideOpen}
           aria-controls="join-mascot-guide"
         >
-          {t('还不知道选谁？问问我', 'Not sure who you are here as? Ask me')}
+          {t('还不知道选谁？问问我', "Not sure which option fits you? Ask me")}
           <ArrowRight aria-hidden="true" />
         </button>
 
         <div id="join-mascot-guide" className="join-editorial-guide__panel">
           <p className="join-editorial-guide__question">
-            {t('此刻的你，更像——', 'Right now, you are closer to—')}
+            {t('此刻的你，更像——', "Which description fits you best right now?")}
           </p>
           <div className="join-editorial-guide__choices">
             {identityPathItems.map((identity) => (
@@ -361,7 +361,7 @@ export default function JoinUs() {
         >
           <div className="join-editorial-cover__copy">
             <h1 id="join-editorial-title" className="join-editorial-cover__title">
-              {t('成为阿柑少年', 'Become an R-Gan Junior')}
+              {t('成为阿柑少年', "Join R-Gan Junior")}
             </h1>
             <p className="join-editorial-cover__subtitle">
               {t('与我们同行', 'Walk with us')}
@@ -444,7 +444,7 @@ export default function JoinUs() {
           <div
             className="join-editorial-path-map relative"
             role="group"
-            aria-label={t('加入身份选择', 'Join identity selector')}
+            aria-label={t('加入身份选择', "Choose how to join")}
           >
             <svg
               viewBox="0 0 1000 430"
@@ -606,7 +606,7 @@ export default function JoinUs() {
 
             <nav
               className="join-role-folio__switcher"
-              aria-label={t('切换加入身份', 'Switch joining identity')}
+              aria-label={t('切换加入身份', "Change how you want to join")}
             >
               {identityPathItems.map((identity) => (
                 <button

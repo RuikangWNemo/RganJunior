@@ -81,7 +81,7 @@ function GuardianPublicConfirmation({ token }: { token: string }) {
       <CommunitySurface
         eyebrow="Guardian informed consent"
         title={t('阿柑少年社群加入确认', "R-Gan Junior community confirmation")}
-        description={request ? t(`${request.minor_display_label}正在申请加入阿柑少年线上社群。`, `${request.minor_display_label} is applying to join the online community.`) : t('正在读取确认内容…', 'Loading confirmation details…')}
+        description={request ? t(`${request.minor_display_label}正在申请加入阿柑少年线上社群。`, `${request.minor_display_label} is applying to join the R-Gan Junior online community.`) : t('正在读取确认内容…', 'Loading confirmation details…')}
         aside={<><ShieldCheck className="mb-4 size-7 text-[hsl(var(--community-orange))]" /><p>{t('手机验证码只核验您对该手机号的控制权，不自动证明法定监护关系或真实身份。平台会另行完成必要审核。', 'The phone code only verifies control of the number. It does not prove legal guardianship or identity; the community team completes the necessary review separately.')}</p></>}
         width="wide"
       >

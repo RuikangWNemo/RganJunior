@@ -216,7 +216,7 @@ export default function CommunityAdminAnalytics() {
                   <h2 id="analytics-performance-title" className="font-serif text-2xl text-primary">{t('真实用户加载体验', 'Real-user loading experience')}</h2>
                 </div>
               </div>
-              <p className="max-w-md text-xs leading-6 text-foreground/45">{t('仅显示匿名聚合的第 75 百分位、优秀占比和样本数，不保留可识别访问明细。', 'Anonymous aggregates only: p75, good share, and sample count. No identifiable visit details are retained.')}</p>
+              <p className="max-w-md text-xs leading-6 text-foreground/45">{t('仅显示匿名聚合的第 75 百分位、优秀占比和样本数，不保留可识别访问明细。', "Only anonymous aggregates are shown: the 75th percentile, the percentage rated good, and the sample count. Identifiable visit details are not retained.")}</p>
             </div>
             {dashboard.webVitals.length ? (
               <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
@@ -233,7 +233,7 @@ export default function CommunityAdminAnalytics() {
                 ))}
               </div>
             ) : (
-              <div className="mt-5"><CommunityEmptyState title={t('等待首次真实用户性能数据', 'Awaiting the first real-user performance sample')} description={t('部署后，支持 PerformanceObserver 的公开页面访问会逐步形成这里的聚合指标。', 'After deployment, supported public-page visits will gradually populate these aggregates.')} /></div>
+              <div className="mt-5"><CommunityEmptyState title={t('等待首次真实用户性能数据', 'Awaiting the first real-user performance sample')} description={t('部署后，支持 PerformanceObserver 的公开页面访问会逐步形成这里的聚合指标。', "After deployment, visits to public pages in browsers that support PerformanceObserver will gradually populate these aggregate metrics.")} /></div>
             )}
           </section>
 

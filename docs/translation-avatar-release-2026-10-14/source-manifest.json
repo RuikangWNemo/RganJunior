@@ -1,0 +1,337 @@
+{
+  "baseline": "0ae0b4cb4041df1082eacaedfe57b967036e8fa0",
+  "files": [
+    {
+      "path": "api/_lib/auth-email/dispatch.runtime.mjs",
+      "sha256": "c3e123b18e189d1d934675e83f7492a357be791eb91ad7069b3b6170935d96d9"
+    },
+    {
+      "path": "api/_lib/auth-email/emails/copy.ts",
+      "sha256": "1f079d3ea2464ca8c19dfaefc04965f9e22616a6660435f6bbd8843685d1ed25"
+    },
+    {
+      "path": "api/_lib/join-handler.js",
+      "sha256": "8f6bdcf216f5b7bf55b860032f6841699d7d04a0f96707658a67e2602ed2c683"
+    },
+    {
+      "path": "api/action-inquiry.js",
+      "sha256": "6858911a6ec3a4a51ff43ec4a2de1996da3991c335bc4bce25921ceae8c320f8"
+    },
+    {
+      "path": "src/assets/about-team/chengzi.png",
+      "sha256": "f96ca9c2398374da085e9b2605dcc3b692b5c46af91cea1b05c5b98b3b6aac38"
+    },
+    {
+      "path": "src/components/Navbar.tsx",
+      "sha256": "c7f3b7f464572648714d1dec860526eea33cb6e4130670ad4f0edc7620b33c8d"
+    },
+    {
+      "path": "src/components/about/TieniuRegenerationStory.tsx",
+      "sha256": "def1260216ebd8d4b0b33a85f2f4c856df840de465bfd26df40ca023d2f8219d"
+    },
+    {
+      "path": "src/components/about/TieniuStoryMap.tsx",
+      "sha256": "ac35c5e7af927101594a17f0947ad71bb077c62bb0f566722a51d402760f5251"
+    },
+    {
+      "path": "src/components/actions/ActionInquiryForm.tsx",
+      "sha256": "52ea0e875cf76ef7f48839b7779e911407561a5756bf748735d853d1f932d877"
+    },
+    {
+      "path": "src/components/community/CommunityChrome.test.tsx",
+      "sha256": "f466edf54cab3051c95d4a6bfaaedf1f1a7f3832690a8cfef8ee1c3d3de96547"
+    },
+    {
+      "path": "src/components/community/CommunityPlanetNavigator.tsx",
+      "sha256": "de9793707d2457d46139a300b6cc7216d553ffbff62a83403b80471aa15280dd"
+    },
+    {
+      "path": "src/components/community/ManualGuardianReviewPanel.tsx",
+      "sha256": "063eeade18987b806b18c05005b94f5866d3245ab28bc4ac74ef8c98f77b91e4"
+    },
+    {
+      "path": "src/components/community/StoryCategoryManager.tsx",
+      "sha256": "a522f38794c24852486d1b32c640507dcca964969736e908d70a177d416e28aa"
+    },
+    {
+      "path": "src/components/community/StoryDeleteDialog.tsx",
+      "sha256": "61c25824d4791a1953970f4b6f00fb3974b07a34f6791f832952ec352e76e52c"
+    },
+    {
+      "path": "src/components/community/editor/StoryCollaborationPanel.tsx",
+      "sha256": "7891bfe608c7e9123aa007a6940c498d4d543a1fbd6e3588d53bc6325377eeb4"
+    },
+    {
+      "path": "src/components/community/editor/StoryPublishingSettings.test.tsx",
+      "sha256": "e5ffefae9e8badf947608cd0848e403567cfb86d11e68866a7611a394c517d2e"
+    },
+    {
+      "path": "src/components/community/editor/StoryPublishingSettings.tsx",
+      "sha256": "7a74eec67f04d86374937899b479dea560c243d0352cfc5abfe3d6159db68121"
+    },
+    {
+      "path": "src/components/field-notes/FieldNoteExplorer.tsx",
+      "sha256": "4bb2f84d4362def3cbcc4eb0339b8de2a65471ae034960fb563fae0386757779"
+    },
+    {
+      "path": "src/components/home/ActionLayerStory.tsx",
+      "sha256": "d2b2faec07e50cdc7e64cd56e1aa1f246d96cfeadae9a386ed27ba346fc3b5a6"
+    },
+    {
+      "path": "src/components/home/HeroCopy.tsx",
+      "sha256": "b38a2fe2a0a933ee75fe607877332390d7a919ea21add31fafa95f8fa0b49dce"
+    },
+    {
+      "path": "src/components/home/HomeFieldScene.tsx",
+      "sha256": "8668fc37f63a1cb3853126f8a5522d8e102e72f4e357ac7ec73500c7cf6648a1"
+    },
+    {
+      "path": "src/components/home/HomeFounderStory.tsx",
+      "sha256": "1f48926cd55ca11140a661c8616462bb5bf2ea0bea84a2419df7c650de734d2a"
+    },
+    {
+      "path": "src/components/home/HomeJoinCta.tsx",
+      "sha256": "f27396340ed61996097cca3c5ffc7da8151f14f7d9ad30ea94b17da3c264a6ae"
+    },
+    {
+      "path": "src/components/home/HomePhotoScroll.tsx",
+      "sha256": "d3ca091f7fe0ce100a377f22d50c4e34aaeaf88a8f643da43093d3354f963938"
+    },
+    {
+      "path": "src/components/home/NetworkAnimation.tsx",
+      "sha256": "2abfcf26e28e737043eb6bf66ff0a87ed7e529077a6b8e31d7f67c63a95ebb7a"
+    },
+    {
+      "path": "src/components/home/SeedCommunity.tsx",
+      "sha256": "1e3b1c561297b710238734ff1a66108edea9d586a63ea831085583837700a148"
+    },
+    {
+      "path": "src/components/home/WholeLifeGrowth.tsx",
+      "sha256": "d7819010c8bbb4a16255b8b0c3c837654f55d7b8e41ef718c0014ae4c38778ce"
+    },
+    {
+      "path": "src/components/impact/ImpactSectionNav.tsx",
+      "sha256": "fb836942e774f076c91c86bb0678579eff6576f27526e705b3a6c7841e9fc771"
+    },
+    {
+      "path": "src/components/programs/ProgramActions.tsx",
+      "sha256": "ad9db607446af50408e72a3a2b7762699cc1560ac9e31825a2f653f219bba4ab"
+    },
+    {
+      "path": "src/components/programs/ProgramFaq.tsx",
+      "sha256": "bbdd2c965ca65d7f762a18e16e5e34427e86c6801783842ece7f5553a56186ff"
+    },
+    {
+      "path": "src/components/programs/ProgramInvitation.tsx",
+      "sha256": "181ecbbfc2dacac7c4ba359bfb39b7601e164096483ceeac1d12dafc480f9546"
+    },
+    {
+      "path": "src/components/programs/details/ActionGroupDetails.tsx",
+      "sha256": "ed1d74b507081b1a3a1586b2ce305f2be80da30ca31436afccb45aa994d93a36"
+    },
+    {
+      "path": "src/components/programs/details/LifeCoCreationCampDetails.tsx",
+      "sha256": "e6a3797780a31ad73689cd774bb7a189723f82dcf77bb9588a55fba214f6c88d"
+    },
+    {
+      "path": "src/components/programs/details/LifeExperienceCampDetails.tsx",
+      "sha256": "3b8427ac83c8d1700e7a7c446294ff1a2024d49fbec163f638c73da539b962cb"
+    },
+    {
+      "path": "src/components/programs/details/PublicProjectsDetails.tsx",
+      "sha256": "b6ca8d575382e8c2ae73dfc8be7a0d40a44abd62c37a9c35921129e3fa041978"
+    },
+    {
+      "path": "src/content/aboutMethodPhotos.ts",
+      "sha256": "65a57860525eb2e812895aada53da88d1dffcd2bc070274f7fa832edffacf3d1"
+    },
+    {
+      "path": "src/content/actionPrograms.ts",
+      "sha256": "96e74d28f24dfbba64f946e49762dafd1b2499aa761b86cc25d9b558b090b9d2"
+    },
+    {
+      "path": "src/content/archiveContent.ts",
+      "sha256": "f727b25edd974223a25b23b5787c2e6d88e22287810ac2f825f584652acc5f4b"
+    },
+    {
+      "path": "src/content/articleAuthorPortraits.ts",
+      "sha256": "dee719885108111d3c90f1e02fad693d47773afc309814e77312bba0c5523628"
+    },
+    {
+      "path": "src/content/homepage.ts",
+      "sha256": "9fc6acd3287bd518b9ea1e150b34e1d3ae4f22d0a883bff970bc2cd7cd428b0b"
+    },
+    {
+      "path": "src/content/impact.ts",
+      "sha256": "1748e532db1d8b1649509d598daef0a43dc2399a9608e891f123c7f8209387fb"
+    },
+    {
+      "path": "src/content/programDetails.ts",
+      "sha256": "579813e0bf26a0ed0dc1b2bab2da04dfffc87f1718d21745e5d5c9e2f3386dd4"
+    },
+    {
+      "path": "src/content/siteContent.ts",
+      "sha256": "66b9227387f1488650a870bf4d6b57305dc6aaa2b33be23855815e96567e7e0c"
+    },
+    {
+      "path": "src/contexts/LanguageContext.tsx",
+      "sha256": "03c32bb041167ab212fc08f079365199eb181e59bb79cc47756ec7caa9480083"
+    },
+    {
+      "path": "src/lib/brand.ts",
+      "sha256": "b4d8a3d86d8173c22bef4990e6d81459c19b2112b79f21657dbfa50de6c18482"
+    },
+    {
+      "path": "src/lib/communityNavigation.test.ts",
+      "sha256": "130d2014b5eaadc5af86024474b8d2e1325be2c7e8d6c087ce10a716c623e179"
+    },
+    {
+      "path": "src/lib/communityNavigation.ts",
+      "sha256": "710750a86d954fe8973620427bce2a4918ca5808aa636ac10ac7e7f38cee34c7"
+    },
+    {
+      "path": "src/lib/communityUi.ts",
+      "sha256": "2bd91f8e59cb81fc6eecc2101c4992ce3cd37332ff585e663afc54e90db7f339"
+    },
+    {
+      "path": "src/lib/confirmedTranslations.test.ts",
+      "sha256": "19f067e9ff84b5fa628820e3688e75a0cbbd8fb0881c6bc64078b6ffda71c655"
+    },
+    {
+      "path": "src/lib/confirmedTranslations.ts",
+      "sha256": "f976e9358df4a0cdac562b62515e58d6c5eb9edf360ccff92ecf031b17af6ddc"
+    },
+    {
+      "path": "src/pages/About.test.tsx",
+      "sha256": "43090297e90d0330a04786ce7c0a43765d3c8e5720a94e40b3560dd78f67f7ee"
+    },
+    {
+      "path": "src/pages/About.tsx",
+      "sha256": "466ea33bdca9117fd16ba2000d21a8d51b9bee2bf93899cee856c9ec383d44b9"
+    },
+    {
+      "path": "src/pages/ActionInquiry.tsx",
+      "sha256": "fddc7179e88a053dab81255bf957b9b41725b2800b5506800284defb51f7556e"
+    },
+    {
+      "path": "src/pages/Actions.tsx",
+      "sha256": "4ad497fc14e0862d4cd5cd14a1cc2c6ff649866588f5d50ef1045e68e52f5fcc"
+    },
+    {
+      "path": "src/pages/FieldNotes.tsx",
+      "sha256": "8bfdd0aaf7c002575640c94f8bd925afdff6dc40d59b86d3ebae40d41fae42af"
+    },
+    {
+      "path": "src/pages/FieldResearch.tsx",
+      "sha256": "7d28aa0d21bf17c264245b586a84f59bf96463d680aa6d5fc2587073bf7e7462"
+    },
+    {
+      "path": "src/pages/FounderStory.tsx",
+      "sha256": "3ad00b96f0793d2a18c665d89e3c1ed0b5cae11b70a146c197cc40e33d04dda8"
+    },
+    {
+      "path": "src/pages/Impact.tsx",
+      "sha256": "a2bd9b4e80b1b5931a48b1fcb384c14d6e482ac6f5b0dd2c7bf34e4d90b65a2d"
+    },
+    {
+      "path": "src/pages/ImpactAwards.tsx",
+      "sha256": "65c2adbba03ab04141223e8ed6863324b9d3743e06eec7444d367ad5752bd97e"
+    },
+    {
+      "path": "src/pages/Index.test.tsx",
+      "sha256": "89d9bac3701dabc353d3cc3a74123d612e7138f22d66440b16349488e4eeffe6"
+    },
+    {
+      "path": "src/pages/JoinUs.tsx",
+      "sha256": "58ded05227a58ec4bb3d019bdf56501f7b4529df60e3defe807bbade68e2067b"
+    },
+    {
+      "path": "src/pages/Journey.tsx",
+      "sha256": "89edc6e81427a4a9db70e686207719c022b6f526d8e3e1aab717a2d9b775ae3c"
+    },
+    {
+      "path": "src/pages/TieniuStory.tsx",
+      "sha256": "854b9641cadfa59d56d76b1e1e349a75eba2c86b20e2dc0e284d2020efdacd76"
+    },
+    {
+      "path": "src/pages/community/CommunityAdminAccess.tsx",
+      "sha256": "fcb72fd9763a53ab24be9edab75bd6cfeb1f8f5cbe95f9dee046493d662812f4"
+    },
+    {
+      "path": "src/pages/community/CommunityAdminAnalytics.tsx",
+      "sha256": "7acc0813becb1279c16c2ccb42a7f09862fe9aab633b496fd6e455a5ae299a75"
+    },
+    {
+      "path": "src/pages/community/CommunityAdminApplications.tsx",
+      "sha256": "9fb910827ddc605e1725cd175dface9e776fc81b2884744251a9a05263a9e688"
+    },
+    {
+      "path": "src/pages/community/CommunityAdminIdentities.tsx",
+      "sha256": "a225aba7cbe32bad45e58d7e8890e3cf273303166cc87abbb7b81459ba1a7e0f"
+    },
+    {
+      "path": "src/pages/community/CommunityApplicationStatus.tsx",
+      "sha256": "5499b70c9c7707f94c0ac2b9669e32346305615b4ca8cd441dfd7af309b8c4a7"
+    },
+    {
+      "path": "src/pages/community/CommunityApply.tsx",
+      "sha256": "df377c661a29f523fa3e6e20f32f38ef397fa352684b9c6ed579330894c4ebe6"
+    },
+    {
+      "path": "src/pages/community/CommunityAuth.test.tsx",
+      "sha256": "a01c0ee6dcb55741ef48582f7b2b33f8ab5ba9ec01ae372007451bf504528705"
+    },
+    {
+      "path": "src/pages/community/CommunityAuth.tsx",
+      "sha256": "f7dabf0a5606f8f5f7133511d18a5d35f60f63c95b123867eb20a700a5936956"
+    },
+    {
+      "path": "src/pages/community/CommunityHome.tsx",
+      "sha256": "08a7fe7f5f58a98390a0bde0269b703db8e95ce2ae7a11301ea580fc70664408"
+    },
+    {
+      "path": "src/pages/community/CommunityMessages.tsx",
+      "sha256": "9c032e97dfa16b61fe823d63f1e42492a334bad47376bcf27f1c3982378805d1"
+    },
+    {
+      "path": "src/pages/community/CommunityOnboarding.tsx",
+      "sha256": "249929514619c0ab267673b09d014eb1c64aaf3f10b3d0e9b99e5f85974d2ab2"
+    },
+    {
+      "path": "src/pages/community/CommunityPeople.test.tsx",
+      "sha256": "3d8e368891002e3fbe731e0958951e47eb2b0a7a728aeb66fb9bd605d0bb0061"
+    },
+    {
+      "path": "src/pages/community/CommunityPeople.tsx",
+      "sha256": "f8ed33ca2fc33c46766424b0ca641d8a182e419a3c79b0f71d0c4e4bce088cf0"
+    },
+    {
+      "path": "src/pages/community/CommunityPractice.tsx",
+      "sha256": "a54fe781362f6773da227d4f18af737eae14897ae02b7ec79de5249561320a5b"
+    },
+    {
+      "path": "src/pages/community/CommunitySettings.tsx",
+      "sha256": "4a44b2e0724678c5f6a7d0578e12607b32d6a3d1d8fdb6a0afe44c50c6fe2041"
+    },
+    {
+      "path": "src/pages/community/CommunityStorySquare.tsx",
+      "sha256": "d631a104468dd34cd552652895c86563406083ed201765e1b5b08a50a480661b"
+    },
+    {
+      "path": "src/pages/community/GuardianConsent.tsx",
+      "sha256": "4191bad3c9c3fdb7fe188e2b4308168f2e810b6cf83db5f395c67f8a304cf7f5"
+    },
+    {
+      "path": "src/services/field-notes/publicRepository.test.ts",
+      "sha256": "d69a6746614fe8c44ab617772269dd32dc49d3b44d4d4b6fc9490052c24b3acb"
+    },
+    {
+      "path": "src/services/field-notes/publicRepository.ts",
+      "sha256": "a2c889bfc8e2ea57f32d4354a892faf2c820748072525d961d74f170adf16a3b"
+    },
+    {
+      "path": "tests/auth-email/templates.test.tsx",
+      "sha256": "4204073946161f2457fca8ab37256ba690633a8e8acfe80ff22c81a0498ce172"
+    }
+  ]
+}

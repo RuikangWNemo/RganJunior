@@ -102,7 +102,7 @@ export function FieldNoteExplorer({
           <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
             {dimension === 'people'
               ? t('选择一个人物，沿着他的观察继续阅读。', 'Choose a person and follow their observations across the archive.')
-              : t('从生活、共创与研究进入同一片真实现场。', 'Enter the same lived setting through reflection, co-creation, or research.')}
+              : t('从生活、共创与研究进入同一片真实现场。', "Explore the same real-world experiences through everyday life, co-creation, and research.")}
           </p>
         </div>
 
@@ -175,7 +175,7 @@ export function FieldNoteExplorer({
                     <img
                       src={person.avatar}
                       alt=""
-                      className="size-13 rounded-full bg-secondary object-cover"
+                      className="size-[3.25rem] rounded-full bg-secondary object-cover"
                     />
                     <span className="min-w-0">
                       <span className="block truncate text-sm font-medium">{pickLocalized(person.name, lang)}</span>
@@ -267,12 +267,12 @@ export function FieldNoteExplorer({
       ) : (
         <div className="py-20 text-center">
           <h3 className="font-serif text-2xl text-foreground">
-            {hasFilters ? t('暂时没有匹配的文章', 'No matching articles yet') : t('还没有正式发布的文章', 'No stories have been published yet')}
+            {hasFilters ? t('暂时没有匹配的文章', 'No matching articles yet') : t('还没有正式发布的文章', "No articles have been published yet")}
           </h3>
           <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted-foreground">
             {hasFilters
               ? t('换一个人物、题材或关键词，再看看这片档案。', 'Try another person, topic, or keyword to explore the archive again.')
-              : t('真实投稿经过审核并公开发布后，会出现在这里。', 'Real submissions will appear here after review and public publication.')}
+              : t('真实投稿经过审核并公开发布后，会出现在这里。', "Author submissions will appear here once they have been reviewed and published publicly.")}
           </p>
           {hasFilters ? (
             <button

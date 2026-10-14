@@ -1,4 +1,5 @@
 import { articleTranslations, articleAuthorNames } from '@/content/articleTranslations';
+import { articleAuthorPortraits } from '@/content/articleAuthorPortraits';
 import { voiceStories } from '@/content/voiceStories';
 import communityMascot from '@/assets/mascot-wide.png';
 import villageIllustration from '@/assets/village-illustration.webp';
@@ -98,7 +99,7 @@ function mappedAuthors(record: PublicNoteRecord): FieldNotePerson[] {
       },
       identityLabel: { zh: '社群作者', en: 'Community author' },
       introduction: { zh: '', en: '' },
-      avatar: communityMascot,
+      avatar: articleAuthorPortraits[String(person.slug)] || communityMascot,
     }));
   return authors;
 }
@@ -126,7 +127,7 @@ function mappedTopics(record: PublicNoteRecord): FieldNoteTopic[] {
       slug: String(topic.slug ?? 'community'),
       name: {
         zh: String(topic.name_zh || topic.name_en || '社群文章'),
-        en: String(topic.name_en || topic.name_zh || 'Community story'),
+        en: String(topic.name_en || topic.name_zh || "Community article"),
       },
       shortName: {
         zh: String(topic.name_zh || topic.name_en || '社群'),

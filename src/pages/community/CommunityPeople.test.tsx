@@ -122,14 +122,14 @@ describe('CommunityPeople planet plaza', () => {
     );
 
     await screen.findByTestId('people-planet');
-    fireEvent.click(screen.getByRole('tab', { name: '成人支持团队 1' }));
+    fireEvent.click(screen.getByRole('tab', { name: '社群支持 1' }));
 
-    expect(screen.getByRole('tab', { name: '成人支持团队 1' })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tab', { name: '社群支持 1' })).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByTestId('location')).toHaveTextContent('/community/people?planet=support');
     fireEvent.click(screen.getByRole('button', { name: '名单' }));
     expect(screen.getByText('关心自然与社区行动。')).toBeInTheDocument();
     expect(screen.queryByText('喜欢记录土地与食物。')).not.toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: '家长守护团 0' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: '守护团 0' })).toBeInTheDocument();
   });
 
   it('reuses the existing message flow from the selected person panel', async () => {

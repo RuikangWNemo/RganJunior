@@ -318,7 +318,7 @@ export default function NetworkAnimation({ className = '' }: NetworkAnimationPro
           <div className="text-center">
             <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-primary/20" />
             <p className="text-sm text-muted-foreground">
-              {t('网络连接中...', 'Network connecting...')}
+              {t('网络连接中...', "Connecting to the network...")}
             </p>
           </div>
         </div>
@@ -339,10 +339,10 @@ export default function NetworkAnimation({ className = '' }: NetworkAnimationPro
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center">
           <p className="text-sm font-medium text-foreground/80">
-            {t('全球网络连接中', 'Global Network Connecting')}
+            {t('全球网络连接中', "Connecting the Global Network")}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {t('从世界各地汇聚到铁牛村', 'From around the world to Tie Niu Village')}
+            {t('从世界各地汇聚到铁牛村', "From around the world to Tieniu Village")}
           </p>
         </div>
       </div>

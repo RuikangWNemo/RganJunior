@@ -40,7 +40,7 @@ export default function CommunityPractice() {
         setNotice(t('已取消参加。', 'Your place has been released.'));
       } else {
         const next = await joinPracticeSession(sessionId);
-        setNotice(next === 'waitlisted' ? t('场次已满，你已进入候补。', 'The session is full. You are now on the waitlist.') : t('已经加入共练。', 'You joined the practice.'));
+        setNotice(next === 'waitlisted' ? t('场次已满，你已进入候补。', 'The session is full. You are now on the waitlist.') : t('已经加入共练。', "You have joined the Shared Practice session."));
       }
       await load();
     } catch (actionError) {
@@ -72,10 +72,10 @@ export default function CommunityPractice() {
       await publishPracticeSession(id);
       setShowCreate(false);
       setForm({ title: '', description: '', startsAt: '', endsAt: '', capacity: 20, meetingUrl: '', accessNotes: '' });
-      setNotice(t('共练已创建并发布。', 'The practice was created and published.'));
+      setNotice(t('共练已创建并发布。', "The Shared Practice session was created and published."));
       await load();
     } catch (createError) {
-      setError(createError instanceof Error ? createError.message : t('共练创建失败。', 'Could not create the practice.'));
+      setError(createError instanceof Error ? createError.message : t('共练创建失败。', "Could not create the Shared Practice session."));
     } finally {
       setCreating(false);
     }
@@ -85,12 +85,12 @@ export default function CommunityPractice() {
     <CommunitySurface
       eyebrow="Practice"
       title={t('在同一个时刻，共同练习。', 'Practice together, at the same time.')}
-      description={t('查看即将发生的共练、加入或候补；会议信息只在临近开始时向已加入成员开放。', 'Browse upcoming sessions, join or waitlist, and unlock access shortly before a joined session begins.')}
-      action={permissions.includes('practice.create') ? <button type="button" className={`${communitySecondaryButtonClass} gap-2`} onClick={() => setShowCreate((value) => !value)}><Plus className="size-4" aria-hidden="true" />{showCreate ? t('收起创建表单', 'Close form') : t('创建共练', 'Create practice')}</button> : undefined}
+      description={t('查看即将发生的共练、加入或候补；会议信息只在临近开始时向已加入成员开放。', "Browse upcoming Shared Practice sessions, join a session or its waitlist, and view meeting details shortly before a session you have joined begins.")}
+      action={permissions.includes('practice.create') ? <button type="button" className={`${communitySecondaryButtonClass} gap-2`} onClick={() => setShowCreate((value) => !value)}><Plus className="size-4" aria-hidden="true" />{showCreate ? t('收起创建表单', 'Close form') : t('创建共练', "Create a Shared Practice session")}</button> : undefined}
     >
       {showCreate ? (
         <form className="mb-8 grid gap-4 rounded-[1.4rem] border border-[hsl(var(--community-forest)/0.1)] bg-[hsl(var(--community-paper-deep)/0.58)] p-5 sm:grid-cols-2" onSubmit={create}>
-          <label className="space-y-2 text-sm font-semibold"><span>{t('共练名称', 'Practice title')}</span><input className={communityInputClass} value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} required /></label>
+          <label className="space-y-2 text-sm font-semibold"><span>{t('共练名称', "Shared Practice session title")}</span><input className={communityInputClass} value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} required /></label>
           <label className="space-y-2 text-sm font-semibold"><span>{t('人数上限', 'Capacity')}</span><input className={communityInputClass} type="number" min={2} max={500} value={form.capacity} onChange={(event) => setForm({ ...form, capacity: Number(event.target.value) })} /></label>
           <label className="space-y-2 text-sm font-semibold"><span>{t('开始时间', 'Starts')}</span><input className={communityInputClass} type="datetime-local" value={form.startsAt} onChange={(event) => setForm({ ...form, startsAt: event.target.value })} required /></label>
           <label className="space-y-2 text-sm font-semibold"><span>{t('结束时间', 'Ends')}</span><input className={communityInputClass} type="datetime-local" value={form.endsAt} onChange={(event) => setForm({ ...form, endsAt: event.target.value })} required /></label>
@@ -121,18 +121,18 @@ export default function CommunityPractice() {
                   <span className="flex items-center gap-2"><Clock3 className="size-4 text-[hsl(var(--community-orange))]" />{formatTime(session.starts_at)} – {formatTime(session.ends_at)}</span>
                   <span className="flex items-center gap-2"><Users className="size-4 text-[hsl(var(--community-orange))]" />{session.participant_count}/{session.capacity} · {t('候补', 'Waitlist')} {session.waitlist_count}</span>
                 </div>
-                <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[hsl(var(--community-forest)/0.08)]" aria-label={t('席位使用进度', 'Capacity progress')}><span className="block h-full rounded-full bg-[hsl(var(--community-orange))]" style={{ width: `${capacityRatio}%` }} /></div>
+                <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[hsl(var(--community-forest)/0.08)]" aria-label={t('席位使用进度', "Places filled")}><span className="block h-full rounded-full bg-[hsl(var(--community-orange))]" style={{ width: `${capacityRatio}%` }} /></div>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <button type="button" className={joined ? communitySecondaryButtonClass : communityPrimaryButtonClass} disabled={busyId !== null} onClick={() => void toggleJoin(session.id, session.my_participation_status)}>{busyId === session.id ? t('正在处理…', 'Working…') : joined ? t('取消参加', 'Leave session') : t('加入共练', 'Join practice')}</button>
-                  {session.my_participation_status === 'joined' ? <button type="button" className={`${communitySecondaryButtonClass} gap-2`} disabled={busyId !== null} onClick={() => void revealAccess(session.id)}><Link2 className="size-4" aria-hidden="true" />{t('查看会议信息', 'View access')}</button> : null}
+                  <button type="button" className={joined ? communitySecondaryButtonClass : communityPrimaryButtonClass} disabled={busyId !== null} onClick={() => void toggleJoin(session.id, session.my_participation_status)}>{busyId === session.id ? t('正在处理…', 'Working…') : joined ? t('取消参加', 'Leave session') : t('加入共练', "Join the session")}</button>
+                  {session.my_participation_status === 'joined' ? <button type="button" className={`${communitySecondaryButtonClass} gap-2`} disabled={busyId !== null} onClick={() => void revealAccess(session.id)}><Link2 className="size-4" aria-hidden="true" />{t('查看会议信息', "View meeting details")}</button> : null}
                 </div>
-                {sessionAccess ? <div className="mt-4 rounded-2xl bg-[hsl(var(--community-forest)/0.06)] p-4 text-sm">{sessionAccess.available_now ? <><a className="font-semibold text-[hsl(var(--community-orange))] underline underline-offset-4" href={sessionAccess.meeting_url || '#'} target="_blank" rel="noreferrer">{t('进入共练', 'Enter practice')}</a>{sessionAccess.access_notes ? <p className="mt-2 text-[hsl(var(--community-forest)/0.62)]">{sessionAccess.access_notes}</p> : null}</> : <p className="text-[hsl(var(--community-forest)/0.62)]">{t('会议信息会在开始前 60 分钟开放。', 'Access opens 60 minutes before the session starts.')}</p>}</div> : null}
+                {sessionAccess ? <div className="mt-4 rounded-2xl bg-[hsl(var(--community-forest)/0.06)] p-4 text-sm">{sessionAccess.available_now ? <><a className="font-semibold text-[hsl(var(--community-orange))] underline underline-offset-4" href={sessionAccess.meeting_url || '#'} target="_blank" rel="noreferrer">{t('进入共练', "Enter the session")}</a>{sessionAccess.access_notes ? <p className="mt-2 text-[hsl(var(--community-forest)/0.62)]">{sessionAccess.access_notes}</p> : null}</> : <p className="text-[hsl(var(--community-forest)/0.62)]">{t('会议信息会在开始前 60 分钟开放。', "Meeting details become available 60 minutes before the session starts.")}</p>}</div> : null}
               </article>
             );
           })}
         </div>
       ) : null}
-      {!loading && !sessions.length ? <CommunityEmptyState title={t('还没有已发布的共练', 'No practices are scheduled yet')} description={t('新的共练发布后会出现在这里。', 'New practice sessions will appear here when they are published.')} /> : null}
+      {!loading && !sessions.length ? <CommunityEmptyState title={t('还没有已发布的共练', "No Shared Practice sessions have been published yet")} description={t('新的共练发布后会出现在这里。', 'New practice sessions will appear here when they are published.')} /> : null}
     </CommunitySurface>
   );
 }

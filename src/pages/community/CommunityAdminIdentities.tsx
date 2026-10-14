@@ -26,8 +26,8 @@ type MemberDraft = { primary: string; secondary: string[] };
 
 const planetOptions: Array<{ slug: PlanetSlug; zh: string; en: string }> = [
   { slug: 'youth', zh: '阿柑少年圈', en: 'R-Gan Junior Circle' },
-  { slug: 'support', zh: '成人支持团队', en: 'Adult Support Team' },
-  { slug: 'guardian', zh: '家长守护团', en: 'Parent Guardian Circle' },
+  { slug: 'support', zh: "社群支持", en: "Community Support" },
+  { slug: 'guardian', zh: "守护团", en: "Guardian Circle" },
 ];
 
 function emptyStats(): CommunityIdentityStats {
@@ -72,7 +72,7 @@ export default function CommunityAdminIdentities() {
         secondary: member.secondary_identity_slugs || [],
       }])));
     } catch (readError) {
-      setError(readError instanceof Error ? readError.message : t('身份工作台读取失败。', 'Could not load the identity workspace.'));
+      setError(readError instanceof Error ? readError.message : t('身份工作台读取失败。', 'Could not load community role management.'));
     } finally {
       setLoading(false);
     }
@@ -106,10 +106,10 @@ export default function CommunityAdminIdentities() {
         isActive: label.is_active,
         sortOrder: label.sort_order,
       });
-      setNotice(t('身份标签设置已保存。', 'Identity label settings saved.'));
+      setNotice(t('身份标签设置已保存。', 'Community role label settings saved.'));
       await load(search);
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : t('身份标签保存失败。', 'Could not save the identity label.'));
+      setError(saveError instanceof Error ? saveError.message : t('身份标签保存失败。', 'Could not save the community role label.'));
     } finally {
       setBusyKey(null);
     }
@@ -118,7 +118,7 @@ export default function CommunityAdminIdentities() {
   const saveMember = async (personId: number) => {
     const draft = memberDrafts[personId];
     if (!draft?.primary) {
-      setError(t('成员必须有一个主身份。', 'A member must have one primary identity.'));
+      setError(t('成员必须有一个主身份。', 'A member must have one primary community role.'));
       return;
     }
     setBusyKey(`member-${personId}`);
@@ -137,9 +137,9 @@ export default function CommunityAdminIdentities() {
 
   return (
     <CommunitySurface
-      eyebrow="Identity system"
+      eyebrow="Community roles"
       title={t('管理三星身份与统计。', 'Manage planet identities and statistics.')}
-      description={t('自报身份只用于审核参考；正式星球、重叠关系和统计只读取管理员确认后的身份。', 'Declarations are review context only. Planets, overlaps, and statistics use confirmed identities.')}
+      description={t('自报身份只用于审核参考；正式星球、重叠关系和统计只读取管理员确认后的身份。', "Self-reported community roles are used only to inform review. Planet groups, overlaps, and statistics use only roles confirmed by an administrator.")}
       width="wide"
     >
       {error ? <div className="mb-5"><CommunityErrorState message={error} onRetry={() => void load(search)} /></div> : null}
@@ -167,7 +167,7 @@ export default function CommunityAdminIdentities() {
           </section>
 
           <section aria-labelledby="identity-labels-title">
-            <div className="flex items-center gap-3"><span className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary"><Tags className="size-5" aria-hidden="true" /></span><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary/55">Labels</p><h2 id="identity-labels-title" className="font-serif text-2xl text-primary">{t('身份标签设置', 'Identity label settings')}</h2></div></div>
+            <div className="flex items-center gap-3"><span className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary"><Tags className="size-5" aria-hidden="true" /></span><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary/55">Labels</p><h2 id="identity-labels-title" className="font-serif text-2xl text-primary">{t('身份标签设置', 'Community role labels')}</h2></div></div>
             <div className="mt-5 space-y-4">
               {labels.map((label) => (
                 <article key={label.id} className="rounded-[1.4rem] border border-primary/10 bg-white/50 p-5">
@@ -188,18 +188,18 @@ export default function CommunityAdminIdentities() {
           </section>
 
           <section aria-labelledby="identity-members-title">
-            <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><span className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary"><Users className="size-5" aria-hidden="true" /></span><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary/55">Members</p><h2 id="identity-members-title" className="font-serif text-2xl text-primary">{t('成员身份管理', 'Member identity management')}</h2></div></div><form className="flex w-full max-w-sm gap-2" onSubmit={submitSearch}><label className="sr-only" htmlFor="identity-member-search">{t('搜索成员', 'Search members')}</label><input id="identity-member-search" className={communityInputClass} value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('自然名、显示名或用户名', 'Nature name, display name, or username')} /><button className="community-button community-button--secondary" type="submit"><Search className="size-4" aria-hidden="true" />{t('搜索', 'Search')}</button></form></div>
+            <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><span className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary"><Users className="size-5" aria-hidden="true" /></span><div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary/55">Members</p><h2 id="identity-members-title" className="font-serif text-2xl text-primary">{t('成员身份管理', 'Member roles')}</h2></div></div><form className="flex w-full max-w-sm gap-2" onSubmit={submitSearch}><label className="sr-only" htmlFor="identity-member-search">{t('搜索成员', 'Search members')}</label><input id="identity-member-search" className={communityInputClass} value={search} onChange={(event) => setSearch(event.target.value)} placeholder={t('自然名、显示名或用户名', 'Nature name, display name, or username')} /><button className="community-button community-button--secondary" type="submit"><Search className="size-4" aria-hidden="true" />{t('搜索', 'Search')}</button></form></div>
             <div className="mt-5 space-y-4">
               {members.map((member) => {
                 const draft = memberDrafts[member.person_id] || { primary: '', secondary: [] };
                 return (
                   <article key={member.person_id} className="rounded-[1.4rem] border border-primary/10 bg-white/50 p-5">
                     <div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-serif text-xl text-primary">{member.nature_name || member.display_name}</h3><p className="text-xs text-foreground/45">#{member.person_id} · {member.membership_status}</p></div><button type="button" className={communityPrimaryButtonClass} disabled={busyKey !== null || !draft.primary} onClick={() => void saveMember(member.person_id)}><Save className="size-4" aria-hidden="true" />{busyKey === `member-${member.person_id}` ? t('保存中…', 'Saving…') : t('保存身份', 'Save identities')}</button></div>
-                    <div className="mt-4 grid gap-4 md:grid-cols-[minmax(12rem,0.75fr)_minmax(0,1.25fr)]"><label className="space-y-2 text-sm font-semibold"><span>{t('主身份 *', 'Primary identity *')}</span><select className={communityInputClass} value={draft.primary} onChange={(event) => setMemberDrafts((current) => ({ ...current, [member.person_id]: { primary: event.target.value, secondary: draft.secondary.filter((slug) => slug !== event.target.value) } }))}><option value="">{t('待补齐', 'Missing')}</option>{labels.filter((label) => label.is_active).map((label) => <option key={label.slug} value={label.slug}>{lang === 'zh' ? label.name_zh : label.name_en || label.name_zh}</option>)}</select></label><fieldset><legend className="text-sm font-semibold">{t('副身份', 'Secondary identities')}</legend><div className="mt-2 flex flex-wrap gap-2">{labels.filter((label) => label.is_active && label.slug !== draft.primary).map((label) => { const checked = draft.secondary.includes(label.slug); return <label key={label.slug} className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-xs ${checked ? 'border-primary bg-primary/10 text-primary' : 'border-primary/15'}`}><input type="checkbox" checked={checked} onChange={() => setMemberDrafts((current) => ({ ...current, [member.person_id]: { ...draft, secondary: checked ? draft.secondary.filter((slug) => slug !== label.slug) : [...draft.secondary, label.slug] } }))} />{lang === 'zh' ? label.name_zh : label.name_en || label.name_zh}</label>; })}</div></fieldset></div>
+                    <div className="mt-4 grid gap-4 md:grid-cols-[minmax(12rem,0.75fr)_minmax(0,1.25fr)]"><label className="space-y-2 text-sm font-semibold"><span>{t('主身份 *', "Primary community role *")}</span><select className={communityInputClass} value={draft.primary} onChange={(event) => setMemberDrafts((current) => ({ ...current, [member.person_id]: { primary: event.target.value, secondary: draft.secondary.filter((slug) => slug !== event.target.value) } }))}><option value="">{t('待补齐', 'Missing')}</option>{labels.filter((label) => label.is_active).map((label) => <option key={label.slug} value={label.slug}>{t(label.name_zh, label.name_en || label.name_zh)}</option>)}</select></label><fieldset><legend className="text-sm font-semibold">{t('副身份', "Additional community roles")}</legend><div className="mt-2 flex flex-wrap gap-2">{labels.filter((label) => label.is_active && label.slug !== draft.primary).map((label) => { const checked = draft.secondary.includes(label.slug); return <label key={label.slug} className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-2 text-xs ${checked ? 'border-primary bg-primary/10 text-primary' : 'border-primary/15'}`}><input type="checkbox" checked={checked} onChange={() => setMemberDrafts((current) => ({ ...current, [member.person_id]: { ...draft, secondary: checked ? draft.secondary.filter((slug) => slug !== label.slug) : [...draft.secondary, label.slug] } }))} />{t(label.name_zh, label.name_en || label.name_zh)}</label>; })}</div></fieldset></div>
                   </article>
                 );
               })}
-              {!members.length ? <CommunityEmptyState title={t('没有找到成员', 'No members found')} description={t('尝试其他关键词；没有主身份的正式成员也会显示在这里。', 'Try another search. Active members without a primary identity also appear here.')} /> : null}
+              {!members.length ? <CommunityEmptyState title={t('没有找到成员', 'No members found')} description={t('尝试其他关键词；没有主身份的正式成员也会显示在这里。', "Try another search. Members without a primary community role also appear here.")} /> : null}
             </div>
           </section>
         </div>

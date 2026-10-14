@@ -210,7 +210,7 @@ describe('CommunityAuth', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: '注册' }));
     fireEvent.click(await screen.findByRole('radio', { name: /青年共创伙伴/ }));
-    fireEvent.click(screen.getByRole('checkbox', { name: '家长守护团' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: '守护团' }));
     fireEvent.click(screen.getByRole('button', { name: '确认身份，继续' }));
     fireEvent.click(screen.getByRole('radio', { name: '已满 18 岁' }));
     fireEvent.click(screen.getByRole('button', { name: '继续创建账号' }));

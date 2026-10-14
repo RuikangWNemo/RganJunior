@@ -164,12 +164,12 @@ function HomeSceneReel() {
                       <button
                         type="button"
                         onClick={selectPrevious}
-                        aria-label={t('点击照片左侧查看上一张', 'View the previous photograph from the left side')}
+                        aria-label={t('点击照片左侧查看上一张', "Click the left side of the photograph to see the previous one.")}
                       />
                       <button
                         type="button"
                         onClick={selectNext}
-                        aria-label={t('点击照片右侧查看下一张', 'View the next photograph from the right side')}
+                        aria-label={t('点击照片右侧查看下一张', "Click the right side of the photograph to see the next one.")}
                       />
                     </div>
                   ) : null}
@@ -254,7 +254,7 @@ export default function HomeFieldScene() {
         <p className="home-field-scene__body">
           {t(
             '他们在南宝山和铁牛村一起徒步、喝茶、运动、做饭、共创、告别，也带走了自己的三个月小行动。',
-            'In Nanbaoshan and Tieniu Village, they hiked, shared tea, moved, cooked, created, and said goodbye together. Each carried home a small action for the next three months.',
+            "At Nanbao Mountain and in Tieniu Village, they hiked, shared tea, played sports, cooked, created together, and said goodbye. Each took home a small action plan for the next three months.",
           )}
         </p>
       </div>

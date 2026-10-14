@@ -133,13 +133,9 @@ describe('homepage editorial refresh', () => {
 
     const heroSubtitle = container.querySelector('.home-hero-subtitle');
     expect(heroSubtitle).toHaveClass('home-hero-subtitle--en');
-    expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')).toHaveLength(2);
-    expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')[0]).toHaveTextContent(
-      'Return to nature, everyday life,',
-    );
-    expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')[1]).toHaveTextContent(
-      'and the real world. Grow strength from within.',
-    );
+    const approvedSubtitle = 'Return to nature, everyday life, and the real world, and grow strength from within.';
+    expect(heroSubtitle).toHaveTextContent(approvedSubtitle);
+    expect(heroSubtitle).toHaveAttribute('aria-label', approvedSubtitle);
 
     expect(
       screen.getByRole('heading', { level: 2, name: 'Recently, we lived together for 5 days and 4 nights' }),
@@ -150,7 +146,7 @@ describe('homepage editorial refresh', () => {
     expect(screen.queryByText('How to take part in R-Gan Junior')).not.toBeInTheDocument();
     const founderHeading = screen.getByRole('heading', {
       level: 2,
-      name: "One young person's growth became a shared action.",
+      name: "What began as one young person's growth has gradually become collective action.",
     });
     expect(founderHeading.querySelectorAll('.home-founder-story__title-line')).toHaveLength(2);
     expect(container.querySelector('.home-field-scene__headline')).toHaveClass('home-field-scene__headline--en');

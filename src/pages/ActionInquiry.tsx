@@ -83,7 +83,7 @@ export default function ActionInquiry() {
           {PUBLIC_CONTACT.wechatQrImage && (
             <img
               src={PUBLIC_CONTACT.wechatQrImage}
-              alt={t('阿柑少年项目咨询微信二维码', "R-Gan Junior program enquiry WeChat QR code")}
+              alt={t('阿柑少年项目咨询微信二维码', "R-Gan Junior program inquiry WeChat QR code")}
               width="240"
               height="240"
               loading="lazy"
@@ -99,7 +99,7 @@ export default function ActionInquiry() {
             <p className="mt-3 text-xs leading-6 text-primary-foreground/68">
               {t(
                 '仅用于项目咨询、匹配合适的参与方式和后续联系。',
-                'Only for program enquiries, matching suitable participation options, and follow-up.',
+                'Only for program inquiries, matching suitable participation options, and follow-up.',
               )}
             </p>
           </div>

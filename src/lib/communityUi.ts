@@ -22,23 +22,23 @@ export const COMMUNITY_UI = {
   navigation: { zh: '社群导航', en: 'Community navigation' },
   mobileNavigation: { zh: '社群主要导航', en: 'Primary community navigation' },
   navHome: { zh: '首页', en: 'Home' },
-  navStories: { zh: '文章', en: 'Stories' },
-  navStorySquare: { zh: '文章广场', en: 'Story square' },
-  navMyStories: { zh: '我的文章', en: 'My stories' },
+  navStories: { zh: '文章', en: "Articles" },
+  navStorySquare: { zh: '文章广场', en: "Community Articles" },
+  navMyStories: { zh: '我的文章', en: "My articles" },
   navPeople: { zh: '伙伴', en: 'People' },
-  navPractice: { zh: '共练', en: 'Practice' },
+  navPractice: { zh: '共练', en: "Shared Practice" },
   navMessages: { zh: '消息', en: 'Messages' },
 } as const satisfies Record<string, LocalizedText>;
 
 export const COMMUNITY_STATUS_LABELS: Record<string, LocalizedText> = {
   draft: { zh: '草稿', en: 'Draft' },
   submitted: { zh: '已提交', en: 'Submitted' },
-  in_review: { zh: '审核中', en: 'In review' },
+  in_review: { zh: '审核中', en: "Under review" },
   changes_requested: { zh: '需要修改', en: 'Changes requested' },
   approved: { zh: '已通过', en: 'Approved' },
   published: { zh: '已发布', en: 'Published' },
   archived: { zh: '已归档', en: 'Archived' },
-  pending_guardian: { zh: '等待监护人确认', en: 'Guardian confirmation' },
+  pending_guardian: { zh: '等待监护人确认', en: "Awaiting guardian confirmation" },
   under_review: { zh: '审核中', en: 'Under review' },
   more_info_requested: { zh: '需要补充资料', en: 'More information needed' },
   rejected: { zh: '未通过', en: 'Not approved' },
@@ -52,7 +52,7 @@ export const COMMUNITY_STATUS_LABELS: Record<string, LocalizedText> = {
   dismissed: { zh: '已驳回', en: 'Dismissed' },
   open: { zh: '待处理', en: 'Open' },
   public: { zh: '公开', en: 'Public' },
-  members: { zh: '正式成员', en: 'Members' },
+  members: { zh: '正式成员', en: "Member" },
   private: { zh: '仅自己', en: 'Only me' },
 };
 

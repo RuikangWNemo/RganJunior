@@ -83,7 +83,7 @@ export default function FieldNotes() {
             <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
               {t(
                 '这里只展示作者真实提交、经过审核并正式公开的社群文章。',
-                'Only real community stories submitted by their authors, reviewed, and published for everyone appear here.',
+                "Only real community articles submitted by their authors, reviewed, and published for everyone appear here.",
               )}
             </p>
             <nav className="flex gap-5 text-sm" aria-label={t('田野笔记栏目', 'Field Notes sections')}>
@@ -111,7 +111,7 @@ export default function FieldNotes() {
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
               <h2 id="featured-field-notes" className="font-serif text-3xl text-[#ea6a2a] md:text-4xl">
-                {t('本期精选', 'Featured this time')}
+                {t('本期精选', "Current Featured Articles")}
               </h2>
               <Link
                 to="/field-notes/all"
@@ -129,15 +129,15 @@ export default function FieldNotes() {
               </div>
             ) : allNotesQuery.isError ? (
               <div className="rounded-lg border border-border bg-card/50 px-6 py-12 text-center" role="alert">
-                <p className="font-serif text-2xl text-foreground">{t('精选文章暂时没有加载出来', 'Featured stories could not be loaded')}</p>
+                <p className="font-serif text-2xl text-foreground">{t('精选文章暂时没有加载出来', "Featured articles could not be loaded")}</p>
                 <button type="button" className="mt-5 min-h-11 text-sm font-medium text-primary" onClick={() => void allNotesQuery.refetch()}>{t('重新加载', 'Try again')}</button>
               </div>
             ) : featured.length ? (
               <FeaturedReader notes={featured} />
             ) : (
               <div className="rounded-lg border border-dashed border-border bg-card/40 px-6 py-12 text-center">
-                <h3 className="font-serif text-2xl text-foreground">{t('本期精选正在准备中', 'The next featured selection is being prepared')}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted-foreground">{t('管理员精选真实发布文章后，它们会出现在这里。', 'Real published stories will appear here after an editor features them.')}</p>
+                <h3 className="font-serif text-2xl text-foreground">{t('本期精选正在准备中', "The current featured selection is being prepared")}</h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">{t('管理员精选真实发布文章后，它们会出现在这里。', "Real published articles will appear here after an editor features them.")}</p>
               </div>
             )}
           </div>

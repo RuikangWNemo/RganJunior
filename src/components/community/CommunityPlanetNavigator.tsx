@@ -21,15 +21,15 @@ export const COMMUNITY_PLANETS: Array<{
     zh: '阿柑少年圈',
     en: 'R-Gan Junior Circle',
     shortZh: '少年圈',
-    shortEn: 'Youth',
+    shortEn: "R-Gan Junior",
     descriptionZh: '发起人、青年共创伙伴与参与者',
-    descriptionEn: 'Founders, youth co-creators, and participants',
+    descriptionEn: "Founder, Co-creators, and Participants",
     color: '#EAA160',
   },
   {
     slug: 'support',
-    zh: '成人支持团队',
-    en: 'Adult Support Team',
+    zh: "社群支持",
+    en: "Community Support",
     shortZh: '支持团队',
     shortEn: 'Support',
     descriptionZh: '在两个星球之间支持、翻译与连接',
@@ -38,10 +38,10 @@ export const COMMUNITY_PLANETS: Array<{
   },
   {
     slug: 'guardian',
-    zh: '家长守护团',
-    en: 'Parent Guardian Circle',
+    zh: "守护团",
+    en: "Guardian Circle",
     shortZh: '守护团',
-    shortEn: 'Guardians',
+    shortEn: "Guardian Circle",
     descriptionZh: '以家庭经验、陪伴与共同守护支持成长',
     descriptionEn: 'Supports growth through family experience and care',
     color: '#8BB5C8',
@@ -79,10 +79,10 @@ export default function CommunityPlanetNavigator({
           <p>{t('三个星球 · 一个社群', 'Three planets · One community')}</p>
           <h2 id="community-planet-system-title">{t('沿着连接，切换你想认识的伙伴。', 'Follow the connections and choose who to meet.')}</h2>
         </div>
-        <span><Link2 className="size-4" aria-hidden="true" />{t('成人支持团队连接两端', 'Adult support connects both sides')}</span>
+        <span><Link2 className="size-4" aria-hidden="true" />{t("伙伴彼此连接与支持", "Community members connect and support one another")}</span>
       </div>
 
-      <div className="community-planet-system__tabs" role="tablist" aria-label={t('选择伙伴星球', 'Choose a people planet')}>
+      <div className="community-planet-system__tabs" role="tablist" aria-label={t('选择伙伴星球', "Choose a community planet")}>
         {COMMUNITY_PLANETS.map((planet) => {
           const count = people.filter((person) => belongsToPlanet(person, planet.slug)).length;
           return (
@@ -107,8 +107,8 @@ export default function CommunityPlanetNavigator({
           <path className="community-planet-system__bridge community-planet-system__bridge--left" d="M 245 150 C 360 70, 420 70, 500 150" />
           <path className="community-planet-system__bridge community-planet-system__bridge--right" d="M 500 150 C 580 230, 650 230, 755 150" />
         </svg>
-        <span className="community-planet-system__overlap community-planet-system__overlap--left">{youthSupportOverlap} {t('位重叠伙伴', 'shared')}</span>
-        <span className="community-planet-system__overlap community-planet-system__overlap--right">{supportGuardianOverlap} {t('位重叠伙伴', 'shared')}</span>
+        <span className="community-planet-system__overlap community-planet-system__overlap--left">{youthSupportOverlap} {t('位重叠伙伴', "members in both groups")}</span>
+        <span className="community-planet-system__overlap community-planet-system__overlap--right">{supportGuardianOverlap} {t('位重叠伙伴', "members in both groups")}</span>
 
         {COMMUNITY_PLANETS.map((planet) => {
           const active = selectedPlanet === planet.slug;

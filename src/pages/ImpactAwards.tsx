@@ -143,9 +143,9 @@ export default function ImpactAwards() {
           </div>
           <div className="grid gap-10 py-14 sm:py-16 md:py-20 lg:grid-cols-[minmax(0,0.85fr)_minmax(24rem,1.15fr)] lg:items-center lg:gap-16 lg:py-24">
             <div>
-              <p className="text-xs tracking-[0.18em] text-primary/75">{t('RECOGNITION / 获奖情况', 'RECOGNITION / 获奖情况')}</p>
+              <p className="text-xs tracking-[0.18em] text-primary/75">{t("RECOGNITION / 获奖情况", "RECOGNITION / 获奖情况")}</p>
               <h1 className="mt-5 max-w-[9ch] text-balance font-serif text-5xl leading-[1.08] tracking-[-0.035em] text-foreground sm:text-6xl lg:text-7xl">
-                {t('每一项成果，都保留来路', 'Every outcome keeps its evidence')}
+                {t('每一项成果，都保留来路', "Every outcome has a documented source")}
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-foreground/72 md:text-lg md:leading-9">
                 {t(
@@ -219,7 +219,7 @@ export default function ImpactAwards() {
               to="/impact"
               className="inline-flex min-h-12 items-center rounded-lg border border-primary/30 px-5 py-3 text-sm font-medium text-primary transition hover:bg-primary/5 active:translate-y-px"
             >
-              {t('返回统计', 'Back to overview')}
+              {t('返回统计', 'Back to Impact & Records')}
             </Link>
           </div>
         </section>

@@ -27,7 +27,7 @@ const storyMoments: StoryMoment[] = [
     title: text('来到一个陌生的村庄', 'A new village, and a lonely beginning'),
     body: text(
       '11 岁的 Nate 跟着家人从上海搬到铁牛村。村里没有几个同龄朋友，他常常待在房间里上网、玩游戏，也不知道这个村子和自己有什么关系。',
-      'At eleven, Nate moved with his family from Shanghai to Tieniu Village. With few people his age nearby, he spent much of his time online and wondered what this village had to do with him.',
+      "At eleven, Nate moved with his family from Shanghai to Tieniu Village. With few friends his age nearby, he often stayed in his room browsing online and playing video games, unsure how he connected to the village.",
     ),
     image: '/stories/it-takes-a-village/images/image-001.webp',
     imageAlt: text('2020 年 Nate 与家人在铁牛村的合照', 'Nate with his family in Tieniu Village in 2020'),
@@ -56,7 +56,7 @@ const storyMoments: StoryMoment[] = [
       'In high school, Nate invited classmates to restart the project. They researched in the orchards, organized a citrus harvest festival, and brought their work on youth and sustainable agriculture to the CTB Global Forum.',
     ),
     image: '/stories/it-takes-a-village/images/image-012.webp',
-    imageAlt: text('阿柑少年项目组与家庭体验生态柑橘采摘', "R-Gan Junior participants and families picking ecological citrus"),
+    imageAlt: text('阿柑少年项目组与家庭体验生态柑橘采摘', "R-Gan Junior participants and families picking ecologically grown citrus"),
     imageWidth: 1080,
     imageHeight: 720,
   },
@@ -66,7 +66,7 @@ const storyMoments: StoryMoment[] = [
     title: text('从热闹之后，回到更深的生活', 'After the excitement, a deeper way of living'),
     body: text(
       '一次活动不会自动带来改变。Nate 开始学习做饭、照顾四棵柑橘树，也和同学研究城市家庭如何选择生态产品；在行为经济学社团与 John Locke 论文写作中，他逐渐确认了对公共政策的兴趣。',
-      'One event does not create lasting change. Nate learned to cook, cared for four citrus trees, and studied how urban families choose ecological products. Through a behavioral economics group and his John Locke essay, his questions began to lead toward public policy.',
+      "One activity does not automatically bring change. Nate began learning to cook, caring for four citrus trees, and researching with classmates how urban families choose ecologically grown products. Through his Behavioral Economics Study Group and John Locke essay writing, he became more certain of his interest in public policy.",
     ),
     image: '/stories/it-takes-a-village/images/image-023.webp',
     imageAlt: text('Nate 与行为经济学学习社团的同学讨论', 'Nate discussing ideas with his behavioral economics study group'),
@@ -80,10 +80,10 @@ const storyMoments: StoryMoment[] = [
     title: text('把自己的经历，变成给同龄人的邀请', 'Turning his own journey into an invitation'),
     body: text(
       'Nate 与伙伴们发起生活共创营，邀请更多青少年进入森林、田野和社区。从一个人的成长项目，到可以一起生活、发现问题并继续行动的青少年产品，阿柑少年走向了新的阶段。',
-      "Nate and his partners created the Life Co-creation Camp, inviting more young people into forests, fields, and community life. What began as one person's growth project became a youth experience for living together, finding real questions, and continuing to act.",
+      "Nate and his peers launched the Life Co-creation Camp, inviting more young people into forests, fields, and community life. R-Gan Junior entered a new phase: what began as one person's growth project became a program where young people could live together, identify real-world problems, and continue taking action.",
     ),
     image: '/stories/it-takes-a-village/images/founder-story-camp-2026.jpg',
-    imageAlt: text('阿柑少年生活共创营发起人站在菜园中', "R-Gan Junior Life Co-creation Camp initiators in a garden"),
+    imageAlt: text('阿柑少年生活共创营发起人站在菜园中', "The team behind the R-Gan Junior Life Co-creation Camp in a garden"),
     imageWidth: 5168,
     imageHeight: 3448,
     imagePosition: 'center bottom',
@@ -95,21 +95,21 @@ const actionContinuations = [
     title: text('一起生活', 'Live together'),
     body: text(
       '在生活共创营里先慢下来，感受身体、食物和土地，也真正认识同行的伙伴。',
-      'The Life Co-creation Camp begins by slowing down—feeling the body, food, and land, and genuinely meeting the people beside you.',
+      "Begin by slowing down at the Life Co-creation Camp, noticing your body, the food you eat, and the land, while getting to know the other participants.",
     ),
   },
   {
     title: text('继续同行', 'Keep going together'),
     body: text(
       '营地不是终点。伙伴们按兴趣组成行动小组，把一次相遇延续到日常的观察与实践中。',
-      'The camp is not the finish line. Interest-led action groups carry one meeting into everyday observation and practice.',
+      "Camp is a starting point. Participants form Action Groups around shared interests and build on the connections made at camp through everyday observation and practice.",
     ),
   },
   {
     title: text('回应真实问题', 'Respond to real questions'),
     body: text(
       '再把关心带进青少年研究计划，让青少年的兴趣回应土地和社区真正面对的事情。',
-      "Research and public-issue projects then turn young people's interests toward questions the land and community actually face.",
+      "Participants can then bring those interests into the R-Gan Junior Research Program, using research to address real issues facing the land and community.",
     ),
   },
 ] as const;
@@ -261,7 +261,7 @@ export default function FounderStory() {
               <figure>
                 <img
                   src="/stories/it-takes-a-village/images/image-005.webp"
-                  alt={t('在铁牛村共同生活的阿柑青年合照', 'R-Gan Junior community members living together in Tieniu Village')}
+                  alt={t('在铁牛村共同生活的阿柑青年合照', "R-Gan Youth living together in Tieniu Village")}
                   width="1080"
                   height="720"
                   loading="lazy"
@@ -288,7 +288,7 @@ export default function FounderStory() {
               <p>
                 {t(
                   'Nate 对土地、食物和社区的理解，来自麦昆塔社区和阿柑青年多年的生活与陪伴。他们在村里种植、做饭，照顾土地，也照顾身边的人；后来，又陪着少年们做调研、办采摘节，把一个小小的想法托举成真实行动。',
-                  "Nate's understanding of land, food, and community grew through years of daily life with the Quinta community and R-Gan Junior community members. They farmed, cooked, cared for the land and one another—and later stood beside the teenagers as they learned to research, organize, and act.",
+                  "Nate’s understanding of land, food, and community developed through years of daily life with Mykunda Community and R-Gan Youth. They grew food, cooked, and cared for the land and one another. Later, they supported the young people in research and in organizing a citrus harvest festival, helping a small idea become real action.",
                 )}
               </p>
             </Reveal>
@@ -317,7 +317,7 @@ export default function FounderStory() {
               <p>
                 {t(
                   '先走进自然和生活，找到自己的感受，也遇见同行的伙伴；再把一次相遇变成长久的行动；最后，从真实问题出发，用研究和实践回应土地与社区。',
-                  'First, enter nature and daily life, recover your senses, and meet people to walk beside. Then let one encounter become sustained action. Finally, begin with real questions and respond to the land and community through research and practice.',
+                  "Begin in nature and everyday life: notice how you feel and meet others to share the journey. Build on those connections through sustained action. Then use research and practice to respond to real questions about the land and community.",
                 )}
               </p>
             </Reveal>

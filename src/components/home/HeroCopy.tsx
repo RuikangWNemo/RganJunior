@@ -12,6 +12,10 @@ interface HeroCopyProps {
 export default function HeroCopy({ onJoin }: HeroCopyProps) {
   const { lang, t } = useLanguage();
   const brandName = pickLocalized(BRAND.name, lang);
+  const subtitle = t(
+    '回归自然、生活与真实世界，长出内在的力量',
+    'Return to nature, everyday life, and the real world, and grow strength from within.',
+  );
 
   return (
     <div className="home-hero-copy relative z-20 order-2 w-full min-w-0 max-w-full lg:order-2 lg:max-w-4xl">
@@ -23,10 +27,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
       </h1>
 
       <p
-        aria-label={t(
-          '回归自然、生活与真实世界，长出内在的力量',
-          'Return to nature, everyday life, and the real world. Grow strength from within.',
-        )}
+        aria-label={subtitle}
         className={`home-hero-subtitle home-hero-subtitle--${lang} animate-fade-in-up-apple mt-4 max-w-3xl text-balance font-serif text-[1.45rem] leading-tight sm:mt-5 sm:text-3xl lg:text-[2.25rem]`}
         style={{ animationDelay: '0.08s' }}
       >
@@ -36,10 +37,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
             <span className="home-hero-subtitle__line">长出内在的力量</span>
           </>
         ) : (
-          <>
-            <span className="home-hero-subtitle__line">Return to nature, everyday life,</span>{' '}
-            <span className="home-hero-subtitle__line">and the real world. Grow strength from within.</span>
-          </>
+          subtitle
         )}
       </p>
 
@@ -49,7 +47,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
       >
         {t(
           '一个从铁牛村长出来的青少年真实生活与公共行动计划。我们通过自然、食物、茶、运动、社群共创和可持续生活实践，陪伴青少年连接自己、他人、土地和未来。',
-          "A real-life and public-action program for young people, grown in Tieniu Village. Through nature, food, tea, movement, co-creation, and sustainable living, we reconnect young people with themselves, others, the land, and the future.",
+          "A real-life and public action program developed in Tieniu Village for young people. Through nature, food, tea, physical activity, community co-creation, and sustainable living practices, we support young people in connecting with themselves, others, the land, and the future.",
         )}
       </p>
 

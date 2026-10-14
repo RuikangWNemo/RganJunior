@@ -2,8 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const items = [
-  { path: '/impact', zh: '统计', en: 'Overview' },
-  { path: '/impact/awards', zh: '获奖情况', en: 'Recognition' },
+  { path: '/impact', zh: '影响与记录', en: 'Impact & Records' },
+  { path: '/impact/awards', zh: '获奖情况', en: "External Records" },
 ];
 
 export function ImpactSectionNav() {

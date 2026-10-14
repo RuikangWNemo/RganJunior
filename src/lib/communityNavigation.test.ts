@@ -9,7 +9,7 @@ describe('getCommunityRouteMeta', () => {
 
     expect(create.back?.to).toBe('/community/stories');
     expect(edit.back?.to).toBe('/community/stories');
-    expect(edit.crumbs.map((crumb) => crumb.label.en)).toEqual(['Community', 'Stories', 'Edit story']);
+    expect(edit.crumbs.map((crumb) => crumb.label.en)).toEqual(['Community', 'Articles', 'Edit article']);
   });
 
   it('keeps member sections connected to the community home', () => {

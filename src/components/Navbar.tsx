@@ -36,7 +36,7 @@ const navItems = [
   { path: '/', zh: '首页', en: 'Home' },
   { path: '/about', zh: '关于', en: 'About' },
   { path: '/programs', zh: '项目', en: 'Programs' },
-  { path: '/story', zh: '发起人故事', en: 'Story' },
+  { path: '/story', zh: '发起人故事', en: "Founder's Story" },
   { path: '/field-notes', zh: '田野笔记', en: 'Field Notes' },
   { path: '/impact', zh: '影响', en: 'Impact' },
   { path: '/join', zh: '加入我们', en: 'Join Us' },
@@ -44,9 +44,9 @@ const navItems = [
 
 const aboutSubItems = [
   { id: 'team' as const, path: '/about#team', zh: '我们的团队', en: 'Our Team' },
-  { id: 'belief' as const, path: '/about#belief', zh: '我们相信', en: 'Our Belief' },
-  { id: 'method' as const, path: '/about#method', zh: '我们的方法', en: 'Our Method' },
-  { id: 'places' as const, path: '/about#places', zh: '空间与场域', en: 'Our Places' },
+  { id: 'belief' as const, path: '/about#belief', zh: '我们相信', en: "What We Believe" },
+  { id: 'method' as const, path: '/about#method', zh: '我们的方法', en: "How We Work" },
+  { id: 'places' as const, path: '/about#places', zh: '空间与场域', en: "Real-World Contexts" },
 ];
 
 const fieldNotesSubItems = [
@@ -55,8 +55,8 @@ const fieldNotesSubItems = [
 ];
 
 const impactSubItems = [
-  { path: '/impact', zh: '统计', en: 'Overview' },
-  { path: '/impact/awards', zh: '获奖情况', en: 'Recognition' },
+  { path: '/impact', zh: '统计', en: 'Impact & Records' },
+  { path: '/impact/awards', zh: '获奖情况', en: "External Records" },
 ];
 
 const MOBILE_NAVIGATION_DELAY_MS = 160;

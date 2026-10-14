@@ -299,7 +299,7 @@ export default function ActionInquiryForm({
             >
               {t(
                 '同意阿柑少年为项目咨询与后续联系保存这些信息。',
-                "I agree that R-Gan Junior may keep this information for program enquiries and follow-up.",
+                "I agree that R-Gan Junior may keep this information for program inquiries and follow-up.",
               )}
             </Label>
           </div>
@@ -325,7 +325,7 @@ export default function ActionInquiryForm({
         className="cursor-target min-h-12 w-full whitespace-nowrap sm:w-auto sm:justify-self-start"
       >
         <Send className="size-4" aria-hidden="true" />
-        <span>{submitStatus === 'submitting' ? t('正在发送', 'Sending') : t('提交参与意向', 'Send interest')}</span>
+        <span>{submitStatus === 'submitting' ? t('正在发送', 'Sending') : t('提交参与意向', "Register interest")}</span>
       </Button>
     </form>
   );

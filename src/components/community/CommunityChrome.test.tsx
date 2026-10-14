@@ -39,7 +39,7 @@ describe('CommunityChrome', () => {
 
     expect(screen.getByRole('link', { name: 'Go to community home' })).toHaveAttribute('href', '/community/enter');
     expect(screen.getByRole('link', { name: 'Main site' })).toHaveAttribute('href', '/');
-    expect(screen.getByRole('link', { name: 'Back: Stories' })).toHaveAttribute('href', '/community/stories');
+    expect(screen.getByRole('link', { name: 'Back: Articles' })).toHaveAttribute('href', '/community/stories');
     expect(screen.getByRole('button', { name: 'EN' })).toHaveAttribute('aria-pressed', 'true');
   });
 

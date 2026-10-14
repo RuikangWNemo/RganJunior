@@ -135,11 +135,11 @@ describe('About editorial content system', () => {
     window.localStorage.setItem('rgan-lang', 'en');
     renderAbout();
 
-    expect(screen.getByText('Nate Shi | Initiator')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'ZHANG Tianshi' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'Rossie Chen' })).toBeInTheDocument();
+    expect(screen.getByText('Nate | Founder')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: 'Tianshi Zhang' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: 'Rosie Chen' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
-    expect(within(screen.getByLabelText('Youth co-creation partner directory')).getAllByText('Partner profiles are on the way. Stay tuned.')).toHaveLength(3);
+    expect(within(screen.getByLabelText('Co-creator directory')).getAllByText('Partner profiles are on the way. Stay tuned.')).toHaveLength(3);
     expect(screen.queryByText(/？{2,}/)).not.toBeInTheDocument();
   });
 

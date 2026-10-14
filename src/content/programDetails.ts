@@ -22,7 +22,7 @@ export const lifeExperienceMoments: ProgramContentItem[] = [
     title: text('让身体先打开', 'Open the senses'),
     body: text(
       '在森林、茶山和村庄里慢下来，用行走、观察和游戏重新感受身体与自然。',
-      'Slow down in forests, tea mountains, and the village, using movement, observation, and play to reconnect with body and nature.',
+      "Slow down in forests, tea-growing hills, and the village. Through walking, observation, and play, reconnect with your body and with nature.",
     ),
   },
   {
@@ -36,7 +36,7 @@ export const lifeExperienceMoments: ProgramContentItem[] = [
     title: text('围坐下来相遇', 'Meet around the table'),
     body: text(
       '一起吃饭、喝茶、聊天，把一天里的感受说出来，也认真听见别人的故事。',
-      'Share food, tea, and conversation, giving language to the day while listening carefully to one another.',
+      "Sit together over food and tea, share how the day felt, and listen carefully to one another’s stories.",
     ),
   },
 ];
@@ -44,18 +44,18 @@ export const lifeExperienceMoments: ProgramContentItem[] = [
 export const lifeExperienceRhythm: ProgramRhythmItem[] = [
   {
     period: text('第一天 · 白天', 'Day one · Daytime'),
-    title: text('走进现场', 'Enter the place'),
-    body: text('认识伙伴和村庄，通过自然探索与真实任务建立最初的安全感。', 'Meet the group and the village through nature exploration and a real shared task.'),
+    title: text('走进现场', "Get to know the place"),
+    body: text('认识伙伴和村庄，通过自然探索与真实任务建立最初的安全感。', "Get to know one another and the village, building an initial sense of safety through nature exploration and shared tasks."),
   },
   {
     period: text('第一天 · 夜晚', 'Day one · Evening'),
     title: text('一起生活', 'Live together'),
-    body: text('共同准备晚餐、整理空间，在围坐交流中感受群体生活。', 'Prepare dinner, care for the shared space, and experience group life through conversation.'),
+    body: text('共同准备晚餐、整理空间，在围坐交流中感受群体生活。', "Prepare dinner and tidy shared spaces together, then sit down to talk and experience living as a group."),
   },
   {
     period: text('第二天', 'Day two'),
     title: text('带走一个发现', 'Carry one discovery home'),
-    body: text('完成主题体验与分享，让一次短暂相遇留下可以回到日常的观察。', 'Complete the themed experience and reflection, carrying one useful observation into daily life.'),
+    body: text('完成主题体验与分享，让一次短暂相遇留下可以回到日常的观察。', "Complete the themed activities and share your reflections, taking home observations from this brief experience to explore in daily life."),
   },
 ];
 
@@ -70,7 +70,7 @@ export const lifeCoCreationPractices: ProgramContentItem[] = [
   },
   {
     title: text('共创与表达', 'Co-creation and expression'),
-    body: text('社区共创与成果分享，把经历整理成可以交流的表达。', 'Community co-creation and final sharing turn experience into something that can be communicated.'),
+    body: text('社区共创与成果分享，把经历整理成可以交流的表达。', "Create together in the community, then share the results in a way that conveys what you have experienced."),
   },
   {
     title: text('信任与关系', 'Trust and relationships'),
@@ -81,17 +81,17 @@ export const lifeCoCreationPractices: ProgramContentItem[] = [
 export const lifeCoCreationRhythm: ProgramRhythmItem[] = [
   {
     period: text('第 1—2 天', 'Days 1–2'),
-    title: text('进入关系', 'Enter relationships'),
-    body: text('认识场域和伙伴，从身体活动、自然探索与共同约定建立安全感。', 'Meet the place and one another, building safety through movement, nature, and shared agreements.'),
+    title: text('进入关系', "Build connections"),
+    body: text('认识场域和伙伴，从身体活动、自然探索与共同约定建立安全感。', "Get to know the setting and one another. Build a sense of safety through physical activities, nature exploration, and shared agreements."),
   },
   {
     period: text('第 3—4 天', 'Days 3–4'),
     title: text('共同承担', 'Share responsibility'),
-    body: text('通过小队任务、生活劳动和议题共创，在真实分歧中练习协作。', 'Use team tasks, daily work, and co-creation to practice collaboration through real differences.'),
+    body: text('通过小队任务、生活劳动和议题共创，在真实分歧中练习协作。', "Practice collaboration through team tasks, daily work, and joint exploration of issues, learning to work through real differences of opinion."),
   },
   {
     period: text('第 5 天', 'Day 5'),
-    title: text('表达与继续', 'Express and continue'),
+    title: text('表达与继续', "Share and continue"),
     body: text('整理共同成果与个人发现，为回到日常后的持续行动留下一个起点。', 'Share collective outcomes and personal discoveries, leaving a starting point for action after camp.'),
   },
 ];
@@ -102,7 +102,7 @@ export const actionGroupRhythm: ProgramRhythmItem[] = [
     title: text('重新连接', 'Reconnect'),
     body: text(
       '从线上茶会、读书会、共学或主题分享开始，延续营地里形成的伙伴关系。',
-      'Begin with online tea gatherings, reading circles, shared learning, or themed conversations.',
+      "Continue the relationships formed at camp through online tea gatherings, reading circles, shared learning, and themed discussions.",
     ),
   },
   {
@@ -110,7 +110,7 @@ export const actionGroupRhythm: ProgramRhythmItem[] = [
     title: text('进入日常', 'Bring it into daily life'),
     body: text(
       '发起七日挑战、低碳生活小行动和家庭实践，让想法进入真实生活。',
-      'Try a seven-day challenge, a small low-carbon action, or a family practice at home.',
+      "Try a seven-day challenge, a small step toward low-carbon living, or a hands-on activity with your family.",
     ),
   },
   {
@@ -128,7 +128,7 @@ export const publicProjectMethods: ProgramContentItem[] = [
     title: text('我们关心的议题', 'Questions we care about'),
     body: text(
       '生态农业、CSA、家庭消费、行为经济学与公共政策。议题从伙伴真实接触的生活问题中形成。',
-      'Ecological agriculture, CSA, household consumption, behavioral economics, and public policy. Topics emerge from questions participants encounter in daily life.',
+      'Ecological agriculture, community-supported agriculture (CSA), household consumption, behavioral economics, and public policy. Topics emerge from questions participants encounter in daily life.',
     ),
   },
   {
@@ -150,12 +150,12 @@ export const publicProjectMethods: ProgramContentItem[] = [
 export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
   'life-experience-camp': [
     {
-      question: text('生活体验营适合谁？', 'Who is the Life Discovery Camp for?'),
-      answer: text('主要面向第一次接触阿柑少年的 12-18 岁青少年和家庭。每期如有更细的年龄或参与要求，会在当期说明中明确。', "It is mainly for young people aged 12-18 and families meeting R-Gan Junior for the first time. Any narrower requirements are stated in the session brief."),
+      question: text('生活体验营适合谁？', "Who is the Life Immersion Camp for?"),
+      answer: text('主要面向第一次接触阿柑少年的 12-18 岁青少年和家庭。每期如有更细的年龄或参与要求，会在当期说明中明确。', "It is mainly for young people ages 12–18 and their families who are new to R-Gan Junior. Any additional age or participation requirements will be listed in the details for that camp session."),
     },
     {
       question: text('家长需要全程共同参加吗？', 'Do parents need to attend the full camp?'),
-      answer: text('体验营会根据主题采用青少年独立体验、亲子共同参与或家长单独交流等形式，具体安排会在当期说明中明确。', 'The format may involve young people independently, families together, or a separate parent conversation. Each session explains its arrangement clearly.'),
+      answer: text('体验营会根据主题采用青少年独立体验、亲子共同参与或家长单独交流等形式，具体安排会在当期说明中明确。', 'Depending on the theme, the camp may include activities for young people on their own, activities for parents and children together, or separate discussions for parents. The details for each camp session will explain the arrangements.'),
     },
     {
       question: text('两天一夜会经历什么？', 'What happens during the two days?'),
@@ -171,21 +171,21 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('参加前需要准备什么？', 'How should participants prepare?'),
-      answer: text('确认参与后会收到行前说明，包括衣物与个人用品清单、健康信息收集、集合安排和共同生活约定。', 'Confirmed participants receive a preparation guide covering clothing, personal items, health information, meeting arrangements, and shared-life agreements.'),
+      answer: text('确认参与后会收到行前说明，包括衣物与个人用品清单、健康信息收集、集合安排和共同生活约定。', "Confirmed participants receive a preparation guide with a clothing and personal items checklist, a request for health information, meeting arrangements, and agreements for living together."),
     },
   ],
   'life-co-creation-camp': [
     {
       question: text('哪些年龄的青少年适合参加？', 'What ages is the camp designed for?'),
-      answer: text('主要面向 12-18 岁青少年和家庭。五天共同生活需要一定的独立性和参与意愿，团队会在活动前与家庭充分沟通。', 'The camp is primarily for young people aged 12-18 and their families. Five days of shared life requires some independence and willingness to participate, discussed with families in advance.'),
+      answer: text('主要面向 12-18 岁青少年和家庭。五天共同生活需要一定的独立性和参与意愿，团队会在活动前与家庭充分沟通。', "The camp is primarily for young people ages 12–18 and their families. Living together for five days takes some independence and a willingness to participate. The team discusses these expectations with families beforehand."),
     },
     {
-      question: text('必须先参加生活体验营吗？', 'Must I join the Life Discovery Camp first?'),
-      answer: text('不作为硬性条件。第一次参与的伙伴也可以报名生活共创营，团队会通过前期沟通判断营期是否适合。', 'It is not a strict requirement. First-time participants may join, with a conversation beforehand to make sure the format is suitable.'),
+      question: text('必须先参加生活体验营吗？', "Must I join the Life Immersion Camp first?"),
+      answer: text('不作为硬性条件。第一次参与的伙伴也可以报名生活共创营，团队会通过前期沟通判断营期是否适合。', 'No. First-time participants can apply for the Life Co-creation Camp. The team will talk with them beforehand to assess whether that camp session is a good fit.'),
     },
     {
       question: text('五天里需要承担哪些共同责任？', 'What shared responsibilities are involved?'),
-      answer: text('伙伴会参与小队任务、用餐与空间整理、主题共创和成果表达。责任会根据年龄、能力与当期场域合理安排。', 'Participants join team tasks, meals and space care, themed co-creation, and final sharing. Responsibilities are adapted to age, ability, and place.'),
+      answer: text('伙伴会参与小队任务、用餐与空间整理、主题共创和成果表达。责任会根据年龄、能力与当期场域合理安排。', "Participants take on team tasks, help with meals and tidying shared spaces, create together around a theme, and present their work. Responsibilities are assigned according to age, ability, and the camp setting."),
     },
     {
       question: text('家长需要全程共同参加吗？', 'Do parents need to attend throughout?'),
@@ -197,29 +197,29 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('费用和行前准备如何确认？', 'How are fees and preparation confirmed?'),
-      answer: text('费用会根据住宿、餐食、活动材料和人员配置完整公布。确认参与后会收到健康信息、物品清单、集合安排和共同生活约定。', 'Fees are published in full based on accommodation, meals, materials, and staffing. Confirmed participants receive health forms, a packing list, meeting details, and shared-life agreements.'),
+      answer: text('费用会根据住宿、餐食、活动材料和人员配置完整公布。确认参与后会收到健康信息、物品清单、集合安排和共同生活约定。', "Fees are based on lodging, meals, materials, and staffing and are published in full. Confirmed participants receive health forms, a packing list, meeting details, and agreements for living together."),
     },
     {
       question: text('营地结束后还能继续参与吗？', 'Can participation continue after camp?'),
-      answer: text('可以。伙伴可以根据自己的兴趣进入后续行动小组、家庭实践或新的线下共创，但不会被要求完成固定路径。', 'Yes. Participants may continue through an Action Group, family practice, or another co-creation, without being required to follow a fixed pathway.'),
+      answer: text('可以。伙伴可以根据自己的兴趣进入后续行动小组、家庭实践或新的线下共创，但不会被要求完成固定路径。', "Yes. Participants can choose an Action Group, activities with their families, or another in-person co-creation activity based on their interests. There is no required sequence."),
     },
   ],
   'action-group': [
     {
-      question: text('必须先参加生活共创营吗？', 'Do I need to attend the camp first?'),
+      question: text('必须先参加生活共创营吗？', 'Do I need to attend the Life Co-creation Camp first?'),
       answer: text('行动小组主要承接营后形成的伙伴关系。若某一期向其他认同项目理念的伙伴开放，会在招募说明中单独写明。', 'The group primarily continues relationships formed through camp. If a cycle opens to other participants who share the project values, this is stated in the call for participants.'),
     },
     {
       question: text('三个月中需要投入多少时间？', 'How much time does the three-month cycle require?'),
-      answer: text('每期会根据主题安排线上相遇、个人或家庭实践和一次阶段分享。具体频率会在周期开始前与伙伴共同确认。', 'Each cycle includes online meetings, individual or family practice, and a stage reflection. The exact rhythm is confirmed with participants before the cycle begins.'),
+      answer: text('每期会根据主题安排线上相遇、个人或家庭实践和一次阶段分享。具体频率会在周期开始前与伙伴共同确认。', "Each cycle includes online meetings, activities done individually or with family, and a session to share progress and reflect. Participants agree on the frequency before the cycle begins."),
     },
     {
       question: text('线上活动会有哪些形式？', 'What forms do the online sessions take?'),
       answer: text('可能包括线上茶会、读书会、共学、主题分享和实践复盘。形式服务于当期伙伴真正关心的问题。', 'Online sessions may include tea gatherings, reading circles, shared learning, themed conversations, and practice reflection, shaped around the questions participants care about.'),
     },
     {
-      question: text('家庭实践需要家长参加吗？', 'Do parents take part in family practice?'),
-      answer: text('家庭实践鼓励家人共同参与，但不会要求所有任务都由家长陪同。每项行动会说明适合的参与方式。', 'Family practice welcomes participation from family members, but not every task requires a parent. Each action explains an appropriate way to take part.'),
+      question: text('家庭实践需要家长参加吗？', "Do parents need to take part in activities at home?"),
+      answer: text('家庭实践鼓励家人共同参与，但不会要求所有任务都由家长陪同。每项行动会说明适合的参与方式。', "Family members are encouraged to take part in activities at home, but a parent does not need to accompany every task. Each activity explains how family members can participate."),
     },
     {
       question: text('如果中途错过一次活动怎么办？', 'What happens if I miss a session?'),
@@ -233,19 +233,19 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
   'public-projects': [
     {
       question: text('谁可以参与公共议题项目？', 'Who can join a public-issues project?'),
-      answer: text('参与条件会根据议题、研究方法和合作周期确定。青少年、家庭伙伴和相关领域协作者都可能成为项目成员。', 'Participation depends on the topic, research method, and collaboration period. Young people, family partners, and relevant collaborators may all take part.'),
+      answer: text('参与条件会根据议题、研究方法和合作周期确定。青少年、家庭伙伴和相关领域协作者都可能成为项目成员。', "Participation requirements depend on the topic, research methods, and project duration. Young people, family members, and collaborators with relevant expertise may all take part."),
     },
     {
       question: text('没有研究经验可以参加吗？', 'Can I join without research experience?'),
-      answer: text('可以。项目会从提出问题、访谈准备、记录方法和资料整理开始共学，不把既有研究经验作为唯一门槛。', 'Yes. Projects begin with shared learning about questions, interview preparation, documentation, and organizing evidence. Prior research experience is not the only entry requirement.'),
+      answer: text('可以。项目会从提出问题、访谈准备、记录方法和资料整理开始共学，不把既有研究经验作为唯一门槛。', "Yes. You can join without prior research experience. We begin by learning together how to develop research questions, prepare interviews, take notes, and organize information."),
     },
     {
       question: text('研究议题如何确定？', 'How are research topics chosen?'),
-      answer: text('议题来自伙伴在土地、家庭消费、食物系统和公共生活中遇到的真实问题，并结合可接触的社区与资料共同判断。', 'Topics come from real questions participants encounter in land, household consumption, food systems, and public life, considered alongside accessible communities and evidence.'),
+      answer: text('议题来自伙伴在土地、家庭消费、食物系统和公共生活中遇到的真实问题，并结合可接触的社区与资料共同判断。', "Together, participants choose topics from questions about land, household consumption, food systems, and public life, taking into account the communities they can visit and the information available."),
     },
     {
       question: text('通常需要投入多长时间？', 'How much time does a project require?'),
-      answer: text('公共议题项目以持续研究为主，不预设统一周期。每个项目会在启动时说明阶段目标、协作节奏和预计投入。', 'Public-issues work is sustained research rather than a fixed program. Each project sets out its stages, collaboration rhythm, and expected commitment at the start.'),
+      answer: text('公共议题项目以持续研究为主，不预设统一周期。每个项目会在启动时说明阶段目标、协作节奏和预计投入。', "Public-issue projects focus on sustained research and do not have a uniform duration. At the start, each project sets out its stage goals, collaboration schedule, and expected time commitment."),
     },
     {
       question: text('项目会形成哪些成果？', 'What outcomes can a project produce?'),

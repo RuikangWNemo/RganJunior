@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Check, Globe2, Loader2, LockKeyhole, Plus, Tag, Users, X } from 'lucide-react';
+import { confirmedTranslation } from '@/lib/confirmedTranslations';
 
 import type {
   ArticleCategory,
@@ -36,10 +37,8 @@ export default function StoryPublishingSettings({
   const selectedTags = tags.filter((tag) => selected.has(tag.id));
   const availableTags = tags.filter((tag) => !selected.has(tag.id));
 
-  const categoryLabel = (category: ArticleCategory) => language === 'zh'
-    ? category.name_zh
-    : (category.name_en || category.name_zh);
-  const tagLabel = (tag: FieldNoteTag) => language === 'zh' ? tag.name_zh : (tag.name_en || tag.name_zh);
+  const categoryLabel = (category: ArticleCategory) => confirmedTranslation(category.name_zh, category.name_en || category.name_zh, language);
+  const tagLabel = (tag: FieldNoteTag) => confirmedTranslation(tag.name_zh, tag.name_en || tag.name_zh, language);
 
   const addTag = (tagId: number) => {
     if (!editable || selected.has(tagId) || metadata.topicIds.length >= 12) return;
@@ -65,8 +64,8 @@ export default function StoryPublishingSettings({
     descriptionEn: string;
   }> = [
     { value: 'private', icon: LockKeyhole, zh: '仅自己', en: 'Only me', descriptionZh: '只在你的工作台可见', descriptionEn: 'Visible only in your workspace' },
-    { value: 'members', icon: Users, zh: '社群成员', en: 'Members', descriptionZh: '发布后仅正式成员可见', descriptionEn: 'Visible to active members after publishing' },
-    { value: 'public', icon: Globe2, zh: '公开', en: 'Public', descriptionZh: '发布后进入文章广场', descriptionEn: 'Appears in the story square after publishing' },
+    { value: 'members', icon: Users, zh: '社群成员', en: 'Members', descriptionZh: '发布后仅正式成员可见', descriptionEn: "Visible only to members after publishing" },
+    { value: 'public', icon: Globe2, zh: '公开', en: 'Public', descriptionZh: '发布后进入文章广场', descriptionEn: "Appears in Community Articles after publishing" },
   ];
 
   return (

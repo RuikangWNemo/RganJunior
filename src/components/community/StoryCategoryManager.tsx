@@ -97,9 +97,9 @@ export default function StoryCategoryManager({
           <span className="mb-2 grid size-11 place-items-center rounded-2xl rounded-bl-md bg-[hsl(var(--community-orange)/0.11)] text-[hsl(var(--community-orange))]">
             <Shapes className="size-5" aria-hidden="true" />
           </span>
-          <DialogTitle className="font-serif text-3xl text-[hsl(var(--community-forest))]">{t('管理文章分类', 'Manage story categories')}</DialogTitle>
+          <DialogTitle className="font-serif text-3xl text-[hsl(var(--community-forest))]">{t('管理文章分类', "Manage article categories")}</DialogTitle>
           <DialogDescription className="max-w-xl leading-6 text-[hsl(var(--community-forest)/0.62)]">
-            {t('分类构成文章广场的主要浏览结构。停用后不会影响已经使用该分类的文章。', 'Categories shape the square’s main browsing structure. Deactivating one does not change existing stories.')}
+            {t('分类构成文章广场的主要浏览结构。停用后不会影响已经使用该分类的文章。', "Categories organize Community Articles. Deactivating a category does not affect articles already assigned to it.")}
           </DialogDescription>
         </DialogHeader>
 

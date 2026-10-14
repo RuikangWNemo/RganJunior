@@ -15,7 +15,7 @@ export default function ActionGroupDetails() {
           <p className="mt-5 text-base leading-8 text-muted-foreground">
             {t(
               '行动小组不是营地的附加活动，而是一段独立的持续实践。伙伴在稳定的相遇中提出问题、尝试行动，也学习回应彼此。',
-              'The Action Group is not an add-on to camp. It is a sustained practice in which participants ask questions, try actions, and learn to respond to one another.',
+              "The Action Group is an independent, ongoing practice, rather than an extra camp activity. Through regular meetings, participants raise questions, try out ideas, and learn to respond to one another.",
             )}
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function ActionGroupDetails() {
             <p className="mt-4 text-sm leading-8 text-muted-foreground sm:text-base">
               {t(
                 '线上茶会、读书会、共学和主题分享提供稳定的交流空间。讨论从伙伴真实经历出发，不追求统一答案。',
-                'Online tea gatherings, reading circles, shared learning, and themed conversations create a steady space for exchange grounded in participants’ real experience.',
+                "Online tea gatherings, reading circles, shared learning, and themed discussions provide regular opportunities to talk. Discussions start with participants’ real experiences, without seeking one answer for everyone.",
               )}
             </p>
           </article>
@@ -53,7 +53,7 @@ export default function ActionGroupDetails() {
             <p className="mt-4 text-sm leading-8 text-muted-foreground sm:text-base">
               {t(
                 '七日挑战、低碳生活行动和家庭实践把讨论带回日常。阶段分享帮助伙伴整理经验，并找到下一次线下共创的问题。',
-                'Seven-day challenges, low-carbon actions, and family practice bring discussion into daily life. Reflection helps participants identify questions for the next in-person co-creation.',
+                "Seven-day challenges, low-carbon activities, and activities with family put discussions into practice in everyday life. At each stage, participants share and reflect on their experiences, identifying questions for the next in-person co-creation activity.",
               )}
             </p>
           </article>

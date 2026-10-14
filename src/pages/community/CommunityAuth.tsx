@@ -68,10 +68,10 @@ function submitErrorMessage(error: unknown, lang: 'zh' | 'en') {
 
 function CommunityPrinciples({ lang, className = '' }: { lang: 'zh' | 'en'; className?: string }) {
   const principles = [
-    [lang === 'zh' ? '注册用户' : 'Registered users', lang === 'zh' ? '完善资料、阅读公开内容、提交入群申请。' : 'Build a profile, read public work, and apply to join.'],
+    [lang === 'zh' ? '注册用户' : 'Registered users', lang === 'zh' ? '完善资料、阅读公开内容、提交入群申请。' : "Complete your profile, read public content, and apply for membership."],
     [lang === 'zh' ? '社群成员' : 'Community members', lang === 'zh' ? '创作、认识伙伴、参加共练并使用成员消息。' : 'Create, meet peers, practice together, and use member messages.'],
     [lang === 'zh' ? '青少年保护' : 'Youth protection', isManualGuardianFlow
-      ? lang === 'zh' ? '未满 14 岁申请由工作人员联系监护人；14–17 岁走普通审核。' : 'For under-14 applicants, staff contact a guardian; ages 14–17 follow ordinary review.'
+      ? lang === 'zh' ? '未满 14 岁申请由工作人员联系监护人；14–17 岁走普通审核。' : "For applicants under 14, staff contact a guardian. Applicants ages 14–17 follow the standard review process."
       : lang === 'zh' ? '未成年人按年龄范围进入相应的监护人知情流程。' : 'Minors follow the guardian flow appropriate to their age range.'],
   ];
 
@@ -89,7 +89,7 @@ function CommunityPrinciples({ lang, className = '' }: { lang: 'zh' | 'en'; clas
 
 export default function CommunityAuth() {
   const { user, communityState, loading } = useAuth();
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const navigate = useNavigate();
   const [mode, setMode] = useState<AuthMode>('signin');
   const [signupStage, setSignupStage] = useState<SignupStage>('identity');
@@ -130,7 +130,7 @@ export default function CommunityAuth() {
         setIdentityOptions(options.filter((option) => option.slug !== 'rgan-founder'));
       })
       .catch((readError) => {
-        setError(readError instanceof Error ? readError.message : (lang === 'zh' ? '身份选项读取失败。' : 'Could not load identity options.'));
+        setError(readError instanceof Error ? readError.message : (lang === 'zh' ? '身份选项读取失败。' : 'Could not load community roles.'));
       })
       .finally(() => {
         setIdentitiesLoading(false);
@@ -175,7 +175,7 @@ export default function CommunityAuth() {
 
     if (mode === 'signup' && signupStage === 'identity') {
       if (!primaryIdentitySlug) {
-        setError(lang === 'zh' ? '请先选择一个主身份。' : 'Choose one primary identity first.');
+        setError(lang === 'zh' ? '请先选择一个主身份。' : "Choose one primary community role first.");
         return;
       }
       setSignupStage('age');
@@ -211,7 +211,7 @@ export default function CommunityAuth() {
         navigate('/community/enter', { replace: true });
       } else if (mode === 'signup') {
         if (!ageBand) throw new Error(lang === 'zh' ? '请先选择年龄范围。' : 'Choose your age range first.');
-        if (!primaryIdentitySlug) throw new Error(lang === 'zh' ? '请先选择主身份。' : 'Choose a primary identity first.');
+        if (!primaryIdentitySlug) throw new Error(lang === 'zh' ? '请先选择主身份。' : "Choose a primary community role first.");
         const result = await signUp({
           email,
           password,
@@ -292,7 +292,7 @@ export default function CommunityAuth() {
     ? lang === 'zh' ? '确认你的邮箱' : 'Confirm your email'
     : mode === 'signup'
     ? isSignupIdentity
-      ? lang === 'zh' ? '你从哪里加入？' : 'Where do you join from?'
+      ? lang === 'zh' ? '你从哪里加入？' : "Choose your community role"
       : isSignupAge
         ? lang === 'zh' ? '再确认年龄范围' : 'Next, your age range'
         : lang === 'zh' ? '建立你的账号' : 'Create your account'
@@ -314,7 +314,7 @@ export default function CommunityAuth() {
       : `Enter the ${EMAIL_OTP_LENGTH}-digit code or use the confirmation link in your email.`
     : mode === 'signup'
     ? isSignupIdentity
-      ? lang === 'zh' ? '选择一个主身份，也可以补充其他身份。所有选择都需要管理员确认。' : 'Choose one primary identity and add any secondary identities. All selections require admin confirmation.'
+      ? lang === 'zh' ? '选择一个主身份，也可以补充其他身份。所有选择都需要管理员确认。' : "Choose one primary community role and any additional roles. All selections require administrator confirmation."
       : isSignupAge
         ? lang === 'zh' ? '年龄范围用于安排合适的申请审核与青少年保护流程。' : 'Your age range determines the appropriate review and youth-safety flow.'
         : lang === 'zh' ? '先创建基础账号，个人主页资料将在下一步完善。' : 'Create a basic account first. Your profile comes next.'
@@ -360,7 +360,7 @@ export default function CommunityAuth() {
 
         <section className="flex min-w-0 flex-col justify-center px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-12 xl:px-14">
           <div className="mx-auto w-full max-w-[28rem] rounded-[1.6rem] rounded-bl-[0.6rem] border border-[hsl(var(--community-forest)/0.12)] bg-white/75 p-5 shadow-[0_28px_80px_hsl(var(--community-forest)/0.09)] backdrop-blur sm:p-8">
-            <div className="grid grid-cols-2 border-b border-primary/15" role="tablist" aria-label={lang === 'zh' ? '账号入口' : 'Account entry'}>
+            <div className="grid grid-cols-2 border-b border-primary/15" role="tablist" aria-label={lang === 'zh' ? '账号入口' : "Account access"}>
               {([
                 ['signin', '登录', 'Sign in'],
                 ['signup', '注册', 'Register'],
@@ -499,13 +499,13 @@ export default function CommunityAuth() {
                   {identitiesLoading ? (
                     <div className="flex min-h-28 items-center justify-center rounded-2xl bg-primary/[0.05] text-sm text-primary" role="status">
                       <span className="mr-3 size-2 animate-pulse rounded-full bg-[hsl(var(--community-orange))] motion-reduce:animate-none" />
-                      {lang === 'zh' ? '正在读取身份选项…' : 'Loading identity options…'}
+                      {lang === 'zh' ? '正在读取身份选项…' : 'Loading community roles…'}
                     </div>
                   ) : null}
                   {!identitiesLoading && identityOptions.length ? (
                     <>
                       <fieldset className="space-y-3">
-                        <legend className="mb-3 text-sm font-semibold text-foreground">{lang === 'zh' ? '主身份（必选）' : 'Primary identity (required)'}</legend>
+                        <legend className="mb-3 text-sm font-semibold text-foreground">{lang === 'zh' ? '主身份（必选）' : "Primary community role (required)"}</legend>
                         <div className="grid gap-3">
                           {identityOptions.map((option) => {
                             const selected = primaryIdentitySlug === option.slug;
@@ -520,8 +520,8 @@ export default function CommunityAuth() {
                                   aria-hidden="true"
                                 />
                                 <span className="min-w-0 flex-1">
-                                  <span className="block text-sm font-semibold text-primary">{lang === 'zh' ? option.name_zh : option.name_en || option.name_zh}</span>
-                                  <span className="mt-1 block text-xs leading-5 text-foreground/60">{lang === 'zh' ? option.description_zh : option.description_en || option.description_zh}</span>
+                                  <span className="block text-sm font-semibold text-primary">{t(option.name_zh, option.name_en || option.name_zh)}</span>
+                                  <span className="mt-1 block text-xs leading-5 text-foreground/60">{t(option.description_zh || '', option.description_en || option.description_zh || '')}</span>
                                 </span>
                                 <span className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border ${selected ? 'border-primary bg-primary text-primary-foreground' : 'border-primary/25'}`} aria-hidden="true">
                                   {selected ? <Check className="size-3.5" /> : null}
@@ -545,7 +545,7 @@ export default function CommunityAuth() {
 
                       {primaryIdentitySlug ? (
                         <fieldset className="rounded-2xl bg-primary/[0.055] p-4">
-                          <legend className="px-1 text-xs font-semibold text-primary">{lang === 'zh' ? '其他身份（可选）' : 'Secondary identities (optional)'}</legend>
+                          <legend className="px-1 text-xs font-semibold text-primary">{lang === 'zh' ? '其他身份（可选）' : "Additional community roles (optional)"}</legend>
                           <div className="mt-2 grid gap-2">
                             {identityOptions.filter((option) => option.slug !== primaryIdentitySlug).map((option) => {
                               const checked = secondaryIdentitySlugs.includes(option.slug);
@@ -559,7 +559,7 @@ export default function CommunityAuth() {
                                       checked ? current.filter((slug) => slug !== option.slug) : [...current, option.slug]
                                     ))}
                                   />
-                                  <span>{lang === 'zh' ? option.name_zh : option.name_en || option.name_zh}</span>
+                                  <span>{t(option.name_zh, option.name_en || option.name_zh)}</span>
                                 </label>
                               );
                             })}
@@ -569,7 +569,7 @@ export default function CommunityAuth() {
 
                       <div className="flex gap-3 rounded-xl bg-[hsl(var(--community-orange)/0.08)] px-4 py-3 text-xs leading-5 text-[hsl(var(--community-forest)/0.72)]">
                         <Orbit className="mt-0.5 size-4 shrink-0 text-[hsl(var(--community-orange))]" aria-hidden="true" />
-                        <p>{lang === 'zh' ? '身份用于星球归类与统计，不会授予管理权限；入群审核时管理员会再次确认。' : 'Identity supports planet grouping and statistics. It grants no admin access and is confirmed during membership review.'}</p>
+                        <p>{lang === 'zh' ? '身份用于星球归类与统计，不会授予管理权限；入群审核时管理员会再次确认。' : "Community roles are used to group members into planets and compile statistics. They do not grant administrator permissions and must be confirmed during membership review."}</p>
                       </div>
                     </>
                   ) : null}
@@ -614,15 +614,15 @@ export default function CommunityAuth() {
                             : lang === 'zh' ? '监护人确认后，才会继续收集完整个人主页资料。' : 'A guardian confirms before full profile details are collected.'
                           : ageBand === 'age_14_17'
                             ? isManualGuardianFlow
-                              ? lang === 'zh' ? '可以正常注册并提交申请，之后进入工作人员普通审核。' : 'You can register and apply normally, then enter ordinary staff review.'
-                              : lang === 'zh' ? '申请成为正式成员前，需要一位监护人知情确认。' : 'Guardian confirmation is required before formal membership.'
+                              ? lang === 'zh' ? '可以正常注册并提交申请，之后进入工作人员普通审核。' : "You can register and submit an application, which staff will review through the standard process."
+                              : lang === 'zh' ? '申请成为正式成员前，需要一位监护人知情确认。' : 'A parent or legal guardian must confirm that they are aware of your application before you apply for membership.'
                             : lang === 'zh' ? '你可以在注册后完善资料并申请加入社群。' : 'After registration, complete your profile and apply to join.'}
                       </p>
                     </div>
                   ) : null}
                   <button type="button" className="inline-flex items-center gap-2 text-xs font-semibold text-primary underline-offset-4 hover:underline" onClick={() => setSignupStage('identity')}>
                     <ArrowLeft className="size-3.5" aria-hidden="true" />
-                    {lang === 'zh' ? '返回修改身份' : 'Back to identity'}
+                    {lang === 'zh' ? '返回修改身份' : "Back to community roles"}
                   </button>
                 </fieldset>
               ) : null}
@@ -631,7 +631,7 @@ export default function CommunityAuth() {
                 <>
                   <div className="flex items-center justify-between gap-4 rounded-xl bg-primary/[0.06] px-4 py-3 text-sm text-primary">
                     <span className="min-w-0 truncate">
-                      {primaryIdentity ? (lang === 'zh' ? primaryIdentity.name_zh : primaryIdentity.name_en || primaryIdentity.name_zh) : ''}
+                      {primaryIdentity ? t(primaryIdentity.name_zh, primaryIdentity.name_en || primaryIdentity.name_zh) : ''}
                       {' · '}
                       {ageLabel ? (lang === 'zh' ? ageLabel.zh : ageLabel.en) : ''}
                     </span>
@@ -684,7 +684,7 @@ export default function CommunityAuth() {
                       ? lang === 'zh' ? '进入社群' : 'Enter community'
                       : mode === 'signup'
                         ? isSignupIdentity
-                          ? lang === 'zh' ? '确认身份，继续' : 'Confirm identity'
+                          ? lang === 'zh' ? '确认身份，继续' : "Confirm your community role"
                           : isSignupAge
                           ? lang === 'zh' ? '继续创建账号' : 'Continue'
                           : lang === 'zh' ? '注册账号' : 'Create account'

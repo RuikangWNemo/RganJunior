@@ -70,15 +70,15 @@ export default function ActionLayerStory() {
         <div className="grid gap-12 lg:grid-cols-[minmax(220px,0.52fr)_minmax(0,1fr)] lg:gap-20">
           <ScrollProgressReveal direction="up" distance={50} className="home-action-intro lg:sticky lg:top-28 lg:self-start">
             <p className="text-xs uppercase tracking-[0.28em] text-primary/70">
-              {t('三条行动线', 'Three Lines')}
+              {t('三条行动线', "Three Paths of Action")}
             </p>
             <h2 className="mt-5 max-w-xl font-serif text-4xl leading-tight text-foreground md:text-5xl">
-              {t('从山野，到田野，再到城乡。', 'From mountain, to field, to community.')}
+              {t('从山野，到田野，再到城乡。', "From the mountains to field research, then to action in cities and villages.")}
             </h2>
             <p className="mt-7 max-w-md text-base leading-8 text-muted-foreground md:text-lg">
               {t(
                 '从山野恢复感知，到田野理解问题，再到城乡形成行动。',
-                'Restore the senses in the mountain, understand real problems in the field, and form action across communities.'
+                "Renew sensory awareness in the mountains, understand real-world issues through field research, and take action in cities and villages."
               )}
             </p>
             <Link

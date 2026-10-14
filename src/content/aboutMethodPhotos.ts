@@ -18,7 +18,7 @@ const photo = (
 export const aboutMethodPhotoGroups: readonly (readonly AboutMethodPhoto[])[] = [
   [
     photo('/images/about/methods/01/01-shared-life.webp', 1919, 1279, '大人与孩子在菜地里一起劳作', 'An adult and child working together in a vegetable garden'),
-    photo('/images/about/methods/01/02-mountain-basketball.webp', 1920, 1281, '青少年在南宝山的球场上一起打篮球', 'Young people playing basketball together in Nanbaoshan'),
+    photo('/images/about/methods/01/02-mountain-basketball.webp', 1920, 1281, '青少年在南宝山的球场上一起打篮球', "Young people playing basketball together on a court at Nanbao Mountain"),
     photo('/images/about/methods/01/03-cooking-together.webp', 1920, 1280, '伙伴们围着柴火灶学习做饭', 'Participants learning to cook together around a wood-fired stove'),
     photo('/images/about/methods/01/04-life-moment.webp', 1080, 810, '伙伴们在厨房一起准备食物', 'Participants preparing food together in the kitchen'),
     photo('/images/about/methods/01/05-life-portrait.webp', 1014, 1352, '伙伴坐在窗边安静地喝茶', 'A participant sharing a quiet tea moment beside the window', 'center 42%'),

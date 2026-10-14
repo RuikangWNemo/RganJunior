@@ -99,7 +99,7 @@ export default function Impact() {
                 />
               </div>
               <figcaption className="mt-3 text-sm leading-5 text-muted-foreground">
-                {t('再生设计国际生态营，2024 年 5 月', 'Regenerative Design Eco Camp, May 2024')}
+                {t('再生设计国际生态营，2024 年 5 月', "International Regenerative Design Eco Camp, May 2024")}
               </figcaption>
             </figure>
           </div>
@@ -160,7 +160,7 @@ export default function Impact() {
               <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
                 {t(
                   '我们把影响理解为关系的变化：少年与家庭、伙伴、土地和公共生活开始形成新的连接。',
-                  'We understand impact as change in relationships, connecting young people with family, peers, land, and public life.',
+                  "We understand impact as a change in relationships: young people begin forming new connections with family, peers, land, and public life.",
                 )}
               </p>
             </ImpactReveal>

@@ -24,7 +24,7 @@ export default function ProgramFaq({ program }: { program: ActionProgramOption }
           <p className="text-pretty">
             {t(
               '这里整理了参与前最常见的问题。具体安排仍以当期项目说明为准。',
-              'These are the questions people most often ask before joining. Session-specific information remains the final reference.',
+              "These are common questions about participation. Please refer to the details provided for each specific program session for the final arrangements.",
             )}
           </p>
         </div>

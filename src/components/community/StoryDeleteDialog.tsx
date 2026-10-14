@@ -38,11 +38,11 @@ export default function StoryDeleteDialog({
             <Trash2 className="size-5" aria-hidden="true" />
           </span>
           <AlertDialogTitle className="font-serif text-2xl text-[hsl(var(--community-forest))]">
-            {permanent ? t('永久删除这篇文章？', 'Permanently delete this story?') : t('把草稿移入回收站？', 'Move this draft to Trash?')}
+            {permanent ? t('永久删除这篇文章？', "Permanently delete this article?") : t('把草稿移入回收站？', 'Move this draft to Trash?')}
           </AlertDialogTitle>
           <AlertDialogDescription className="pt-1 leading-6 text-[hsl(var(--community-forest)/0.62)]">
             {permanent
-              ? t(`“${title}”的正文、版本和协作记录都会被永久删除，且无法恢复。`, `“${title}” and its content, versions, and collaboration history will be permanently removed.`)
+              ? t(`“${title}”的正文、版本和协作记录都会被永久删除，且无法恢复。`, `The content, versions, and collaboration history of “${title}” will be permanently deleted and cannot be recovered.`)
               : t(`“${title}”会进入回收站，你可以稍后恢复。`, `“${title}” will move to Trash and can be restored later.`)}
           </AlertDialogDescription>
         </AlertDialogHeader>

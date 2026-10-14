@@ -7,7 +7,7 @@ const sections = [
   {
     id: 'nature',
     titleZh: '自然探索',
-    titleEn: 'Natural Discovery',
+    titleEn: "Nature Exploration",
     descZh: '走进荒野，观察生态系统中的每一个细微变化',
     descEn: 'Venturing into the wild, observing every subtle change in the ecosystem',
   },
