@@ -153,7 +153,7 @@ export default function ParentGuardianReel({ members }: ParentGuardianReelProps)
                   <figure>
                     <img
                       src={member.photo}
-                      style={member.cardScale ? { transform: `scale(${member.cardScale})`, transformOrigin: '50% 75%' } : undefined}
+                      style={{ objectPosition: member.cardPosition, ...(member.cardScale ? { transform: `scale(${member.cardScale})`, transformOrigin: '50% 75%' } : {}) }}
                       alt={t(
                         `守护团成员 ${index + 1}`,
                         `Guardian circle member ${index + 1}`,

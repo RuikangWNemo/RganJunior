@@ -6,6 +6,7 @@ export type GuardianMember = {
   name?: LocalizedText;
   bio?: LocalizedText;
   cardScale?: number;
+  cardPosition?: string;
   fullPhotoInProfile?: boolean;
 };
 
@@ -13,6 +14,7 @@ export type GuardianMember = {
 // Keep IDs stable when adding confirmed names and biographies.
 export const guardianMembers: readonly GuardianMember[] = [
   { id: 'zhao-jing', photo: '/images/about/adult-support/zhao-jing.jpg', name: { zh: '赵璟', en: 'Zhao Jing' } },
+  { id: 'he-chaochao', photo: '/images/about/adult-support/adult-support-02.webp', name: { zh: '贺超超', en: 'He Chaochao' } },
   { id: 'qiu-lu', photo: '/images/about/adult-support/adult-support-05.webp', name: { zh: '秋鹭', en: 'Qiu Lu' } },
   { id: 'wang-ruikang', photo: '/images/about/adult-support/adult-support-06.webp', name: { zh: '王睿康', en: 'Wang Ruikang' } },
   { id: 'teacher-deng', photo: '/images/about/adult-support/adult-support-07.webp', name: { zh: '邓老师', en: 'Teacher Deng' } },
@@ -26,6 +28,7 @@ export const guardianMembers: readonly GuardianMember[] = [
   { id: 'guardian-07', photo: '/images/about/parent-guardian/parent-guardian-07.webp' },
   { id: 'guardian-08', photo: '/images/about/parent-guardian/parent-guardian-08.webp' },
   { id: 'guardian-09', photo: '/images/about/parent-guardian/parent-guardian-09.webp' },
+  { id: 'zhuo-fei', photo: '/images/about/guardians/zhuo-fei-20261014.png', name: { zh: '卓霏', en: 'Zhuo Fei' }, cardPosition: '63% 50%', fullPhotoInProfile: true },
 ];
 
 export function guardianProfilePath(member: GuardianMember) {

@@ -74,7 +74,7 @@ export default function GuardianDirectory() {
                   <img
                     className="h-full w-full object-cover"
                     src={entry.photo}
-                    style={entry.cardScale ? { transform: `scale(${entry.cardScale})`, transformOrigin: '50% 75%' } : undefined}
+                    style={{ objectPosition: entry.cardPosition, ...(entry.cardScale ? { transform: `scale(${entry.cardScale})`, transformOrigin: '50% 75%' } : {}) }}
                     alt={entry.name?.[lang] ?? t(`守护团成员 ${index + 1}`, `Guardian circle member ${index + 1}`)}
                     width="1067" height="1600" loading={index < 4 ? 'eager' : 'lazy'} decoding="async"
                   />
