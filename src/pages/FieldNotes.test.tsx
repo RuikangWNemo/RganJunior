@@ -82,7 +82,7 @@ describe('FieldNotes', () => {
   it('renders only reviewed real records and the selected featured story', async () => {
     renderFieldNotes();
 
-    expect(screen.getByRole('heading', { name: '田野笔记' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '社区故事' })).toBeInTheDocument();
     expect(screen.getByText(/这里只展示作者真实提交/)).toBeInTheDocument();
     expect(await screen.findAllByRole('heading', { name: '一棵树的四季' })).toHaveLength(2);
     expect(screen.queryByText(/内容样稿/)).not.toBeInTheDocument();

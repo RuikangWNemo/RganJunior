@@ -64,7 +64,7 @@ export default function FieldNotes() {
           <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-end">
             <div className="min-w-0 max-w-4xl">
               <h1 className="text-balance font-serif text-5xl leading-[1.08] text-[#ea6a2a] sm:text-6xl lg:text-7xl">
-                {isAll ? t('全部文章', 'All Field Notes') : t('田野笔记', 'Field Notes')}
+                {isAll ? t('全部文章', 'All Community Stories') : t('社区故事', 'Community Stories')}
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg md:leading-9">
                 {isAll
@@ -86,7 +86,7 @@ export default function FieldNotes() {
                 "Only real community articles submitted by their authors, reviewed, and published for everyone appear here.",
               )}
             </p>
-            <nav className="flex gap-5 text-sm" aria-label={t('田野笔记栏目', 'Field Notes sections')}>
+            <nav className="flex gap-5 text-sm" aria-label={t('社区故事栏目', 'Community Stories sections')}>
               <Link
                 to="/field-notes"
                 aria-current={!isAll ? 'page' : undefined}

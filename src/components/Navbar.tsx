@@ -37,7 +37,7 @@ const navItems = [
   { path: '/about', zh: '关于', en: 'About' },
   { path: '/programs', zh: '项目', en: 'Programs' },
   { path: '/story', zh: '发起人故事', en: "Founder's Story" },
-  { path: '/field-notes', zh: '田野笔记', en: 'Field Notes' },
+  { path: '/field-notes', zh: '社区故事', en: 'Community Stories' },
   { path: '/impact', zh: '影响', en: 'Impact' },
   { path: '/join', zh: '加入我们', en: 'Join Us' },
 ];
@@ -401,7 +401,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                     >
                       <div
                         role="menu"
-                        aria-label={lang === 'zh' ? '田野笔记次级菜单' : 'Field Notes submenu'}
+                        aria-label={lang === 'zh' ? '社区故事次级菜单' : 'Community Stories submenu'}
                         className="overflow-hidden rounded-xl border border-primary/25 bg-popover p-2 shadow-xl"
                       >
                         {fieldNotesSubItems.map((subItem) => {

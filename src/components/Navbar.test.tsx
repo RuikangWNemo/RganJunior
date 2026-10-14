@@ -77,7 +77,7 @@ describe('Navbar mobile drawer', () => {
   it('uses 14px bold typography for every desktop primary menu item', () => {
     renderNavbar('/about');
 
-    for (const label of ['首页', '关于', '项目', '发起人故事', '田野笔记', '影响', '加入我们']) {
+    for (const label of ['首页', '关于', '项目', '发起人故事', '社区故事', '影响', '加入我们']) {
       expect(screen.getByRole('link', { name: label })).toHaveClass('text-sm', 'font-bold');
     }
   });
@@ -114,15 +114,15 @@ describe('Navbar mobile drawer', () => {
     expect(story).toHaveAttribute('aria-current', 'page');
   });
 
-  it('places Field Notes after the founder story and exposes both article views', async () => {
+  it('places Community Stories after the founder story and exposes both article views', async () => {
     renderNavbar('/field-notes/all');
 
     const story = screen.getByRole('link', { name: '发起人故事' });
-    const fieldNotes = screen.getByRole('link', { name: '田野笔记' });
+    const fieldNotes = screen.getByRole('link', { name: '社区故事' });
     expect(story.compareDocumentPosition(fieldNotes) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(fieldNotes).toHaveAttribute('aria-current', 'page');
 
-    const desktopMenu = screen.getByRole('menu', { name: '田野笔记次级菜单' });
+    const desktopMenu = screen.getByRole('menu', { name: '社区故事次级菜单' });
     expect(within(desktopMenu).getByRole('menuitem', { name: '精选文章' })).toHaveAttribute('href', '/field-notes');
     expect(within(desktopMenu).getByRole('menuitem', { name: '全部文章' })).toHaveAttribute('aria-current', 'location');
 
@@ -132,10 +132,10 @@ describe('Navbar mobile drawer', () => {
     expect(within(dialog).getByRole('button', { name: '全部文章' })).toHaveAttribute('aria-current', 'location');
   });
 
-  it('places Impact after Field Notes and exposes overview and recognition', async () => {
+  it('places Impact after Community Stories and exposes overview and recognition', async () => {
     renderNavbar('/impact/awards');
 
-    const fieldNotes = screen.getByRole('link', { name: '田野笔记' });
+    const fieldNotes = screen.getByRole('link', { name: '社区故事' });
     const impact = screen.getByRole('link', { name: '影响' });
     expect(fieldNotes.compareDocumentPosition(impact) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(impact).toHaveAttribute('aria-current', 'page');

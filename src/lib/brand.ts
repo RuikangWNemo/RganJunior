@@ -175,8 +175,8 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   },
   "/field-notes": {
     title: {
-      zh: "田野笔记",
-      en: "Field Notes",
+      zh: "社区故事",
+      en: "Community Stories",
     },
     description: {
       zh: "阅读阿柑少年发起人、少年伙伴、家长与合作者关于共同生活、生态实践和真实研究的文章。",
@@ -185,12 +185,12 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   },
   "/field-notes/all": {
     title: {
-      zh: "全部田野笔记",
-      en: "All Field Notes",
+      zh: "全部社区故事",
+      en: "All Community Stories",
     },
     description: {
-      zh: "按人物、题材或关键词浏览阿柑少年的全部公开田野笔记。",
-      en: "Browse all public R-Gan Junior Field Notes by person, topic, or keyword.",
+      zh: "按人物、题材或关键词浏览阿柑少年的全部公开社区故事。",
+      en: "Browse all public R-Gan Junior Community Stories by person, topic, or keyword.",
     },
   },
   "/impact": {

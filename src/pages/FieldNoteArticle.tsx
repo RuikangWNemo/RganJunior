@@ -79,7 +79,7 @@ export default function FieldNoteArticle() {
               className="cursor-target inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-              {t('返回田野笔记', 'Back to Field Notes')}
+              {t('返回社区故事', 'Back to Community Stories')}
             </Link>
 
             <div className="mt-11 max-w-5xl">
