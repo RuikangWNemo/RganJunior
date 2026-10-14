@@ -18165,7 +18165,7 @@ html[lang='en'] .programs-editorial-intro h1 {
 
   .founder-story-closing__layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     gap: clamp(3rem, 7vw, 7rem);
     align-items: end;
   }
@@ -18174,7 +18174,14 @@ html[lang='en'] .programs-editorial-intro h1 {
     max-width: none;
     color: hsl(var(--founder-paper));
     font-size: 3.375rem;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .founder-story-closing__copy,
+  .founder-story-closing__actions {
+    min-width: 0;
+    max-width: 100%;
   }
 
   .founder-story-closing__actions {
@@ -18187,6 +18194,11 @@ html[lang='en'] .programs-editorial-intro h1 {
   .founder-story-action {
     display: inline-flex;
     min-height: 3.35rem;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: left;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
@@ -18203,6 +18215,7 @@ html[lang='en'] .programs-editorial-intro h1 {
   }
 
   .founder-story-action svg {
+    flex-shrink: 0;
     width: 1.05rem;
     height: 1.05rem;
     stroke-width: 1.8;

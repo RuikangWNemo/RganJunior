@@ -61,8 +61,8 @@ export default function FieldNotes() {
     <div className="field-notes-page pt-20">
       <header className="border-b border-border/80 pb-12 pt-14 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
-            <div className="max-w-4xl">
+          <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-end">
+            <div className="min-w-0 max-w-4xl">
               <h1 className="text-balance font-serif text-5xl leading-[1.08] text-[#ea6a2a] sm:text-6xl lg:text-7xl">
                 {isAll ? t('全部文章', 'All Field Notes') : t('田野笔记', 'Field Notes')}
               </h1>
@@ -72,8 +72,8 @@ export default function FieldNotes() {
                   : t('把生活、共创与研究中仍值得追问的时刻，留在这里。', 'A place for moments in life, co-creation, and research that still deserve questions.')}
               </p>
             </div>
-            <div className="border-l border-primary/30 pl-6">
-              <p className="font-serif text-lg leading-8 text-foreground lg:whitespace-nowrap">
+            <div className="min-w-0 border-l border-primary/30 pl-6">
+              <p className="text-pretty font-serif text-lg leading-8 text-foreground">
                 {t('经验先发生，理解随后慢慢长出来。', 'Experience happens first. Understanding grows afterward.')}
               </p>
             </div>
@@ -109,7 +109,7 @@ export default function FieldNotes() {
       {!isAll ? (
         <section className="py-16 md:py-24" aria-labelledby="featured-field-notes">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-10 flex items-end justify-between gap-6">
+            <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
               <h2 id="featured-field-notes" className="font-serif text-3xl text-[#ea6a2a] md:text-4xl">
                 {t('本期精选', 'Featured this time')}
               </h2>

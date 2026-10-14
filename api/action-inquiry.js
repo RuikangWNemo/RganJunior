@@ -7,7 +7,7 @@ const PROGRAM_LABELS = {
   'life-co-creation-camp': '生活共创营 / Life Co-creation Camp',
   'life-camp': '生活共创营 / Life Co-creation Camp',
   'action-group': "阿柑少年行动小组 / R'gan Junior Action Group",
-  'public-projects': '青少年研究计划 / Youth Research Programme',
+  'public-projects': '青少年研究计划 / Youth Research Program',
 };
 
 const FIELD_ENV = {

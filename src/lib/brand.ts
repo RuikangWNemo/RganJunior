@@ -98,7 +98,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     },
     description: {
       zh: "了解阿柑少年的生活体验营、生活共创营、三个月行动小组和青少年研究计划。",
-      en: "Explore R-Gan Junior's Life Discovery Camp, Life Co-creation Camp, three-month Action Group, and Youth Research Programme.",
+      en: "Explore R-Gan Junior's Life Discovery Camp, Life Co-creation Camp, three-month Action Group, and Youth Research Program.",
     },
   },
   "/programs/inquiry": {
@@ -154,11 +154,11 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   "/programs/public-projects": {
     title: {
       zh: "青少年研究计划",
-      en: "Youth Research Programme",
+      en: "Youth Research Program",
     },
     description: {
       zh: "了解阿柑少年青少年研究计划的议题方向、研究方法、田野实践、公共成果、合作方式和常见问题。",
-      en: "Learn about R-Gan Junior's Youth Research Programme, including topics, methods, fieldwork, public outcomes, collaboration, and frequently asked questions.",
+      en: "Learn about R-Gan Junior's Youth Research Program, including topics, methods, fieldwork, public outcomes, collaboration, and frequently asked questions.",
     },
   },
   "/story": {

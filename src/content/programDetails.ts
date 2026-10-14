@@ -74,7 +74,7 @@ export const lifeCoCreationPractices: ProgramContentItem[] = [
   },
   {
     title: text('信任与关系', 'Trust and relationships'),
-    body: text('在冲突、协商与彼此照护中，练习表达需要，也回应共同体。', 'Practise naming needs and responding to the group through conflict, negotiation, and mutual care.'),
+    body: text('在冲突、协商与彼此照护中，练习表达需要，也回应共同体。', 'Practice naming needs and responding to the group through conflict, negotiation, and mutual care.'),
   },
 ];
 
@@ -87,7 +87,7 @@ export const lifeCoCreationRhythm: ProgramRhythmItem[] = [
   {
     period: text('第 3—4 天', 'Days 3–4'),
     title: text('共同承担', 'Share responsibility'),
-    body: text('通过小队任务、生活劳动和议题共创，在真实分歧中练习协作。', 'Use team tasks, daily work, and co-creation to practise collaboration through real differences.'),
+    body: text('通过小队任务、生活劳动和议题共创，在真实分歧中练习协作。', 'Use team tasks, daily work, and co-creation to practice collaboration through real differences.'),
   },
   {
     period: text('第 5 天', 'Day 5'),
@@ -223,7 +223,7 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('如果中途错过一次活动怎么办？', 'What happens if I miss a session?'),
-      answer: text('行动小组重视持续参与，也理解真实生活中的时间变化。伙伴可以通过记录、补充交流和后续实践重新接上进度。', 'The group values continuity while recognising that schedules change. Participants can reconnect through notes, follow-up conversations, and later practice.'),
+      answer: text('行动小组重视持续参与，也理解真实生活中的时间变化。伙伴可以通过记录、补充交流和后续实践重新接上进度。', 'The group values continuity while recognizing that schedules change. Participants can reconnect through notes, follow-up conversations, and later practice.'),
     },
     {
       question: text('下一次线下共创如何发生？', 'How does the next in-person co-creation happen?'),
@@ -237,7 +237,7 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('没有研究经验可以参加吗？', 'Can I join without research experience?'),
-      answer: text('可以。项目会从提出问题、访谈准备、记录方法和资料整理开始共学，不把既有研究经验作为唯一门槛。', 'Yes. Projects begin with shared learning about questions, interview preparation, documentation, and organising evidence. Prior research experience is not the only entry requirement.'),
+      answer: text('可以。项目会从提出问题、访谈准备、记录方法和资料整理开始共学，不把既有研究经验作为唯一门槛。', 'Yes. Projects begin with shared learning about questions, interview preparation, documentation, and organizing evidence. Prior research experience is not the only entry requirement.'),
     },
     {
       question: text('研究议题如何确定？', 'How are research topics chosen?'),
@@ -245,14 +245,14 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('通常需要投入多长时间？', 'How much time does a project require?'),
-      answer: text('公共议题项目以持续研究为主，不预设统一周期。每个项目会在启动时说明阶段目标、协作节奏和预计投入。', 'Public-issues work is sustained research rather than a fixed programme. Each project sets out its stages, collaboration rhythm, and expected commitment at the start.'),
+      answer: text('公共议题项目以持续研究为主，不预设统一周期。每个项目会在启动时说明阶段目标、协作节奏和预计投入。', 'Public-issues work is sustained research rather than a fixed program. Each project sets out its stages, collaboration rhythm, and expected commitment at the start.'),
     },
     {
       question: text('项目会形成哪些成果？', 'What outcomes can a project produce?'),
       answer: text('根据议题形成访谈记录、问卷分析、田野笔记、文章和公共分享。成果以真实、可讨论和尊重参与者为基本原则。', 'Depending on the topic, outcomes may include interview records, survey analysis, field notes, articles, and public sharing, guided by accuracy, openness to discussion, and respect for participants.'),
     },
     {
-      question: text('机构或专业伙伴可以合作吗？', 'Can organisations or specialist partners collaborate?'),
+      question: text('机构或专业伙伴可以合作吗？', 'Can organizations or specialist partners collaborate?'),
       answer: text('可以。欢迎能够提供议题经验、研究支持、场域连接或公共传播资源的伙伴先与团队沟通合作边界和方式。', 'Yes. Partners who can contribute topic expertise, research support, field access, or public communication are welcome to discuss the scope and form of collaboration with the team.'),
     },
   ],

@@ -8,7 +8,7 @@ import { fieldNotesRepository } from '@/services/field-notes/publicRepository';
 import NotFound from './NotFound';
 
 function formatDate(date: string, language: 'zh' | 'en') {
-  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-GB', {
+  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

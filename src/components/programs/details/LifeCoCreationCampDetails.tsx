@@ -16,7 +16,7 @@ export default function LifeCoCreationCampDetails() {
           <p className="text-pretty">
             {t(
               '连续相处让关系不只停留在一次活动。伙伴要一起面对节奏、分工、意见和冲突，也在真实生活里练习信任、表达与回应。',
-              'Sustained time together takes relationships beyond an activity. Participants face rhythm, roles, differences, and conflict while practising trust, expression, and response.',
+              'Sustained time together takes relationships beyond an activity. Participants face rhythm, roles, differences, and conflict while practicing trust, expression, and response.',
             )}
           </p>
         </div>

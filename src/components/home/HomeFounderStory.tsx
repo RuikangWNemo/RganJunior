@@ -45,7 +45,7 @@ export default function HomeFounderStory() {
               </>
             ) : (
               <>
-                <span className="home-founder-story__title-line">One young person's growth</span>
+                <span className="home-founder-story__title-line">One young person's growth</span>{' '}
                 <span className="home-founder-story__title-line">became a shared action.</span>
               </>
             )}
@@ -53,7 +53,7 @@ export default function HomeFounderStory() {
           <p>
             {t(
               '阿柑少年从 Nate 在铁牛村的成长经历中长出来。从一个在乡村感到孤独、想邀请朋友来玩的孩子，到组织同学调研生态农业、发起生活共创营，他逐渐把自己的成长，变成一个连接青少年、家庭、土地与真实世界的行动计划。',
-              "R-Gan Junior grew from Nate's own life in Tieniu Village. A lonely child who wanted friends to visit the village began organising ecological agriculture research and a life co-creation camp. His experience gradually became an action plan connecting young people, families, land, and the real world.",
+              "R-Gan Junior grew from Nate's own life in Tieniu Village. A lonely child who wanted friends to visit the village began organizing ecological agriculture research and a life co-creation camp. His experience gradually became an action plan connecting young people, families, land, and the real world.",
             )}
           </p>
           <Link to="/story" className="home-text-link cursor-target">

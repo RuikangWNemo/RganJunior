@@ -6,7 +6,7 @@ import { pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
 
 function formatDate(date: string, language: 'zh' | 'en') {
-  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-GB', {
+  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

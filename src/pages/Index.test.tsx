@@ -146,7 +146,7 @@ describe('homepage editorial refresh', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: 'What we believe' })).toBeInTheDocument();
     expect(screen.queryByText('Learning by living')).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: 'Our programmes' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Our programs' })).toBeInTheDocument();
     expect(screen.queryByText('How to take part in R-Gan Junior')).not.toBeInTheDocument();
     const founderHeading = screen.getByRole('heading', {
       level: 2,

@@ -146,7 +146,7 @@ export const homePrograms: HomeProgram[] = [
     },
   },
   {
-    title: text('青少年研究计划', 'Youth Research Programme'),
+    title: text('青少年研究计划', 'Youth Research Program'),
     body: text(
       '面对感兴趣的青少年，围绕社区的各类真实议题，用田野观察、访谈和写作，学习理解真实问题，形成自己的公共思考。',
       'Field observation, interviews, and writing help older students understand community questions and form a public point of view.',
@@ -158,7 +158,7 @@ export const homePrograms: HomeProgram[] = [
       sizes: '(max-width: 767px) calc(100vw - 4rem), 56vw',
       width: 3168,
       height: 2113,
-      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', 'Youth Research Programme team presenting their work at the CTB Research and Innovation Forum'),
+      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', 'Youth Research Program team presenting their work at the CTB Research and Innovation Forum'),
       position: 'center 46%',
     },
   },

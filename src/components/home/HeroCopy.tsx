@@ -49,7 +49,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
       >
         {t(
           '一个从铁牛村长出来的青少年真实生活与公共行动计划。我们通过自然、食物、茶、运动、社群共创和可持续生活实践，陪伴青少年连接自己、他人、土地和未来。',
-          "A real-life and public-action programme for young people, grown in Tieniu Village. Through nature, food, tea, movement, co-creation, and sustainable living, we reconnect young people with themselves, others, the land, and the future.",
+          "A real-life and public-action program for young people, grown in Tieniu Village. Through nature, food, tea, movement, co-creation, and sustainable living, we reconnect young people with themselves, others, the land, and the future.",
         )}
       </p>
 
