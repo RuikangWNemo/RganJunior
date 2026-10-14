@@ -7,7 +7,7 @@ const linkClass = 'inline-flex items-center gap-2 rounded-sm py-3 text-primary u
 export default function GuardianDirectory() {
   const { memberId } = useParams<{ memberId: string }>();
   const { t, lang } = useLanguage();
-  const member = guardianMembers.find((entry) => entry.id === memberId);
+  const member = guardianMembers.find((entry) => entry.id === memberId || entry.aliases?.includes(memberId ?? ''));
 
   return (
     <div className="about-v2-page px-6 pb-20 pt-28 sm:px-8 sm:pt-36">

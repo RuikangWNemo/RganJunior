@@ -18,13 +18,15 @@ function renderDirectory(path = '/about/guardians', language: 'zh' | 'en' = 'zh'
 }
 
 describe('Guardian directory navigation', () => {
-  it('shows sixteen equal entries, includes He Chaochao, and opens a profile then returns to the directory', () => {
+  it('shows fifteen unique entries, includes He Chaochao, and opens a profile then returns to the directory', () => {
     renderDirectory();
     const list = screen.getByLabelText('全部守护团成员');
-    expect(within(list).getAllByRole('link')).toHaveLength(16);
+    expect(within(list).getAllByRole('link')).toHaveLength(15);
     expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).toContain('/images/about/adult-support/adult-support-02.webp');
     expect(screen.getByText('贺超超')).toBeInTheDocument();
-    expect(screen.getByText('卓霏')).toBeInTheDocument();
+    expect(within(list).getAllByRole('img', { name: '卓霏' })).toHaveLength(1);
+    expect(within(list).getByRole('link', { name: '查看守护团成员 14 资料' })).toHaveAttribute('href', '/about/guardians/zhuo-fei');
+    expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).not.toContain('/images/about/parent-guardian/parent-guardian-08.webp');
     fireEvent.click(within(list).getByRole('link', { name: '查看守护团成员 1 资料' }));
     expect(screen.getByRole('heading', { level: 1, name: '赵璟' })).toBeInTheDocument();
     expect(screen.getByRole('img', { name: '赵璟' })).toHaveAttribute('src', '/images/about/adult-support/zhao-jing.jpg');
@@ -43,7 +45,8 @@ describe('Guardian directory navigation', () => {
 
   it.each([
     ['he-chaochao', '贺超超', '/images/about/adult-support/adult-support-02.webp'],
-    ['zhuo-fei', '卓霏', '/images/about/guardians/zhuo-fei-20261014.png'],
+    ['zhuo-fei', '卓霏', '/images/about/guardians/zhuo-fei-20261014-upright.png'],
+    ['guardian-08', '卓霏', '/images/about/guardians/zhuo-fei-20261014-upright.png'],
   ])('opens the confirmed profile at %s', (id, name, photo) => {
     renderDirectory(`/about/guardians/${id}`);
     expect(screen.getByRole('heading', { level: 1, name })).toBeInTheDocument();
