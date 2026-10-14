@@ -6,6 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { fieldNotesRepository } from '@/services/field-notes/publicRepository';
 import NotFound from './NotFound';
+import { AuthorPortrait } from '@/components/field-notes/AuthorPortrait';
 
 function formatDate(date: string, language: 'zh' | 'en') {
   return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
@@ -111,7 +112,7 @@ export default function FieldNoteArticle() {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <div className="flex -space-x-2" aria-hidden="true">
                   {authors.map((author) => (
-                    <img key={author.slug} src={author.avatar} alt="" className="size-10 rounded-full border-2 border-background object-cover" />
+                    <AuthorPortrait key={author.slug} person={author} />
                   ))}
                 </div>
                 <p className="text-sm text-foreground/75">
@@ -127,7 +128,7 @@ export default function FieldNoteArticle() {
             <img
               src={note.cover}
               alt={pickLocalized(note.coverAlt, lang)}
-              className="aspect-[16/8] w-full object-cover"
+              className={note.topicSlugs.includes('project-letter') ? 'h-auto w-full' : 'aspect-[16/8] w-full object-cover'}
             />
           </figure>
         </div>

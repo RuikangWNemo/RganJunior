@@ -4,6 +4,7 @@ import type { FieldNote } from '@/types/field-notes';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
+import { AuthorPortrait } from './AuthorPortrait';
 
 function formatDate(date: string, language: 'zh' | 'en') {
   return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
@@ -28,11 +29,14 @@ export function FieldNoteCard({
 }: FieldNoteCardProps) {
   const { lang, t } = useLanguage();
   const authors = note.authors;
+  const jointAuthor = authors.find((author) => author.portraitGroup?.length);
+  const isInvitation = note.topicSlugs.includes('project-letter');
   const topics = note.topics;
   const title = pickLocalized(note.title, lang);
   const href = `/field-notes/${note.slug}`;
   const meta = (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
+      {jointAuthor ? <AuthorPortrait person={jointAuthor} /> : null}
       <span className="font-medium text-primary/80">
         {authors.map((person) => pickLocalized(person.name, lang)).join(', ')}
       </span>
@@ -111,7 +115,7 @@ export function FieldNoteCard({
   }
 
   return (
-    <article className={cn('group', className)}>
+    <article className={cn('group', isInvitation && 'my-5 rounded-2xl border border-primary/15 bg-primary/[0.035] px-5 sm:px-7', className)}>
       <Link
         to={href}
         aria-label={t(`阅读：${title}`, `Read: ${title}`)}
@@ -135,7 +139,7 @@ export function FieldNoteCard({
             alt=""
             loading="lazy"
             decoding="async"
-            className="aspect-[16/9] w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none sm:aspect-[4/3]"
+            className={cn("w-full transition duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none", isInvitation ? "aspect-[1280/545] object-contain" : "aspect-[16/9] object-cover sm:aspect-[4/3]")}
           />
         </div>
       </Link>

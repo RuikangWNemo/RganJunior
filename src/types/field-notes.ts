@@ -6,6 +6,8 @@ export interface FieldNotePerson {
   identityLabel: LocalizedText;
   introduction: LocalizedText;
   avatar: string;
+  portraitGroup?: string[];
+  displayName?: LocalizedText;
 }
 
 export interface FieldNoteTopic {

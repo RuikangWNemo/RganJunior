@@ -4,6 +4,7 @@ import type { FieldNote, FieldNotePerson, FieldNoteTopic } from '@/types/field-n
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { FieldNoteCard } from './FieldNoteCard';
+import { AuthorPortrait } from './AuthorPortrait';
 
 export type ExplorerDimension = 'people' | 'topics';
 
@@ -166,19 +167,16 @@ export function FieldNoteExplorer({
                     type="button"
                     aria-pressed={selected}
                     onClick={() => onPersonChange(selected ? '' : person.slug)}
-                    className={`grid min-h-20 w-48 grid-cols-[3.25rem_1fr] items-center gap-3 rounded-lg border px-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    aria-label={pickLocalized(person.name, lang)}
+                    className={`grid min-h-20 ${person.portraitGroup ? 'w-64' : 'w-48'} grid-cols-[3.25rem_minmax(0,1fr)] items-center gap-3 rounded-lg border px-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                       selected
                         ? 'border-primary/45 bg-primary/[0.08] text-primary'
                         : 'border-border bg-card/45 text-foreground hover:border-primary/30'
                     }`}
                   >
-                    <img
-                      src={person.avatar}
-                      alt=""
-                      className="size-[3.25rem] rounded-full bg-secondary object-cover"
-                    />
+                    <AuthorPortrait person={person} />
                     <span className="min-w-0">
-                      <span className="block truncate text-sm font-medium">{pickLocalized(person.name, lang)}</span>
+                      <span className="block text-sm font-medium leading-5">{pickLocalized(person.displayName ?? person.name, lang)}</span>
                       <span className="mt-1 block truncate text-xs text-muted-foreground">
                         {pickLocalized(person.identityLabel, lang)} {t(`${articleCount} 篇`, `${articleCount}`)}
                       </span>
@@ -229,7 +227,7 @@ export function FieldNoteExplorer({
 
       <div className="flex min-h-12 items-center justify-between gap-4 border-b border-border pb-4" aria-live="polite">
         <p className="text-sm text-muted-foreground">
-          {isLoading ? t('正在整理文章', 'Gathering articles') : t(`找到 ${notes.length} 篇文章`, `${notes.length} articles found`)}
+          {isLoading ? t('正在整理文章', 'Gathering articles') : t(`找到 ${notes.length} 篇文章`, `${notes.length} ${notes.length === 1 ? 'article' : 'articles'} found`)}
         </p>
         {hasFilters ? (
           <button

@@ -340,11 +340,11 @@ export const joinAudiences: JoinAudienceContent[] = [
   },
   {
     id: 'join-parents',
-    trigger: { zh: '成为阿柑家长', en: "Join as an R-Gan Parent" },
-    heading: { zh: '成为阿柑家长', en: "Join as an R-Gan Parent" },
+    trigger: { zh: '加入守护团', en: 'Join the Guardian Circle' },
+    heading: { zh: '加入守护团', en: 'Join the Guardian Circle' },
     intro: {
-      zh: '如果你希望孩子在真实世界中成长，而不是只被焦虑推着向前，欢迎先了解我们的路径、节奏与陪伴方式。',
-      en: "If you hope your child can grow through real-world experiences rather than be driven by anxiety, explore our programs, their pace, and the support we provide.",
+      zh: '如果你愿意以家长、陪伴者或支持者的身份，陪伴青少年在真实世界中成长，欢迎了解我们的路径、节奏与支持方式。',
+      en: "If you would like to support young people as a parent, companion, or community supporter, explore our programs, their pace, and the ways you can help.",
     },
     rows: [
       {

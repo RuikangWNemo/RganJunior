@@ -217,7 +217,11 @@ function existingProjectLetters(): FieldNote[] {
     contentHtml: story.bodyHtml.zh, contentHtmlEn: story.bodyHtml.en,
     originalUrl: story.originalUrl,
     authors: [{ slug: 'founding-team', name: story.author, identityLabel: story.kindLabel,
-      introduction: { zh: '', en: '' }, avatar: communityMascot }],
+      introduction: { zh: '', en: '' },
+      displayName: { zh: 'Nate、天时与发起小组', en: 'Nate, Tianshi & team' },
+      avatar: articleAuthorPortraits['nateshi-94403ff7'],
+      portraitGroup: [articleAuthorPortraits['nateshi-94403ff7'], articleAuthorPortraits['article-author-tianshi']],
+    }],
     topics: [{ slug: 'project-letter', name: story.kindLabel, shortName: story.kindLabel,
       description: { zh: '', en: '' } }],
   }));

@@ -14,6 +14,8 @@ import { joinAudiences, type JoinAudienceId } from '@/content/siteContent';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { type LocalizedText, pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
+import { joinRoleLabels } from '@/content/joinRoles';
+import MiniOrange from '@/components/join/MiniOrange';
 
 const Lanyard = lazy(() => import('@/components/ui/lanyard/Lanyard'));
 
@@ -50,8 +52,8 @@ const identityVisuals: Record<JoinAudienceId, JoinIdentityVisual> = {
     eyebrow: { zh: '陪伴与边界', en: 'Care & Boundaries' },
     card: '/images/join/parents-card.webp',
     cardAlt: {
-      zh: '成为阿柑家长的悬挂卡片插图',
-      en: "Hanging card illustration for R-Gan Junior parents",
+      zh: '加入守护团的悬挂卡片插图',
+      en: "Hanging card illustration for the Guardian Circle",
     },
   },
   'join-partners': {
@@ -69,23 +71,23 @@ const identityPathItems: JoinIdentityEditorial[] = [
     id: 'join-youth',
     issue: '01',
     code: 'R-Gan Junior',
-    label: { zh: '阿柑少年', en: "R-Gan Junior" },
+    label: joinRoleLabels['join-youth'],
     hint: { zh: '带着问题，走进真实世界', en: 'Carry a question into the real world' },
     guide: { zh: '我想去真实世界看看', en: 'I want to explore the real world' },
   },
   {
     id: 'join-parents',
     issue: '02',
-    code: 'PARENTS',
-    label: { zh: '家长', en: 'Parents' },
+    code: 'GUARDIAN CIRCLE',
+    label: joinRoleLabels['join-parents'],
     hint: { zh: '在陪伴与边界之间同行', en: 'Walk together with care and boundaries' },
-    guide: { zh: '我正在陪伴一个孩子', en: "I am supporting a child as they grow" },
+    guide: { zh: '我愿意陪伴与支持青少年', en: "I want to support young people as they grow" },
   },
   {
     id: 'join-partners',
     issue: '03',
     code: 'PARTNERS',
-    label: { zh: '伙伴', en: 'Partners' },
+    label: joinRoleLabels['join-partners'],
     hint: { zh: '把资源与能力变成共同行动', en: 'Turn resources and skills into shared action' },
     guide: { zh: '我有资源或能力想共创', en: "I have resources or skills to contribute" },
   },
@@ -550,7 +552,7 @@ export default function JoinUs() {
                     `join-editorial-role--${identity.id.replace('join-', '')}`
                   )}
                 >
-                  <span className="join-editorial-role__index">{identity.issue}</span>
+                  <MiniOrange />
                   <span className="join-editorial-role__copy">
                     <span className="join-editorial-role__title">
                       {pickLocalized(identity.label, lang)}

@@ -4,11 +4,13 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SeedCommunityStage from '@/components/home/SeedCommunityStage';
 import { cn } from '@/lib/utils';
+import { joinRoleLabels } from '@/content/joinRoles';
+import MiniOrange from '@/components/join/MiniOrange';
 
 const communityRoles = [
-  { zh: '阿柑少年', en: "R-Gan Junior", className: 'left-0 top-[5.1rem]' },
-  { zh: '家长', en: 'Parents', className: 'left-[42%] top-[1.4rem] -translate-x-1/2' },
-  { zh: '伙伴', en: 'Partners', className: 'right-0 top-[3.65rem]' },
+  { ...joinRoleLabels['join-youth'], className: 'left-0 top-[5.1rem]' },
+  { ...joinRoleLabels['join-parents'], className: 'left-[42%] top-[1.4rem] -translate-x-1/2' },
+  { ...joinRoleLabels['join-partners'], className: 'right-0 top-[3.65rem]' },
 ] as const;
 
 export default function SeedCommunity() {
@@ -30,10 +32,10 @@ export default function SeedCommunity() {
             <div className="seed-community__headline-stack mt-6">
               <h2 className={`seed-community__title seed-community__title--${lang}`}>
                 {lang === 'zh' ? (
-                  '成为阿柑少年、家长或伙伴。'
+                  '与阿柑少年、守护团和合作伙伴一起同行。'
                 ) : (
                   <>
-                    Join <span className="whitespace-nowrap">R-Gan Junior</span> as a participant, parent, or partner.
+                    Grow with <span className="whitespace-nowrap">R-Gan Junior</span>, the Guardian Circle, and our partners.
                   </>
                 )}
               </h2>
@@ -66,7 +68,7 @@ export default function SeedCommunity() {
                       role.className
                     )}
                   >
-                    <span className="seed-community__fruit" aria-hidden="true" />
+                    <MiniOrange className="seed-community__fruit" />
                     <span>{t(role.zh, role.en)}</span>
                   </motion.li>
                 ))}
