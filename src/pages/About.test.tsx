@@ -102,19 +102,19 @@ describe('About editorial content system', () => {
 
     const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
     const reel = within(guardianGroup).getByRole('region', { name: '守护团成员照片' });
-    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(14);
-    expect(within(reel).getAllByRole('img')).toHaveLength(14);
-    expect(within(reel).getAllByRole('link')).toHaveLength(14);
+    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(16);
+    expect(within(reel).getAllByRole('img')).toHaveLength(16);
+    expect(within(reel).getAllByRole('link')).toHaveLength(16);
     expect(within(reel).getByText('赵璟')).toBeInTheDocument();
     expect(within(reel).getByText('知予')).toBeInTheDocument();
-    expect(guardianGroup).not.toHaveTextContent(/麦昆塔教育|贺超超|何超超/);
-    expect(within(reel).getAllByRole('img').map((img) => img.getAttribute('src'))).not.toContain('/images/about/adult-support/adult-support-02.webp');
+    expect(guardianGroup).not.toHaveTextContent(/麦昆塔教育/);
+    expect(within(reel).getAllByRole('img').map((img) => img.getAttribute('src'))).toContain('/images/about/adult-support/adult-support-02.webp');
     expect(guardianGroup.querySelector('.about-v2-adult-roster')).toBeNull();
     expect(within(guardianGroup).getByRole('link', { name: /查看全部成员/ })).toHaveAttribute('href', '/about/guardians');
     expect(within(reel).getByRole('link', { name: '查看守护团成员 1 资料' })).toHaveAttribute('href', '/about/guardians/zhao-jing');
-    expect(within(reel).getByRole('link', { name: '查看守护团成员 14 资料' })).toHaveAttribute('href', '/about/guardians/guardian-09');
-    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 14' }));
-    expect(screen.getByRole('button', { name: '切换到守护团成员 14' })).toHaveAttribute('aria-pressed', 'true');
+    expect(within(reel).getByRole('link', { name: '查看守护团成员 16 资料' })).toHaveAttribute('href', '/about/guardians/zhuo-fei');
+    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 16' }));
+    expect(screen.getByRole('button', { name: '切换到守护团成员 16' })).toHaveAttribute('aria-pressed', 'true');
 
   });
 

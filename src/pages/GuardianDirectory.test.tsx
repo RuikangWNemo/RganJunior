@@ -18,12 +18,13 @@ function renderDirectory(path = '/about/guardians', language: 'zh' | 'en' = 'zh'
 }
 
 describe('Guardian directory navigation', () => {
-  it('shows fourteen equal entries, removes He Chaochao, and opens a profile then returns to the directory', () => {
+  it('shows sixteen equal entries, includes He Chaochao, and opens a profile then returns to the directory', () => {
     renderDirectory();
     const list = screen.getByLabelText('全部守护团成员');
-    expect(within(list).getAllByRole('link')).toHaveLength(14);
-    expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).not.toContain('/images/about/adult-support/adult-support-02.webp');
-    expect(screen.queryByText(/贺超超|何超超/)).not.toBeInTheDocument();
+    expect(within(list).getAllByRole('link')).toHaveLength(16);
+    expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).toContain('/images/about/adult-support/adult-support-02.webp');
+    expect(screen.getByText('贺超超')).toBeInTheDocument();
+    expect(screen.getByText('卓霏')).toBeInTheDocument();
     fireEvent.click(within(list).getByRole('link', { name: '查看守护团成员 1 资料' }));
     expect(screen.getByRole('heading', { level: 1, name: '赵璟' })).toBeInTheDocument();
     expect(screen.getByRole('img', { name: '赵璟' })).toHaveAttribute('src', '/images/about/adult-support/zhao-jing.jpg');
@@ -40,8 +41,18 @@ describe('Guardian directory navigation', () => {
     expect(screen.getByRole('link', { name: /View all members/ })).toHaveAttribute('href', '/about/guardians');
   });
 
-  it('handles missing or removed member URLs with a way back to the directory', () => {
-    renderDirectory('/about/guardians/he-chaochao');
+  it.each([
+    ['he-chaochao', '贺超超', '/images/about/adult-support/adult-support-02.webp'],
+    ['zhuo-fei', '卓霏', '/images/about/guardians/zhuo-fei-20261014.png'],
+  ])('opens the confirmed profile at %s', (id, name, photo) => {
+    renderDirectory(`/about/guardians/${id}`);
+    expect(screen.getByRole('heading', { level: 1, name })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name })).toHaveAttribute('src', photo);
+    expect(screen.getByText('敬请期待')).toBeInTheDocument();
+  });
+
+  it('handles missing member URLs with a way back to the directory', () => {
+    renderDirectory('/about/guardians/unknown-member');
     expect(screen.getByRole('heading', { name: '未找到这位成员' })).toBeInTheDocument();
     expect(screen.queryByRole('img')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /查看全部成员/ })).toHaveAttribute('href', '/about/guardians');
