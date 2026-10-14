@@ -1,0 +1,99 @@
+{
+  "applicationCommit": "836cd70b90711425e422b62ace7f00a6c68e7d23",
+  "minimumBase": "d3675c5",
+  "includesJoinInvitationBase": "a8cb91b",
+  "deploymentId": "dpl_8pctJRcZpLFNGrRjCjyHVo3sA6Vx",
+  "deploymentUrl": "https://rgan-junior-roots-main-abmro4hp7-rganjuniors-projects.vercel.app",
+  "domain": "https://www.rganjunior.org",
+  "readyState": "READY",
+  "plan": "hobby",
+  "prebuilt": true,
+  "operatorNode": "24.19.0",
+  "databaseWrites": false,
+  "ecsAccess": false,
+  "ossChanges": false,
+  "gitPush": false,
+  "imagesMapped": 129,
+  "webpCandidates": 315,
+  "testsPassed": 331,
+  "verifiedAtUTC": "2026-10-14 16:33:50 UTC",
+  "verifiedAtShanghai": "2026-10-15 00:33:50 Asia/Shanghai",
+  "previousOfficialDeployment": "dpl_J7j8K4td3nu8YKMumUddHqVqFyZg",
+  "uploadedFiles": [
+    {
+      "path": "index.html",
+      "matchesLocal": true,
+      "bytes": 2969,
+      "sha256": "07b55e4184164bdbd919e94d763e8c5fa7a09052d4bd749cfdc42f45c589c0bc"
+    },
+    {
+      "path": "/assets/index--g2dZ7e9.js",
+      "matchesLocal": true,
+      "bytes": 737640,
+      "sha256": "362ca7863fdf25b0bf61db855e0421ca2caebee119b4d67b8346a8b70ec77a6c"
+    },
+    {
+      "path": "/assets/index-D8v9Zb3T.css",
+      "matchesLocal": true,
+      "bytes": 420281,
+      "sha256": "95cb0bb5dbf0c2e4d380b2af916ccbff695f673eadf675a4547394d299ddbe81"
+    },
+    {
+      "path": "/assets/OptimizedImage-CF2w5UnZ.js",
+      "matchesLocal": true,
+      "bytes": 35926,
+      "sha256": "633bae34da0a9f06f3bc339f94d9e49a33d1182b37532c4555ef6f76e281c9b0"
+    },
+    {
+      "path": "/assets/FieldNoteArticle-xeOPrxje.js",
+      "matchesLocal": true,
+      "bytes": 7134,
+      "sha256": "f1b719a301354530a0ea9a2ac51cf585e59a049056a76860dcb5d583da15db07"
+    },
+    {
+      "path": "/assets/FieldNotes-ColoBaAy.js",
+      "matchesLocal": true,
+      "bytes": 20390,
+      "sha256": "a4278101059591487d3e81937bc8b0e06cf5096a7d5c17a4ec8c0a2f6ce715db"
+    },
+    {
+      "path": "/assets/JoinUs-BcfrIS6t.js",
+      "matchesLocal": true,
+      "bytes": 12412,
+      "sha256": "ef2eb995555f3bd3587269fda377ebd7d843baa44180690ce92acce58da72790"
+    },
+    {
+      "path": "/assets/chengzi-512-UntSwpcs.webp",
+      "matchesLocal": true,
+      "bytes": 14700,
+      "sha256": "39a70669e54ca50be8b8dc86fe77d929cd2881220b6851fed4e2a7787939fccd"
+    },
+    {
+      "path": "/images/optimized/52a16d3d832b3b65-640.webp",
+      "matchesLocal": true,
+      "bytes": 67302,
+      "sha256": "842c2fffeba615144ed38a4b97f28642bc906d68f382fa3868849ca3c293fe24"
+    },
+    {
+      "path": "/images/optimized/d7bf3e26ae5e769a-640.webp",
+      "matchesLocal": true,
+      "bytes": 41274,
+      "sha256": "3b420e6c6c311fbc87c8fd01b5f3feb38ce7d9c4efff2640e4893ca1e731d6f3"
+    },
+    {
+      "path": "/images/optimized/17e8c722e0ed7874-640.webp",
+      "matchesLocal": true,
+      "bytes": 79184,
+      "sha256": "b35b4eabceddd3fc848277e834cecd096849ea6747fcf3fc0e0c36dcd0c28467"
+    }
+  ],
+  "browserVerification": {
+    "programWebpImagesDecoded": 5,
+    "jointInvitationPortraits": 2,
+    "jointInvitationOptimizedImages": 5,
+    "joinOrangeMarks": 3,
+    "communityStoriesLabel": true,
+    "consoleErrorsObserved": 0
+  },
+  "worktree": "/Users/hw/.codex/worktrees/webp-release/rgan-junior-roots-main"
+}
