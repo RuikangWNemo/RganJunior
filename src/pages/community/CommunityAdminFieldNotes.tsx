@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ArticleAuthorManager from '@/components/community/ArticleAuthorManager';
 import {
   CheckCircle2,
   Eye,
@@ -36,7 +38,7 @@ import {
   type FieldNoteStatus,
 } from '@/services/field-notes';
 
-type EditorialFilter = 'active' | 'submitted' | 'in_review' | 'approved' | 'published';
+type EditorialFilter = 'active' | 'draft' | 'submitted' | 'in_review' | 'approved' | 'published';
 
 function authorName(note: EditorialFieldNote) {
   const author = [...note.field_note_authors]
@@ -60,6 +62,9 @@ export default function CommunityAdminFieldNotes() {
   const canReview = permissions.includes('field_notes.review');
   const canApprove = permissions.includes('field_notes.approve');
   const canPublish = permissions.includes('field_notes.publish');
+  const canEdit = permissions.includes('field_notes.edit_any');
+  const canSubmit = canEdit && permissions.includes('field_notes.submit');
+  const canManageAuthors = canEdit && permissions.includes('people.manage');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -82,6 +87,7 @@ export default function CommunityAdminFieldNotes() {
 
   const counts = useMemo(() => ({
     active: notes.filter((note) => note.status !== 'published').length,
+    draft: notes.filter((note) => note.status === 'draft').length,
     submitted: notes.filter((note) => note.status === 'submitted').length,
     in_review: notes.filter((note) => note.status === 'in_review').length,
     approved: notes.filter((note) => note.status === 'approved').length,
@@ -120,19 +126,21 @@ export default function CommunityAdminFieldNotes() {
   };
 
   const filters: Array<{ id: EditorialFilter; label: string; count: number }> = [
-    { id: 'active', label: t('待处理', 'Active'), count: counts.active },
-    { id: 'submitted', label: t('待接审', 'Submitted'), count: counts.submitted },
+    { id: 'active', label: t('待处理', "Pending"), count: counts.active },
+    { id: 'draft', label: t('待整理草稿', "Drafts to prepare"), count: counts.draft },
+    { id: 'submitted', label: t('待接审', "Awaiting review"), count: counts.submitted },
     { id: 'in_review', label: t('审核中', 'In review'), count: counts.in_review },
-    { id: 'approved', label: t('待发布', 'Approved'), count: counts.approved },
+    { id: 'approved', label: t('待发布', "Ready to publish"), count: counts.approved },
     { id: 'published', label: t('已发布', 'Published'), count: counts.published },
   ];
 
   return (
     <CommunitySurface
       eyebrow="Editorial desk"
-      title={t('真实文章，从审核走向公开。', 'Real stories, reviewed before they go public.')}
+      title={t('真实文章，从审核走向公开。', "Real articles, reviewed before they go public.")}
       description={t('预览作者提交的原文，完成审核、批准、发布与精选。', 'Preview author submissions, then review, approve, publish, and feature them.')}
       width="wide"
+      action={canManageAuthors ? <ArticleAuthorManager notes={notes} onChanged={load} /> : undefined}
     >
       {loading ? <CommunityLoadingState label={t('正在整理投稿…', 'Gathering submissions…')} variant="list" /> : null}
       {!loading && error ? <CommunityErrorState message={error} onRetry={() => void load()} /> : null}
@@ -165,6 +173,12 @@ export default function CommunityAdminFieldNotes() {
 
                     <div className="flex flex-wrap items-center gap-2 lg:max-w-[28rem] lg:justify-end">
                       <button type="button" className="community-button community-button--secondary min-h-10" onClick={() => void openPreview(note)}><Eye className="size-4" />{t('预览原文', 'Preview')}</button>
+                      {canEdit && ['draft', 'submitted', 'in_review', 'changes_requested'].includes(note.status) ? (
+                        <Link to={`/community/stories/${note.id}/edit`} className="community-button community-button--secondary min-h-10">{t('整理文章', "Edit article")}</Link>
+                      ) : null}
+                      {canSubmit && ['draft', 'changes_requested'].includes(note.status) ? (
+                        <button type="button" disabled={busy || !note.category_id} className="community-button community-button--primary min-h-10" onClick={() => void transition(note, 'submitted', t('文章已提交审核', "Article submitted for review"))}><Send className="size-4" />{t('提交审核', 'Submit for review')}</button>
+                      ) : null}
                       {note.status === 'submitted' && canReview ? (
                         <button type="button" disabled={busy} className="community-button community-button--primary min-h-10" onClick={() => void transition(note, 'in_review', t('已开始审核', 'Review started'))}>{busy ? <Loader2 className="size-4 animate-spin" /> : <FileCheck2 className="size-4" />}{t('开始审核', 'Start review')}</button>
                       ) : null}
@@ -172,10 +186,10 @@ export default function CommunityAdminFieldNotes() {
                         <button type="button" disabled={busy} className="community-button community-button--secondary min-h-10" onClick={() => void transition(note, 'changes_requested', t('已退回作者修改', 'Changes requested'))}><RotateCcw className="size-4" />{t('退回修改', 'Request changes')}</button>
                       ) : null}
                       {note.status === 'in_review' && canApprove ? (
-                        <button type="button" disabled={busy} className="community-button community-button--primary min-h-10" onClick={() => void transition(note, 'approved', t('文章已批准', 'Story approved'))}><CheckCircle2 className="size-4" />{t('批准', 'Approve')}</button>
+                        <button type="button" disabled={busy} className="community-button community-button--primary min-h-10" onClick={() => void transition(note, 'approved', t('文章已批准', "Article approved"))}><CheckCircle2 className="size-4" />{t('批准', 'Approve')}</button>
                       ) : null}
                       {note.status === 'approved' && canPublish ? (
-                        <button type="button" disabled={busy} className="community-button community-button--primary min-h-10" onClick={() => void mutate(note, () => publishFieldNote(note.id), t('文章已公开发布', 'Story published publicly'))}><Send className="size-4" />{t('公开发布', 'Publish')}</button>
+                        <button type="button" disabled={busy} className="community-button community-button--primary min-h-10" onClick={() => void mutate(note, () => publishFieldNote(note.id), t('文章已公开发布', "Article published publicly"))}><Send className="size-4" />{t('公开发布', 'Publish')}</button>
                       ) : null}
                       {note.status === 'published' && canPublish ? (
                         <button type="button" disabled={busy} className="community-button community-button--secondary min-h-10" aria-pressed={note.featured} onClick={() => void mutate(note, () => setFieldNoteFeatured(note.id, !note.featured), note.featured ? t('已取消精选', 'Removed from featured') : t('已加入精选', 'Added to featured'))}><Star className={`size-4 ${note.featured ? 'fill-current' : ''}`} />{note.featured ? t('取消精选', 'Unfeature') : t('设为精选', 'Feature')}</button>

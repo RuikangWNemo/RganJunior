@@ -27,6 +27,8 @@ export interface FieldNote {
   cover: string;
   coverAlt: LocalizedText;
   contentHtml?: string;
+  contentHtmlEn?: string;
+  originalUrl?: string;
   plainContent?: string;
   authors: FieldNotePerson[];
   topics: FieldNoteTopic[];

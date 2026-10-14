@@ -68,5 +68,6 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "installCommand": "node -e \"require.resolve('vite'); require.resolve('esbuild')\""
 }

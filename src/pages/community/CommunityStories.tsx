@@ -59,7 +59,7 @@ function noteTags(note: ManagedFieldNote) {
 }
 
 export default function CommunityStories() {
-  const { permissions } = useAuth();
+  const { permissions, user } = useAuth();
   const { lang, t, status, formatDateTime } = useCommunityUi();
   const canManageCategories = permissions.includes('topics.manage');
   const [notes, setNotes] = useState<Awaited<ReturnType<typeof listMyFieldNotes>>>([]);
@@ -86,7 +86,7 @@ export default function CommunityStories() {
       setNotes(nextNotes);
       setCategories(nextCategories);
     } catch (readError) {
-      setError(readError instanceof Error ? readError.message : t('文章读取失败。', 'Could not load your stories.'));
+      setError(readError instanceof Error ? readError.message : t('文章读取失败。', "Could not load your articles."));
     } finally {
       setLoading(false);
     }
@@ -137,7 +137,7 @@ export default function CommunityStories() {
     try {
       if (confirming.permanent) {
         await permanentlyDeleteFieldNote(confirming.note.id);
-        toast.success(t('文章已永久删除', 'Story permanently deleted'));
+        toast.success(t('文章已永久删除', "Article permanently deleted"));
       } else {
         await archiveFieldNote(confirming.note.id);
         toast.success(t('草稿已移入回收站', 'Draft moved to Trash'));
@@ -175,39 +175,39 @@ export default function CommunityStories() {
 
   const emptyCopy = query || categoryId !== 'all'
     ? {
-      title: t('没有符合条件的文章', 'No matching stories'),
+      title: t('没有符合条件的文章', "No matching articles"),
       description: t('换一个关键词或分类试试。', 'Try another keyword or category.'),
     }
     : view === 'trash'
       ? {
         title: t('回收站是空的', 'Trash is empty'),
-        description: t('移除的草稿会暂时保存在这里。', 'Removed drafts will stay here until you delete them forever.'),
+        description: t('移除的草稿会暂时保存在这里。', "Removed drafts are temporarily stored here."),
       }
       : {
-        title: t('你的第一篇文章，从这里开始', 'Your first story starts here'),
+        title: t('你的第一篇文章，从这里开始', "Your first article starts here"),
         description: t('先保存成草稿也没关系。写下一个你不想忘记的片段。', 'A draft is enough to begin. Write down one moment you do not want to forget.'),
       };
 
   return (
     <CommunitySurface
       eyebrow="Story desk"
-      title={t('我的文章，正在成为共同记忆。', 'Your stories, becoming shared memory.')}
+      title={t('我的文章，正在成为共同记忆。', "Your articles, becoming shared memory.")}
       description={t('从草稿到发布，在这里整理每一次观察、行动与成长。', 'Shape each observation, action, and moment of growth from draft to publication.')}
       width="wide"
       action={(
         <div className="flex flex-wrap items-center gap-2">
-          <Link to="/community/stories/square" className={`${communitySecondaryButtonClass} gap-2`}><Newspaper className="size-4" />{t('文章广场', 'Story square')}</Link>
+          <Link to="/community/stories/square" className={`${communitySecondaryButtonClass} gap-2`}><Newspaper className="size-4" />{t('文章广场', "Community Articles")}</Link>
           <Link to="/community/stories/new" className={`${communityPrimaryButtonClass} gap-2`}><Plus className="size-4" />{t('写文章', 'Write')}</Link>
         </div>
       )}
     >
-      {loading ? <CommunityLoadingState label={t('正在整理你的文章…', 'Gathering your stories…')} variant="list" /> : null}
+      {loading ? <CommunityLoadingState label={t('正在整理你的文章…', "Gathering your articles…")} variant="list" /> : null}
       {!loading && error ? <CommunityErrorState message={error} onRetry={() => void load()} /> : null}
       {!loading && !error ? (
         <div className="community-story-library">
-          <section className="community-story-stats" aria-label={t('文章概览', 'Story overview')}>
+          <section className="community-story-stats" aria-label={t('文章概览', "Article overview")}>
             {[
-              { label: t('所有文章', 'All stories'), value: counts.all, icon: BookOpenText },
+              { label: t('所有文章', "All articles"), value: counts.all, icon: BookOpenText },
               { label: t('草稿', 'Drafts'), value: counts.draft, icon: FileText },
               { label: t('审核中', 'In review'), value: counts.review, icon: Clock3 },
               { label: t('已发布', 'Published'), value: counts.published, icon: Newspaper },
@@ -220,8 +220,8 @@ export default function CommunityStories() {
             ))}
           </section>
 
-          <section className="community-story-toolbar" aria-label={t('筛选文章', 'Filter stories')}>
-            <div className="community-story-tabs" role="tablist" aria-label={t('文章状态', 'Story status')}>
+          <section className="community-story-toolbar" aria-label={t('筛选文章', "Filter articles")}>
+            <div className="community-story-tabs" role="tablist" aria-label={t('文章状态', "Article status")}>
               {views.map((item) => (
                 <button key={item.id} type="button" role="tab" aria-selected={view === item.id} className={view === item.id ? 'is-active' : ''} onClick={() => setView(item.id)}>
                   {t(item.zh, item.en)}<span>{item.count}</span>
@@ -232,7 +232,7 @@ export default function CommunityStories() {
             <div className="community-story-filters">
               <label className="community-story-search">
                 <Search className="size-4" aria-hidden="true" />
-                <span className="sr-only">{t('搜索文章', 'Search stories')}</span>
+                <span className="sr-only">{t('搜索文章', "Search articles")}</span>
                 <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t('搜索标题、摘要或标签', 'Search title, summary, or tag')} />
               </label>
               <label className="community-story-select">
@@ -240,13 +240,13 @@ export default function CommunityStories() {
                 <span className="sr-only">{t('按分类筛选', 'Filter by category')}</span>
                 <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
                   <option value="all">{t('全部分类', 'All categories')}</option>
-                  {categories.map((category) => <option key={category.id} value={category.id}>{lang === 'zh' ? category.name_zh : (category.name_en || category.name_zh)}{category.is_active ? '' : ` · ${t('停用', 'Inactive')}`}</option>)}
+                  {categories.map((category) => <option key={category.id} value={category.id}>{t(category.name_zh, category.name_en || category.name_zh)}{category.is_active ? '' : ` · ${t('停用', 'Inactive')}`}</option>)}
                 </select>
                 <ChevronDown className="size-3.5" aria-hidden="true" />
               </label>
               <label className="community-story-select">
                 <Clock3 className="size-4" aria-hidden="true" />
-                <span className="sr-only">{t('文章排序', 'Sort stories')}</span>
+                <span className="sr-only">{t('文章排序', "Sort articles")}</span>
                 <select value={sort} onChange={(event) => setSort(event.target.value as StorySort)}>
                   <option value="updated_desc">{t('最近更新', 'Recently updated')}</option>
                   <option value="updated_asc">{t('最早更新', 'Oldest updated')}</option>
@@ -266,7 +266,8 @@ export default function CommunityStories() {
             <div className="community-story-list">
               {filteredNotes.map((note, index) => {
                 const tags = noteTags(note);
-                const editable = ['draft', 'changes_requested'].includes(note.status);
+                const isOwner = note.created_by === user?.id;
+                const editable = isOwner && ['draft', 'changes_requested'].includes(note.status);
                 const isTrash = note.status === 'archived';
                 return (
                   <article key={note.id} className="community-story-row">
@@ -285,39 +286,39 @@ export default function CommunityStories() {
                         <span className={`community-story-status community-story-status--${note.status}`}>{status(note.status)}</span>
                       </div>
                       <div className="community-story-row__meta">
-                        <span>{note.article_categories ? (lang === 'zh' ? note.article_categories.name_zh : (note.article_categories.name_en || note.article_categories.name_zh)) : t('未分类', 'Uncategorized')}</span>
-                        {tags.slice(0, 3).map((tag) => <span key={tag.id} className="is-tag"><Tags className="size-3" />{lang === 'zh' ? tag.name_zh : (tag.name_en || tag.name_zh)}</span>)}
+                        <span>{note.article_categories ? (t(note.article_categories.name_zh, note.article_categories.name_en || note.article_categories.name_zh)) : t('未分类', 'Uncategorized')}</span>
+                        {tags.slice(0, 3).map((tag) => <span key={tag.id} className="is-tag"><Tags className="size-3" />{t(tag.name_zh, tag.name_en || tag.name_zh)}</span>)}
                         {tags.length > 3 ? <span>+{tags.length - 3}</span> : null}
                         <time>{t('更新于', 'Updated')} {formatDateTime(note.updated_at)}</time>
                       </div>
                     </div>
                     <div className="community-story-row__actions">
-                      {isTrash ? (
+                      {isTrash && isOwner ? (
                         <button type="button" className="community-story-row__primary-action" disabled={restoringId === note.id} onClick={() => void handleRestore(note)}>
                           {restoringId === note.id ? <Loader2 className="size-4 animate-spin" /> : <ArchiveRestore className="size-4" />}{t('恢复', 'Restore')}
                         </button>
                       ) : editable ? (
                         <Link to={`/community/stories/${note.id}/edit`} className="community-story-row__primary-action">{t('继续编辑', 'Continue')}<ArrowRight className="size-4" /></Link>
                       ) : note.status === 'published' ? (
-                        <Link to={`/field-notes/${note.slug}`} className="community-story-row__primary-action">{t('查看文章', 'View story')}<ArrowRight className="size-4" /></Link>
+                        <Link to={`/field-notes/${note.slug}`} className="community-story-row__primary-action">{t('查看文章', "View article")}<ArrowRight className="size-4" /></Link>
                       ) : (
                         <Link to={`/community/stories/${note.id}/edit`} className="community-story-row__primary-action">{t('查看', 'View')}<ArrowRight className="size-4" /></Link>
                       )}
 
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button type="button" className="community-icon-button" aria-label={t('文章操作', 'Story actions')}><CircleEllipsis className="size-4" /></button>
+                          <button type="button" className="community-icon-button" aria-label={t('文章操作', "Article actions")}><CircleEllipsis className="size-4" /></button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-48 rounded-xl border-[hsl(var(--community-forest)/0.12)] bg-[#fffdf7] p-1.5">
-                          {!isTrash ? <DropdownMenuItem asChild className="rounded-lg"><Link to={`/community/stories/${note.id}/edit`}>{editable ? t('编辑文章', 'Edit story') : t('查看工作区', 'View workspace')}</Link></DropdownMenuItem> : null}
+                          {!isTrash ? <DropdownMenuItem asChild className="rounded-lg"><Link to={`/community/stories/${note.id}/edit`}>{editable ? t('编辑文章', "Edit article") : t('查看工作区', 'View workspace')}</Link></DropdownMenuItem> : null}
                           {note.status === 'published' ? <DropdownMenuItem asChild className="rounded-lg"><Link to={`/field-notes/${note.slug}`}>{t('打开公开页面', 'Open public page')}</Link></DropdownMenuItem> : null}
-                          {note.status === 'draft' ? (
+                          {note.status === 'draft' && isOwner ? (
                             <>
                               <DropdownMenuSeparator />
                               <DropdownMenuItem className="rounded-lg text-destructive focus:text-destructive" onSelect={() => setConfirming({ note, permanent: false })}><Trash2 className="mr-2 size-4" />{t('移入回收站', 'Move to Trash')}</DropdownMenuItem>
                             </>
                           ) : null}
-                          {isTrash ? (
+                          {isTrash && isOwner ? (
                             <>
                               <DropdownMenuItem className="rounded-lg" disabled={restoringId === note.id} onSelect={() => void handleRestore(note)}><ArchiveRestore className="mr-2 size-4" />{t('恢复草稿', 'Restore draft')}</DropdownMenuItem>
                               <DropdownMenuSeparator />

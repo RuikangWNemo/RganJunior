@@ -57,6 +57,7 @@ export default function FieldNoteArticle() {
   const note = noteQuery.data;
   if (!note) return <NotFound />;
 
+  const contentHtml = lang === 'en' && note.contentHtmlEn ? note.contentHtmlEn : note.contentHtml;
   const authors = note.authors;
   const topics = note.topics;
   const related = (relatedQuery.data ?? [])
@@ -128,8 +129,8 @@ export default function FieldNoteArticle() {
         </div>
 
         <div className="container mx-auto max-w-[46rem] px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          {note.contentHtml ? (
-            <div className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: note.contentHtml }} />
+          {contentHtml ? (
+            <div className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: contentHtml }} />
           ) : (
             <div className="field-note-prose whitespace-pre-wrap text-[1.0625rem] leading-[2.05] text-foreground/85">{note.plainContent}</div>
           )}
@@ -144,6 +145,9 @@ export default function FieldNoteArticle() {
             </Link>
           </div>
         </div>
+        {note.originalUrl ? <div className="container mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
+          <a href={note.originalUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-primary underline underline-offset-4">{t('阅读微信原文', 'Read the original on WeChat')}</a>
+        </div> : null}
       </article>
 
       {related.length ? (

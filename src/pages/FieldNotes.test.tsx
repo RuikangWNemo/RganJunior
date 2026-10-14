@@ -1,3 +1,4 @@
+vi.mock('@/content/voiceStories', () => ({ voiceStories: [] }));
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
@@ -85,7 +86,7 @@ describe('FieldNotes', () => {
     expect(screen.getByText(/这里只展示作者真实提交/)).toBeInTheDocument();
     expect(await screen.findAllByRole('heading', { name: '一棵树的四季' })).toHaveLength(2);
     expect(screen.queryByText(/内容样稿/)).not.toBeInTheDocument();
-    expect(listPublished).toHaveBeenCalledWith('zh', 100);
+    expect(listPublished).toHaveBeenCalledWith(undefined, 100);
   });
 
   it('searches across real article titles', async () => {

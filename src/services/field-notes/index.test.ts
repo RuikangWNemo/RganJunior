@@ -35,16 +35,20 @@ describe('field note listing boundaries', () => {
     getClient.mockReset();
   });
 
-  it('explicitly scopes My stories to the authenticated owner', async () => {
+  it('loads both created and attributed stories using IDs scoped by the database', async () => {
     const query = queryChain();
+    const rpc = vi.fn().mockResolvedValue({ data: [{ id: 11 }, { id: 22 }], error: null });
     getClient.mockReturnValue({
       auth: { getSession: vi.fn().mockResolvedValue({ data: { session: { user: { id: 'member-42' } } }, error: null }) },
+      rpc,
       from: vi.fn().mockReturnValue(query),
     });
 
     await listMyFieldNotes();
 
-    expect(query.eq).toHaveBeenCalledWith('created_by', 'member-42');
+    expect(rpc).toHaveBeenCalledWith('list_my_field_note_ids');
+    expect(query.in).toHaveBeenCalledWith('id', [11, 22]);
+    expect(query.eq).not.toHaveBeenCalledWith('created_by', expect.anything());
     expect(query.order).toHaveBeenCalledWith('updated_at', { ascending: false });
   });
 
@@ -73,8 +77,28 @@ describe('field note listing boundaries', () => {
 
     await listEditorialFieldNotes();
 
-    expect(query.in).toHaveBeenCalledWith('status', ['submitted', 'in_review', 'changes_requested', 'approved', 'published']);
+    expect(query.in).toHaveBeenCalledWith('status', ['draft', 'submitted', 'in_review', 'changes_requested', 'approved', 'published']);
     expect(query.order).toHaveBeenCalledWith('updated_at', { ascending: false });
+  });
+
+  it('does not issue an unscoped article query for an empty library', async () => {
+    const from = vi.fn();
+    getClient.mockReturnValue({
+      auth: { getSession: vi.fn().mockResolvedValue({ data: { session: { user: { id: 'member-42' } } }, error: null }) },
+      rpc: vi.fn().mockResolvedValue({ data: [], error: null }), from,
+    });
+    expect(await listMyFieldNotes()).toEqual([]);
+    expect(from).not.toHaveBeenCalled();
+  });
+
+  it('propagates authorship lookup failures without broadening the query', async () => {
+    const from = vi.fn();
+    getClient.mockReturnValue({
+      auth: { getSession: vi.fn().mockResolvedValue({ data: { session: { user: { id: 'member-42' } } }, error: null }) },
+      rpc: vi.fn().mockResolvedValue({ data: null, error: { message: 'denied', code: '42501' } }), from,
+    });
+    await expect(listMyFieldNotes()).rejects.toThrow();
+    expect(from).not.toHaveBeenCalled();
   });
 
   it('only changes featured state on a published record', async () => {
@@ -87,4 +111,14 @@ describe('field note listing boundaries', () => {
     expect(query.eq).toHaveBeenCalledWith('id', 8);
     expect(query.eq).toHaveBeenCalledWith('status', 'published');
   });
+  it('loads only public article bylines without exposing private profile fields', async () => {
+    const query = queryChain([{ id: 99, slug: 'published', status: 'published', visibility: 'public', field_note_authors: [] }]);
+    const rpc = vi.fn().mockResolvedValue({ data: [{ field_note_id: 99, person_id: 5, slug: 'orange', display_name: '橙子', nature_name: null, author_order: 0 }], error: null });
+    getClient.mockReturnValue({ from: vi.fn().mockReturnValue(query), rpc });
+    const notes = await listPublishedFieldNotes();
+    expect(rpc).toHaveBeenCalledWith('list_published_field_note_authors', { target_note_ids: [99] });
+    expect(notes[0].field_note_authors[0].people?.display_name).toBe('橙子');
+    expect(notes[0].field_note_authors[0].people).not.toHaveProperty('user_id');
+  });
+
 });

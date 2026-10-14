@@ -1,3 +1,4 @@
+import { voiceStories } from '@/content/voiceStories';
 import communityMascot from '@/assets/mascot-wide.png';
 import villageIllustration from '@/assets/village-illustration.webp';
 import { pickLocalized, type SiteLanguage } from '@/lib/brand';
@@ -67,7 +68,13 @@ async function mediaUrl(record: PublicNoteRecord): Promise<string> {
     .find(({ relation, asset }) => Boolean(asset) && (
       Number(asset?.id) === coverId || relation.usage_role === 'cover'
     ))?.asset;
-  if (!media) return villageIllustration;
+  if (!media) {
+    const original = voiceStories.find((story) => story.slug === record.slug);
+    if (original) return original.cover;
+    const photos = [...String(record.content_html || '').matchAll(/<img[^>]+src="([^"\s]+)"/g)];
+    const photo = photos.find((match) => match[1].startsWith('/stories/') && !/\.gif$/i.test(match[1]));
+    return photo?.[1] || villageIllustration;
+  }
 
   const bucket = String(media.storage_bucket ?? '');
   const path = String(media.storage_path ?? '');
@@ -139,12 +146,13 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
   const language = record.language === 'en' ? 'en' : 'zh';
   const excerpt = String(record.excerpt ?? '').trim();
   const plainText = String(record.content ?? '');
-  const publishedAt = String(record.published_at || record.updated_at || '').slice(0, 10);
+  const original = voiceStories.find((story) => story.slug === slug);
+  const publishedAt = original?.displayDate || String(record.published_at || record.updated_at || '').slice(0, 10);
 
   return {
     slug,
-    title: { zh: title, en: title },
-    excerpt: { zh: excerpt, en: excerpt },
+    title: { zh: title, en: original?.title.en || title },
+    excerpt: { zh: excerpt, en: original?.description.en || excerpt },
     authorSlugs: authors.map((author) => author.slug),
     topicSlugs: topics.map((topic) => topic.slug),
     publishedAt,
@@ -153,6 +161,8 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
     cover: await mediaUrl(record),
     coverAlt: { zh: title, en: title },
     contentHtml: await resolvedContentHtml(record),
+    contentHtmlEn: original?.bodyHtml.en,
+    originalUrl: original?.originalUrl,
     plainContent: plainText,
     authors,
     topics,
@@ -160,7 +170,7 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
 }
 
 async function databaseNotes(language?: SiteLanguage): Promise<FieldNote[]> {
-  const rows = await listPublishedFieldNotes(language, 100);
+  const rows = await listPublishedFieldNotes(undefined, 100);
   const mapped = await Promise.all(rows.map(mapDatabaseNote));
   return mapped.filter((note): note is FieldNote => Boolean(note));
 }
@@ -192,12 +202,36 @@ export function topicsFromPublishedNotes(notes: FieldNote[]): FieldNoteTopic[] {
   return [...topics.values()].sort((left, right) => left.name.zh.localeCompare(right.name.zh, 'zh-CN'));
 }
 
+
+// The invitation is already published on the site. Founder stories are now
+// managed in the database, so they never fall back after being unpublished.
+function existingProjectLetters(): FieldNote[] {
+  return voiceStories.filter((story) => story.kind === 'project-letter').map((story) => ({
+    slug: story.slug, title: story.title, excerpt: story.description,
+    authorSlugs: ['founding-team'], topicSlugs: ['project-letter'],
+    publishedAt: story.displayDate, readingMinutes: 5,
+    cover: story.cover, coverAlt: story.coverAlt,
+    contentHtml: story.bodyHtml.zh, contentHtmlEn: story.bodyHtml.en,
+    originalUrl: story.originalUrl,
+    authors: [{ slug: 'founding-team', name: story.author, identityLabel: story.kindLabel,
+      introduction: { zh: '', en: '' }, avatar: communityMascot }],
+    topics: [{ slug: 'project-letter', name: story.kindLabel, shortName: story.kindLabel,
+      description: { zh: '', en: '' } }],
+  }));
+}
+
+export function mergePublishedArticles(existing: FieldNote[], managed: FieldNote[]): FieldNote[] {
+  const bySlug = new Map(existing.map((note) => [note.slug, note]));
+  managed.forEach((note) => bySlug.set(note.slug, note));
+  return [...bySlug.values()];
+}
+
 export const fieldNotesRepository: FieldNoteRepository = {
   async listPublishedNotes(query) {
-    return filterPublishedNotes(await databaseNotes(query.language), query);
+    return filterPublishedNotes(mergePublishedArticles(existingProjectLetters(), await databaseNotes(query.language)), query);
   },
 
   async getPublishedNoteBySlug(slug) {
-    return mapDatabaseNote(await getFieldNoteBySlug(slug));
+    return (await mapDatabaseNote(await getFieldNoteBySlug(slug))) || existingProjectLetters().find((note) => note.slug === slug) || null;
   },
 };

@@ -13,10 +13,12 @@ const listCategories = vi.fn();
 const listTags = vi.fn();
 const saveMetadata = vi.fn();
 const createTag = vi.fn();
+const authPermissions: string[] = [];
 
 vi.mock('@/contexts/AuthContext', () => ({
   useAuth: () => ({
     session: { access_token: 'session-token' },
+    permissions: authPermissions,
   }),
 }));
 
@@ -96,6 +98,7 @@ function renderEditor() {
 
 describe('CommunityStoryEditor', () => {
   beforeEach(() => {
+    authPermissions.length = 0;
     window.localStorage.clear();
     window.localStorage.setItem('rgan-lang', 'zh');
     getBundle.mockReset().mockResolvedValue(bundle);
@@ -119,6 +122,17 @@ describe('CommunityStoryEditor', () => {
     expect(screen.getByRole('link', { name: '返回文章列表' })).toHaveAttribute('href', '/community/stories');
     expect(screen.getByRole('button', { name: '提交审核' })).toBeInTheDocument();
     expect(screen.getByText('所有更改已保存')).toBeInTheDocument();
+  });
+
+  it('allows an administrator to manage metadata and submit another operator’s draft', async () => {
+    authPermissions.push('field_notes.edit_any', 'field_notes.submit');
+    getBundle.mockResolvedValue({ ...bundle, access: { ...bundle.access, isOwner: false } });
+    renderEditor();
+    await screen.findByTestId('advanced-editor');
+    expect(screen.getByRole('button', { name: '提交审核' })).toBeEnabled();
+    fireEvent.click(screen.getByRole('button', { name: '提交审核' }));
+    await waitFor(() => expect(saveMetadata).toHaveBeenCalledWith(42, expect.objectContaining({ categoryId: 1 })));
+    await waitFor(() => expect(checkpoint).toHaveBeenCalledWith(expect.objectContaining({ submit: true })));
   });
 
   it('creates an explicit restorable version from the current block document', async () => {
