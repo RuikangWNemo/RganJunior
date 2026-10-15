@@ -2,12 +2,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import handler from '../../api/analytics/collect.js';
 
-const { createSecretSupabaseClient, rpc } = vi.hoisted(() => ({
+const { createSecretSupabaseClient, rpc, publicSummary } = vi.hoisted(() => ({
   createSecretSupabaseClient: vi.fn(),
   rpc: vi.fn(),
+  publicSummary: vi.fn(),
 }));
 
 vi.mock('../../api/_lib/supabase.js', () => ({ createSecretSupabaseClient }));
+vi.mock('../../api/_lib/website-visit-totals.js', () => ({ default: publicSummary }));
 
 function responseHarness() {
   let statusCode = 0;
@@ -49,6 +51,7 @@ delete (validVital as Partial<typeof validEvent>).engagedSeconds;
 describe('website analytics collection API', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    publicSummary.mockImplementation(async (_request, response) => response.status(200).json({ publicSummary: true }));
     vi.stubEnv('COMMUNITY_PUBLIC_URL', 'https://www.rganjunior.org');
     vi.stubEnv('SUPABASE_SECRET_KEY', 'server-secret');
     createSecretSupabaseClient.mockReturnValue({ rpc });
@@ -118,6 +121,23 @@ describe('website analytics collection API', () => {
     const { response, result } = responseHarness();
     await handler({ method: 'POST', headers: { 'user-agent': 'Googlebot/2.1' }, body: validEvent } as never, response);
     expect(result()).toEqual({ statusCode: 202, body: { ok: true, ignored: true } });
+    expect(createSecretSupabaseClient).not.toHaveBeenCalled();
+  });
+
+  it.each(['GET', 'POST'])('delegates summary %s requests to the read-only handler without collecting an event', async (method) => {
+    const request = { method, query: { summary: 'website-visits' }, headers: {}, body: validEvent };
+    const { response, result } = responseHarness();
+    await handler(request as never, response);
+    expect(publicSummary).toHaveBeenCalledExactlyOnceWith(request, response);
+    expect(createSecretSupabaseClient).not.toHaveBeenCalled();
+    expect(result()).toEqual({ statusCode: 200, body: { publicSummary: true } });
+  });
+
+  it('still rejects GET requests to the collection endpoint', async () => {
+    const { response, result } = responseHarness();
+    await handler({ method: 'GET', headers: {} } as never, response);
+    expect(result()).toEqual({ statusCode: 405, body: { ok: false, code: 'METHOD_NOT_ALLOWED' } });
+    expect(publicSummary).not.toHaveBeenCalled();
     expect(createSecretSupabaseClient).not.toHaveBeenCalled();
   });
 });

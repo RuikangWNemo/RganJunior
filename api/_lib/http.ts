@@ -4,6 +4,7 @@ export type ApiRequest = AsyncIterable<unknown> & {
   method?: string;
   body?: unknown;
   headers: IncomingHttpHeaders;
+  query?: Record<string, string | string[] | undefined>;
 };
 
 export type ApiResponse = {

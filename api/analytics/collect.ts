@@ -9,6 +9,7 @@ import {
   type ApiResponse,
 } from '../_lib/http.js';
 import { createSecretSupabaseClient } from '../_lib/supabase.js';
+import publicVisitTotals from '../_lib/website-visit-totals.js';
 import {
   isAnalyticsBot,
   websiteAnalyticsEventSchema,
@@ -37,6 +38,10 @@ function analyticsRateLimitHash(value: string) {
 }
 
 export default async function handler(request: ApiRequest, response: ApiResponse) {
+  // Share the existing function while keeping the public summary read-only.
+  if (request.query?.summary === 'website-visits') {
+    return publicVisitTotals(request, response);
+  }
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
     return sendJson(response, 405, { ok: false, code: 'METHOD_NOT_ALLOWED' });

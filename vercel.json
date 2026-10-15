@@ -59,6 +59,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/impact/visits",
+      "destination": "/api/analytics/collect?summary=website-visits"
+    },
+    {
       "source": "/api/join",
       "destination": "/api/action-inquiry?form=join"
     },

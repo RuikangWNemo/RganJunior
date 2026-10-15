@@ -1,5 +1,5 @@
-import { sendJson, type ApiRequest, type ApiResponse } from "../_lib/http.js";
-import { createPublicAuthSupabaseClient } from "../_lib/supabase.js";
+import { sendJson, type ApiRequest, type ApiResponse } from "./http.js";
+import { createPublicAuthSupabaseClient } from "./supabase.js";
 import { websiteVisitTotalsSchema } from "../../src/lib/websiteVisitTotals.js";
 
 export default async function handler(

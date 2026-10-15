@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import handler from "../../api/impact/visits";
+import handler from "../../api/_lib/website-visit-totals";
 const { rpc, abortSignal, createPublicAuthSupabaseClient } = vi.hoisted(() => ({
   rpc: vi.fn(),
   abortSignal: vi.fn(),

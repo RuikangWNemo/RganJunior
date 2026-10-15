@@ -1,5 +1,5 @@
 import type { Connect, Plugin } from "vite";
-import handler from "../api/impact/visits.js";
+import handler from "../api/_lib/website-visit-totals.js";
 import type { ApiRequest } from "../api/_lib/http.js";
 import { apiResponse } from "./vite-community-api";
 
