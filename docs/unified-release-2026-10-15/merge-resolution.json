@@ -1,0 +1,27 @@
+{
+  "publishedParent": "3cff9c7",
+  "reviewedLocalParent": "3cfb501",
+  "resolution": "Preserve reviewed local versions already incorporating published features; retain incoming historical design document.",
+  "resolvedFiles": [
+    "api/_lib/join-handler.js",
+    "src/App.tsx",
+    "src/components/Navbar.test.tsx",
+    "src/components/Navbar.tsx",
+    "src/components/about/ParentGuardianReel.tsx",
+    "src/components/impact/ImpactSectionNav.tsx",
+    "src/content/impact.ts",
+    "src/lib/brand.ts",
+    "src/lib/confirmedTranslations.ts",
+    "src/pages/About.test.tsx",
+    "src/pages/About.tsx",
+    "src/pages/FieldNotes.test.tsx",
+    "src/pages/FieldNotes.tsx",
+    "src/pages/GuardianDirectory.test.tsx",
+    "src/pages/GuardianDirectory.tsx",
+    "src/pages/Impact.tsx",
+    "src/pages/ImpactAwards.tsx",
+    "src/pages/JoinUs.tsx",
+    "src/pages/community/CommunitySettings.tsx",
+    "vercel.json"
+  ]
+}
