@@ -17,4 +17,11 @@ describe('approved article corrections', () => {
     expect(correctedArticleCopy('chengzi-camp-letter', old)).toBe(old.replace('2月', '1月'));
     expect(correctedArticleCopy('unreviewed-story', old)).toBe(old);
   });
+
+  it('removes duplicated text when the corrected phrase is a prefix of the original', () => {
+    const old = '<p class="bn-inline-content">如果有人和我有共同的兴趣兴趣，我们之后可以一起交流。</p>';
+    const corrected = correctedArticleCopy('tea-kitchen-and-summer', old);
+    expect(corrected).toBe(old.replace('兴趣兴趣', '兴趣'));
+    expect(correctedArticleCopy('tea-kitchen-and-summer', corrected)).toBe(corrected);
+  });
 });

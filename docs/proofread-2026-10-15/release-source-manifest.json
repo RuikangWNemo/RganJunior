@@ -3922,11 +3922,11 @@
     },
     {
       "path": "src/content/articleCorrections.test.ts",
-      "sha256": "3cacbd3f116da9ece532db6413683b537a57c6cda67a8f73996df8355b0b7080"
+      "sha256": "7a167a31988df2c15d1f592107af84b078aca550cae0cbccbf1f4858f98c34ab"
     },
     {
       "path": "src/content/articleCorrections.ts",
-      "sha256": "deb897738f8493fe722a6f076d372b93f0a8f5c487116226e3f5483c41051051"
+      "sha256": "b788135175febd7ca4ea45ae176fccfa16b8e289db00735297060fff5590290e"
     },
     {
       "path": "src/content/articleTranslations.test.ts",

@@ -3,7 +3,7 @@
 ## 范围与本机验证
 
 - 落实校对表 63 项反馈，删除加入页“与我们同行 / Walk with us”，完善中英文、移动端首页按钮、身份弹窗和双语姓名输入。
-- 修正累计访问统计的旧测试；98 个文件、375 项测试通过。前端、API、后端类型检查通过；Lint 无错误，9 条既有 Fast Refresh 警告。
+- 修正累计访问统计的旧测试；98 个文件、376 项测试通过。前端、API、后端类型检查通过；Lint 无错误，9 条既有 Fast Refresh 警告。
 - 使用 Node.js 24，在本机执行 `vercel build --prod`，12 个函数。Git 自动部署保持关闭，GitHub 只检查源码；没有 ECS 操作。
 - Vercel pull 返回空的 Supabase 公开配置；当前线上主脚本也没有连接值。沿用此前已验证发布产物中的同项目公开 URL 与 publishable key，核对项目为 `sronjswselrxewaqfcar` 后注入本机构建。未修改远端服务端密钥。成品确认包含该项目配置且不包含测试域名。
 - 源码 SHA-256 清单见 release-source-manifest.json。发布前核对源码与成品，上传时只用 `.vercel/output`。

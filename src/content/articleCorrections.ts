@@ -26,7 +26,9 @@ const corrections: Readonly<Record<string, readonly (readonly [string, string])[
 
 export function correctedArticleCopy(slug: string, value: string): string {
   return (corrections[slug] ?? []).reduce(
-    (text, [before, after]) => text.split(after).map((part) => part.split(before).join(after)).join(after),
+    (text, [before, after]) => after.includes(before)
+      ? text.split(after).map((part) => part.split(before).join(after)).join(after)
+      : text.split(before).join(after),
     value,
   );
 }
