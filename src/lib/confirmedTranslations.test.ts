@@ -10,7 +10,7 @@ describe('confirmed translations', () => {
 
   it('applies the returned review to legacy dynamic terms and preserves Chinese names', () => {
     expect(confirmedTranslation('生活体验营', 'Life Discovery Camp', 'en')).toBe('Life Immersion Camp');
-    expect(confirmedTranslation('青年共创伙伴', 'Youth Co-creator', 'en')).toBe('Co-creator');
+    expect(confirmedTranslation('青年共创伙伴', 'Youth Co-creator', 'en')).toBe('Youth Co-creator');
     expect(confirmedTranslation('家长守护团', 'Parent Guardian Circle', 'en')).toBe('Guardian Circle');
     expect(confirmedTranslation('陈若容', 'Rosie Chen', 'zh')).toBe('陈若容');
     expect(confirmedTranslation('黄若音', 'Ruby Huang', 'zh')).toBe('黄若音');

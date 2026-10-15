@@ -50,6 +50,7 @@ export type ImpactEvidence = {
   secondaryImage?: string;
   secondaryImageAlt?: LocalizedText;
   sourceLabel: LocalizedText;
+  sourceHref?: string;
 };
 
 export type ImpactSnapshot = {
@@ -83,7 +84,7 @@ export const impactSnapshot: ImpactSnapshot = {
       title: { zh: '家庭', en: 'Family' },
       description: {
         zh: '把营地与田野中的问题带回饮食、消费和陪伴等日常选择。',
-        en: 'Bring questions from camp and fieldwork into daily choices around food, consumption, and care.',
+        en: 'Bring questions from camp and fieldwork into daily choices about food, consumption, and how families spend time and support one another.',
       },
     },
     {
@@ -225,8 +226,8 @@ export const impactSnapshot: ImpactSnapshot = {
         en: "The research project on youth participation in sustainable agriculture advanced from the national forum to the CTB global forum, held in English.",
       },
       facts: [
-        { zh: '从 2,000+ 支参赛队伍中进入前 72 名', en: 'Advanced to the top 72 among more than 2,000 teams' },
-        { zh: '留有 Most Popular Project 奖牌实物记录', en: 'Physical record of a Most Popular Project medal' },
+        { zh: '从 2,000 多支队伍中晋级全球论坛的 72 支队伍之一', en: 'One of 72 teams advancing to the global forum from a field of more than 2,000 teams' },
+        { zh: '留有 Most Popular Project 奖牌照片记录', en: 'A photograph of the Most Popular Project medal is on file' },
       ],
       image: '/archive/elements/photos/academic-forum/s16-ctb-forum-team-booth.jpg',
       imageAlt: { zh: '阿柑少年团队在 CTB 青年研究创新论坛展位合影', en: "R-Gan Junior team at the CTB youth research forum booth" },
@@ -241,16 +242,19 @@ export const impactSnapshot: ImpactSnapshot = {
       date: '2024',
       title: { zh: 'YSA Journal 论文发表', en: 'YSA Journal publication' },
       summary: {
-        zh: '研究成果整理为中英文论文，讨论青少年如何参与可持续农业与乡村发展。',
-        en: "The research was written up as a paper on youth participation in sustainable agriculture and rural development, with Chinese and English abstracts.",
+        zh: '关于青少年参与可持续农业的研究论文收录于哈佛 YSA 学术特刊 CTB 英文论文集（Volume 3, 2024）。',
+        en: "The research on youth participation in sustainable agriculture was published in the Harvard YSA special issue of the CTB English conference proceedings (Volume 3, 2024).",
       },
       facts: [
-        { zh: '论文包含中英文摘要', en: 'The paper includes Chinese and English abstracts' },
+        { zh: '正式英文题名：Agan Junior Project: Research and Practice on How Adolescents can Participate in Sustainable Agriculture', en: 'Published title: Agan Junior Project: Research and Practice on How Adolescents can Participate in Sustainable Agriculture' },
+        { zh: '论文及当时的 CTB 项目使用 Agan Junior，项目现统一使用 R-Gan Junior。', en: 'The paper and the CTB project used the name Agan Junior. The project is now known as R-Gan Junior.' },
+        { zh: '本站保留论文中英文摘要内页资料', en: 'The archive includes a spread with Chinese and English abstracts' },
         { zh: '初步调研关注 11-15 岁青少年', en: 'Initial research focused on young people aged 11-15' },
       ],
       image: '/archive/elements/graphics/publications/s17-ysa-journal-spread.png',
       imageAlt: { zh: 'YSA Journal 论文中英文摘要内页', en: 'Chinese and English abstract spread from the YSA Journal paper' },
       sourceLabel: { zh: 'YSA Journal 论文资料', en: 'YSA Journal paper material' },
+      sourceHref: 'https://www.chinathinksbig.com/digital-library/project-info/10002107',
     },
     {
       id: 'claremont-eco-forum',

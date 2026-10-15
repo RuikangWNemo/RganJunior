@@ -30,7 +30,7 @@ const aboutChapters = [
   { id: 'team', zh: '我们的团队', en: 'Our Team' },
   { id: 'belief', zh: '我们相信', en: 'What We Believe' },
   { id: 'method', zh: '我们如何做', en: 'How We Work' },
-  { id: 'places', zh: '真实场域', en: "Real-World Contexts" },
+  { id: 'places', zh: '真实场域', en: "Our Learning Sites" },
 ] as const;
 
 const CHAPTER_SELECTION_LOCK_MS = 900;
@@ -54,7 +54,7 @@ const beliefs = [
   },
   {
     number: '02',
-    title: { zh: '真实世界是最深刻的课堂', en: "The Real World Teaches Us the Most" },
+    title: { zh: '真实世界是最深刻的课堂', en: "The Real World Is Our Most Powerful Classroom" },
     imageSrc: '/images/about/belief-real-world-tea-harvest.webp',
     imageAlt: { zh: '青少年完成采茶实践后在茶厂合影', en: 'Young people gathering at a tea factory after harvesting tea' },
     prompt: {
@@ -106,7 +106,7 @@ const methods = [
   {
     number: '02',
     title: { zh: '真实社区', en: 'Real Community' },
-    examples: { zh: '铁牛村、麦昆塔社区、生态阿柑与社区伙伴', en: "Tieniu Village, Mykunda Community, ecological tangerine, and community members" },
+    examples: { zh: '铁牛村、麦昆塔社区、生态阿柑与社区伙伴', en: "Tieniu Village, Mykunda Community, ecological tangerines, and community members" },
     body: {
       zh: '孩子走进正在发生的乡村生活，看见食物、土地、产业和人之间的真实连接。',
       en: 'Young people enter village life as it unfolds and see the real connections among food, land, livelihoods, and people.',
@@ -148,7 +148,7 @@ const places = [
     },
     body: {
       zh: '这里是丘陵乡村，柑橘是主要农业产业。孩子们走进果园、农场、厨房、书房和社区日常，理解食物、土地、家庭消费、生态农业和真实生活之间的关系。',
-      en: "Citrus farming is the main agricultural industry in this hilly village. Young people spend time in orchards, farms, kitchens, reading rooms, and community life to understand how food, land, household consumption, ecological agriculture, and everyday life are connected.",
+      en: "Citrus farming is the main agricultural industry in this hilly village, home to linpan settlements—traditional rural homesteads surrounded by trees in the Chengdu Plain. Young people spend time in orchards, farms, kitchens, reading rooms, and community life to understand how food, land, household consumption, ecological agriculture, and everyday life are connected.",
     },
     keywords: {
       zh: ['社区生活', '生态柑橘', '共同做饭', '田野观察', '公共议题'],
@@ -172,7 +172,7 @@ const places = [
     subtitle: { zh: '在森林和茶山中，重新打开身体与感受', en: "Reconnect with your body and senses in forests and tea-growing hills" },
     location: {
       zh: '龙门山脉 · 距离铁牛村约 1.5 小时车程',
-      en: 'Longmen Mountains · About 1.5 hours from Tieniu Village',
+      en: 'Longmen Mountains · About a 1.5-hour drive from Tieniu Village',
     },
     body: {
       zh: '这是离社区最近的森林生态场域，也是麦昆塔社区的有机茶种植与生产基地之一。孩子们在这里徒步、采茶、制茶、夜茶，在山野中慢下来，重新感受空气、植物、身体和土地。',
@@ -180,7 +180,7 @@ const places = [
     },
     keywords: {
       zh: ['森林徒步', '有机茶', '采茶制茶', '自然观察', '身体打开'],
-      en: ['Forest hiking', 'Organic tea', "Tea picking and processing", 'Nature observation', 'Embodied awareness'],
+      en: ['Forest hiking', 'Organic tea', "Tea picking and processing", 'Nature observation', 'Reconnect with Your Body'],
     },
     image: {
       src: '/images/about/nanbaoshan-cloud-forest.webp',
@@ -200,7 +200,7 @@ const places = [
     subtitle: { zh: '看见茶、森林与山地社区的连接', en: 'See how tea, forest, and mountain communities connect' },
     location: {
       zh: '泸州古蔺县 · 距离铁牛村约 5 小时车程',
-      en: 'Gulin County, Luzhou · About 5 hours from Tieniu Village',
+      en: 'Gulin County, Luzhou · About a 5-hour drive from Tieniu Village',
     },
     body: {
       zh: '周边连接黄荆老林自然保护区，也是麦昆塔社区的有机茶生产基地之一。这里提供更深入的山地生态与茶生活体验，让孩子看见一片茶园如何与森林、村落、自然保护和日常生活发生关系。',
@@ -362,7 +362,7 @@ export default function About() {
                 title={t('我们的团队', 'Our Team')}
                 intro={t(
                   '阿柑少年由 Nate 发起，在麦昆塔社区的支持下，和一群来自不同城市、拥有不同兴趣的青少年伙伴共同生长。我们希望青少年不只是活动的参与者，也能在真实项目中学习设计、组织、记录、表达和行动。',
-                  "Founded by Nate with support from Mykunda Community, R-Gan Junior develops together with young people from different cities and with different interests. They learn to design, organize, document, express ideas, and take action through real projects, as well as participating in activities.",
+                  "Founded by Nate with support from Mykunda Community, R-Gan Junior develops together with young people from different cities and with different interests. We hope young people will do more than take part in activities: through real projects, they can learn to design, organize, document, express ideas, and take action.",
                 )}
               />
 
@@ -504,7 +504,7 @@ export default function About() {
           <div className="about-v2-shell">
             <ChapterHeader
               index="2.3"
-              eyebrow={t('四个真实', 'Four Realities')}
+              eyebrow={t('四个真实', 'Four Elements of Real-World Learning')}
               title={t('我们如何做', 'How We Work')}
               intro={t(
                 '阿柑少年把成长放回真实生活中。孩子们在生活里感受，在社区里观察，在议题中思考，也在行动中学习承担。',
@@ -553,10 +553,10 @@ export default function About() {
             <ChapterHeader
               index="2.4"
               eyebrow={t('一座社区大本营，三片生态试验田', 'One Community Home Base, Three Ecological Field Sites')}
-              title={t('我们的真实场域', "Our Real-World Contexts")}
+              title={t('我们的真实场域', "Our Learning Sites")}
               intro={t(
                 '阿柑少年的成长，扎根于麦昆塔社区长期生活与产业实践形成的真实场域。',
-                "R-Gan Junior’s growth is rooted in the Real-World Contexts shaped by Mykunda Community’s years of shared living and work in local industries.",
+                "R-Gan Junior’s growth is rooted in the learning sites shaped by Mykunda Community’s years of shared living and work in local industries.",
               )}
             />
 

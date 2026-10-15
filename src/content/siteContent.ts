@@ -64,7 +64,7 @@ export const siteBeliefs: BeliefContent[] = [
   {
     title: {
       zh: '真实世界是最深刻的课堂',
-      en: "The real world is life’s most profound classroom.",
+      en: "The Real World Is Our Most Powerful Classroom",
     },
     description: {
       zh: '知识不只停留在书本里，而要回到土地、家庭、消费、社区和真实问题中被验证。',
@@ -272,7 +272,7 @@ export const actionLayers: ActionLayerContent[] = [
 
 export const impactProof = [
   {
-    value: 'Top 3.6%',
+    value: '72 / 2,000+',
     label: {
       zh: 'CTB 全球青年研究创新论坛',
       en: "CTB Global Youth Research and Innovation Forum",
@@ -315,11 +315,11 @@ export const joinAudiences: JoinAudienceContent[] = [
         label: { zh: '山野', en: "Mountains and Nature" },
         value: {
           zh: '在自然中恢复感受力和身体里的稳定感。',
-          en: "Reconnect with your senses and regain a sense of physical steadiness in nature.",
+          en: "Reconnect with your senses and feel grounded in your body through time in nature.",
         },
       },
       {
-        label: { zh: '田野', en: 'Field' },
+        label: { zh: '田野', en: 'Fields and Countryside' },
         value: {
           zh: '进入真实社区，用研究理解复杂问题。',
           en: 'Enter real communities and use research to understand complex problems.',
@@ -344,14 +344,14 @@ export const joinAudiences: JoinAudienceContent[] = [
     heading: { zh: '加入守护团', en: 'Join the Guardian Circle' },
     intro: {
       zh: '如果你愿意以家长、陪伴者或支持者的身份，陪伴青少年在真实世界中成长，欢迎了解我们的路径、节奏与支持方式。',
-      en: "If you would like to support young people as a parent, companion, or community supporter, explore our programs, their pace, and the ways you can help.",
+      en: "If you would like to support young people as they grow through real-world experiences—as a parent, mentor, or community supporter—explore our approach, pace, and ways to get involved.",
     },
     rows: [
       {
         label: { zh: '环境', en: 'Setting' },
         value: {
           zh: '真实社区、小规模同行和清晰边界。',
-          en: "A real community, a small peer group, and clear boundaries.",
+          en: "A real community, a small group learning and taking action together, and clear boundaries.",
         },
       },
       {

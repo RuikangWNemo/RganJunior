@@ -31,7 +31,7 @@ export const coCreationDirections = [
     title: { zh: '生活体验设计', en: 'Life Experience Design' },
     body: {
       zh: '参与食物、茶、运动、空间、低碳生活和游戏化任务设计，让真实生活更有秩序、更有美感，也更容易参与。',
-      en: 'Design experiences around food, tea, movement, space, low-carbon living, and playful missions so everyday life becomes more ordered, beautiful, and inviting.',
+      en: 'Design experiences around food, tea, movement, space, low-carbon living, and fun activities so everyday life becomes more ordered, beautiful, and inviting.',
     },
   },
 ] as const;

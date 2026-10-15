@@ -29,7 +29,7 @@ describe('JoinUs', () => {
     const primaryJoinLink = screen.getByRole('link', { name: '立即加入' });
 
     expect(screen.getByRole('heading', { name: '成为阿柑少年' })).toBeInTheDocument();
-    expect(screen.getByText('与我们同行')).toBeInTheDocument();
+    expect(screen.queryByText('与我们同行')).not.toBeInTheDocument();
     expect(primaryJoinLink).toHaveAttribute('href', '/join/apply');
     expect(container.querySelector('#join-community')).toContainElement(primaryJoinLink);
     expect(container.querySelector('.join-editorial-cover')).not.toContainElement(primaryJoinLink);

@@ -53,10 +53,10 @@ const stages: MapStage[] = [
     id: 'chengdu',
     label: { zh: '成都平原', en: 'Chengdu Plain' },
     place: { zh: '四川 · 成都', en: 'Sichuan · Chengdu' },
-    title: { zh: '从成都平原向西南，进入蒲江的林盘乡村。', en: 'Southwest of Chengdu, the landscape opens into Pujiang\'s Linpan villages.' },
+    title: { zh: '从成都平原向西南，进入蒲江的林盘乡村。', en: 'Southwest of Chengdu, the landscape opens into Pujiang\'s linpan villages.' },
     body: {
       zh: '铁牛村位于成都蒲江县西来镇。这里的院落、林地、水体和果园，共同组成川西林盘的生活生态。',
-      en: "Tieniu Village is in Xilai Town, Pujiang County, Chengdu. Its courtyards, woodlands, water, and orchards form a Linpan landscape—a traditional rural settlement landscape of western Sichuan.",
+      en: "Tieniu Village is in Xilai Town, Pujiang County, Chengdu. Its courtyards, woodlands, water, and orchards form a linpan landscape—a traditional rural settlement landscape of western Sichuan.",
     },
     center: [103.72, 30.42],
     zoom: 8.8,
@@ -80,7 +80,7 @@ const stages: MapStage[] = [
     title: { zh: '阿柑少年从一片正在修复的土地中生长出来。', en: "R-Gan Junior grew out of the restoration of this land." },
     body: {
       zh: '果园、鱼塘、林盘、新老村民和城市家庭在这里相遇。少年由此理解食物、劳动、生态与社区之间真实的关系。',
-      en: "Here, orchards, fishponds, and Linpan landscapes are part of the lives of longtime villagers, newcomers, and urban families. Young people learn how food, work, ecology, and community are connected.",
+      en: "Here, orchards, fishponds, and linpan landscapes are part of the lives of longtime villagers, newcomers, and urban families. Young people learn how food, work, ecology, and community are connected.",
     },
     center: TIENIU_CENTER,
     zoom: 17.1,

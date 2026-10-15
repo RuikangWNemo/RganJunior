@@ -368,7 +368,7 @@ export const participants: readonly Participant[] = [
     "height": 612,
     "name": {
       "zh": "王睿康",
-      "en": "Wang Ruikang"
+      "en": "Ruikang Wang"
     },
     "natureName": {
       "zh": "澜生",

@@ -6,13 +6,13 @@ const confirmedEnglish: Readonly<Record<string, string>> = {
   '阿柑少年圈': 'R-Gan Junior Circle',
   '阿柑青年': 'R-Gan Youth',
   '丑美阿柑': 'Or-Life R-Gan',
-  '生态阿柑': 'ecological tangerine',
+  '生态阿柑': 'ecological tangerines',
   '麦昆塔': 'Mykunda',
   '麦昆塔社区': 'Mykunda Community',
   '整全生命成长': 'Holistic Life Growth',
   '身心修复': 'Restoring Physical and Emotional Well-Being',
-  '内在生态': 'Inner Ecology',
-  '真实场域': 'Real-World Contexts',
+  '内在生态': 'inner ecology',
+  '真实场域': 'Our Learning Sites',
   '共练': 'Shared Practice',
   '生态农业': 'Ecological Agriculture',
   '再生农业': 'Regenerative Agriculture',
@@ -25,8 +25,10 @@ const confirmedEnglish: Readonly<Record<string, string>> = {
   '张天时': 'Tianshi Zhang',
   '发起人': 'Founder',
   '阿柑少年发起人': 'Founder of R-Gan Junior',
-  '共创伙伴': 'Co-creator',
-  '青年共创伙伴': 'Co-creator',
+  '共创伙伴': 'Partner',
+  '青年共创伙伴': 'Youth Co-creator',
+  '少年共创者': 'Youth Co-creator',
+  '合作伙伴': 'Partner',
   '青少年共创伙伴': 'Co-creators',
   '参与者': 'Participant',
   '正式成员': 'Member',
@@ -53,7 +55,7 @@ const confirmedEnglish: Readonly<Record<string, string>> = {
   '参与阿柑少年的活动、共练与社群生活。': 'Takes part in R-Gan Junior activities, Shared Practice, and community life.',
   '阿柑少年参与者的家长': 'A parent of an R-Gan Junior participant',
   '长期参与和支持项目的伙伴': 'A community member who contributes to and supports the program over time',
-  '支持青少年行动，并连接阿柑少年圈与家长守护团。': 'Supports young people’s activities and connects R-Gan Junior with the Guardian Circle.',
+  '支持青少年行动，并连接阿柑少年圈与家长守护团。': 'Supports young people’s activities and connects the youth community with the parent Guardian Circle.',
   '共同开展项目的合作者': 'A collaborator who works with others on projects',
   '以家庭经验、陪伴与共同守护支持社群成长。': 'Supports community growth through family experience, care, and shared responsibility.',
   '提供专业陪伴与指导的导师': 'A mentor who provides professional guidance and support',
@@ -67,6 +69,8 @@ const confirmedEnglish: Readonly<Record<string, string>> = {
 
 export function confirmedTranslation(zh: string, en: string, language: 'zh' | 'en'): string {
   if (language === 'zh') {
+    if (zh === '青年共创伙伴') return '少年共创者';
+    if (zh === '共创伙伴') return '合作伙伴';
     if (zh === '家长守护团') return '守护团';
     if (zh === '成人支持团队') return '社群支持';
     return zh;

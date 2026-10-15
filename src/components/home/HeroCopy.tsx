@@ -14,7 +14,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
   const brandName = pickLocalized(BRAND.name, lang);
   const subtitle = t(
     '回归自然、生活与真实世界，长出内在的力量',
-    'Return to nature, everyday life, and the real world, and grow strength from within.',
+    'Return to nature, everyday life, and the real world. Build inner strength.',
   );
 
   return (
@@ -47,7 +47,7 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
       >
         {t(
           '一个从铁牛村长出来的青少年真实生活与公共行动计划。我们通过自然、食物、茶、运动、社群共创和可持续生活实践，陪伴青少年连接自己、他人、土地和未来。',
-          "A real-life and public action program developed in Tieniu Village for young people. Through nature, food, tea, physical activity, community co-creation, and sustainable living practices, we support young people in connecting with themselves, others, the land, and the future.",
+          "A program rooted in Tieniu Village for young people to learn through everyday experiences and take action in their communities. Through nature, food, tea, physical activity, community co-creation, and sustainable living practices, we support young people in connecting with themselves, others, the land, and the future.",
         )}
       </p>
 
@@ -67,9 +67,9 @@ export default function HeroCopy({ onJoin }: HeroCopyProps) {
 
         <Button
           onClick={onJoin}
-          className="home-hero-button home-hero-button--primary btn-apple cursor-target w-full sm:w-auto"
+          className="home-hero-button home-hero-button--primary btn-apple cursor-target h-auto w-full whitespace-normal sm:w-auto"
         >
-          {t('加入下一期', 'Join the next camp')}
+          <span className="min-w-0 text-balance">{t('登记下一期意向', 'Register Interest in the Next Camp')}</span>
           <ArrowRight className="ml-2" size={18} />
         </Button>
       </div>

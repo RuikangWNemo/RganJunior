@@ -51,7 +51,7 @@ export const homeBeliefs: HomeBelief[] = [
   },
   {
     number: '02',
-    title: text('真实世界是最深刻的课堂', "The real world is life’s most profound classroom."),
+    title: text('真实世界是最深刻的课堂', "The Real World Is Our Most Powerful Classroom"),
     body: text(
       '在食物、茶、运动、劳动和社区中，让知识回到真实生活里。',
       "Through food, tea, physical activity, hands-on work, and community life, we connect knowledge with everyday experience.",

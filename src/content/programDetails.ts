@@ -118,7 +118,7 @@ export const actionGroupRhythm: ProgramRhythmItem[] = [
     title: text('分享与再相遇', 'Share and meet again'),
     body: text(
       '在线上整理和分享实践，也为下一次线下共创找到共同关心的问题。',
-      'Reflect and share online, then identify a shared question for the next in-person co-creation.',
+      'Reflect and share online, then identify a shared question for the next in-person co-creation activity.',
     ),
   },
 ];
@@ -163,7 +163,7 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('安全、医疗和保险如何安排？', 'How are safety, medical support, and insurance handled?'),
-      answer: text('每期活动会根据路线和内容制定照护方案，并在开放报名时说明附近医疗配套、活动保险、人员配置和紧急联系流程。', 'Each session has a care plan based on its route and activities. Nearby medical support, insurance, staffing, and emergency contacts are explained when registration opens.'),
+      answer: text('每期活动会根据路线和内容制定照护方案，并在开放报名时说明附近医疗配套、活动保险、人员配置和紧急联系流程。', 'Each session has a care plan based on its route and activities. When registration opens, we will inform participants regarding nearby medical services, activity insurance, staffing, and emergency contact procedures.'),
     },
     {
       question: text('费用如何确定？', 'How are fees determined?'),
@@ -193,7 +193,7 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('安全、医疗和保险如何安排？', 'How are safety, medical support, and insurance handled?'),
-      answer: text('每期活动会根据路线和内容制定照护方案，并说明附近医疗配套、活动保险、人员配置、住宿管理和紧急联系流程。', 'Each session has a care plan covering nearby medical support, insurance, staffing, accommodation management, and emergency contacts.'),
+      answer: text('每期活动会根据路线和内容制定照护方案，并说明附近医疗配套、活动保险、人员配置、住宿管理和紧急联系流程。', 'Each camp has a care plan tailored to its route and activities, covering nearby medical services, activity insurance, staffing, accommodation management, and emergency contact procedures.'),
     },
     {
       question: text('费用和行前准备如何确认？', 'How are fees and preparation confirmed?'),
@@ -232,7 +232,7 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
   ],
   'public-projects': [
     {
-      question: text('谁可以参与公共议题项目？', 'Who can join a public-issues project?'),
+      question: text('谁可以参与青少年研究计划？', 'Who can join the R-Gan Junior Research Program?'),
       answer: text('参与条件会根据议题、研究方法和合作周期确定。青少年、家庭伙伴和相关领域协作者都可能成为项目成员。', "Participation requirements depend on the topic, research methods, and project duration. Young people, family members, and collaborators with relevant expertise may all take part."),
     },
     {
@@ -245,7 +245,7 @@ export const programFaqs: Record<ActionProgramId, ProgramFaqItem[]> = {
     },
     {
       question: text('通常需要投入多长时间？', 'How much time does a project require?'),
-      answer: text('公共议题项目以持续研究为主，不预设统一周期。每个项目会在启动时说明阶段目标、协作节奏和预计投入。', "Public-issue projects focus on sustained research and do not have a uniform duration. At the start, each project sets out its stage goals, collaboration schedule, and expected time commitment."),
+      answer: text('青少年研究计划以持续研究为主，不预设统一周期。每个项目会在启动时说明阶段目标、协作节奏和预计投入。', "These research projects focus on sustained research and do not have a uniform duration. At the start, each project sets out its stage goals, collaboration schedule, and expected time commitment."),
     },
     {
       question: text('项目会形成哪些成果？', 'What outcomes can a project produce?'),

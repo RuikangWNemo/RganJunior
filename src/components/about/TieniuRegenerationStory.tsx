@@ -20,7 +20,7 @@ const repairPractices = [
     },
     body: {
       zh: '乔木、果树、地被、水体和动物重新建立关系，让林盘不只是一片果园。',
-      en: "Trees, fruit trees, ground-cover plants, water, and animals become connected again, making the Linpan landscape more than an orchard.",
+      en: "Trees, fruit trees, ground-cover plants, water, and animals become connected again, making the linpan landscape more than an orchard.",
     },
   },
   {
@@ -39,7 +39,7 @@ const landScales = [
   {
     value: '9',
     unit: { zh: '亩', en: 'mu' },
-    label: { zh: '一个林盘修复样本', en: "a Linpan restoration site (0.6 hectares)" },
+    label: { zh: '一个林盘修复样本', en: "a linpan restoration site (0.6 hectares)" },
   },
   {
     value: '40',
@@ -116,7 +116,7 @@ export default function TieniuRegenerationStory() {
         <figure className="about-land-repair__diagram">
           <OptimizedImage
             src="/archive/elements/graphics/infographics/s05-linpan-biodiversity-restoration-diagram.png"
-            alt={t('林盘生物多样性修复前后示意图', 'Diagram comparing Linpan biodiversity before and after restoration')}
+            alt={t('林盘生物多样性修复前后示意图', 'Diagram comparing linpan biodiversity before and after restoration')}
             loading="lazy"
           />
           <figcaption>

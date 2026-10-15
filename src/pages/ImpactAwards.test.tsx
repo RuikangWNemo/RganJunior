@@ -33,8 +33,8 @@ describe('ImpactAwards', () => {
     expect(await screen.findByRole('heading', { name: 'CTB 全球青年研究创新论坛' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'YSA Journal 论文发表' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '克莱蒙生态文明国际论坛' })).toBeInTheDocument();
-    expect(screen.getByText('从 2,000+ 支参赛队伍中进入前 72 名')).toBeInTheDocument();
-    expect(screen.getByText('留有 Most Popular Project 奖牌实物记录')).toBeInTheDocument();
+    expect(screen.getByText('从 2,000 多支队伍中晋级全球论坛的 72 支队伍之一')).toBeInTheDocument();
+    expect(screen.getByText('留有 Most Popular Project 奖牌照片记录')).toBeInTheDocument();
     expect(screen.queryByText(/3.6%/)).not.toBeInTheDocument();
     expect(document.getElementById('ctb-global-forum')).toHaveTextContent('CTB 全球青年研究创新论坛');
     expect(document.getElementById('ysa-journal')).toHaveTextContent('YSA Journal 论文发表');

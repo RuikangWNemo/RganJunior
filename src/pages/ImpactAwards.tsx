@@ -112,7 +112,11 @@ export default function ImpactAwards() {
               </ul>
               <p className="impact-meta">
                 {t("资料来源：", "Source: ")}
-                {pickLocalized(item.sourceLabel, lang)}
+                {item.sourceHref ? (
+                  <a className="underline underline-offset-4" href={item.sourceHref} target="_blank" rel="noreferrer">
+                    {pickLocalized(item.sourceLabel, lang)}
+                  </a>
+                ) : pickLocalized(item.sourceLabel, lang)}
               </p>
             </div>
           </div>

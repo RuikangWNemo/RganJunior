@@ -52,7 +52,7 @@ const storyMoments: StoryMoment[] = [
   {
     date: '2023 — 2024',
     phase: text('阿柑少年 2.0', "R-Gan Junior 2.0"),
-    title: text('从一个想法，变成一次行动', 'An idea becomes a real action'),
+    title: text('从一个想法，变成一次行动', 'Turning an Idea into Action'),
     body: text(
       '进入高中后，Nate 邀请同学重新发起项目。他们走进果园做调研，办柑甜采摘节，也把关于青少年与可持续农业的研究带到 CTB 全球论坛。',
       'In high school, Nate invited classmates to restart the project. They researched in the orchards, organized a citrus harvest festival, and brought their work on youth and sustainable agriculture to the CTB Global Forum.',
@@ -68,7 +68,7 @@ const storyMoments: StoryMoment[] = [
     title: text('从热闹之后，回到更深的生活', 'After the excitement, a deeper way of living'),
     body: text(
       '一次活动不会自动带来改变。Nate 开始学习做饭、照顾四棵柑橘树，也和同学研究城市家庭如何选择生态产品；在行为经济学社团与 John Locke 论文写作中，他逐渐确认了对公共政策的兴趣。',
-      "One activity does not automatically bring change. Nate began learning to cook, caring for four citrus trees, and researching with classmates how urban families choose ecologically grown products. Through his Behavioral Economics Study Group and John Locke essay writing, he became more certain of his interest in public policy.",
+      "One activity does not automatically bring change. Nate began learning to cook, caring for four citrus trees, and researching with classmates how urban families choose ecologically grown products. Through his Behavioral Economics Club and John Locke essay writing, he became more certain of his interest in public policy.",
     ),
     image: '/stories/it-takes-a-village/images/image-023.webp',
     imageAlt: text('Nate 与行为经济学学习社团的同学讨论', 'Nate discussing ideas with his behavioral economics study group'),
@@ -208,7 +208,7 @@ export default function FounderStory() {
               <p className="founder-story-eyebrow">{t('一路走来', 'THE JOURNEY')}</p>
               <h2
                 id="founder-story-timeline"
-                aria-label={t('一个想法，怎样在生活里慢慢长大', 'How an idea slowly grew through life')}
+                aria-label={t('一个想法，怎样在生活里慢慢长大', 'How an idea slowly grew through everyday life')}
               >
                 {lang === 'zh' ? (
                   <>
@@ -216,7 +216,7 @@ export default function FounderStory() {
                     <span className="founder-story-copy-line">怎样在生活里慢慢长大</span>
                   </>
                 ) : (
-                  'How an idea slowly grew through life'
+                  'How an idea slowly grew through everyday life'
                 )}
               </h2>
             </Reveal>

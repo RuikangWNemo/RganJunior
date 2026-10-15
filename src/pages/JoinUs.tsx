@@ -367,9 +367,6 @@ export default function JoinUs() {
             <h1 id="join-editorial-title" className="join-editorial-cover__title">
               {t('成为阿柑少年', "Join R-Gan Junior")}
             </h1>
-            <p className="join-editorial-cover__subtitle">
-              {t('与我们同行', 'Walk with us')}
-            </p>
           </div>
         </motion.div>
 
@@ -538,7 +535,11 @@ export default function JoinUs() {
                   onBlur={() => setPreviewId(null)}
                   aria-label={t(
                     `了解${pickLocalized(content.trigger, 'zh')}`,
-                    `Learn about ${pickLocalized(content.trigger, 'en')}`
+                    identity.id === 'join-youth'
+                      ? 'Learn about joining R-Gan Junior'
+                      : identity.id === 'join-parents'
+                        ? 'Learn about joining the Guardian Circle'
+                        : 'Learn about becoming a partner'
                   )}
                   data-selected={isSelected}
                   data-previewed={isPreviewed}
@@ -594,6 +595,7 @@ export default function JoinUs() {
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent
+          closeLabel={t('关闭', 'Close')}
           overlayClassName="join-role-folio-overlay"
           className="join-role-folio overflow-y-auto border-0 bg-background p-0 shadow-2xl outline-none"
         >

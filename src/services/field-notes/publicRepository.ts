@@ -1,6 +1,7 @@
 import { articleTranslations, articleAuthorNames } from '@/content/articleTranslations';
 import { articleAuthorPortraits } from '@/content/articleAuthorPortraits';
 import { voiceStories } from '@/content/voiceStories';
+import { correctedArticleCopy } from '@/content/articleCorrections';
 import communityMascot from '@/assets/mascot-wide.png';
 import villageIllustration from '@/assets/village-illustration.webp';
 import { pickLocalized, type SiteLanguage } from '@/lib/brand';
@@ -154,7 +155,7 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
 
   return {
     slug,
-    title: { zh: title, en: translated?.title || original?.title.en || title },
+    title: { zh: correctedArticleCopy(slug, title), en: translated?.title || original?.title.en || title },
     excerpt: { zh: translated?.excerptZh || excerpt, en: translated?.excerpt || original?.description.en || excerpt },
     authorSlugs: authors.map((author) => author.slug),
     topicSlugs: topics.map((topic) => topic.slug),
@@ -162,8 +163,8 @@ async function mapDatabaseNote(value: unknown): Promise<FieldNote | null> {
     readingMinutes: Math.max(1, Math.ceil((language === 'zh' ? plainText.length : plainText.split(/\s+/).length) / (language === 'zh' ? 420 : 220))),
     featuredRank: record.featured === true ? 1 : undefined,
     cover: await mediaUrl(record),
-    coverAlt: { zh: title, en: translated?.title || original?.coverAlt.en || title },
-    contentHtml: await resolvedContentHtml(record),
+    coverAlt: { zh: correctedArticleCopy(slug, title), en: translated?.title || original?.coverAlt.en || title },
+    contentHtml: correctedArticleCopy(slug, await resolvedContentHtml(record)),
     contentHtmlEn: translated?.html || original?.bodyHtml.en,
     originalUrl: original?.originalUrl,
     plainContent: plainText,

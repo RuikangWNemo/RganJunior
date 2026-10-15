@@ -24,9 +24,13 @@ export default function CommunityOnboarding() {
   const change = (key: keyof typeof form, value: string | boolean) => setForm((current) => ({ ...current, [key]: value }));
   const submit = async (event: FormEvent) => {
     event.preventDefault();
+    if (!form.nameZh.trim() || !form.nameEn.trim()) {
+      setError(t('请填写中文名和英文名，方便伙伴在两种语言中认识同一个你。', 'Enter both your Chinese and English names so people can recognize you in either language.'));
+      return;
+    }
     setBusy(true); setError(null);
     try {
-      await completeCommunityOnboarding({ ...form, language: lang, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai' });
+      await completeCommunityOnboarding({ ...form, nameZh: form.nameZh.trim(), nameEn: form.nameEn.trim(), language: lang, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai' });
       await refreshCommunity();
       navigate('/community/enter', { replace: true });
     } catch (submitError) {
@@ -48,8 +52,9 @@ export default function CommunityOnboarding() {
         <form className="grid gap-5 sm:grid-cols-2" onSubmit={submit}>
           <label className={labelClass}><span>{t('用户名 *', 'Username *')}</span><input className={communityInputClass} value={form.username} onChange={(event) => change('username', event.target.value)} pattern="[A-Za-z0-9][A-Za-z0-9_-]{2,31}" autoComplete="username" required /></label>
           <label className={labelClass}><span>{t('主页显示名 *', 'Display name *')}</span><input className={communityInputClass} value={form.displayName} onChange={(event) => change('displayName', event.target.value)} required /></label>
-          <label className={labelClass}><span>{t('中文名', 'Chinese name')}</span><input className={communityInputClass} value={form.nameZh} onChange={(event) => change('nameZh', event.target.value)} /></label>
-          <label className={labelClass}><span>{t('英文名', 'English name')}</span><input className={communityInputClass} value={form.nameEn} onChange={(event) => change('nameEn', event.target.value)} /></label>
+          <label className={labelClass}><span>{t('中文名 *', 'Chinese name *')}</span><input className={communityInputClass} value={form.nameZh} onChange={(event) => change('nameZh', event.target.value)} required aria-describedby="bilingual-name-help" /></label>
+          <label className={labelClass}><span>{t('英文名 *', 'English name *')}</span><input className={communityInputClass} value={form.nameEn} onChange={(event) => change('nameEn', event.target.value)} required aria-describedby="bilingual-name-help" /></label>
+          <p id="bilingual-name-help" className="text-sm leading-6 text-muted-foreground sm:col-span-2">{t('请填写你希望使用的中文名和英文名。英文名也可以用拼音，按名在前、姓在后的顺序填写；两项称呼应对应同一个人。是否公开仍由你选择。', 'Enter the Chinese and English names you use. You may use pinyin for your English name, with your given name before your family name. Both names should identify the same person. You still choose whether to display them.')}</p>
           <label className={`${labelClass} sm:col-span-2`}><span>{t('自然名', "Nature name (a nickname inspired by nature)")}</span><input className={communityInputClass} value={form.natureName} onChange={(event) => change('natureName', event.target.value)} placeholder={t('例如：青苔、山风、小树', 'For example: Moss, Mountain Wind, Little Tree')} /></label>
           <label className={`${labelClass} sm:col-span-2`}><span>{t('简介', 'Bio')}</span><textarea className={communityTextareaClass} value={form.bio} onChange={(event) => change('bio', event.target.value)} /></label>
           <label className={labelClass}><span>{t('城市', 'City')}</span><input className={communityInputClass} value={form.city} onChange={(event) => change('city', event.target.value)} /></label>

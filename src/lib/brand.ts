@@ -39,6 +39,13 @@ export type RouteMeta = {
 };
 
 export const ROUTE_META: Record<string, RouteMeta> = {
+  "/community/auth": {
+    title: { zh: "登录与注册", en: "Sign In and Register" },
+    description: {
+      zh: "登录阿柑少年社群，或注册账号、完善资料并提交入群申请。",
+      en: "Sign in to the R-Gan Junior community, or register, complete your profile, and apply for membership.",
+    },
+  },
   "/": {
     title: {
       zh: "阿柑少年",

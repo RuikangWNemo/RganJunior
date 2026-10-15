@@ -49,8 +49,8 @@ describe("Impact", () => {
     expect(within(program).queryByText("594")).not.toBeInTheDocument();
     expect(within(program).queryByText("2,000+")).not.toBeInTheDocument();
     const visits = screen.getByRole("region", { name: "网站访问" });
-    expect(await within(visits).findByText("132")).toBeInTheDocument();
-    expect(within(visits).getByText("594")).toBeInTheDocument();
+    expect(await within(visits).findByText("594")).toBeInTheDocument();
+    expect(within(visits).queryByText("132")).not.toBeInTheDocument();
     expect(within(visits).queryByText("近 30 天")).not.toBeInTheDocument();
   });
   it("uses one shared six-chapter navigation and preserves the permission notice", async () => {

@@ -45,7 +45,8 @@ function renderOnboarding(language: 'zh' | 'en') {
 async function submitRequiredProfile(language: 'zh' | 'en') {
   fireEvent.change(screen.getByLabelText(language === 'zh' ? '用户名 *' : 'Username *'), { target: { value: 'forest_friend' } });
   fireEvent.change(screen.getByLabelText(language === 'zh' ? '主页显示名 *' : 'Display name *'), { target: { value: '山风伙伴' } });
-  fireEvent.change(screen.getByLabelText(language === 'zh' ? '中文名' : 'English name'), { target: { value: language === 'zh' ? '小林' : 'Lin' } });
+  fireEvent.change(screen.getByLabelText(language === 'zh' ? '中文名 *' : 'Chinese name *'), { target: { value: '  小林  ' } });
+  fireEvent.change(screen.getByLabelText(language === 'zh' ? '英文名 *' : 'English name *'), { target: { value: '  Lin  ' } });
   fireEvent.click(screen.getByRole('button', { name: language === 'zh' ? '保存并继续' : 'Save and continue' }));
 
   await waitFor(() => expect(completeCommunityOnboarding).toHaveBeenCalledTimes(1));
@@ -69,9 +70,20 @@ describe('CommunityOnboarding language payload', () => {
     await submitRequiredProfile('zh');
 
     expect(completeCommunityOnboarding).toHaveBeenCalledWith(
-      expect.objectContaining({ language: 'zh' }),
+      expect.objectContaining({ language: 'zh', nameZh: '小林', nameEn: 'Lin' }),
     );
     await waitFor(() => expect(screen.getByLabelText('current path')).toHaveTextContent('/community/enter'));
+  });
+
+  it('rejects whitespace-only bilingual names before saving a profile', () => {
+    const { container } = renderOnboarding('en');
+    expect(screen.getByLabelText('Chinese name *')).toBeRequired();
+    expect(screen.getByLabelText('English name *')).toBeRequired();
+    fireEvent.change(screen.getByLabelText('Chinese name *'), { target: { value: '   ' } });
+    fireEvent.change(screen.getByLabelText('English name *'), { target: { value: '  Lin  ' } });
+    fireEvent.submit(container.querySelector('form')!);
+    expect(completeCommunityOnboarding).not.toHaveBeenCalled();
+    expect(screen.getByRole('alert')).toHaveTextContent('Enter both your Chinese and English names');
   });
 
   it('submits the canonical en code from the English interface', async () => {

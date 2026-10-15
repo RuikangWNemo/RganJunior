@@ -133,7 +133,7 @@ describe('homepage editorial refresh', () => {
 
     const heroSubtitle = container.querySelector('.home-hero-subtitle');
     expect(heroSubtitle).toHaveClass('home-hero-subtitle--en');
-    const approvedSubtitle = 'Return to nature, everyday life, and the real world, and grow strength from within.';
+    const approvedSubtitle = 'Return to nature, everyday life, and the real world. Build inner strength.';
     expect(heroSubtitle).toHaveTextContent(approvedSubtitle);
     expect(heroSubtitle).toHaveAttribute('aria-label', approvedSubtitle);
 

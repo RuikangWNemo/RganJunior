@@ -132,7 +132,7 @@ describe('CommunityAuth', () => {
     const identityButton = screen.getByRole('button', { name: '确认身份，继续' });
     expect(identityButton).toBeDisabled();
     expect(screen.queryByText('阿柑少年发起人')).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole('radio', { name: /青年共创伙伴/ }));
+    fireEvent.click(screen.getByRole('radio', { name: /少年共创者/ }));
     expect(identityButton).toBeEnabled();
     fireEvent.click(identityButton);
 
@@ -209,7 +209,7 @@ describe('CommunityAuth', () => {
     renderAuth();
 
     fireEvent.click(screen.getByRole('tab', { name: '注册' }));
-    fireEvent.click(await screen.findByRole('radio', { name: /青年共创伙伴/ }));
+    fireEvent.click(await screen.findByRole('radio', { name: /少年共创者/ }));
     fireEvent.click(screen.getByRole('checkbox', { name: '守护团' }));
     fireEvent.click(screen.getByRole('button', { name: '确认身份，继续' }));
     fireEvent.click(screen.getByRole('radio', { name: '已满 18 岁' }));

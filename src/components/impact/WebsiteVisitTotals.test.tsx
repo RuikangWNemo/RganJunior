@@ -30,11 +30,13 @@ function show(lang: "zh" | "en" = "zh") {
 
 describe("public lifetime visit figures", () => {
   beforeEach(() => vi.mocked(getWebsiteVisitTotals).mockReset());
-  it("renders lifetime visits and PV with the collection date, without UV or range controls", async () => {
+  it("renders one lifetime PV total with the collection date, without session counts or range controls", async () => {
     vi.mocked(getWebsiteVisitTotals).mockResolvedValue(totals);
     show();
-    expect(await screen.findByText("132")).toBeInTheDocument();
-    expect(screen.getByText("594")).toBeInTheDocument();
+    expect(await screen.findByText("594")).toBeInTheDocument();
+    expect(screen.queryByText("132")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("definition")).toHaveLength(1);
+    expect(screen.getByText(/累计页面浏览量（PV）/)).toBeInTheDocument();
     expect(screen.getByText(/2026\/08\/16/)).toHaveTextContent("开始记录");
     expect(screen.getByText(/不代表去重访客人数/)).toBeInTheDocument();
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
@@ -47,7 +49,7 @@ describe("public lifetime visit figures", () => {
       totalPageViews: 0,
     });
     show();
-    expect(await screen.findAllByText("0")).toHaveLength(2);
+    expect(await screen.findAllByText("0")).toHaveLength(1);
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
   });
   it("does not show zero on failure and supports retry", async () => {
@@ -67,7 +69,9 @@ describe("public lifetime visit figures", () => {
     vi.mocked(getWebsiteVisitTotals).mockResolvedValue(totals);
     show("en");
     expect(await screen.findByText("Total visits")).toBeInTheDocument();
-    expect(screen.getByText("Total page views (PV)")).toBeInTheDocument();
+    expect(await screen.findByText("594")).toBeInTheDocument();
+    expect(screen.queryByText("132")).not.toBeInTheDocument();
+    expect(screen.getByText(/Counted as cumulative page views/)).toBeInTheDocument();
     expect(
       screen.getByText(/visits do not represent unique people/),
     ).toBeInTheDocument();

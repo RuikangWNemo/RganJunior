@@ -62,11 +62,11 @@ const phases = [
         { date: '2023.09', text: '进行调查问卷，了解中学生参与可持续发展农业活动的情况' },
         { date: '2023.10', text: '根据调查结果，为同龄人量身定制有趣而有意义的农业活动，28名同学及家长参与' },
         { date: '2023.11', text: '将成果总结成论文，从2000+小队中脱颖而出，进入CTB全国论坛' },
-        { date: '2024.02', text: '最终进入前72名，前往美国哈佛参加CTB全球英文论坛' },
+        { date: '2024.02', text: '成为晋级全球论坛的72支队伍之一，前往美国哈佛参加CTB全球英文论坛' },
         { date: '2024.05', text: '参与克莱蒙生态文明国际论坛，与中美加三地同学分享生态文明建设经验' },
       ],
       achievements: [
-        'CTB全球前3.6%',
+        'CTB 全球论坛晋级队伍之一',
         '哈佛决赛圈',
         'YSA Journal论文发表',
         '克莱蒙生态论坛',
@@ -81,11 +81,11 @@ const phases = [
         { date: '2023.09', text: 'Conducted surveys on middle school students participating in sustainable agriculture activities' },
         { date: '2023.10', text: 'Designed tailored agricultural activities for peers, with 28 students and parents participating' },
         { date: '2023.11', text: 'Summarized findings into a paper, selected from 2,000+ teams for CTB National Forum' },
-        { date: '2024.02', text: "Advanced to the top 72 and traveled to Harvard for the CTB global forum, held in English" },
+        { date: '2024.02', text: "One of 72 teams advancing to the global forum; traveled to Harvard for the CTB global forum, held in English" },
         { date: '2024.05', text: "Participated in the Claremont International Forum on Ecological Civilization, sharing experiences of building an ecological civilization with peers from China, the United States, and Canada" },
       ],
       achievements: [
-        'CTB Global Top 3.6%',
+        'CTB Global Forum Qualifier',
         "CTB Global Forum at Harvard",
         'YSA Journal Publication',
         "Claremont International Forum on Ecological Civilization",
@@ -669,8 +669,8 @@ export default function Journey() {
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   {t(
-                    '从全球2000+项目中入选前72名，在哈佛大学展示研究成果，探索青少年如何通过参与可持续农业活动建立环境意识。',
-                    "Selected as one of the top 72 teams from more than 2,000 projects worldwide, the team presented its research at Harvard University on how participating in sustainable agriculture can help young people develop environmental awareness."
+                    '从全球2000多支队伍中晋级全球论坛的72支队伍之一，在哈佛大学展示研究成果，探索青少年如何通过参与可持续农业活动建立环境意识。',
+                    "One of 72 teams advancing to the global forum from more than 2,000 teams worldwide, the team presented its research at Harvard University on how participating in sustainable agriculture can help young people develop environmental awareness."
                   )}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">

@@ -69,7 +69,7 @@ function submitErrorMessage(error: unknown, lang: 'zh' | 'en') {
 function CommunityPrinciples({ lang, className = '' }: { lang: 'zh' | 'en'; className?: string }) {
   const principles = [
     [lang === 'zh' ? '注册用户' : 'Registered users', lang === 'zh' ? '完善资料、阅读公开内容、提交入群申请。' : "Complete your profile, read public content, and apply for membership."],
-    [lang === 'zh' ? '社群成员' : 'Community members', lang === 'zh' ? '创作、认识伙伴、参加共练并使用成员消息。' : 'Create, meet peers, practice together, and use member messages.'],
+    [lang === 'zh' ? '社群成员' : 'Community members', lang === 'zh' ? '创作、认识伙伴、参加共练并使用成员消息。' : 'Create, meet peers, join shared practice sessions, and message other members.'],
     [lang === 'zh' ? '青少年保护' : 'Youth protection', isManualGuardianFlow
       ? lang === 'zh' ? '未满 14 岁申请由工作人员联系监护人；14–17 岁走普通审核。' : "For applicants under 14, staff contact a guardian. Applicants ages 14–17 follow the standard review process."
       : lang === 'zh' ? '未成年人按年龄范围进入相应的监护人知情流程。' : 'Minors follow the guardian flow appropriate to their age range.'],
@@ -317,15 +317,15 @@ export default function CommunityAuth() {
       ? lang === 'zh' ? '选择一个主身份，也可以补充其他身份。所有选择都需要管理员确认。' : "Choose one primary community role and any additional roles. All selections require administrator confirmation."
       : isSignupAge
         ? lang === 'zh' ? '年龄范围用于安排合适的申请审核与青少年保护流程。' : 'Your age range determines the appropriate review and youth-safety flow.'
-        : lang === 'zh' ? '先创建基础账号，个人主页资料将在下一步完善。' : 'Create a basic account first. Your profile comes next.'
+        : lang === 'zh' ? '先创建基础账号，下一步请填写中文名、英文名和个人主页资料。' : 'Create a basic account first. Next, enter your Chinese and English names and complete your profile.'
     : mode === 'magic'
       ? otpSent
         ? lang === 'zh' ? '登录链接和验证码已发送到下面的邮箱。' : 'The sign-in link and code were sent to the email below.'
-        : lang === 'zh' ? `我们会发送一封包含登录链接和 ${EMAIL_OTP_LENGTH} 位验证码的一次性邮件。` : `We will send a one-time email with a sign-in link and ${EMAIL_OTP_LENGTH}-digit code.`
+        : lang === 'zh' ? `我们会发送一封邮件，内含一次性登录链接和 ${EMAIL_OTP_LENGTH} 位验证码。` : `We will email you a one-time sign-in link and an ${EMAIL_OTP_LENGTH}-digit verification code.`
       : mode === 'otp'
         ? otpSent
           ? lang === 'zh' ? '验证码发送到了下面的邮箱。' : 'The code was sent to the email below.'
-          : lang === 'zh' ? `我们会发送一封包含 ${EMAIL_OTP_LENGTH} 位验证码的邮件。` : `We will email you a ${EMAIL_OTP_LENGTH}-digit verification code.`
+          : lang === 'zh' ? `我们会发送一封包含 ${EMAIL_OTP_LENGTH} 位验证码的邮件。` : `We will email you an ${EMAIL_OTP_LENGTH}-digit verification code.`
       : mode === 'reset'
         ? lang === 'zh' ? '输入注册邮箱，接收密码重设邮件。' : 'Enter your registered email to reset your password.'
         : lang === 'zh' ? '使用用户名或邮箱，回到你的社群空间。' : 'Use your username or email to return to the community.';
@@ -342,7 +342,7 @@ export default function CommunityAuth() {
                   <span className="block">认识彼此，</span>
                   <span className="block">一起生活与行动。</span>
                 </>
-              ) : 'Know each other. Grow through action.'}
+              ) : 'Get to know each other. Share everyday life and take action together.'}
             </h1>
             <p className="mt-6 max-w-lg text-base leading-7 text-[hsl(var(--community-forest)/0.7)] sm:text-lg sm:leading-8">
               {lang === 'zh' ? '先建立账号、了解社区，再申请成为正式成员。' : 'Create an account, understand the community, then apply for membership.'}
@@ -506,6 +506,7 @@ export default function CommunityAuth() {
                     <>
                       <fieldset className="space-y-3">
                         <legend className="mb-3 text-sm font-semibold text-foreground">{lang === 'zh' ? '主身份（必选）' : "Primary community role (required)"}</legend>
+                        <p className="text-sm leading-6 text-muted-foreground">{t('如果以阿柑少年加入，你更愿意成为少年共创者，参与设计与组织，还是作为参与者体验活动？请选择相应身份。', 'If you are joining as a young person, would you like to be a youth co-creator who helps design and organize activities, or a participant who takes part? Choose the role that fits you.')}</p>
                         <div className="grid gap-3">
                           {identityOptions.map((option) => {
                             const selected = primaryIdentitySlug === option.slug;

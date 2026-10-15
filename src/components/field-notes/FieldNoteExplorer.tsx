@@ -76,7 +76,7 @@ export function FieldNoteExplorer({
           <div className="flex gap-7" role="tablist" aria-label={t('浏览方式', 'Browse by')}>
             {(['people', 'topics'] as const).map((item) => {
               const selected = dimension === item;
-              const label = item === 'people' ? t('按人物', 'By people') : t('按题材', 'By topic');
+              const label = item === 'people' ? t('按作者', 'By Author') : t('按题材', 'By topic');
               return (
                 <button
                   key={item}
@@ -102,14 +102,14 @@ export function FieldNoteExplorer({
           </div>
           <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
             {dimension === 'people'
-              ? t('选择一个人物，沿着他的观察继续阅读。', 'Choose a person and follow their observations across the archive.')
+              ? t('选择一位作者，沿着其观察继续阅读。', 'Choose an author and follow their observations across the archive.')
               : t('从生活、共创与研究进入同一片真实现场。', "Explore the same real-world experiences through everyday life, co-creation, and research.")}
           </p>
         </div>
 
         <div>
           <label htmlFor="field-note-search" className="mb-2 block text-lg font-medium text-foreground">
-            {t('搜索文章或人物', 'Search articles or people')}
+            {t('搜索文章或作者', 'Search Articles or Authors')}
           </label>
           <div className="relative">
             <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -144,7 +144,7 @@ export function FieldNoteExplorer({
             exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
             className="-mx-4 overflow-x-auto px-4 py-7 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0"
           >
-            <div className="flex min-w-max gap-3" role="group" aria-label={t('人物筛选', 'People filters')}>
+            <div className="flex min-w-max gap-3" role="group" aria-label={t('作者筛选', 'Author filters')}>
               <button
                 type="button"
                 aria-pressed={!personSlug}
@@ -155,8 +155,8 @@ export function FieldNoteExplorer({
                     : 'border-border bg-card/45 text-muted-foreground hover:border-primary/30 hover:text-foreground'
                 }`}
               >
-                <span className="text-lg font-medium">{t('全部人物', 'All people')}</span>
-                <span className="mt-1 text-lg">{t(`${allNotes.length} 篇`, `${allNotes.length} articles`)}</span>
+                <span className="text-lg font-medium">{t('全部作者', 'All Authors')}</span>
+                <span className="mt-1 text-lg">{t(`${allNotes.length} 篇`, `${allNotes.length} ${allNotes.length === 1 ? 'article' : 'articles'}`)}</span>
               </button>
               {people.map((person) => {
                 const selected = personSlug === person.slug;
@@ -216,7 +216,7 @@ export function FieldNoteExplorer({
                     {pickLocalized(topic.description, lang)}
                   </span>
                   <span className="mt-4 block text-xs text-primary/70">
-                    {t(`${articleCount} 篇文章`, `${articleCount} articles`)}
+                    {t(`${articleCount} 篇文章`, `${articleCount} ${articleCount === 1 ? 'article' : 'articles'}`)}
                   </span>
                 </button>
               );

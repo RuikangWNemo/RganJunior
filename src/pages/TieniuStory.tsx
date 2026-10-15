@@ -14,7 +14,7 @@ const placeFacts = [
     label: { zh: '距离西来站', en: 'From Xilai Station' },
   },
   {
-    value: { zh: '果园 · 鱼塘 · 林盘', en: 'Orchards · Ponds · Linpan' },
+    value: { zh: '果园 · 鱼塘 · 林盘', en: 'Orchards · Ponds · linpan' },
     label: { zh: '共同组成生活生态', en: "Together, they sustain village life" },
   },
 ] as const;
@@ -28,7 +28,7 @@ export default function TieniuStory() {
         <div className="tieniu-story-shell">
           <Link className="tieniu-story-back-link" to="/about#places">
             <span aria-hidden="true">←</span>
-            <span>{t('返回真实场域', "Back to Real-World Contexts")}</span>
+            <span>{t('返回真实场域', "Back to Our Learning Sites")}</span>
           </Link>
 
           <div className="tieniu-story-hero__grid">
@@ -44,7 +44,7 @@ export default function TieniuStory() {
               <p>
                 {t(
                   '这里不是活动背景。果园、鱼塘、林盘、新老村民和城市家庭在这里相遇，青少年也从一颗柑橘开始，理解食物、劳动、消费、生态与社区之间真实的关系。',
-                  "Tieniu Village is a living community, with orchards, fishponds, and Linpan settlements shared by longtime residents, newcomers, and urban families. Starting with a single citrus fruit, young people learn how food, work, consumption, ecology, and community are connected.",
+                  "Tieniu Village is a living community, with orchards, fishponds, and linpan settlements—traditional rural homesteads surrounded by trees in the Chengdu Plain—shared by longtime residents, newcomers, and urban families. Starting with a single citrus fruit, young people learn how food, work, consumption, ecology, and community are connected.",
                 )}
               </p>
             </div>
@@ -52,7 +52,7 @@ export default function TieniuStory() {
             <figure className="tieniu-story-hero__figure">
               <OptimizedImage
                 src="/images/s06-linpan-aerial-overview.jpg"
-                alt={t('铁牛村林盘、果园、鱼塘和院落的航拍图', 'Aerial view of Tieniu Village, its Linpan landscape, orchards, ponds, and homes')}
+                alt={t('铁牛村林盘、果园、鱼塘和院落的航拍图', 'Aerial view of Tieniu Village, its linpan landscape, orchards, ponds, and homes')}
                 width="2890"
                 height="2218"
                 loading="eager"
@@ -109,10 +109,10 @@ export default function TieniuStory() {
             <TieniuRegenerationStory />
 
             <div className="tieniu-story-return">
-              <p>{t('从铁牛村，继续认识阿柑少年的真实场域', "Explore R-Gan Junior’s other Real-World Contexts from Tieniu Village")}</p>
+              <p>{t('从铁牛村，继续认识阿柑少年的真实场域', "Explore R-Gan Junior’s other learning sites from Tieniu Village")}</p>
               <h2>{t('一座社区大本营，三片生态试验田。', 'One community home base and three ecological field sites.')}</h2>
               <Link to="/about#places">
-                <span>{t('返回查看四个真实场域', "Return to all four Real-World Contexts")}</span>
+                <span>{t('返回查看四个真实场域', "Return to all four learning sites")}</span>
                 <span aria-hidden="true">→</span>
               </Link>
             </div>

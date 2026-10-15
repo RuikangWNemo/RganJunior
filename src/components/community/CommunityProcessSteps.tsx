@@ -10,7 +10,7 @@ export default function CommunityProcessSteps({ current, safetyRequired = true }
     { id: 'account' as const, label: t('账号', 'Account') },
     { id: 'profile' as const, label: t('资料', 'Profile') },
     { id: 'application' as const, label: t('申请', 'Apply') },
-    ...(safetyRequired ? [{ id: 'safety' as const, label: t('安全确认', 'Safety') }] : []),
+    ...(safetyRequired ? [{ id: 'safety' as const, label: t('安全确认', 'Safety Confirmation') }] : []),
     { id: 'review' as const, label: t('审核', 'Review') },
   ];
   const currentIndex = steps.findIndex((step) => step.id === current);

@@ -100,8 +100,8 @@ export const moreGrowthStories = [
     slug: "tea-connects-an-american-girl",
     author: { zh: "陈若容", en: "Rosie Chen" },
     title: {
-      zh: "一碗茶，如何让一个美国女孩走进阿柑少年",
-      en: "How a Bowl of Tea Brought an American Girl to R-Gan Junior",
+      zh: "一碗茶，如何让一个在美国生活的女孩走进阿柑少年",
+      en: "How a Bowl of Tea Brought a Girl Living in the U.S. to R-Gan Junior",
     },
     summary: {
       zh: "从和阿公种下小茶苗，到一次次回到茶山，若容记录了自己与家人、自然和伙伴的连接。",

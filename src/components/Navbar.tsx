@@ -46,7 +46,7 @@ const aboutSubItems = [
   { id: 'team' as const, path: '/about#team', zh: '我们的团队', en: 'Our Team' },
   { id: 'belief' as const, path: '/about#belief', zh: '我们相信', en: "What We Believe" },
   { id: 'method' as const, path: '/about#method', zh: '我们的方法', en: "How We Work" },
-  { id: 'places' as const, path: '/about#places', zh: '空间与场域', en: "Real-World Contexts" },
+  { id: 'places' as const, path: '/about#places', zh: '空间与场域', en: "Our Learning Sites" },
 ];
 
 const fieldNotesSubItems = [

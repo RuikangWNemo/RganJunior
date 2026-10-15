@@ -95,7 +95,7 @@ describe('FieldNotes', () => {
 
   it('searches across real article titles', async () => {
     renderFieldNotes('/community-stories/all');
-    const search = screen.getByRole('searchbox', { name: '搜索文章或人物' });
+    const search = screen.getByRole('searchbox', { name: '搜索文章或作者' });
     fireEvent.change(search, { target: { value: '厨房' } });
 
     await waitFor(() => expect(screen.getByText('找到 1 篇文章')).toBeInTheDocument());

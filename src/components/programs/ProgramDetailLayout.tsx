@@ -72,7 +72,7 @@ export default function ProgramDetailLayout({ program, children }: ProgramDetail
             <p className="text-pretty">
               {t(
                 '可以直接询问档期、内容和参与方式，也可以先留下参与意向，方便团队继续沟通。',
-                'Ask directly about timing, content, and participation, or register your interest so the team can continue the conversation.',
+                'Ask us about dates, activities, and how to take part, or register your interest so we can follow up.',
               )}
             </p>
             <ProgramActions program={program} />
