@@ -1,0 +1,310 @@
+[
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/",
+    "heading": "",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/about",
+    "heading": "关于",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/about/participants",
+    "heading": "营地伙伴",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/about/guardians",
+    "heading": "守护团",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/programs",
+    "heading": "从真实生活出发，走向共创与行动",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/community-stories",
+    "heading": "社区故事",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/community-stories/technology-ecology-stars",
+    "heading": "在科技与生态之间寻找星辰大海",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/impact",
+    "heading": "影响与记录",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/impact/awards",
+    "heading": "获奖与成果",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/join",
+    "heading": "成为阿柑少年",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "zh",
+    "route": "/community/auth",
+    "heading": "认识彼此，一起生活与行动。",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/",
+    "heading": "",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/about",
+    "heading": "About",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/about/participants",
+    "heading": "Camp Companions",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/about/guardians",
+    "heading": "Guardian Circle",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/programs",
+    "heading": "From real life toward co-creation and action",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/community-stories",
+    "heading": "Community Stories",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/community-stories/technology-ecology-stars",
+    "heading": "Finding a Sea of Stars Between Technology and Ecology",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/impact",
+    "heading": "Impact & Records",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/impact/awards",
+    "heading": "Awards & Achievements",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/join",
+    "heading": "Join R-Gan Junior",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "route": "/community/auth",
+    "heading": "Know each other. Grow through action.",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/",
+    "heading": "",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/about",
+    "heading": "关于",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/about/participants",
+    "heading": "营地伙伴",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/about/guardians",
+    "heading": "守护团",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/programs",
+    "heading": "从真实生活出发，走向共创与行动",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/community-stories",
+    "heading": "社区故事",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/community-stories/technology-ecology-stars",
+    "heading": "在科技与生态之间寻找星辰大海",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/impact",
+    "heading": "影响与记录",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/impact/awards",
+    "heading": "获奖与成果",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/join",
+    "heading": "成为阿柑少年",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "route": "/community/auth",
+    "heading": "认识彼此，一起生活与行动。",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/",
+    "heading": "",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/about",
+    "heading": "About",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/about/participants",
+    "heading": "Camp Companions",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/about/guardians",
+    "heading": "Guardian Circle",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/programs",
+    "heading": "From real life toward co-creation and action",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/community-stories",
+    "heading": "Community Stories",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/community-stories/technology-ecology-stars",
+    "heading": "Finding a Sea of Stars Between Technology and Ecology",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/impact",
+    "heading": "Impact & Records",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/impact/awards",
+    "heading": "Awards & Achievements",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/join",
+    "heading": "Join R-Gan Junior",
+    "noHorizontalOverflow": true
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "route": "/community/auth",
+    "heading": "Know each other. Grow through action.",
+    "noHorizontalOverflow": true
+  }
+]

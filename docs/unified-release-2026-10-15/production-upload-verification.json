@@ -1,0 +1,62 @@
+{
+  "base": "https://www.rganjunior.org",
+  "verifiedCommit": "bee96c421605dfd28a8bcd9c3310df34bb9ecc99",
+  "sourceFilesMatch": 1238,
+  "totals": {
+    "recordedSince": "2026-08-16T13:34:41.652492+00:00",
+    "updatedAt": "2026-10-15T07:49:55.444895+00:00",
+    "totalSessions": 133,
+    "totalPageViews": 603
+  },
+  "summaryPost": 405,
+  "collectionGet": 405,
+  "redirects": [
+    {
+      "from": "/field-notes?person=founding-team",
+      "status": 308,
+      "location": "/community-stories?person=founding-team"
+    },
+    {
+      "from": "/field-notes/technology-ecology-stars",
+      "status": 308,
+      "location": "/community-stories/technology-ecology-stars"
+    }
+  ],
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "274cb4a8f5ef3fcc04821b8a36b1613596af5837aac8bfc6223a4e0aef0bfdb7",
+      "matches": true
+    },
+    {
+      "path": "assets/index-B1TedJG1.js",
+      "sha256": "0222012d9998b46e08e11b86001e745f9e54f078da4f2991ed620ab0c8de5de8",
+      "matches": true
+    },
+    {
+      "path": "assets/index-BDo-v8WD.css",
+      "sha256": "6bffda5660bcdc417de45564c0d15a78bb551db9fff7627c2f506ebf0ac2bd1e",
+      "matches": true
+    },
+    {
+      "path": "assets/About-CI-VSPvT.js",
+      "sha256": "3671d8dd3b976a544341d251ac33160cce709ea8c53344ba7e943987d76faefe",
+      "matches": true
+    },
+    {
+      "path": "assets/Actions-CBmiFCKx.js",
+      "sha256": "d5135b304f330c131299a1cc40af5e316976e7348ab900ead1bcbb5386adf547",
+      "matches": true
+    },
+    {
+      "path": "assets/Impact-C5kWyP2q.js",
+      "sha256": "4c6909edbfb42add5fee352e817fd04d22032c9ebf1093283ba7ad47a29c11ba",
+      "matches": true
+    },
+    {
+      "path": "assets/ParticipantDirectory-CSJX40QH.js",
+      "sha256": "75e09e503ed9e69eea8445b232048f1e03aab362a8860b05c8d33ea880886fd9",
+      "matches": true
+    }
+  ]
+}

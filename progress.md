@@ -1,5 +1,9 @@
 # Progress
 
+## 2026-10-15 Unified production release
+
+Published application `bee96c4` from verified local prebuilt artifacts. GitHub `main`, source/rollback tags, production domain, and local canonical `main` are aligned. See `docs/unified-release-2026-10-15/verification.md`; older entries below remain historical records.
+
 ## 2026-10-13 English translation audit
 - Latest follow-up: completed bounded public entity research and recorded confirmed roles/camp names; distinct proposed brand wording remains pending. An English case-study PDF timed out and was not treated as verified naming evidence.
 - Follow-up: recovered index reference from its persistent WeChat copy, saved three confirmed language/name rules and a staged question list. No translations or workbook final wording auto-approved while awaiting answers.

@@ -1,5 +1,12 @@
 # Task Plan
 
+## 2026-10-15 Unified production release completed
+
+- Local updates and published histories consolidated into `main`; application `bee96c4` is on GitHub and Vercel production.
+- 372 tests, both type checks, lint, GitHub CI, local prebuilt build, and 44 production browser cases passed.
+- Release/rollback tags and worktree inventory are recorded in `docs/unified-release-2026-10-15/verification.md`.
+- Earlier local-only statements below describe their historical task scope, not the current release status.
+
 ## 2026-10-13 American English and simple approval sheet
 - The normalization self-check caught a case-normalization mismatch for en-GB before any file writes; changed the lookup key to lowercase.
 - [ ] Normalize British spelling in local website/email/article copy and English date locale; preserve asset paths, identifiers and unrelated work.

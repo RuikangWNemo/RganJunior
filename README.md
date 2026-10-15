@@ -2,6 +2,15 @@
 
 A bilingual Vite + React website for `阿柑少年 / R'gan Junior`, backed by Supabase Auth, PostgreSQL, and Storage.
 
+## Current production
+
+- Website: [www.rganjunior.org](https://www.rganjunior.org).
+- Application version: `bee96c4`, tag `release/2026-10-15-unified-website`.
+- Canonical source: `main`; older local release worktrees are historical references.
+- [Unified release and verification record](docs/unified-release-2026-10-15/verification.md).
+
+Build and verify production artifacts on the operator machine. GitHub runs code checks only, and Vercel Git automatic deployments are disabled. Upload with `vercel deploy --prebuilt --prod --skip-domain`, verify that deployment, then promote it. Do not build or deploy this project from GitHub or the shared ECS.
+
 ## Runtime
 
 Use Node.js 24, matching `package.json` and GitHub CI.
@@ -15,7 +24,7 @@ npm ci
 
 - Start with [CONTRIBUTING.md](CONTRIBUTING.md) for the shortest contribution path.
 - Read the [two-person workflow](docs/collaboration/two-person-workflow.md) for branch, review, data, and security rules.
-- Follow the [production release runbook](docs/collaboration/production-release-runbook.md) for Preview, Deploy Hook, Supabase migrations, environment variables, rollback, and incident handling.
+- Follow the [production release runbook](docs/collaboration/production-release-runbook.md) for local prebuilt releases, Supabase migrations, environment variables, rollback, and incident handling.
 
 The release runbook is the single source of truth for production operations. Never place Deploy Hook URLs, API keys, passwords, or real user data in GitHub files, Issues, Pull Requests, logs, or screenshots.
 

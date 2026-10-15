@@ -1,0 +1,29 @@
+{
+  "window": "20m",
+  "limit": 50,
+  "deployment": "dpl_GCrgP3N6uEWaUkPSJhC86W7eMksv",
+  "entries": [
+    {
+      "level": "error",
+      "method": "POST",
+      "path": "/api/analytics/collect",
+      "responseStatusCode": 202,
+      "observation": "Node DEP0169 url.parse deprecation warning"
+    },
+    {
+      "level": "error",
+      "method": "POST",
+      "path": "/api/analytics/collect",
+      "responseStatusCode": 202,
+      "observation": "Node DEP0169 url.parse deprecation warning"
+    },
+    {
+      "level": "error",
+      "method": "POST",
+      "path": "/api/analytics/collect",
+      "responseStatusCode": 202,
+      "observation": "Node DEP0169 url.parse deprecation warning"
+    }
+  ],
+  "note": "These three entries are runtime deprecation warnings attached to successful 202 responses, not failed business requests. Raw logs remain local."
+}

@@ -1,0 +1,36 @@
+{
+  "canonicalDirectory": "/Users/hw/Documents/RganJunior/Website/rgan-junior-roots-main",
+  "removedStaleWorktreeRecords": [
+    "/private/tmp/rgan-fix-email-auth",
+    "/private/tmp/rgan-public-site-updates"
+  ],
+  "worktrees": [
+    {
+      "path": "/Users/hw/Documents/RganJunior/Website/rgan-junior-roots-main",
+      "head": "bee96c421605dfd28a8bcd9c3310df34bb9ecc99",
+      "branch": "refs/heads/main",
+      "trackedFilesClean": true,
+      "role": "canonical main"
+    },
+    {
+      "path": "/Users/hw/.codex/worktrees/rgan-guardian-release/rgan-junior-roots-main",
+      "head": "3cff9c700266114f046b0e7e867461a60264f491",
+      "branch": "refs/heads/codex/guardian-coming-soon-2026-10-12",
+      "trackedFilesClean": true,
+      "role": "historical release reference; source/history and environment files preserved"
+    },
+    {
+      "path": "/Users/hw/.codex/worktrees/webp-release/rgan-junior-roots-main",
+      "head": "873ac7a2eaa3b372c3a8fe9fcde9642ab90292c8",
+      "branch": "refs/heads/codex/webp-release-2026-10-14",
+      "trackedFilesClean": true,
+      "role": "historical release reference; source/history and environment files preserved"
+    }
+  ],
+  "rebuildableDirectoriesCleaned": [
+    "node_modules",
+    "dist",
+    ".vercel/output"
+  ],
+  "oldBranchesRetained": true
+}

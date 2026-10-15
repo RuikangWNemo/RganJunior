@@ -1,0 +1,36 @@
+{
+  "applicationCommit": "bee96c421605dfd28a8bcd9c3310df34bb9ecc99",
+  "main": "https://github.com/RuikangWNemo/RganJunior/tree/main",
+  "sourceBranch": "codex/unified-website-2026-10-15",
+  "releaseTag": "release/2026-10-15-unified-website",
+  "previousApplication": "f7a1ff01d9856f95384d9d24d2c6ade3b5709ab7",
+  "previousDeployment": "dpl_pQgBAicRoRRq9knbZ27knfihdZKD",
+  "rollbackTag": "release/2026-10-15-before-unified",
+  "deployment": {
+    "id": "dpl_GCrgP3N6uEWaUkPSJhC86W7eMksv",
+    "url": "https://rgan-junior-roots-main-ork9z11kn-rganjuniors-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/rganjuniors-projects/rgan-junior-roots-main/GCrgP3N6uEWaUkPSJhC86W7eMksv",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_GCrgP3N6uEWaUkPSJhC86W7eMksv"
+  },
+  "productionDomain": "https://www.rganjunior.org",
+  "prebuilt": true,
+  "functionCount": 12,
+  "testsPassed": 372,
+  "testFiles": 97,
+  "lintErrors": 0,
+  "existingLintWarnings": 9,
+  "types": "app and backend/API passed",
+  "githubCI": {
+    "conclusion": "success",
+    "url": "https://github.com/RuikangWNemo/RganJunior/actions/runs/38702600790",
+    "applicationBuildOrDeploymentOnGitHub": false
+  },
+  "browserCasesLocal": 44,
+  "browserCasesProduction": 44,
+  "sourceFilesVerified": 1238,
+  "publishedAt": "2026-10-15T10:05:14.418799+00:00",
+  "databaseChangesThisRelease": false,
+  "sharedECSChanges": false
+}

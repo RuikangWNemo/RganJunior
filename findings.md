@@ -1,5 +1,9 @@
 # Findings
 
+## 2026-10-15 Canonical version
+
+The current application is `bee96c4`, published to GitHub and Vercel from local prebuilt output. `main` is the canonical development/release source; old release worktrees remain historical references. Current verification and rollback details are in `docs/unified-release-2026-10-15/verification.md`.
+
 ## 2026-10-13 English translation audit
 - Latest user answers confirm Founder for Nate, Co-creator for Tianshi/Ruorong/Ruoyin, Participant for camp participants, Member for formal community members, Partner for external organizations, Community Stories for partner stories, no Fellow for now, Life Discovery Camp and Life Co-creation Camp. Updated docs/translation-principles.md; no live website changes.
 - Public research distinguishes 阿柑青年 as new-villager/community group identity and 丑美阿柑 as local ecological-agriculture/products brand. 生态阿柑 appears in product/orchard/practice wording; no verified independent institutional identity or authoritative English brand naming found. Lifeweek organizer article read; CDEIC and China.com.cn search excerpts support taxonomy but full-page fetches failed. Partner product page uses Agan Bubble Juice, insufficient to standardize all R-Gan brand spellings.
