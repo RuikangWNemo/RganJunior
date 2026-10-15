@@ -67,13 +67,14 @@ describe('About editorial content system', () => {
       [...(team?.querySelectorAll('.about-v2-team-group__header h3') ?? [])].map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(['发起人', '营地伙伴', '守护团']);
+    ).toEqual(['发起人', '共同发起人', '营地伙伴', '守护团']);
     expect(
       [...(team?.querySelector('.about-v2-team-groups')?.children ?? [])].map(
         (section) => section.getAttribute('aria-labelledby'),
       ),
     ).toEqual([
       'team-initiator-title',
+      'team-co-founders-title',
       'team-youth-title',
       'team-guardian-title',
     ]);
@@ -82,6 +83,9 @@ describe('About editorial content system', () => {
       'href',
       '/story',
     );
+    const founders = screen.getByRole('region', { name: '共同发起人' });
+    expect(within(founders).getAllByRole('heading', { level: 4 }).map(heading => heading.textContent)).toEqual(['张天时', '陈若容', '黄若音']);
+    expect(within(founders).getAllByRole('link').map(link => link.getAttribute('href'))).toEqual(['/about/participants/tianshi', '/about/participants/rosie', '/about/participants/ruby']);
     const roster = screen.getByLabelText('营地伙伴名录');
     const cards = within(roster).getAllByRole('article');
 
@@ -129,9 +133,9 @@ describe('About editorial content system', () => {
     renderAbout();
 
     expect(screen.getByText('Nate | Founder')).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { level: 4, name: 'Tianshi Zhang' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { level: 4, name: 'Rosie Chen' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { level: 4, name: 'Ruby Huang' })).not.toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Tianshi Zhang' })).toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Rosie Chen' })).toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
     expect(within(screen.getByLabelText('Camp companion directory')).getAllByRole('article')).toHaveLength(campCompanions.length);
   });
 

@@ -35,7 +35,7 @@ export default function HomeFounderStory() {
             className={`home-founder-story__title home-founder-story__title--${lang}`}
             aria-label={t(
               '一个少年的成长，慢慢长成一群人的行动',
-              "What began as one young person's growth has gradually become collective action.",
+              "What began as one young person's growth has gradually become collective actions.",
             )}
           >
             {lang === 'zh' ? (
@@ -46,7 +46,7 @@ export default function HomeFounderStory() {
             ) : (
               <>
                 <span className="home-founder-story__title-line">What began as one young person's growth</span>{' '}
-                <span className="home-founder-story__title-line">has gradually become collective action.</span>
+                <span className="home-founder-story__title-line">has gradually become collective actions.</span>
               </>
             )}
           </h2>

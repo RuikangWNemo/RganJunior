@@ -146,7 +146,7 @@ describe('homepage editorial refresh', () => {
     expect(screen.queryByText('How to take part in R-Gan Junior')).not.toBeInTheDocument();
     const founderHeading = screen.getByRole('heading', {
       level: 2,
-      name: "What began as one young person's growth has gradually become collective action.",
+      name: "What began as one young person's growth has gradually become collective actions.",
     });
     expect(founderHeading.querySelectorAll('.home-founder-story__title-line')).toHaveLength(2);
     expect(container.querySelector('.home-field-scene__headline')).toHaveClass('home-field-scene__headline--en');

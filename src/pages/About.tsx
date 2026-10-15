@@ -1,4 +1,5 @@
-import ParticipantRoster from '@/components/participants/ParticipantRoster';
+import ParticipantRoster, { ParticipantPortrait } from '@/components/participants/ParticipantRoster';
+import { participants, participantPath } from '@/content/participants';
 import OptimizedImage from '@/components/OptimizedImage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
@@ -25,6 +26,8 @@ import {
 import aboutTeamPhoto from '@/assets/about-team-photo-1280.webp';
 import aboutTeamPhotoSmall from '@/assets/about-team-photo-640.webp';
 import nateFounderPhoto from '@/assets/about-team/nate-shi.webp';
+
+const coFounders = participants.filter(person => ['tianshi', 'rosie', 'ruby'].includes(person.id));
 
 const aboutChapters = [
   { id: 'team', zh: '我们的团队', en: 'Our Team' },
@@ -358,7 +361,7 @@ export default function About() {
             <div className="about-v2-team__intro">
               <ChapterHeader
                 index="2.1"
-                eyebrow={t('发起人、营地伙伴与守护团', 'Founder, Camp Companions and Guardian Circle')}
+                eyebrow={t('发起人、共同发起人、营地伙伴与守护团', 'Founder, Co-founders, Camp Companions and Guardian Circle')}
                 title={t('我们的团队', 'Our Team')}
                 intro={t(
                   '阿柑少年由 Nate 发起，在麦昆塔社区的支持下，和一群来自不同城市、拥有不同兴趣的青少年伙伴共同生长。我们希望青少年不只是活动的参与者，也能在真实项目中学习设计、组织、记录、表达和行动。',
@@ -420,9 +423,31 @@ export default function About() {
                 </article>
               </section>
 
-              <section id="participants" className="about-v2-team-group scroll-mt-28" aria-labelledby="team-youth-title">
+              <section id="co-founders" className="about-v2-team-group scroll-mt-28" aria-labelledby="team-co-founders-title">
                 <header className="about-v2-team-group__header">
                   <span aria-hidden="true">02</span>
+                  <h3 id="team-co-founders-title">{t('共同发起人', 'Co-founders')}</h3>
+                </header>
+                <div className="about-v2-partner-roster" aria-label={t('共同发起人名录', 'Co-founder directory')}>
+                  {coFounders.map((person) => (
+                    <article key={person.id} aria-labelledby={`about-co-founder-${person.id}`}>
+                      <figure><ParticipantPortrait person={person} /></figure>
+                      <div className="about-v2-partner-roster__copy">
+                        <p className="about-v2-partner-roster__identity">{t('共同发起人', 'Co-founder')} · {pickLocalized(person.natureName, lang)}</p>
+                        <h4 id={`about-co-founder-${person.id}`}>{pickLocalized(person.name, lang)}</h4>
+                        <p className="about-v2-partner-roster__bio">{pickLocalized(person.bio, lang)}</p>
+                        <Link to={participantPath(person.id)}>
+                          <span>{t('认识这位伙伴', 'Meet this companion')}</span><span aria-hidden="true">→</span>
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+
+              <section id="participants" className="about-v2-team-group scroll-mt-28" aria-labelledby="team-youth-title">
+                <header className="about-v2-team-group__header">
+                  <span aria-hidden="true">03</span>
                   <h3 id="team-youth-title">{lang === 'zh' ? '营地伙伴' : 'Camp Companions'}</h3>
                 </header>
                 <p className="mb-8 max-w-3xl text-base leading-8 text-muted-foreground">
@@ -433,7 +458,7 @@ export default function About() {
 
               <section className="about-v2-team-group" aria-labelledby="team-guardian-title">
                 <header className="about-v2-team-group__header">
-                  <span aria-hidden="true">03</span>
+                  <span aria-hidden="true">04</span>
                   <h3 id="team-guardian-title">{t('守护团', 'Guardian Circle')}</h3>
                 </header>
 
