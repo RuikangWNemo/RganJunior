@@ -1,0 +1,21 @@
+{
+  "commit": "d43aefd070f2164252491e56ec9dbf0fac174df0",
+  "files": [
+    {
+      "path": "src/components/impact/WebsiteVisitTotals.tsx",
+      "sha256": "623c4f6a4027c0cc2512e6c23ff1ffcb1f1c34efef3c024b941610c7416b3a2c"
+    },
+    {
+      "path": "src/components/impact/WebsiteVisitTotals.test.tsx",
+      "sha256": "55217a098dc84b44950d99e28802afb685c1b80024f97abe39c28abd812f1b21"
+    },
+    {
+      "path": "src/pages/Impact.tsx",
+      "sha256": "853de4a0b977cce6eefeb0e0681d1aa74eeb13646f6d02bc5871c3dbb163aca6"
+    },
+    {
+      "path": "src/styles/impact-editorial.css",
+      "sha256": "97976938ed793162163a52f668a1f9c43e9f21f74877f41821755c09618b18f8"
+    }
+  ]
+}

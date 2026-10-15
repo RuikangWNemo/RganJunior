@@ -1,0 +1,71 @@
+[
+  {
+    "width": 1440,
+    "lang": "zh",
+    "pageViews": 654,
+    "displayed": 654,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "pageViews": 654,
+    "displayed": 654,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 768,
+    "lang": "zh",
+    "pageViews": 654,
+    "displayed": 654,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 768,
+    "lang": "en",
+    "pageViews": 654,
+    "displayed": 654,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "pageViews": 654,
+    "displayed": 654,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "pageViews": 654,
+    "displayed": 654,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "fixture": "distinct sessions/PV and grouped large number",
+    "displayed": 0,
+    "expectedPV": 0
+  },
+  {
+    "fixture": "distinct sessions/PV and grouped large number",
+    "displayed": 34567,
+    "expectedPV": 34567
+  },
+  {
+    "fixture": "distinct sessions/PV and grouped large number",
+    "displayed": 1234567890,
+    "expectedPV": 1234567890
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "base": "https://www.rganjunior.org",
+  "verifiedCommit": "d43aefd070f2164252491e56ec9dbf0fac174df0",
+  "sourceFilesMatch": 4,
+  "totals": {
+    "recordedSince": "2026-08-16T13:34:41.652492+00:00",
+    "updatedAt": "2026-10-15T18:46:56.76171+00:00",
+    "totalSessions": 138,
+    "totalPageViews": 654
+  },
+  "summaryPost": 405,
+  "collectionGet": 405,
+  "redirects": [
+    {
+      "from": "/field-notes?person=founding-team",
+      "status": 308,
+      "location": "/community-stories?person=founding-team"
+    },
+    {
+      "from": "/field-notes/technology-ecology-stars",
+      "status": 308,
+      "location": "/community-stories/technology-ecology-stars"
+    }
+  ],
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "e900cbb20fd6a3d977c5ba8d90feceeed9839ad47c1b4ff8c9e9a820685993ea",
+      "matches": true
+    },
+    {
+      "path": "assets/index-BCh1j56g.js",
+      "sha256": "44f22de922237104cc99223f825561708d779511c197b5b45bb19f3b3385bcf0",
+      "matches": true
+    },
+    {
+      "path": "assets/index-IR4q60Kr.css",
+      "sha256": "695d8ec6293e3875208ff09cf27d589a6b2c4570768e95bf84df0ca913c41bc6",
+      "matches": true
+    },
+    {
+      "path": "assets/About-D0XBVzke.js",
+      "sha256": "1b797c7842f7c47ed8d8bd9dcbcb5539c28c3bac5e406b82a8833feb4dc043ab",
+      "matches": true
+    },
+    {
+      "path": "assets/Actions-BQ6vKUKR.js",
+      "sha256": "e88cceffc06d98c7e0ca066f7108a8a01b09bad157c54ad4a9aa0d664050fcde",
+      "matches": true
+    },
+    {
+      "path": "assets/Impact-D-6DZAxq.js",
+      "sha256": "db00c386f2c75ea87a5923486d3f6bcd10b5c7fc9437ae5d55f377ab762e1bc3",
+      "matches": true
+    },
+    {
+      "path": "assets/ParticipantDirectory-izb5P9mV.js",
+      "sha256": "5bc36f4cb030f6b292d4116619aa8c09df8e345cb90ed642de763ff9f40964b9",
+      "matches": true
+    },
+    {
+      "path": "assets/JoinUs-CUlsYPCM.js",
+      "sha256": "ce378031fc8e16680aa2ebe84cb45d770458c62cad3baa78e96586dca20f275a",
+      "matches": true
+    },
+    {
+      "path": "assets/ImpactAwards-ByQD8u_U.js",
+      "sha256": "b054ac12b42f962a9c42721fe362a71b27d351ced9b93e99de2e36345a865e76",
+      "matches": true
+    },
+    {
+      "path": "assets/impact-editorial-LfMOB7oS.css",
+      "sha256": "10bbc8ea746e4461b162f8e6a81e4ce57e62dd47f50a6a91011fdcaea68a609e",
+      "matches": true
+    }
+  ]
+}

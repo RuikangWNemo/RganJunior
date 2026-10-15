@@ -3,9 +3,9 @@
   "sourceFile": "阿柑少年_校对清单_简洁版.xlsx",
   "sourceSha256": "8f10e285c53b22bb55179717072359e862c9716ae930ee075eec2f4767949773",
   "worksheetItems": 63,
-  "additionalItems": 8,
+  "additionalItems": 9,
   "statusCounts": {
-    "已落实": 66,
+    "已落实": 67,
     "现状已符合": 1,
     "旧内容已不存在": 2,
     "按用户要求保留": 2
@@ -801,6 +801,18 @@
       "code": "docs/proofread-2026-10-15/release.md",
       "commit": "67b73e1",
       "evidence": "../proofread-2026-10-15/release.md"
+    },
+    {
+      "id": "ADD-009",
+      "title": "简化并美化累计访问展示",
+      "status": "已落实",
+      "source": "2026-10-16 用户反馈",
+      "page": "https://www.rganjunior.org/impact#website-visits",
+      "resolution": "森林绿底、暖白大号数字；移动端上下排列。删除开始记录、更新时间、PV和去重口径解释及区块介绍，只显示累计访问标签和数字；保留加载失败、重试和刷新失败提示。底层仍使用真实累计页面浏览量。",
+      "code": "src/components/impact/WebsiteVisitTotals.tsx",
+      "commit": "d43aefd",
+      "evidence": "../visits-display-2026-10-16/README.md"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-16T02:55:01.598131+08:00"
 }
