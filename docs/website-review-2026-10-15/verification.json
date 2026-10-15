@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-10-15T23:36:17.388248+08:00",
+  "baseCommit": "29a294a13793839b68382e86c880073d4dd3c60d",
+  "publishedApplicationCommit": "7093ae0e11b55708bf7f26265080989bf351f6ea",
+  "productionDeployment": "dpl_HrthdL9RLgRzZ5a2A5k3WwFwjQ4h",
+  "productionState": "READY",
+  "worksheetItems": 63,
+  "additionalItems": 8,
+  "sourceSha256": "8f10e285c53b22bb55179717072359e862c9716ae930ee075eec2f4767949773",
+  "duplicateIssueIds": 0,
+  "allEvidenceLinksExist": true,
+  "preIntegrationAheadBehind": [
+    "0",
+    "0"
+  ],
+  "unmergedIndexEntries": 0,
+  "conflictMarkerMatches": 0,
+  "operationsInProgress": {
+    "MERGE_HEAD": false,
+    "CHERRY_PICK_HEAD": false,
+    "REVERT_HEAD": false,
+    "rebase-merge": false,
+    "rebase-apply": false
+  },
+  "worktrees": [
+    {
+      "name": "current main",
+      "cleanBeforeIntegration": true
+    },
+    {
+      "name": "guardian-release",
+      "clean": true,
+      "headIncludedInMain": true
+    },
+    {
+      "name": "webp-release",
+      "clean": true,
+      "headIncludedInMain": true
+    }
+  ],
+  "tests": {
+    "files": 98,
+    "passed": 376,
+    "failed": 0
+  },
+  "typeChecks": [
+    "app",
+    "backend",
+    "api"
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": 9,
+    "kind": "existing Fast Refresh export warnings"
+  },
+  "applicationUnchangedFromVerifiedBuild": true,
+  "newDeployment": false,
+  "vercelGitAutoDeploy": false
+}

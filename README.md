@@ -5,9 +5,12 @@ A bilingual Vite + React website for `阿柑少年 / R'gan Junior`, backed by Su
 ## Current production
 
 - Website: [www.rganjunior.org](https://www.rganjunior.org).
-- Application version: `bee96c4`, tag `release/2026-10-15-unified-website`.
+- Application version: `7093ae0` (2026-10-15, co-founder section and Home copy update).
+- Production deployment: `dpl_HrthdL9RLgRzZ5a2A5k3WwFwjQ4h`.
 - Canonical source: `main`; older local release worktrees are historical references.
-- [Unified release and verification record](docs/unified-release-2026-10-15/verification.md).
+- [Current worksheet, consolidated issues, and verification](docs/website-review-2026-10-15/README.md).
+- [Latest production release record](docs/cofounders-home-2026-10-15/README.md).
+- [Earlier unified release record](docs/unified-release-2026-10-15/verification.md).
 
 Build and verify production artifacts on the operator machine. GitHub runs code checks only, and Vercel Git automatic deployments are disabled. Upload with `vercel deploy --prebuilt --prod --skip-domain`, verify that deployment, then promote it. Do not build or deploy this project from GitHub or the shared ECS.
 
