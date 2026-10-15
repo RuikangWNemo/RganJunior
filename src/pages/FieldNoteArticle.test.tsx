@@ -40,7 +40,7 @@ function renderArticle(path: string) {
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[path]}>
         <LanguageProvider>
-          <Routes><Route path="/field-notes/:slug" element={<FieldNoteArticle />} /></Routes>
+          <Routes><Route path="/community-stories/:slug" element={<FieldNoteArticle />} /></Routes>
         </LanguageProvider>
       </MemoryRouter>
     </QueryClientProvider>,
@@ -56,7 +56,7 @@ describe('FieldNoteArticle', () => {
   });
 
   it('renders the stored real article snapshot without a sample banner', async () => {
-    renderArticle('/field-notes/tree-seasons');
+    renderArticle('/community-stories/tree-seasons');
 
     expect(await screen.findByRole('heading', { name: '一棵树的四季' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '从春天开始' })).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe('FieldNoteArticle', () => {
     getBySlug.mockResolvedValue(null);
     listPublished.mockResolvedValue([]);
     vi.spyOn(console, 'error').mockImplementation(() => undefined);
-    renderArticle('/field-notes/not-a-real-note');
+    renderArticle('/community-stories/not-a-real-note');
 
     expect(await screen.findByRole('heading', { name: '404' })).toBeInTheDocument();
   });

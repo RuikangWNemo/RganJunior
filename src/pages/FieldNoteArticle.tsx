@@ -82,7 +82,7 @@ export default function FieldNoteArticle() {
         <header className="pb-12 pt-14 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24">
           <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <Link
-              to="/field-notes"
+              to="/community-stories"
               className="cursor-target inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
@@ -149,7 +149,7 @@ export default function FieldNoteArticle() {
 
           <div className="mt-16 border-t border-border pt-8">
             <Link
-              to="/field-notes/all"
+              to="/community-stories/all"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {t('查看文章档案', 'View the article archive')}

@@ -36,20 +36,20 @@ describe('WebsiteAnalyticsTracker', () => {
 
   it('records a normalized public route without arbitrary query parameters', async () => {
     render(
-      <MemoryRouter initialEntries={['/field-notes/?utm_source=newsletter&email=private@example.test']}>
+      <MemoryRouter initialEntries={['/community-stories/?utm_source=newsletter&email=private@example.test']}>
         <LanguageProvider initialLanguage="zh"><WebsiteAnalyticsTracker /></LanguageProvider>
       </MemoryRouter>,
     );
     await waitFor(() => expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledTimes(2));
     expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledWith(expect.objectContaining({
       eventType: 'page_view',
-      path: '/field-notes',
+      path: '/community-stories',
       sourceCategory: 'campaign',
       utmSource: 'newsletter',
     }));
     expect(mocks.sendWebsiteAnalyticsEvent).toHaveBeenCalledWith(expect.objectContaining({
       eventType: 'web_vital',
-      path: '/field-notes',
+      path: '/community-stories',
       metricName: 'LCP',
       metricValue: 2300,
       metricRating: 'good',

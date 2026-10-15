@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { gsap } from 'gsap';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useCursorEffectsEnabled } from '@/hooks/useCursorEffectsEnabled';
 
 import './TargetCursor.css';
@@ -46,6 +47,8 @@ export default function TargetCursor({
   parallaxOn = true,
 }: TargetCursorProps) {
   const enabled = useCursorEffectsEnabled();
+  const { lang } = useLanguage();
+  const pointerPositionRef = useRef<{ x: number; y: number } | null>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const cornersRef = useRef<NodeListOf<HTMLElement> | null>(null);
   const spinTl = useRef<gsap.core.Timeline | null>(null);
@@ -153,7 +156,10 @@ export default function TargetCursor({
 
     tickerFnRef.current = tickerFn;
 
-    const moveHandler = (event: MouseEvent) => moveCursor(event.clientX, event.clientY);
+    const moveHandler = (event: MouseEvent) => {
+      pointerPositionRef.current = { x: event.clientX, y: event.clientY };
+      moveCursor(event.clientX, event.clientY);
+    };
     window.addEventListener('mousemove', moveHandler);
 
     const scrollHandler = () => {
@@ -186,7 +192,7 @@ export default function TargetCursor({
     window.addEventListener('mousedown', mouseDownHandler);
     window.addEventListener('mouseup', mouseUpHandler);
 
-    const enterHandler = (event: MouseEvent) => {
+    const enterHandler = (event: Pick<MouseEvent, 'target'>) => {
       if (!(event.target instanceof HTMLElement)) return;
 
       const target = event.target.closest<HTMLElement>(targetSelector);
@@ -314,12 +320,22 @@ export default function TargetCursor({
 
     window.addEventListener('mouseover', enterHandler, { passive: true });
 
+    // Language changes can move the button without a mouseleave event.
+    const relockFrame = requestAnimationFrame(() => {
+      const point = pointerPositionRef.current;
+      if (!point) return;
+      moveCursor(point.x, point.y);
+      enterHandler({ target: document.elementFromPoint(point.x, point.y) });
+    });
+
     const resizeHandler = () => {
       containingBlockRef.current = getContainingBlock(cursor);
     };
     window.addEventListener('resize', resizeHandler);
 
     return () => {
+      cancelAnimationFrame(relockFrame);
+      gsap.killTweensOf([cursor, activeStrength, ...Array.from(cornersRef.current ?? [])]);
       if (tickerFnRef.current) {
         gsap.ticker.remove(tickerFnRef.current);
       }
@@ -343,7 +359,7 @@ export default function TargetCursor({
       targetCornerPositionsRef.current = null;
       activeStrength.current = 0;
     };
-  }, [constants, enabled, hideDefaultCursor, hoverDuration, moveCursor, parallaxOn, spinDuration, targetSelector]);
+  }, [constants, enabled, hideDefaultCursor, hoverDuration, lang, moveCursor, parallaxOn, spinDuration, targetSelector]);
 
   useEffect(() => {
     if (!enabled || !cursorRef.current || !spinTl.current) return;

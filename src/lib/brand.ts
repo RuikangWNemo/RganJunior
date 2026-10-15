@@ -173,7 +173,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Meet Nate, founder of R-Gan Junior, and follow his journey from loneliness in Tieniu Village to inviting more young people into the real world.",
     },
   },
-  "/field-notes": {
+  "/community-stories": {
     title: {
       zh: "社区故事",
       en: "Community Stories",
@@ -183,7 +183,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       en: "Read articles by the R-Gan Junior founder, young community members, parents, and collaborators about shared living, ecological practice, and real-world research.",
     },
   },
-  "/field-notes/all": {
+  "/community-stories/all": {
     title: {
       zh: "全部社区故事",
       en: "All Community Stories",
@@ -267,8 +267,8 @@ function resolveRouteMeta(pathname: string): RouteMeta | undefined {
     return ROUTE_META["/voices"];
   }
 
-  if (pathname.startsWith("/field-notes/") && pathname !== "/field-notes/all") {
-    return ROUTE_META["/field-notes"];
+  if (pathname.startsWith("/community-stories/") && pathname !== "/community-stories/all") {
+    return ROUTE_META["/community-stories"];
   }
 
   return ROUTE_META[pathname];

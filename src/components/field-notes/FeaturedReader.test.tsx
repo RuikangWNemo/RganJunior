@@ -20,7 +20,7 @@ describe('FeaturedReader', () => {
     expect(screen.getAllByRole('tabpanel')).toHaveLength(1);
     expect(within(screen.getByRole('tabpanel')).getByRole('heading', { name: 'Story 1' })).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Next featured article' }));
-    expect(within(screen.getByRole('tabpanel')).getByRole('link', { name: 'Read this story' })).toHaveAttribute('href', '/field-notes/kitchen');
+    expect(within(screen.getByRole('tabpanel')).getByRole('link', { name: 'Read this story' })).toHaveAttribute('href', '/community-stories/kitchen');
     fireEvent.click(screen.getByRole('button', { name: 'Previous featured article' }));
     expect(within(screen.getByRole('tabpanel')).getByRole('heading', { name: 'Story 1' })).toBeInTheDocument();
   });

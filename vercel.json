@@ -69,5 +69,17 @@
       "destination": "/index.html"
     }
   ],
-  "installCommand": "node -e \"require.resolve('vite'); require.resolve('esbuild')\""
+  "installCommand": "node -e \"require.resolve('vite'); require.resolve('esbuild')\"",
+  "redirects": [
+    {
+      "source": "/field-notes",
+      "destination": "/community-stories",
+      "permanent": true
+    },
+    {
+      "source": "/field-notes/:path*",
+      "destination": "/community-stories/:path*",
+      "permanent": true
+    }
+  ]
 }

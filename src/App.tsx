@@ -7,6 +7,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { getLegacyProgramsRedirect } from '@/lib/programRoutes';
 import Layout from '@/components/Layout';
+import LegacyCommunityStoriesRedirect from '@/components/LegacyCommunityStoriesRedirect';
 import Index from './pages/Index';
 
 const About = lazy(() => import('./pages/About'));
@@ -69,9 +70,10 @@ function PublicRoutes() {
       <Route path="/actions/inquiry" element={<LegacyProgramsRedirect inquiry />} />
       <Route path="/actions" element={<LegacyProgramsRedirect />} />
       <Route path="/story" element={<FounderStory />} />
-      <Route path="/field-notes" element={<FieldNotes />} />
-      <Route path="/field-notes/all" element={<FieldNotes />} />
-      <Route path="/field-notes/:slug" element={<FieldNoteArticle />} />
+      <Route path="/field-notes/*" element={<LegacyCommunityStoriesRedirect />} />
+      <Route path="/community-stories" element={<FieldNotes />} />
+      <Route path="/community-stories/all" element={<FieldNotes />} />
+      <Route path="/community-stories/:slug" element={<FieldNoteArticle />} />
       <Route path="/impact" element={<Impact />} />
       <Route path="/impact/awards" element={<ImpactAwards />} />
       <Route path="/voices" element={<Navigate to="/about#team" replace />} />

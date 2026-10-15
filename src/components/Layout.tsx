@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const isEditorialRoute =
     location.pathname.startsWith('/about') ||
     location.pathname === '/story' ||
-    location.pathname.startsWith('/field-notes') ||
+    location.pathname.startsWith('/community-stories') ||
     location.pathname.startsWith('/impact') ||
     location.pathname.startsWith('/voices');
   const showMascotCompanion =

@@ -34,7 +34,7 @@ export function FieldNoteCard({
   const isInvitation = note.topicSlugs.includes('project-letter');
   const topics = note.topics;
   const title = pickLocalized(note.title, lang);
-  const href = `/field-notes/${note.slug}`;
+  const href = `/community-stories/${note.slug}`;
   const meta = (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
       {jointAuthor ? <AuthorPortrait person={jointAuthor} /> : null}

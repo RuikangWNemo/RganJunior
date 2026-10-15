@@ -12,7 +12,7 @@ import {
 
 describe('website analytics privacy helpers', () => {
   it('normalizes public paths while excluding Community and query details', () => {
-    expect(normalizeAnalyticsPath('/field-notes/?private=value#section')).toBe('/field-notes');
+    expect(normalizeAnalyticsPath('/community-stories/?private=value#section')).toBe('/community-stories');
     expect(normalizeAnalyticsPath('/community/admin/analytics')).toBeNull();
     expect(normalizeAnalyticsPath('https://example.test/about')).toBeNull();
   });

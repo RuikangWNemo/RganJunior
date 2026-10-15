@@ -37,7 +37,7 @@ const navItems = [
   { path: '/about', zh: '关于', en: 'About' },
   { path: '/programs', zh: '项目', en: 'Programs' },
   { path: '/story', zh: '发起人故事', en: "Founder's Story" },
-  { path: '/field-notes', zh: '社区故事', en: 'Community Stories' },
+  { path: '/community-stories', zh: '社区故事', en: 'Community Stories' },
   { path: '/impact', zh: '影响', en: 'Impact' },
   { path: '/join', zh: '加入我们', en: 'Join Us' },
 ];
@@ -50,8 +50,8 @@ const aboutSubItems = [
 ];
 
 const fieldNotesSubItems = [
-  { path: '/field-notes', zh: '精选文章', en: 'Featured Articles' },
-  { path: '/field-notes/all', zh: '全部文章', en: 'All Articles' },
+  { path: '/community-stories', zh: '精选文章', en: 'Featured Articles' },
+  { path: '/community-stories/all', zh: '全部文章', en: 'All Articles' },
 ];
 
 const impactSubItems = [
@@ -62,7 +62,7 @@ const impactSubItems = [
 const MOBILE_NAVIGATION_DELAY_MS = 160;
 const DESKTOP_MENU_CLOSE_DELAY_MS = 2_000;
 
-type DesktopMenu = '/about' | '/programs' | '/field-notes' | '/impact';
+type DesktopMenu = '/about' | '/programs' | '/community-stories' | '/impact';
 
 interface NavbarProps {
   hideLogo?: boolean;
@@ -72,6 +72,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [logoVisible, setLogoVisible] = useState(!hideLogo);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const [pendingPath, setPendingPath] = useState<string | null>(null);
   const [hoveredDesktopMenu, setHoveredDesktopMenu] = useState<DesktopMenu | null>(null);
   const [focusedDesktopMenu, setFocusedDesktopMenu] = useState<DesktopMenu | null>(null);
@@ -269,13 +270,13 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
               const isActive =
                 item.path === '/programs'
                   ? location.pathname === '/programs' || location.pathname.startsWith('/programs/')
-                  : item.path === '/field-notes'
-                    ? location.pathname.startsWith('/field-notes')
+                  : item.path === '/community-stories'
+                    ? location.pathname.startsWith('/community-stories')
                   : item.path === '/impact'
                     ? location.pathname.startsWith('/impact')
                   : location.pathname === item.path;
               const label = lang === 'zh' ? item.zh : item.en;
-              const desktopMenu = item.path === '/about' || item.path === '/programs' || item.path === '/field-notes' || item.path === '/impact'
+              const desktopMenu = item.path === '/about' || item.path === '/programs' || item.path === '/community-stories' || item.path === '/impact'
                 ? item.path
                 : null;
               const hasSubmenu = desktopMenu !== null;
@@ -381,20 +382,20 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                 );
               }
 
-              if (item.path === '/field-notes') {
+              if (item.path === '/community-stories') {
                 return (
                   <div
                     key={item.path}
                     className="relative"
-                    onMouseEnter={() => handleDesktopMenuEnter('/field-notes')}
+                    onMouseEnter={() => handleDesktopMenuEnter('/community-stories')}
                     onMouseLeave={handleDesktopMenuLeave}
-                    onFocusCapture={() => handleDesktopMenuFocus('/field-notes')}
-                    onBlurCapture={(event) => handleDesktopMenuBlur('/field-notes', event)}
+                    onFocusCapture={() => handleDesktopMenuFocus('/community-stories')}
+                    onBlurCapture={(event) => handleDesktopMenuBlur('/community-stories', event)}
                   >
                     {navLink}
                     <div
                       className={`absolute left-1/2 top-full w-52 -translate-x-1/2 pt-2 transition duration-200 ${
-                        activeDesktopMenu === '/field-notes'
+                        activeDesktopMenu === '/community-stories'
                           ? 'visible pointer-events-auto opacity-100'
                           : 'invisible pointer-events-none opacity-0'
                       }`}
@@ -594,7 +595,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
             {lang === 'zh' ? 'EN' : '中文'}
           </button>
 
-          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          <Sheet open={menuOpen} onOpenChange={(open) => { setMenuOpen(open); setExpandedMobileMenu(null); }}>
             <SheetTrigger asChild>
               <button
                 type="button"
@@ -640,20 +641,24 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                     const isActive =
                       item.path === '/programs'
                         ? location.pathname === '/programs' || location.pathname.startsWith('/programs/')
-                        : item.path === '/field-notes'
-                          ? location.pathname.startsWith('/field-notes')
+                        : item.path === '/community-stories'
+                          ? location.pathname.startsWith('/community-stories')
                         : item.path === '/impact'
                           ? location.pathname.startsWith('/impact')
                         : location.pathname === item.path;
                     const isPending = pendingPath === item.path;
                     const label = lang === 'zh' ? item.zh : item.en;
+                    const hasSubmenu = ['/about', '/programs', '/community-stories', '/impact'].includes(item.path);
+                    const isExpanded = expandedMobileMenu === item.path;
+                    const submenuId = `mobile-submenu-${item.path.slice(1)}`;
 
                     return (
                       <div key={item.path}>
-                        <SheetClose asChild>
                           <button
                             type="button"
-                            onClick={() => handleMobileNavigate(item.path)}
+                            onClick={() => hasSubmenu ? setExpandedMobileMenu(isExpanded ? null : item.path) : handleMobileNavigate(item.path)}
+                            aria-expanded={hasSubmenu ? isExpanded : undefined}
+                            aria-controls={hasSubmenu ? submenuId : undefined}
                             aria-current={isActive ? 'page' : undefined}
                             className={`flex min-h-14 w-full items-center border-b border-border/70 text-left font-serif text-2xl transition-colors duration-200 ease-out hover:text-primary focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-popover ${
                               isActive || isPending ? 'text-primary' : 'text-foreground'
@@ -670,11 +675,11 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                             >
                               {label}
                             </motion.span>
+                            {hasSubmenu && <ChevronDown className={`ml-auto size-5 shrink-0 transition-transform ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true" />}
                           </button>
-                        </SheetClose>
 
                         {item.path === '/about' && (
-                          <div className="border-b border-border/70 py-2 pl-5">
+                          <div id={submenuId} hidden={!isExpanded} className="border-b border-border/70 py-2 pl-5">
                             {aboutSubItems.map((subItem) => {
                               const isSubActive = location.pathname === '/about' && activeAboutChapter === subItem.id;
                               return (
@@ -696,7 +701,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                         )}
 
                         {item.path === '/programs' && (
-                          <div className="border-b border-border/70 py-2 pl-5">
+                          <div id={submenuId} hidden={!isExpanded} className="border-b border-border/70 py-2 pl-5">
                             {actionPrograms.map((program) => {
                               const isSubActive = isProgramsLocation && activeProgram === program.id;
 
@@ -720,8 +725,8 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                           </div>
                         )}
 
-                        {item.path === '/field-notes' && (
-                          <div className="border-b border-border/70 py-2 pl-5">
+                        {item.path === '/community-stories' && (
+                          <div id={submenuId} hidden={!isExpanded} className="border-b border-border/70 py-2 pl-5">
                             {fieldNotesSubItems.map((subItem) => {
                               const isSubActive = location.pathname === subItem.path;
 
@@ -746,7 +751,7 @@ export default function Navbar({ hideLogo = false }: NavbarProps) {
                         )}
 
                         {item.path === '/impact' && (
-                          <div className="border-b border-border/70 py-2 pl-5">
+                          <div id={submenuId} hidden={!isExpanded} className="border-b border-border/70 py-2 pl-5">
                             {impactSubItems.map((subItem) => {
                               const isSubActive = location.pathname === subItem.path;
 

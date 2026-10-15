@@ -56,15 +56,15 @@ const realArticles = [
   record({ id: 3, slug: 'river-notes', title: '河流观察笔记', author: '小雨', authorSlug: 'xiaoyu', topic: '自然观察', topicSlug: 'nature' }),
 ];
 
-function renderFieldNotes(path = '/field-notes') {
+function renderFieldNotes(path = '/community-stories') {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[path]}>
         <LanguageProvider>
           <Routes>
-            <Route path="/field-notes" element={<FieldNotes />} />
-            <Route path="/field-notes/all" element={<FieldNotes />} />
+            <Route path="/community-stories" element={<FieldNotes />} />
+            <Route path="/community-stories/all" element={<FieldNotes />} />
           </Routes>
         </LanguageProvider>
       </MemoryRouter>
@@ -90,16 +90,16 @@ describe('FieldNotes', () => {
   });
 
   it('searches across real article titles', async () => {
-    renderFieldNotes('/field-notes/all');
+    renderFieldNotes('/community-stories/all');
     const search = screen.getByRole('searchbox', { name: '搜索文章或人物' });
     fireEvent.change(search, { target: { value: '厨房' } });
 
     await waitFor(() => expect(screen.getByText('找到 1 篇文章')).toBeInTheDocument());
-    expect(screen.getByRole('link', { name: '阅读：村庄厨房的一天' })).toHaveAttribute('href', '/field-notes/village-kitchen');
+    expect(screen.getByRole('link', { name: '阅读：村庄厨房的一天' })).toHaveAttribute('href', '/community-stories/village-kitchen');
   });
 
   it('derives people filters from published records', async () => {
-    renderFieldNotes('/field-notes/all');
+    renderFieldNotes('/community-stories/all');
     const person = await screen.findByRole('button', { name: /小雨/ });
     fireEvent.click(person);
     await waitFor(() => expect(screen.getByText('找到 2 篇文章')).toBeInTheDocument());

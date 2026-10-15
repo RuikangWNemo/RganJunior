@@ -9,7 +9,7 @@ describe('legacy story links', () => {
   it.each(voiceStories.map((story) => story.slug))('keeps %s linked to the unified article', (slug) => {
     render(<MemoryRouter initialEntries={[`/voices/${slug}`]}><LanguageProvider><Routes>
       <Route path="/voices/:slug" element={<VoiceArticle />} />
-      <Route path="/field-notes/:slug" element={<Target />} />
+      <Route path="/community-stories/:slug" element={<Target />} />
     </Routes></LanguageProvider></MemoryRouter>);
     expect(screen.getByRole('heading', { name: slug })).toBeInTheDocument();
   });

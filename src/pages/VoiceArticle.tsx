@@ -6,6 +6,6 @@ import NotFound from './NotFound';
 export default function VoiceArticle() {
   const { slug } = useParams<{ slug: string }>();
   return getVoiceStory(slug)
-    ? <Navigate to={`/field-notes/${slug}`} replace />
+    ? <Navigate to={`/community-stories/${slug}`} replace />
     : <NotFound />;
 }

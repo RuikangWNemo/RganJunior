@@ -300,7 +300,7 @@ export default function CommunityStories() {
                       ) : editable ? (
                         <Link to={`/community/stories/${note.id}/edit`} className="community-story-row__primary-action">{t('继续编辑', 'Continue')}<ArrowRight className="size-4" /></Link>
                       ) : note.status === 'published' ? (
-                        <Link to={`/field-notes/${note.slug}`} className="community-story-row__primary-action">{t('查看文章', "View article")}<ArrowRight className="size-4" /></Link>
+                        <Link to={`/community-stories/${note.slug}`} className="community-story-row__primary-action">{t('查看文章', "View article")}<ArrowRight className="size-4" /></Link>
                       ) : (
                         <Link to={`/community/stories/${note.id}/edit`} className="community-story-row__primary-action">{t('查看', 'View')}<ArrowRight className="size-4" /></Link>
                       )}
@@ -311,7 +311,7 @@ export default function CommunityStories() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-48 rounded-xl border-[hsl(var(--community-forest)/0.12)] bg-[#fffdf7] p-1.5">
                           {!isTrash ? <DropdownMenuItem asChild className="rounded-lg"><Link to={`/community/stories/${note.id}/edit`}>{editable ? t('编辑文章', "Edit article") : t('查看工作区', 'View workspace')}</Link></DropdownMenuItem> : null}
-                          {note.status === 'published' ? <DropdownMenuItem asChild className="rounded-lg"><Link to={`/field-notes/${note.slug}`}>{t('打开公开页面', 'Open public page')}</Link></DropdownMenuItem> : null}
+                          {note.status === 'published' ? <DropdownMenuItem asChild className="rounded-lg"><Link to={`/community-stories/${note.slug}`}>{t('打开公开页面', 'Open public page')}</Link></DropdownMenuItem> : null}
                           {note.status === 'draft' && isOwner ? (
                             <>
                               <DropdownMenuSeparator />

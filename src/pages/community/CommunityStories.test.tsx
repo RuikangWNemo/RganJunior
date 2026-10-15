@@ -107,7 +107,7 @@ describe('CommunityStories', () => {
     expect(screen.queryByText('回收站里的草稿')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('tab', { name: /已发布/ }));
-    expect(screen.getByRole('link', { name: '查看文章' })).toHaveAttribute('href', '/field-notes/published-story');
+    expect(screen.getByRole('link', { name: '查看文章' })).toHaveAttribute('href', '/community-stories/published-story');
     expect(screen.queryByText('河边的第一份草稿')).not.toBeInTheDocument();
   });
 

@@ -28,14 +28,14 @@ export function FeaturedReader({ notes }: { notes: FieldNote[] }) {
       </div>
       {notes.map((note) => <TabsContent key={note.slug} value={note.slug} className="featured-reader__panel">
         <div className="featured-reader__stage">
-          <Link to={`/field-notes/${note.slug}`} className="featured-reader__image" aria-label={t(`阅读：${note.title.zh}`, `Read: ${note.title.en}`)}>
+          <Link to={`/community-stories/${note.slug}`} className="featured-reader__image" aria-label={t(`阅读：${note.title.zh}`, `Read: ${note.title.en}`)}>
             <OptimizedImage src={note.cover} alt={pickLocalized(note.coverAlt, lang)} decoding="async" />
           </Link>
           <div className="featured-reader__copy">
             <p className="featured-reader__byline">{note.authors.map((author) => pickLocalized(author.name, lang)).join(' · ')}<span aria-hidden="true"> / </span>{t(`${note.readingMinutes} 分钟阅读`, `${note.readingMinutes} min read`)}</p>
             <h3 className="text-balance font-serif">{pickLocalized(note.title, lang)}</h3>
             <p className="featured-reader__excerpt text-pretty">{pickLocalized(note.excerpt, lang)}</p>
-            <Link to={`/field-notes/${note.slug}`} className="featured-reader__read">{t('走进这篇故事', 'Read this story')}<ArrowRight aria-hidden="true" size={18} /></Link>
+            <Link to={`/community-stories/${note.slug}`} className="featured-reader__read">{t('走进这篇故事', 'Read this story')}<ArrowRight aria-hidden="true" size={18} /></Link>
           </div>
         </div>
       </TabsContent>)}

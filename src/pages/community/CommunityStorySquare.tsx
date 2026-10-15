@@ -156,13 +156,13 @@ export default function CommunityStorySquare() {
           {featured ? (
             <>
               <article className="community-square-feature">
-                <Link to={`/field-notes/${featured.slug}`} className="community-square-feature__image">
+                <Link to={`/community-stories/${featured.slug}`} className="community-square-feature__image">
                   <img src={noteCover(featured)} alt="" />
                   <span>{categoryLabel(featured)}</span>
                 </Link>
                 <div className="community-square-feature__copy">
                   <p className="community-eyebrow">{t('最近发布', 'Latest story')}</p>
-                  <h2><Link to={`/field-notes/${featured.slug}`}>{featured.title}</Link></h2>
+                  <h2><Link to={`/community-stories/${featured.slug}`}>{featured.title}</Link></h2>
                   <p>{featured.excerpt || t('一段来自社群现场的真实记录。', 'A real account from within the community.')}</p>
                   <div className="community-square-story-meta">
                     <span>{noteAuthor(featured) || t('社群作者', 'Community author')}</span>
@@ -171,7 +171,7 @@ export default function CommunityStorySquare() {
                   <div className="flex flex-wrap gap-2">
                     {noteTags(featured).slice(0, 4).map((tag) => <span className="community-story-tag" key={tag.id}>{t(tag.name_zh, tag.name_en || tag.name_zh)}</span>)}
                   </div>
-                  <Link to={`/field-notes/${featured.slug}`} className="community-square-read-link">{t('阅读这篇文章', "Read this article")}<ArrowUpRight className="size-4" /></Link>
+                  <Link to={`/community-stories/${featured.slug}`} className="community-square-read-link">{t('阅读这篇文章', "Read this article")}<ArrowUpRight className="size-4" /></Link>
                 </div>
               </article>
 
@@ -184,10 +184,10 @@ export default function CommunityStorySquare() {
                   <div className="community-square-feed__list">
                     {feed.map((note, index) => (
                       <article className={`community-square-story ${index % 3 === 0 ? 'is-wide' : ''}`} key={note.id}>
-                        <Link to={`/field-notes/${note.slug}`} className="community-square-story__image"><img src={noteCover(note)} alt="" /></Link>
+                        <Link to={`/community-stories/${note.slug}`} className="community-square-story__image"><img src={noteCover(note)} alt="" /></Link>
                         <div className="community-square-story__copy">
                           <div className="community-square-story__kicker"><span>{String(index + 2).padStart(2, '0')}</span><span>{categoryLabel(note)}</span></div>
-                          <h3><Link to={`/field-notes/${note.slug}`}>{note.title}</Link></h3>
+                          <h3><Link to={`/community-stories/${note.slug}`}>{note.title}</Link></h3>
                           <p>{note.excerpt || t('一段来自社群现场的真实记录。', 'A real account from within the community.')}</p>
                           <div className="community-square-story-meta"><span>{noteAuthor(note) || t('社群作者', 'Community author')}</span><time>{formatDate(note.published_at || note.updated_at)}</time></div>
                           <div className="flex flex-wrap gap-1.5">{noteTags(note).slice(0, 3).map((tag) => <span className="community-story-tag" key={tag.id}>{t(tag.name_zh, tag.name_en || tag.name_zh)}</span>)}</div>

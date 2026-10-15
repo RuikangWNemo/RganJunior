@@ -19,7 +19,7 @@ export default function FieldNotes() {
   const { lang, t } = useLanguage();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const isAll = location.pathname === '/field-notes/all';
+  const isAll = location.pathname === '/community-stories/all';
   const dimension: ExplorerDimension = searchParams.get('browse') === 'topics' ? 'topics' : 'people';
   const search = searchParams.get('q') ?? '';
   const deferredSearch = useDeferredValue(search);
@@ -88,14 +88,14 @@ export default function FieldNotes() {
             </p>
             <nav className="flex gap-5 text-sm" aria-label={t('社区故事栏目', 'Community Stories sections')}>
               <Link
-                to="/field-notes"
+                to="/community-stories"
                 aria-current={!isAll ? 'page' : undefined}
                 className={!isAll ? 'font-medium text-primary' : 'text-muted-foreground transition hover:text-foreground'}
               >
                 {t('精选文章', 'Featured')}
               </Link>
               <Link
-                to="/field-notes/all"
+                to="/community-stories/all"
                 aria-current={isAll ? 'page' : undefined}
                 className={isAll ? 'font-medium text-primary' : 'text-muted-foreground transition hover:text-foreground'}
               >
@@ -114,7 +114,7 @@ export default function FieldNotes() {
                 {t('本期精选', "Current Featured Articles")}
               </h2>
               <Link
-                to="/field-notes/all"
+                to="/community-stories/all"
                 className="hidden min-h-11 items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/70 sm:inline-flex"
               >
                 {t('浏览全部', 'Browse all')}
