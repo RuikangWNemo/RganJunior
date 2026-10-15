@@ -1,0 +1,72 @@
+{
+  "base": "https://rgan-junior-roots-main-jtc28ntbe-rganjuniors-projects.vercel.app",
+  "verifiedCommit": "7093ae0e11b55708bf7f26265080989bf351f6ea",
+  "sourceFilesMatch": 4,
+  "totals": {
+    "recordedSince": "2026-08-16T13:34:41.652492+00:00",
+    "updatedAt": "2026-10-15T15:12:21.187772+00:00",
+    "totalSessions": 138,
+    "totalPageViews": 648
+  },
+  "summaryPost": 405,
+  "collectionGet": 405,
+  "redirects": [
+    {
+      "from": "/field-notes?person=founding-team",
+      "status": 308,
+      "location": "/community-stories?person=founding-team"
+    },
+    {
+      "from": "/field-notes/technology-ecology-stars",
+      "status": 308,
+      "location": "/community-stories/technology-ecology-stars"
+    }
+  ],
+  "assets": [
+    {
+      "path": "index.html",
+      "sha256": "cc56982be202e79f07c3d7759894852cfaef8f5c3601f4db0ee32af01a47bc2f",
+      "matches": true
+    },
+    {
+      "path": "assets/index-CuBHVZX2.js",
+      "sha256": "3f5246a7da5e0876e731c643f96bb5075acb16d5e5130ac6c73381f94d55ed43",
+      "matches": true
+    },
+    {
+      "path": "assets/index-IR4q60Kr.css",
+      "sha256": "695d8ec6293e3875208ff09cf27d589a6b2c4570768e95bf84df0ca913c41bc6",
+      "matches": true
+    },
+    {
+      "path": "assets/About-CxOknkOx.js",
+      "sha256": "351a6a1188d21f447054dd6242d7716a0b02a38a5f4b12b350e9917fdf9085eb",
+      "matches": true
+    },
+    {
+      "path": "assets/Actions-IqEaQYQu.js",
+      "sha256": "4fea4eb0255f8faa80f634b1a84c8c78193562e715e97ea8aa1b41beed259135",
+      "matches": true
+    },
+    {
+      "path": "assets/Impact-niSqAZsT.js",
+      "sha256": "4d38a2b6588a0137e9d6efd5810717d671ea8df598778491c088ffc85badf50f",
+      "matches": true
+    },
+    {
+      "path": "assets/ParticipantDirectory-Cgq2btZE.js",
+      "sha256": "6590ce6b4410ed7ce994531ed73c61f7c2bf45a5e1649977a29746af9aa3057d",
+      "matches": true
+    },
+    {
+      "path": "assets/JoinUs-6pcd1Bzg.js",
+      "sha256": "da62f2fdaf162d592d95210ed0271674362842cff77d3460c31b4eec4bf52e15",
+      "matches": true
+    },
+    {
+      "path": "assets/ImpactAwards-CjZiPWW7.js",
+      "sha256": "6e738e8630d8101984dd57b00e5e7c99015d8741453f6d1d255547be03538055",
+      "matches": true
+    }
+  ]
+}

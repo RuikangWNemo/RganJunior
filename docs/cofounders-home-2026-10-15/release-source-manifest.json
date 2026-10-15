@@ -1,0 +1,21 @@
+{
+  "commit": "7093ae0e11b55708bf7f26265080989bf351f6ea",
+  "files": [
+    {
+      "path": "src/pages/About.tsx",
+      "sha256": "9004e3b92b31ab9c2fdf35c516d040b49ad8772338b8647d1b04d5c68eb10837"
+    },
+    {
+      "path": "src/pages/About.test.tsx",
+      "sha256": "c3120522a9931d6baf1065ae227f1543fea5ef92b9b179f781751508f804fc57"
+    },
+    {
+      "path": "src/components/home/HomeFounderStory.tsx",
+      "sha256": "63867bdb495381094f017673e0e4a9285dfad8e4e38f1316be2bc10595156c21"
+    },
+    {
+      "path": "src/pages/Index.test.tsx",
+      "sha256": "548ac4553a0408519293e6549ff61ad48ab536df9cf8d52da310f4a2af4aa853"
+    }
+  ]
+}
