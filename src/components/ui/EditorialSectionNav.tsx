@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export interface EditorialSectionNavItem<Id extends string> {
   id: Id;
@@ -30,11 +30,16 @@ export default function EditorialSectionNav<Id extends string>({
     const activeLink = trackRef.current?.querySelector<HTMLElement>(
       `[data-editorial-section-id="${activeId}"]`,
     );
-    if (activeLink && typeof activeLink.scrollIntoView === 'function') {
-      activeLink.scrollIntoView({
-        behavior: reducedMotion ? 'auto' : 'smooth',
-        block: 'nearest',
-        inline: 'center',
+    const track = trackRef.current;
+    if (activeLink && track && typeof track.scrollTo === "function") {
+      // Center the tab inside its track without scrolling the page past the Hero.
+      const left =
+        activeLink.getBoundingClientRect().left -
+        track.getBoundingClientRect().left +
+        track.scrollLeft;
+      track.scrollTo({
+        left: left - (track.clientWidth - activeLink.clientWidth) / 2,
+        behavior: reducedMotion ? "auto" : "smooth",
       });
     }
   }, [activeId, reducedMotion]);
@@ -54,7 +59,7 @@ export default function EditorialSectionNav<Id extends string>({
               to={item.href}
               data-editorial-section-id={item.id}
               data-active={isActive}
-              aria-current={isActive ? 'location' : undefined}
+              aria-current={isActive ? "location" : undefined}
               onClick={() => onSelect(item.id)}
               className="editorial-section-nav__link"
             >
@@ -66,7 +71,12 @@ export default function EditorialSectionNav<Id extends string>({
                   transition={
                     reducedMotion
                       ? { duration: 0 }
-                      : { type: 'spring', stiffness: 360, damping: 32, mass: 0.72 }
+                      : {
+                          type: "spring",
+                          stiffness: 360,
+                          damping: 32,
+                          mass: 0.72,
+                        }
                   }
                   aria-hidden="true"
                 />

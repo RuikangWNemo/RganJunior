@@ -10428,7 +10428,8 @@
     min-height: 37rem;
     background:
       linear-gradient(145deg, rgb(0 102 68 / 0.78), rgb(4 52 39 / 0.88)),
-      url('/images/s06-linpan-aerial-overview.jpg') center / cover;
+      /* WebP source: /images/s06-linpan-aerial-overview.jpg */
+      url('/images/optimized/849a0cd8c60f87cf-1280.webp') center / cover;
   }
 
   .about-rgan-philosophy__grid article[data-pillar='vision'],
@@ -12950,6 +12951,19 @@
   .home-hero-navbar a:hover,
   .home-hero-navbar button:hover {
     color: hsl(var(--forest-foreground));
+  }
+
+  /* Popovers sit on light paper even over the dark home hero. */
+  .home-hero-navbar [role="menu"] [role="menuitem"],
+  .home-hero-navbar [role="menu"] .text-primary {
+    color: hsl(var(--primary));
+  }
+
+  .home-hero-navbar [role="menu"] [role="menuitem"]:hover,
+  .home-hero-navbar [role="menu"] [role="menuitem"]:focus-visible,
+  .home-hero-navbar [role="menu"] [role="menuitem"][aria-current] {
+    color: hsl(var(--primary));
+    background-color: hsl(var(--primary) / 0.11);
   }
 
   .home-editorial-shell {
@@ -18883,7 +18897,7 @@ html[lang='en'] .programs-editorial-intro h1 {
 
   .founder-story-closing__layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     gap: clamp(3rem, 7vw, 7rem);
     align-items: end;
   }
@@ -18892,7 +18906,14 @@ html[lang='en'] .programs-editorial-intro h1 {
     max-width: none;
     color: hsl(var(--founder-paper));
     font-size: 3.375rem;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .founder-story-closing__copy,
+  .founder-story-closing__actions {
+    min-width: 0;
+    max-width: 100%;
   }
 
   .founder-story-closing__actions {
@@ -18905,6 +18926,11 @@ html[lang='en'] .programs-editorial-intro h1 {
   .founder-story-action {
     display: inline-flex;
     min-height: 3.35rem;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: left;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
@@ -18921,6 +18947,7 @@ html[lang='en'] .programs-editorial-intro h1 {
   }
 
   .founder-story-action svg {
+    flex-shrink: 0;
     width: 1.05rem;
     height: 1.05rem;
     stroke-width: 1.8;
@@ -19488,4 +19515,75 @@ html[lang='en'] .programs-editorial-intro h1 {
     white-space: nowrap;
     text-wrap: nowrap;
   }
+}
+
+/* English sentences wrap within their content columns; Chinese keeps its editorial line breaks. */
+html:lang(en) .home-editorial .home-hero-grid {
+  transform: none;
+}
+
+.home-editorial .home-hero-subtitle--en {
+  max-width: min(100%, 36ch);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.home-founder-story__title--en .home-founder-story__title-line {
+  display: inline;
+  white-space: normal;
+}
+
+html:lang(en) .home-editorial .home-field-scene__headline {
+  white-space: normal;
+  text-wrap: balance;
+}
+
+html:lang(en) .home-editorial .home-field-scene__stats {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+html:lang(en) .home-field-scene__stats-program {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  line-height: 1.2;
+}
+
+html:lang(en) .home-editorial #seed-community .seed-community__headline-stack .seed-community__title {
+  max-width: 22ch;
+  white-space: normal;
+  text-wrap: balance;
+}
+
+html:lang(en) .home-editorial #seed-community .seed-community__headline-stack .seed-community__lead {
+  max-width: 44ch;
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+.founder-story-page--en .founder-story-closing__copy h2 {
+  white-space: normal;
+  text-wrap: balance;
+}
+
+@media (max-width: 767px) {
+  html:lang(en) .home-field-scene__stats-program {
+    flex-basis: 100%;
+  }
+
+  html:lang(en) .home-field-scene__stats-separator {
+    display: none;
+  }
+}
+
+html:lang(en) .join-editorial-role__hint {
+  width: auto;
+  max-width: 14rem;
+  text-wrap: pretty;
+}
+
+html:lang(en) .join-editorial-role__title {
+  white-space: normal;
+  text-wrap: balance;
 }

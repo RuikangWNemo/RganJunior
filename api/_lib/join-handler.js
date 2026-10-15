@@ -2,8 +2,8 @@
 const CONTACT_EMAIL = 'contact@rganjunior.org';
 
 const AUDIENCE_LABELS = {
-  'join-youth': '成为阿柑少年 / Youth',
-  'join-parents': '成为阿柑家长 / Parent',
+  'join-youth': "加入阿柑少年 / Join R-Gan Junior",
+  'join-parents': '加入守护团 / Guardian Circle',
   'join-partners': '成为合作伙伴 / Partner',
 };
 

@@ -50,7 +50,7 @@ describe('homepage editorial refresh', () => {
     });
     expect(founderHeading).toBeInTheDocument();
     expect(founderHeading.querySelectorAll('.home-founder-story__title-line')).toHaveLength(2);
-    const communityHeading = screen.getByRole('heading', { level: 2, name: '成为阿柑少年、家长或伙伴。' });
+    const communityHeading = screen.getByRole('heading', { level: 2, name: '与阿柑少年、守护团和合作伙伴一起同行。' });
     const communityLead = screen.getByText('种下一段长期同行的关系，一起走进真实世界。');
     expect(communityHeading).toHaveClass('seed-community__title');
     expect(communityLead).toHaveClass('seed-community__lead');
@@ -133,24 +133,20 @@ describe('homepage editorial refresh', () => {
 
     const heroSubtitle = container.querySelector('.home-hero-subtitle');
     expect(heroSubtitle).toHaveClass('home-hero-subtitle--en');
-    expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')).toHaveLength(2);
-    expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')[0]).toHaveTextContent(
-      'Return to nature, everyday life,',
-    );
-    expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')[1]).toHaveTextContent(
-      'and the real world. Grow strength from within.',
-    );
+    const approvedSubtitle = 'Return to nature, everyday life, and the real world, and grow strength from within.';
+    expect(heroSubtitle).toHaveTextContent(approvedSubtitle);
+    expect(heroSubtitle).toHaveAttribute('aria-label', approvedSubtitle);
 
     expect(
       screen.getByRole('heading', { level: 2, name: 'Recently, we lived together for 5 days and 4 nights' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: 'What we believe' })).toBeInTheDocument();
     expect(screen.queryByText('Learning by living')).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: 'Our programmes' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Our programs' })).toBeInTheDocument();
     expect(screen.queryByText('How to take part in R-Gan Junior')).not.toBeInTheDocument();
     const founderHeading = screen.getByRole('heading', {
       level: 2,
-      name: "One young person's growth became a shared action.",
+      name: "What began as one young person's growth has gradually become collective action.",
     });
     expect(founderHeading.querySelectorAll('.home-founder-story__title-line')).toHaveLength(2);
     expect(container.querySelector('.home-field-scene__headline')).toHaveClass('home-field-scene__headline--en');

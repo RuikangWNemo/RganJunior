@@ -24,7 +24,7 @@ type IdentitySelection = {
 
 export default function CommunityAdminApplications() {
   const { permissions = [], refreshCommunity, user } = useAuth();
-  const { lang, t, status } = useCommunityUi();
+  const { t, status } = useCommunityUi();
   const [applications, setApplications] = useState<Awaited<ReturnType<typeof listMembershipApplications>>>([]);
   const [identityOptions, setIdentityOptions] = useState<ReviewIdentityOption[]>([]);
   const [identitySelections, setIdentitySelections] = useState<Record<number, IdentitySelection>>({});
@@ -149,22 +149,22 @@ export default function CommunityAdminApplications() {
   const verifyIdentity = async (applicationId: number, userId: string) => {
     if (busyApplicationId !== null) return;
     const note = identityNotes[applicationId]?.trim();
-    if (!note) { setError(t('身份核验必须填写工作人员依据。', 'An identity review note is required.')); return; }
+    if (!note) { setError(t('身份核验必须填写工作人员依据。', 'A staff note documenting identity verification is required.')); return; }
     setBusyApplicationId(applicationId);
     setError(null);
     try {
       await reviewMinorIdentity(userId, 'verify', 'other', note);
       await load();
-      setNotice({ message: t('身份核验状态已更新。', 'Identity review status updated.'), showDashboard: false });
+      setNotice({ message: t('身份核验状态已更新。', 'Identity verification status updated.'), showDashboard: false });
     } catch (verifyError) {
-      setError(verifyError instanceof Error ? verifyError.message : t('身份核验保存失败。', 'Could not save the identity review.'));
+      setError(verifyError instanceof Error ? verifyError.message : t('身份核验保存失败。', 'Could not save the identity verification result.'));
     } finally {
       setBusyApplicationId(null);
     }
   };
 
   return (
-    <CommunitySurface eyebrow="Admin" title={t('审核社群申请。', 'Review membership applications.')} description={t('敏感年龄、监护人和身份状态只对具备敏感审核权限的角色显示。', 'Sensitive age, guardian, and identity states are only shown to roles with review permission.')} width="wide">
+    <CommunitySurface eyebrow="Admin" title={t('审核社群申请。', 'Review membership applications.')} description={t('敏感年龄、监护人和身份状态只对具备敏感审核权限的角色显示。', "Sensitive age information, guardian details, and identity verification status are shown only to roles with permission to review sensitive information.")} width="wide">
       {error ? <div className="mb-5"><CommunityErrorState message={error} onRetry={() => void load()} /></div> : null}
       {notice ? (
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-primary/10 p-4 text-sm text-primary" aria-live="polite">
@@ -203,20 +203,20 @@ export default function CommunityAdminApplications() {
               </section>
               <div className="mt-4 rounded-2xl border border-primary/10 bg-primary/[0.04] p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary/60">{t('星球身份确认', 'Planet identity confirmation')}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-primary/60">{t('星球身份确认', 'Confirm community roles')}</p>
                   <p className="text-xs text-foreground/50">{t('自报身份仅供审核参考', 'Self-reported identities are review context only')}</p>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2 text-xs">
                   <span className="rounded-full bg-[hsl(var(--community-orange)/0.12)] px-3 py-1 text-[hsl(var(--community-orange))]">
-                    {t('自报主身份', 'Declared primary')}: {application.declared_primary_identity_slug || t('未填写', 'Missing')}
+                    {t('自报主身份', "Declared primary community role")}: {application.declared_primary_identity_slug || t('未填写', 'Missing')}
                   </span>
                   {(application.declared_secondary_identity_slugs || []).map((slug) => (
-                    <span key={slug} className="rounded-full bg-secondary px-3 py-1">{t('自报副身份', 'Declared secondary')}: {slug}</span>
+                    <span key={slug} className="rounded-full bg-secondary px-3 py-1">{t('自报副身份', "Declared additional community roles")}: {slug}</span>
                   ))}
                 </div>
                 <div className="mt-4 grid gap-4 md:grid-cols-[minmax(12rem,0.8fr)_minmax(0,1.2fr)]">
                   <label className="space-y-2 text-sm font-semibold">
-                    <span>{t('确认主身份 *', 'Confirmed primary *')}</span>
+                    <span>{t('确认主身份 *', "Confirmed primary community role *")}</span>
                     <select
                       className={communityInputClass}
                       value={identitySelection.primary}
@@ -229,14 +229,14 @@ export default function CommunityAdminApplications() {
                         },
                       }))}
                     >
-                      <option value="">{t('请选择身份', 'Choose identity')}</option>
+                      <option value="">{t('请选择身份', "Choose a community role")}</option>
                       {identityOptions.map((option) => (
-                        <option key={option.slug} value={option.slug}>{lang === 'zh' ? option.name_zh : option.name_en || option.name_zh}</option>
+                        <option key={option.slug} value={option.slug}>{t(option.name_zh, option.name_en || option.name_zh)}</option>
                       ))}
                     </select>
                   </label>
                   <fieldset>
-                    <legend className="text-sm font-semibold">{t('确认副身份', 'Confirmed secondary')}</legend>
+                    <legend className="text-sm font-semibold">{t('确认副身份', "Confirmed additional community roles")}</legend>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {identityOptions.filter((option) => option.slug !== identitySelection.primary).map((option) => {
                         const checked = identitySelection.secondary.includes(option.slug);
@@ -258,7 +258,7 @@ export default function CommunityAdminApplications() {
                               }))}
                             />
                             <span className="size-2 rounded-full" style={{ backgroundColor: option.color || undefined }} aria-hidden="true" />
-                            {lang === 'zh' ? option.name_zh : option.name_en || option.name_zh}
+                            {t(option.name_zh, option.name_en || option.name_zh)}
                           </label>
                         );
                       })}
@@ -267,8 +267,8 @@ export default function CommunityAdminApplications() {
                 </div>
               </div>
               {isManualGuardianFlow && isUnder14 && application.status === 'pending_guardian' ? <ManualGuardianReviewPanel applicationId={application.id} disabled={busyApplicationId !== null && !isBusy} onBusyChange={(nextBusy) => setBusyApplicationId(nextBusy ? application.id : null)} onUpdated={load} /> : null}
-              {needsIdentityReview ? <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-primary/[0.06] p-4 sm:flex-row"><input className={communityInputClass} disabled={busyApplicationId !== null} placeholder={t('身份核验依据（不得粘贴证件全文）', 'Identity review basis (do not paste full ID details)')} value={identityNotes[application.id] || ''} onChange={(event) => setIdentityNotes({ ...identityNotes, [application.id]: event.target.value })} /><button type="button" className={communitySecondaryButtonClass} disabled={busyApplicationId !== null} onClick={() => void verifyIdentity(application.id, application.user_id)}>{t('标记身份已核验', 'Mark identity verified')}</button></div> : null}
-              {approvalBlocked ? <p className="mt-3 text-xs text-[hsl(var(--community-orange))]">{!identitySelection.primary ? t('需先确认一个主身份，才能通过申请。', 'Confirm one primary identity before approval.') : isUnder14 && application.guardian_consent_status !== 'verified' ? t('需先完成监护人确认与身份核验，才能通过申请。', 'Guardian confirmation and identity review are required before approval.') : t('需先完成身份核验，才能通过申请。', 'Identity review is required before approval.')}</p> : null}
+              {needsIdentityReview ? <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-primary/[0.06] p-4 sm:flex-row"><input className={communityInputClass} disabled={busyApplicationId !== null} placeholder={t('身份核验依据（不得粘贴证件全文）', 'Identity verification evidence (do not paste full ID details)')} value={identityNotes[application.id] || ''} onChange={(event) => setIdentityNotes({ ...identityNotes, [application.id]: event.target.value })} /><button type="button" className={communitySecondaryButtonClass} disabled={busyApplicationId !== null} onClick={() => void verifyIdentity(application.id, application.user_id)}>{t('标记身份已核验', 'Mark identity verified')}</button></div> : null}
+              {approvalBlocked ? <p className="mt-3 text-xs text-[hsl(var(--community-orange))]">{!identitySelection.primary ? t('需先确认一个主身份，才能通过申请。', 'Confirm one primary community role before approving the application.') : isUnder14 && application.guardian_consent_status !== 'verified' ? t('需先完成监护人确认与身份核验，才能通过申请。', 'Guardian confirmation and identity verification are required before approval.') : t('需先完成身份核验，才能通过申请。', 'Identity verification is required before approval.')}</p> : null}
               <input className={`${communityInputClass} mt-4`} disabled={busyApplicationId !== null} placeholder={t('给申请人的说明（必填）', 'Note to applicant (required)')} value={messages[application.id] || ''} onChange={(event) => setMessages({ ...messages, [application.id]: event.target.value })} />
               <div className="mt-3 flex flex-wrap gap-2"><button type="button" className={communitySecondaryButtonClass} disabled={busyApplicationId !== null} onClick={() => void act(application.id, 'changes')}>{t('请求补件', 'Request details')}</button><button type="button" className={communityPrimaryButtonClass} disabled={busyApplicationId !== null || approvalBlocked} onClick={() => void act(application.id, 'approve')}>{isBusy ? t('正在处理…', 'Working…') : t('通过', 'Approve')}</button><button type="button" className="inline-flex min-h-12 items-center rounded-full border border-destructive/30 px-5 text-sm text-destructive disabled:cursor-not-allowed disabled:opacity-50" disabled={busyApplicationId !== null} onClick={() => void act(application.id, 'reject')}>{t('拒绝', 'Reject')}</button></div>
             </article>

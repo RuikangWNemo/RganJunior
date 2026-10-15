@@ -1,5 +1,22 @@
 # Task Plan
 
+## 2026-10-13 American English and simple approval sheet
+- The normalization self-check caught a case-normalization mismatch for en-GB before any file writes; changed the lookup key to lowercase.
+- [ ] Normalize British spelling in local website/email/article copy and English date locale; preserve asset paths, identifiers and unrelated work.
+- [ ] Verify remaining candidate spellings and run local checks/build.
+- [ ] Deliver one clear four-column spreadsheet with confirmed translations prefilled and essential pending items only.
+- Latest user explicitly authorizes local wording correction; no production deployment is requested.
+
+## 2026-10-13 English translation audit
+- Extraction first run used one extra parent directory for TypeScript import; corrected to the repository dependency location.
+- AST field locator needed a SourceFile parent guard; corrected and extraction completed. Expanded named bilingual fields and zh-CN email locale after inventory cross-check.
+- [x] Extract local bilingual UI, content, metadata, email and article pairs; distinguish live routes, legacy content and dynamic limitations.
+- [x] Review important terms and likely translation issues with exact source locations.
+- [x] Deliver and visually verify a filterable Excel correction workbook with editable final wording.
+- Review enrichment required a missing-key guard for fixed JSX entries; corrected. Browser AX indices produced one shadow-root lookup error; used DOM observations and semantic locators for the public list instead.
+- Delivered 111 review items, 68 terminology entries, 2,762 bilingual records plus 64 fixed-English records, and 84 dynamic/complex entry points. Dynamic production content remains a clearly recorded coverage limitation because the public article list failed to load.
+- Scope: review only; no website changes, deployments or production writes.
+
 ## Goal
 Reduce cold-load delays for public-site fonts, photographs, JavaScript, and CSS while preserving the complete handwriting font as an on-demand fallback for future content.
 
@@ -990,3 +1007,40 @@ Production database rollout is complete and verified; the exact PR head is being
 | Error | Attempt | Resolution |
 |-------|---------|------------|
 | `test -d .codegraph` exited 1 | Checked required CodeGraph availability before source search | `.codegraph/` is absent, so use `rg` and direct source inspection |
+
+## 2026-10-13 简化翻译确认表与美式英文（已完成）
+- [x] 本地19个文案文件共44处英式拼写／日期区域设置统一为美式英文。
+- [x] 309个源码文件重新扫描，无字典覆盖的残留英式文案；类型检查、本地构建与43项相关测试通过。
+- [x] 已交付单页四列简表：24项待确认、12项已确认；只填写黄色列。
+- 未部署；动态数据库文章及图片内文字未纳入这次本地拼写确认。
+
+## 2026-10-14 英文语境全面复核（完成本地修订）
+- [x] 读取用户填写返回的简表，以新决定覆盖旧译名。
+- [x] 对照2,849条双语记录、64条固定英文和84个动态入口，逐段检查四篇英文正文。
+- [x] 修正断句、修饰关系、直译、增减义、资格、地名和操作后果，并加入精确术语显示规则。
+- [x] 只读核查公开文章及动态身份、类别和标签，未写生产数据库。
+- [x] 314项测试、类型检查、本地构建通过；相关 lint 无错误。
+- [x] 单页四列候选表已导出并视觉检查，37项、33项待填写。
+- 事实和正式专名的未决项已放进表格；尚未部署。
+
+2026-10-14 第三轮复核：补齐营地邀请信整篇英文（122个含中文片段与21张图片替代文本），修正原文回退提示判断和语言标记。调整天时故事中的时间范围、指代及增义；明确成员可见范围、社区角色与身份核验，统一编辑器和审核中的动态名称。315项测试（86文件）、应用类型检查、本地构建及相关lint通过；图片结构与顺序不变，未部署。详细记录：docs/translation-context-audit-2026-10-13/support/round3/README.md。
+
+2026-10-14 第四轮严格翻译验收：重新读取用户填回表D列与首页Word接受修订文本；修复26处/17文件，包括旧清单REV-026、REV-034、REV-046、REV-062、REV-063残留、角色混称及语境偏差。16组旧译检索无残留，311文件美式拼写扫描无命中；317项测试/86文件、应用类型检查、lint、本地构建通过。首页主句补and建议已询问尚未答复，保留原句。原文事实、专名与覆盖问题仍未关闭，不能宣布专业定稿。未部署。详见docs/translation-context-audit-2026-10-13/严格复核结果-2026-10-14.md。
+
+## 2026-10-14 英文布局溢出修复
+- [x] 核对截图、线上基线及主工作区未发布修改；复现 Story 标题越过按钮列。
+- [ ] 修复 Story / Field Notes，排查公开页面相同宽度约束错误。
+- [ ] 中英文、多尺寸浏览器检查和本机生产构建。
+- [ ] 预构建发布、正式站复核及截图证据。
+
+## 2026-10-14 布局与联合发布完成
+- [x] 确认线上旧程序拼写与本地worktree差异，协调唯一发布者及共同基线。
+- [x] 修复Story/Field Notes及首页、Impact、Join、Programs同类问题；补齐美式拼写。
+- [x] 64组中英文边界与18组生产构建页面检查、48测试、类型/lint、Node24本机构建通过。
+- [x] 统一提交706729a，1053源码与构建副本一致，prebuilt部署并promote dpl_Aq7DqdV4YfcMF2fGxafFZ6BDKhQn；正式域名及页面验证完成。预览进程已停止，无数据库/ECS/GitHub构建操作。
+
+## 2026-10-14 精选阅读设计与全文章英文对照
+- [x] 审查现有精选及7篇公开文章，确定交互排版。
+- [x] 完成精选阅读组件并验证中英文与手机浏览。
+- [x] 补译两篇新文章，接入全部7篇英文标题、摘要、正文和图片说明，保留中文对照。
+- [x] 本机测试/构建，统一版本预构建发布，正式站逐篇语言核验。

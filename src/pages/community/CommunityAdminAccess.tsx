@@ -65,7 +65,7 @@ const RESERVED_ROLE_SLUGS = new Set(['admin', 'super_admin']);
 
 const roleLabels: Record<string, { zh: string; en: string }> = {
   registered_user: { zh: '注册用户', en: 'Registered user' },
-  community_member: { zh: '正式成员', en: 'Community member' },
+  community_member: { zh: '正式成员', en: "Member" },
   facilitator: { zh: '共练带领者', en: 'Facilitator' },
   editor: { zh: '编辑', en: 'Editor' },
   admin: { zh: '管理员', en: 'Administrator' },
@@ -295,7 +295,7 @@ export default function CommunityAdminAccess() {
           : t('确认撤销角色', 'Confirm role revocation');
 
   const actionDescription = pendingAction?.kind === 'save-permissions'
-    ? t('保存后，所有管理员的有效权限会立即按新权限集计算。', 'All administrators will immediately use the new permission set after saving.')
+    ? t('保存后，所有管理员的有效权限会立即按新权限集计算。', "After saving, all administrators’ effective permissions will immediately be recalculated using the new permission set.")
     : pendingAction && 'user' in pendingAction
       ? t(`目标账号：${userName(pendingAction.user)}`, `Target account: ${userName(pendingAction.user)}`)
       : '';
@@ -340,7 +340,7 @@ export default function CommunityAdminAccess() {
     <CommunitySurface
       eyebrow="Access control"
       title={t('会员与授权管理。', 'Members and access control.')}
-      description={t('管理员负责会员运营；只有超级管理员可以任命管理员并调整管理员权限。所有操作由数据库校验并写入审计记录。', 'Administrators operate memberships. Only super administrators can appoint administrators and change administrator permissions. Every action is database-checked and audited.')}
+      description={t('管理员负责会员运营；只有超级管理员可以任命管理员并调整管理员权限。所有操作由数据库校验并写入审计记录。', "Administrators manage memberships. Only super administrators can appoint administrators and change administrator permissions. Every action is checked by the database and recorded in the audit log.")}
       width="wide"
       action={(
         <button type="button" className={communitySecondaryButtonClass} disabled={loading || busyKey !== null} onClick={() => void loadWorkspace()}>

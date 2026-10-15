@@ -47,7 +47,7 @@ describe('branded auth email templates', () => {
       token="123456"
     />);
 
-    expect(signIn.text).toMatch(/Your R-Gan Junior sign-in code/i);
+    expect(signIn.text).toMatch(/Welcome back/i);
     expect(signIn.text).toContain('123 456');
     expect(magic.text).toContain('Sign in to R-Gan Junior');
     expect(magic.text).toContain('123 456');

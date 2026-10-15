@@ -61,7 +61,7 @@ describe('CommunityStorySquare', () => {
     expect(screen.getByRole('heading', { name: '外婆的茶厨房' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '管理我的文章' })).toHaveAttribute('href', '/community/stories');
     expect(screen.getByRole('link', { name: '管理发布与精选' })).toHaveAttribute('href', '/community/admin/field-notes');
-    expect(screen.getByRole('link', { name: '阅读这篇文章' })).toHaveAttribute('href', '/field-notes/tree-seasons');
+    expect(screen.getByRole('link', { name: '阅读这篇文章' })).toHaveAttribute('href', '/community-stories/tree-seasons');
   });
 
   it('filters stories by category and keyword', async () => {

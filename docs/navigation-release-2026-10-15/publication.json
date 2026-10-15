@@ -1,0 +1,62 @@
+{
+  "applicationCommit": "f7a1ff01d9856f95384d9d24d2c6ade3b5709ab7",
+  "previousApplication": "836cd70",
+  "previousDeployment": "dpl_8pctJRcZpLFNGrRjCjyHVo3sA6Vx",
+  "deployment": {
+    "id": "dpl_pQgBAicRoRRq9knbZ27knfihdZKD",
+    "url": "https://rgan-junior-roots-main-lwqampx4d-rganjuniors-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/rganjuniors-projects/rgan-junior-roots-main/pQgBAicRoRRq9knbZ27knfihdZKD",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_pQgBAicRoRRq9knbZ27knfihdZKD"
+  },
+  "domain": "https://www.rganjunior.org",
+  "prebuilt": true,
+  "testsPassed": 335,
+  "appTypes": "passed",
+  "lintErrors": 0,
+  "lintExistingWarnings": 9,
+  "mainMergedTypes": "passed",
+  "checks": [
+    {
+      "path": "index.html",
+      "sha256": "68132c5080aa6a35f9f1579375baef7993380d94fc418e5d297ef7dd003d68d7",
+      "matches": true
+    },
+    {
+      "path": "assets/index-BNsR0nHv.js",
+      "sha256": "b4b75b348896eee6b12c730ccf06919366f4c2ed2b8dda76f99ff5b3d2ef63e2",
+      "matches": true
+    },
+    {
+      "path": "assets/index-D8v9Zb3T.css",
+      "sha256": "95cb0bb5dbf0c2e4d380b2af916ccbff695f673eadf675a4547394d299ddbe81",
+      "matches": true
+    },
+    {
+      "path": "assets/FieldNotes-GsAme2tP.js",
+      "sha256": "ef6c9e982fa5cfb4d7e3742d2f15232b043aa5edd2703fb423bd8820c1e67ded",
+      "matches": true
+    },
+    {
+      "path": "assets/FieldNoteArticle-B0oRfEDJ.js",
+      "sha256": "4b5db93d2e4a6491890f3caf336db0dc2a3817b509daeed19570d9fb3a918e45",
+      "matches": true
+    },
+    {
+      "from": "/field-notes?person=founding-team",
+      "location": "/community-stories?person=founding-team",
+      "status": 308
+    },
+    {
+      "from": "/field-notes/all?person=founding-team",
+      "location": "/community-stories/all?person=founding-team",
+      "status": 308
+    },
+    {
+      "from": "/field-notes/summer-co-creation-camp-invitation",
+      "location": "/community-stories/summer-co-creation-camp-invitation",
+      "status": 308
+    }
+  ]
+}

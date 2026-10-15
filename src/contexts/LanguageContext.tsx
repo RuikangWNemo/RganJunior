@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
+import { confirmedTranslation } from '@/lib/confirmedTranslations';
 
 type Language = 'zh' | 'en';
 
@@ -33,7 +34,7 @@ export function LanguageProvider({ children, initialLanguage }: { children: Reac
     }, 250);
   }, [lang]);
 
-  const t = useCallback((zh: string, en: string) => (lang === 'zh' ? zh : en), [lang]);
+  const t = useCallback((zh: string, en: string) => confirmedTranslation(zh, en, lang), [lang]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t, isTransitioning }}>

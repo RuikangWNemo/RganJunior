@@ -1,5 +1,5 @@
 import { getSupabaseClient } from '@/lib/supabase/client';
-import type { Tables, TablesInsert, TablesUpdate } from '@/lib/supabase/database.types';
+import type { Database, Json, Tables, TablesInsert, TablesUpdate } from '@/lib/supabase/database.types';
 import { BackendServiceError, throwIfSupabaseError } from '@/lib/supabase/errors';
 import { refreshStoredMediaUrls } from '@/services/media';
 
@@ -41,6 +41,43 @@ export type CommunitySquareFieldNote = ManagedFieldNote & {
 };
 
 export type EditorialFieldNote = CommunitySquareFieldNote;
+export type ArticleAuthor = Database['public']['Functions']['list_article_authors_admin']['Returns'][number];
+
+export interface ImportableArticle {
+  slug: string;
+  title: string;
+  authorSlug: string;
+  authorName: string;
+  requiresAccount: boolean;
+  excerpt: string;
+  content: string;
+  contentHtml: string;
+  contentJson: Json;
+}
+
+export async function listArticleAuthors() {
+  const { data, error } = await getSupabaseClient().rpc('list_article_authors_admin');
+  throwIfSupabaseError(error, 'ARTICLE_AUTHORS_READ_FAILED');
+  return data ?? [];
+}
+
+export async function importAuthorArticle(article: ImportableArticle, authorPersonId?: number) {
+  const { data, error } = await getSupabaseClient().rpc('import_author_article', {
+    article: article as unknown as Json,
+    ...(authorPersonId ? { author_person_id: authorPersonId } : {}),
+  });
+  throwIfSupabaseError(error, 'ARTICLE_IMPORT_FAILED');
+  return data;
+}
+
+export async function linkPendingArticleAuthor(sourcePersonId: number, targetPersonId: number) {
+  const { data, error } = await getSupabaseClient().rpc('link_pending_article_author', {
+    source_person_id: sourcePersonId,
+    target_person_id: targetPersonId,
+  });
+  throwIfSupabaseError(error, 'ARTICLE_AUTHOR_LINK_FAILED');
+  return data;
+}
 
 export interface FieldNoteMetadata {
   categoryId: number | null;
@@ -78,6 +115,20 @@ async function authenticatedUserId() {
   return userId;
 }
 
+async function withPublishedBylines(notes: CommunitySquareFieldNote[]) {
+  if (!notes.length) return notes;
+  const { data, error } = await getSupabaseClient().rpc('list_published_field_note_authors', {
+    target_note_ids: notes.map((note) => note.id),
+  });
+  throwIfSupabaseError(error, 'PUBLIC_ARTICLE_AUTHORS_READ_FAILED');
+  return notes.map((note) => ({ ...note, field_note_authors: (data ?? [])
+    .filter((row) => row.field_note_id === note.id)
+    .map((row) => ({ author_order: row.author_order, contribution_role: 'author', people: {
+      id: row.person_id, slug: row.slug, display_name: row.display_name, nature_name: row.nature_name,
+    } })),
+  }));
+}
+
 export async function listPublishedFieldNotes(language?: 'zh' | 'en', limit = 24) {
   let query = getSupabaseClient()
     .from('field_notes')
@@ -90,7 +141,7 @@ export async function listPublishedFieldNotes(language?: 'zh' | 'en', limit = 24
   if (language) query = query.eq('language', language);
   const { data, error } = await query;
   throwIfSupabaseError(error, 'FIELD_NOTES_READ_FAILED');
-  return (data ?? []) as unknown as CommunitySquareFieldNote[];
+  return withPublishedBylines((data ?? []) as unknown as CommunitySquareFieldNote[]);
 }
 
 export async function getFieldNoteBySlug(slug: string) {
@@ -102,7 +153,7 @@ export async function getFieldNoteBySlug(slug: string) {
     .eq('visibility', 'public')
     .maybeSingle();
   throwIfSupabaseError(error, 'FIELD_NOTE_READ_FAILED');
-  return data as unknown as CommunitySquareFieldNote | null;
+  return data ? (await withPublishedBylines([data as unknown as CommunitySquareFieldNote]))[0] : null;
 }
 
 export async function createFieldNote(input: TablesInsert<'field_notes'>) {
@@ -131,7 +182,10 @@ export async function transitionFieldNote(id: number, status: FieldNoteStatus) {
 }
 
 export async function listMyFieldNotes() {
-  const userId = await authenticatedUserId();
+  await authenticatedUserId();
+  const { data: ids, error: idsError } = await getSupabaseClient().rpc('list_my_field_note_ids');
+  throwIfSupabaseError(idsError, 'MY_FIELD_NOTES_READ_FAILED');
+  if (!ids?.length) return [] as ManagedFieldNote[];
   const { data, error } = await getSupabaseClient()
     .from('field_notes')
     .select(`
@@ -140,7 +194,7 @@ export async function listMyFieldNotes() {
       field_note_topics(topic_id, topics(*)),
       field_note_media(usage_role, media_assets(*))
     `)
-    .eq('created_by', userId)
+    .in('id', ids.map((row) => row.id))
     .order('updated_at', { ascending: false });
   throwIfSupabaseError(error, 'MY_FIELD_NOTES_READ_FAILED');
   return (data ?? []) as unknown as ManagedFieldNote[];
@@ -154,7 +208,7 @@ export async function listEditorialFieldNotes() {
   const { data, error } = await getSupabaseClient()
     .from('field_notes')
     .select(storyRelations)
-    .in('status', ['submitted', 'in_review', 'changes_requested', 'approved', 'published'])
+    .in('status', ['draft', 'submitted', 'in_review', 'changes_requested', 'approved', 'published'])
     .order('updated_at', { ascending: false });
   throwIfSupabaseError(error, 'EDITORIAL_FIELD_NOTES_READ_FAILED');
   return (data ?? []) as unknown as EditorialFieldNote[];

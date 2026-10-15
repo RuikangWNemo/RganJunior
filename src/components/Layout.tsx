@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const isEditorialRoute =
     location.pathname.startsWith('/about') ||
     location.pathname === '/story' ||
-    location.pathname.startsWith('/field-notes') ||
+    location.pathname.startsWith('/community-stories') ||
     location.pathname.startsWith('/impact') ||
     location.pathname.startsWith('/voices');
   const showMascotCompanion =
@@ -75,7 +75,11 @@ export default function Layout({ children }: { children: ReactNode }) {
     return () => window.clearTimeout(timeoutId);
   }, [location.pathname, location.hash, reducedMotion]);
 
-  const routeContent = (
+  const routeContent = reducedMotion ? (
+    <main className="route-stage flex-1" data-route-transition="stable">
+      {children}
+    </main>
+  ) : (
     <div className="route-stage flex-1">
       <AnimatePresence initial={false} mode="popLayout">
         <motion.main

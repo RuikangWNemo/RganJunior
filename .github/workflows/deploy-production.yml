@@ -1,38 +1,18 @@
-name: Deploy production
+name: Production release instructions
 
 on:
-  workflow_run:
-    workflows:
-      - CI
-    types:
-      - completed
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: production-deploy
-  cancel-in-progress: false
-
 jobs:
-  deploy:
-    name: Trigger Vercel production deployment
-    if: >
-      (github.event_name == 'workflow_run' &&
-       github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.event == 'push' &&
-       github.event.workflow_run.head_branch == 'main') ||
-      (github.event_name == 'workflow_dispatch' &&
-       github.actor == 'RuikangWNemo')
+  instructions:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    environment: production
-
     steps:
-      - name: Trigger main Deploy Hook
-        env:
-          DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_PRODUCTION }}
-        run: >-
-          curl --fail --silent --show-error --output /dev/null
-          --request POST "$DEPLOY_HOOK"
+      - name: Use verified local artifacts
+        run: |
+          echo "Build and verify on the operator machine."
+          echo "Upload with vercel deploy --prebuilt --prod --skip-domain."
+          echo "Verify the staged production deployment, then vercel promote it."
+          echo "This workflow does not build, deploy, or call a Deploy Hook."

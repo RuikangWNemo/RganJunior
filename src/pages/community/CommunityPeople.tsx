@@ -1,3 +1,4 @@
+import { ParticipantEntry } from '@/components/participants/ParticipantRoster';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
@@ -264,9 +265,10 @@ export default function CommunityPeople() {
     <CommunitySurface
       eyebrow="Connected people planets"
       title={t('三个星球，沿着支持彼此连通。', 'Three planets, connected through support.')}
-      description={t('默认从阿柑少年圈出发，也可以切换到成人支持团队或家长守护团。交叠位置来自已确认的多身份成员。', 'Start in the R-Gan Junior Circle, then switch to adult support or parent guardians. Overlaps reflect confirmed multi-identity members.')}
+      description={t("默认从阿柑少年圈出发，也可以查看社群支持或守护团。交叠位置来自已确认的多身份成员。", "Start with R-Gan Junior, then explore Community Support or the Guardian Circle. Overlapping members have confirmed roles in more than one group.")}
       width="wide"
     >
+      <ParticipantEntry source="community" />
       {loading ? <CommunityLoadingState label={t('正在寻找社群伙伴…', 'Finding community members…')} variant="cards" /> : null}
       {!loading && error ? <CommunityErrorState message={error} onRetry={load} /> : null}
       {!loading && !error ? (
@@ -317,7 +319,7 @@ export default function CommunityPeople() {
                     <Suspense fallback={<CommunityPlanetLoading t={t} />}>
                       <CommunityPeoplePlanet
                         people={filteredPeople}
-                        ariaLabel={`${lang === 'zh' ? selectedPlanetConfig.zh : selectedPlanetConfig.en} · ${t('可旋转的伙伴星球', 'Rotatable community people planet')}`}
+                        ariaLabel={`${lang === 'zh' ? selectedPlanetConfig.zh : selectedPlanetConfig.en} · ${t('可旋转的伙伴星球', "Interactive community planet")}`}
                         selectedPersonId={selectedPersonId}
                         ownPersonId={ownPersonId}
                         autoRotate={autoRotate}
@@ -329,7 +331,7 @@ export default function CommunityPeople() {
                   </CommunityPeoplePlanetBoundary>
 
                   <div className="community-people-planet__hint" aria-hidden="true">
-                    <MousePointer2 className="size-3.5" />{t('拖拽夜空 · 点击头像', 'Drag the sky · Select an Avatar')}
+                    <MousePointer2 className="size-3.5" />{t('拖拽夜空 · 点击头像', "Drag the sky · Select a profile picture")}
                   </div>
 
                   <CommunityPersonDetail

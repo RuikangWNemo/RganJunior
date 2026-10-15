@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ScrollProgressReveal from '@/components/ui/ScrollProgressReveal';
 
@@ -15,7 +16,7 @@ const featuredPhoto: PhotoMoment = {
   zhTitle: '果园晨雾中的田野观察',
   enTitle: 'Field observation in the orchard mist',
   zhMeta: '蒲江铁牛村 · 生态农业现场',
-  enMeta: 'Tieniu Village · Regenerative agriculture site',
+  enMeta: "Tieniu Village, Pujiang · Ecological agriculture in practice",
   position: 'center 48%',
 };
 
@@ -47,7 +48,7 @@ const fieldPhotos: PhotoMoment[] = [
   {
     src: '/archive/elements/photos/site-ecology/s06-linpan-aerial-overview.jpg',
     zhTitle: '林盘与村落肌理',
-    enTitle: 'Linpan settlement and village texture',
+    enTitle: "Linpan settlements and the village landscape",
     zhMeta: '土地、社区与尺度',
     enMeta: 'Land, community, and scale',
     position: 'center 48%',
@@ -80,7 +81,7 @@ function PhotoFigure({
           featured ? 'aspect-[16/10] lg:aspect-[16/9]' : 'aspect-[4/3]'
         }`}
       >
-        <img
+        <OptimizedImage
           src={photo.src}
           alt={title}
           className="h-full w-full object-cover saturate-[0.9] transition duration-700 ease-out group-hover:scale-[1.025] group-hover:saturate-100"
@@ -115,7 +116,7 @@ export default function HomePhotoScroll() {
           <div className="w-full min-w-0 lg:sticky lg:top-28 lg:self-start">
             <ScrollProgressReveal direction="up" distance={36} scale={false} blur={false} className="w-full max-w-full">
               <span className="mb-5 block text-xs uppercase tracking-[0.32em] text-primary/70">
-                {t('现场影像', 'Field Notes')}
+                {t('现场影像', "Scenes from the Field")}
               </span>
               <h2 className="max-w-full text-balance font-serif text-3xl leading-[1.08] text-foreground sm:text-4xl md:text-5xl lg:text-[4.35rem]">
                 {lang === 'zh' ? (
@@ -130,7 +131,7 @@ export default function HomePhotoScroll() {
               <p className="mt-7 max-w-md break-words text-base leading-8 text-muted-foreground md:text-lg">
                 {t(
                   '这些照片来自果园、山谷和村落。它们记录的是青少年如何在真实地方停留、观察、提问和行动。',
-                  "These images come from orchards, valleys, and villages. They show young people staying with real places: observing, asking, and acting."
+                  "These photographs from orchards, valleys, and villages show how young people spend time in real places, observe, ask questions, and take action."
                 )}
               </p>
             </ScrollProgressReveal>

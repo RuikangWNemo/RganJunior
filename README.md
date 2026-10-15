@@ -46,6 +46,17 @@ Vercel Functions use `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` with the call
 npm run build
 ```
 
+### Static photo optimization
+
+Keep photos on the existing Vercel static deployment. Regenerate committed WebP
+candidates locally with `npm run assets:webp` (requires `cwebp` and macOS `sips`).
+This command is deliberately separate from application builds: deployments do
+not install an encoder or perform bulk image processing. Original images remain
+available. `src/generated/static-images.json` maps public originals to hashed
+WebP files; `OptimizedImage` uses responsive candidates, and published article
+HTML receives the same mapping without updating stored content. External and
+signed media URLs are not rewritten. No additional image service is required.
+
 ## Supabase project
 
 - Project name: `rganjunior`

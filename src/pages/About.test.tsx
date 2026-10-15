@@ -2,7 +2,9 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { getStaticImageProps } from '@/lib/staticImages';
 import About from './About';
+import { campCompanions } from '@/content/participants';
 
 function renderAbout() {
   return render(
@@ -65,7 +67,7 @@ describe('About editorial content system', () => {
       [...(team?.querySelectorAll('.about-v2-team-group__header h3') ?? [])].map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(['发起人', '青少年共创伙伴', '守护团']);
+    ).toEqual(['发起人', '营地伙伴', '守护团']);
     expect(
       [...(team?.querySelector('.about-v2-team-groups')?.children ?? [])].map(
         (section) => section.getAttribute('aria-labelledby'),
@@ -73,7 +75,6 @@ describe('About editorial content system', () => {
     ).toEqual([
       'team-initiator-title',
       'team-youth-title',
-      'co-creation-directions-title',
       'team-guardian-title',
     ]);
     expect(screen.queryByAltText('青少年伙伴围绕真实项目记录与共创')).not.toBeInTheDocument();
@@ -81,23 +82,16 @@ describe('About editorial content system', () => {
       'href',
       '/story',
     );
-    const roster = screen.getByLabelText('青少年共创伙伴名录');
+    const roster = screen.getByLabelText('营地伙伴名录');
     const cards = within(roster).getAllByRole('article');
 
     expect(team?.querySelector('#team-youth-title')?.closest('.about-v2-team-group')).toContainElement(roster);
     expect(team?.querySelector('.about-v2-team-carousel')).not.toBeInTheDocument();
-    expect(cards).toHaveLength(3);
-    expect(within(roster).getAllByRole('heading', { level: 4 }).map((heading) => heading.textContent)).toEqual([
-      '张天时',
-      '陈若容',
-      '黄若音',
-    ]);
-    expect(within(roster).getAllByText('？？？')).toHaveLength(9);
-    expect(within(roster).getAllByRole('link', { name: '阅读伙伴故事' }).map((link) => link.getAttribute('href'))).toEqual([
-      '/voices/technology-ecology-stars',
-      '/voices/tea-connects-an-american-girl',
-      '/voices/tea-kitchen-and-summer',
-    ]);
+    expect(cards).toHaveLength(campCompanions.length);
+    expect(within(roster).queryByRole('heading', { name: '张天时' })).not.toBeInTheDocument();
+    expect(within(roster).getByRole('heading', { name: 'Eddie' })).toBeInTheDocument();
+    expect(within(roster).queryByText('介绍待完善')).not.toBeInTheDocument();
+    expect(within(roster).getAllByRole('link', { name: '认识这位伙伴' })).toHaveLength(campCompanions.length);
 
     const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
     const reel = within(guardianGroup).getByRole('region', { name: '守护团成员照片' });
@@ -130,27 +124,22 @@ describe('About editorial content system', () => {
     expect(within(title).queryByText('R-Gan Junior')).not.toBeInTheDocument();
   });
 
-  it('uses the approved English names for all four people', () => {
+  it('keeps separately featured people out of the English camp roster', () => {
     window.localStorage.setItem('rgan-lang', 'en');
     renderAbout();
 
-    expect(screen.getByText('Nate Shi | Initiator')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'ZHANG Tianshi' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'Rossie Chen' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
-    expect(within(screen.getByLabelText('Youth co-creation partner directory')).getAllByText('？？？')).toHaveLength(9);
+    expect(screen.getByText('Nate | Founder')).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { level: 4, name: 'Tianshi Zhang' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { level: 4, name: 'Rosie Chen' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { level: 4, name: 'Ruby Huang' })).not.toBeInTheDocument();
+    expect(within(screen.getByLabelText('Camp companion directory')).getAllByRole('article')).toHaveLength(campCompanions.length);
   });
 
-  it('lists all five youth co-creation directions', () => {
+  it('keeps the team focused on people and moves co-creation directions to programs', () => {
     const { container } = renderAbout();
-    const directions = container.querySelector('.about-v2-directions');
-
-    expect(directions).not.toBeNull();
-    expect(
-      within(directions as HTMLElement)
-        .getAllByRole('heading', { level: 4, hidden: true })
-        .map((heading) => heading.textContent),
-    ).toEqual(['项目与活动共创', '社群连接', '记录与传播', '田野研究', '生活体验设计']);
+    expect(container.querySelector('.about-v2-directions')).not.toBeInTheDocument();
+    expect(screen.queryByText('青少年共创方向')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /查看全部营地伙伴/ })).toHaveAttribute('href', '/about/participants');
   });
 
   it('renders the three beliefs, four realities, and four living labs', () => {
@@ -193,9 +182,9 @@ describe('About editorial content system', () => {
       hidden: true,
     });
 
-    expect(nanbaoshanPhoto).toHaveAttribute('src', '/images/about/nanbaoshan-cloud-forest.webp');
-    expect(jinyuxiPhoto).toHaveAttribute('src', '/images/about/jinyuxi-forest-valley.webp');
-    expect(liboPhoto).toHaveAttribute('src', '/images/about/libo-highland.webp');
+    expect(nanbaoshanPhoto).toHaveAttribute('src', getStaticImageProps('/images/about/nanbaoshan-cloud-forest.webp').src);
+    expect(jinyuxiPhoto).toHaveAttribute('src', getStaticImageProps('/images/about/jinyuxi-forest-valley.webp').src);
+    expect(liboPhoto).toHaveAttribute('src', getStaticImageProps('/images/about/libo-highland.webp').src);
     expect(nanbaoshanPhoto.closest('article')).toHaveClass('about-v2-lab-card--standard');
     expect(jinyuxiPhoto.closest('article')).toHaveClass('about-v2-lab-card--standard');
     expect(liboPhoto.closest('article')).toHaveClass('about-v2-lab-card--standard');
@@ -205,10 +194,6 @@ describe('About editorial content system', () => {
     renderAbout();
 
     expect(screen.queryByRole('region', { name: '青少年与支持团队轮播' })).not.toBeInTheDocument();
-
-    const directionCarousel = screen.getByRole('region', { name: '青少年共创方向轮播' });
-    fireEvent.click(within(directionCarousel).getByRole('button', { name: '查看生活体验设计' }));
-    expect(directionCarousel.querySelector('[data-active="true"]')).toHaveTextContent('生活体验设计');
 
     const beliefCarousel = screen.getByRole('region', { name: '我们相信的事轮播' });
     fireEvent.click(within(beliefCarousel).getByRole('button', { name: '下一条信念' }));
@@ -243,7 +228,7 @@ describe('About editorial content system', () => {
       '/images/about/methods/02/01-community-visit.webp',
       '/images/about/methods/03/00-tieniu-aerial-overview.jpg',
       '/images/about/methods/04/01-youth-led-moment.webp',
-    ]);
+    ].map((src) => getStaticImageProps(src).src));
     expect(
       [...reels[2].querySelectorAll('img')].map((image) => image.getAttribute('src')),
     ).toEqual([
@@ -255,7 +240,7 @@ describe('About editorial content system', () => {
       '/images/about/methods/03/01-issue-workshop.webp',
       '/images/about/methods/03/03-farming-practice.webp',
       '/images/about/methods/03/02-local-conversation.webp',
-    ]);
+    ].map((src) => getStaticImageProps(src).src));
     expect(within(methodCarousel).getByRole('region', { name: '真实生活照片轮播' })).toBeInTheDocument();
   });
 

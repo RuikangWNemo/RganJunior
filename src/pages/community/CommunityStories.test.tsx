@@ -13,7 +13,7 @@ const restoreNote = vi.fn();
 const deleteNote = vi.fn();
 
 vi.mock('@/contexts/AuthContext', () => ({
-  useAuth: () => ({ permissions: [] }),
+  useAuth: () => ({ permissions: [], user: { id: 'member-1' } }),
 }));
 
 vi.mock('@/components/ui/dropdown-menu', () => ({
@@ -107,7 +107,7 @@ describe('CommunityStories', () => {
     expect(screen.queryByText('回收站里的草稿')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('tab', { name: /已发布/ }));
-    expect(screen.getByRole('link', { name: '查看文章' })).toHaveAttribute('href', '/field-notes/published-story');
+    expect(screen.getByRole('link', { name: '查看文章' })).toHaveAttribute('href', '/community-stories/published-story');
     expect(screen.queryByText('河边的第一份草稿')).not.toBeInTheDocument();
   });
 
@@ -121,6 +121,15 @@ describe('CommunityStories', () => {
     fireEvent.click(within(trashedStory as HTMLElement).getByRole('button', { name: '恢复' }));
 
     await waitFor(() => expect(restoreNote).toHaveBeenCalledWith(33));
+  });
+
+  it('shows attributed drafts without offering owner edit or trash controls', async () => {
+    listNotes.mockResolvedValue([{ ...notes[0], created_by: 'admin-operator', title: '管理员代录的作者文章' }]);
+    renderPage();
+    const row = (await screen.findByText('管理员代录的作者文章')).closest('article')!;
+    expect(within(row).getByRole('link', { name: '查看' })).toHaveAttribute('href', '/community/stories/11/edit');
+    expect(within(row).queryByRole('link', { name: '继续编辑' })).not.toBeInTheDocument();
+    expect(within(row).queryByRole('menuitem', { name: '移入回收站' })).not.toBeInTheDocument();
   });
 
   it('requires confirmation before moving a draft to Trash', async () => {

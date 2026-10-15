@@ -1,0 +1,113 @@
+{
+  "trackedCount": 1020,
+  "selectedUntrackedCount": 489,
+  "totalFileBytes": 231616717,
+  "selectedUntrackedRoots": [
+    "api",
+    "docs",
+    "public",
+    "scripts",
+    "src",
+    "supabase",
+    "tests"
+  ],
+  "secretScanFindings": [],
+  "publishedFilesMissingLocally": [
+    "docs/plans/2026-10-14-join-roles-invitation-design.md"
+  ],
+  "changedFromPublished": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/deploy-production.yml",
+    ".gitignore",
+    "README.md",
+    "api/_lib/join-handler.js",
+    "docs/collaboration/production-release-runbook.md",
+    "eslint.config.js",
+    "findings.md",
+    "progress.md",
+    "public/sitemap.xml",
+    "scripts/vite-community-api.ts",
+    "src/App.tsx",
+    "src/components/Layout.test.tsx",
+    "src/components/Layout.tsx",
+    "src/components/Navbar.test.tsx",
+    "src/components/Navbar.tsx",
+    "src/components/about/ParentGuardianReel.tsx",
+    "src/components/impact/ImpactSectionNav.tsx",
+    "src/components/programs/details/ActionGroupDetails.tsx",
+    "src/components/ui/EditorialSectionNav.tsx",
+    "src/content/impact.ts",
+    "src/index.css",
+    "src/lib/brand.test.ts",
+    "src/lib/brand.ts",
+    "src/lib/confirmedTranslations.ts",
+    "src/lib/supabase/database.types.ts",
+    "src/pages/About.test.tsx",
+    "src/pages/About.tsx",
+    "src/pages/FieldNotes.test.tsx",
+    "src/pages/FieldNotes.tsx",
+    "src/pages/GuardianDirectory.test.tsx",
+    "src/pages/GuardianDirectory.tsx",
+    "src/pages/Impact.test.tsx",
+    "src/pages/Impact.tsx",
+    "src/pages/ImpactAwards.test.tsx",
+    "src/pages/ImpactAwards.tsx",
+    "src/pages/JoinUs.test.tsx",
+    "src/pages/JoinUs.tsx",
+    "src/pages/community/CommunityPeople.tsx",
+    "src/pages/community/CommunitySettings.tsx",
+    "task_plan.md",
+    "vercel.json",
+    "vite.config.ts"
+  ],
+  "branches": [
+    {
+      "branch": "agent/community-production-release",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "backup/main-before-squash-20260810",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "codex/cold-load-performance",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "codex/fix-email-auth",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "codex/frontend-optimization-20260810-gps",
+      "containedInPublishedHistory": true
+    },
+    {
+      "branch": "codex/guardian-coming-soon-2026-10-12",
+      "containedInPublishedHistory": true
+    },
+    {
+      "branch": "codex/local-refinement-2026-10-12",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "codex/parent-guardian-team",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "codex/public-site-updates",
+      "containedInPublishedHistory": false
+    },
+    {
+      "branch": "codex/webp-release-2026-10-14",
+      "containedInPublishedHistory": true
+    },
+    {
+      "branch": "codex/wechat-stories-editorial",
+      "containedInPublishedHistory": true
+    },
+    {
+      "branch": "main",
+      "containedInPublishedHistory": false
+    }
+  ]
+}

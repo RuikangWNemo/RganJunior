@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import {
   useCallback,
   useEffect,
@@ -151,8 +152,9 @@ export default function ParentGuardianReel({ members }: ParentGuardianReelProps)
                   )}
                 >
                   <figure>
-                    <img
+                    <OptimizedImage
                       src={member.photo}
+                      sizes="(max-width: 767px) 152px, 200px"
                       style={{ objectPosition: member.cardPosition, ...(member.cardScale ? { transform: `scale(${member.cardScale})`, transformOrigin: '50% 75%' } : {}) }}
                       alt={t(
                         `守护团成员 ${index + 1}`,

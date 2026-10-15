@@ -1,0 +1,65 @@
+{
+  "sourceCommit": "a8cb91bd8109a5ee4cf259ff12cfc3b23e447899",
+  "deploymentId": "dpl_J7j8K4td3nu8YKMumUddHqVqFyZg",
+  "deploymentUrl": "https://rgan-junior-roots-main-hcifc3ygd-rganjuniors-projects.vercel.app",
+  "productionUrl": "https://www.rganjunior.org",
+  "previousDeploymentId": "dpl_3rT93CBPYK8oQkSNvjdgFeQbqsET",
+  "localBuildOnly": true,
+  "prebuilt": true,
+  "verification": {
+    "relatedTests": 21,
+    "backendApiAppTypes": "passed",
+    "changedFileLint": "passed, no errors",
+    "mobileWidth": 390,
+    "localJoinNoHorizontalOverflow": true,
+    "localArticleNoHorizontalOverflow": true,
+    "jointPortraitsLoaded": true,
+    "mainDirectoryMergeTypecheck": "passed"
+  },
+  "uploadedFileMatches": [
+    {
+      "path": "index.html",
+      "sha256": "5c94549ed5d5b3f2c1336078c69f0514acd42e9f6daa25b5ad2907137fb4407f"
+    },
+    {
+      "path": "assets/index-CXar77jc.js",
+      "sha256": "c1efa43f6f85023eac53400413090b60414b9176521be78ce82a5a033603c035"
+    },
+    {
+      "path": "assets/index-Z43a3HpD.js",
+      "sha256": "ff5e8dc1ce972bdf8f3923ed0164fe873fdd0650a4306ad02c553735129c9643"
+    },
+    {
+      "path": "assets/index-CcIC953K.js",
+      "sha256": "81c8a06a3f9007afb10bc206af7b32858dd772a636ad90374551c793b39737e0"
+    },
+    {
+      "path": "assets/index-DyS6Thel.js",
+      "sha256": "684d6d6e6de77e4834b47d2bfbc62e02777b31577e40d07332b5f9bd2c27cdab"
+    },
+    {
+      "path": "assets/index-D8v9Zb3T.css",
+      "sha256": "95cb0bb5dbf0c2e4d380b2af916ccbff695f673eadf675a4547394d299ddbe81"
+    },
+    {
+      "path": "assets/JoinUs-BDqnhQ1E.js",
+      "sha256": "80de4e2fa86153365661447dc92e31347727c49b38eda644dc8865c1da5acb39"
+    },
+    {
+      "path": "assets/FieldNoteArticle-D-Y0MgUu.js",
+      "sha256": "7dabb12e511ad28d52807377f682d7a938b64d5b5f2fe3b3ef0ca771997b1848"
+    },
+    {
+      "path": "assets/FieldNotes-U8GzunKn.js",
+      "sha256": "ab26d80f01c1a69cd2e437c655f51c81f3838d637f9998cb0d287dcc3ea9f7b7"
+    },
+    {
+      "path": "assets/publicRepository-DKKdf5du.js",
+      "sha256": "3df47c9a735abd73291fd10e24ceff15de3c7cd4b117c504abe66e421cca6019"
+    },
+    {
+      "path": "assets/publicRepository-DegRYYSa.js",
+      "sha256": "2e0016d30af570d63cab5bb73c721b29aba80c4ccf1837ee3aa84962780ccb84"
+    }
+  ]
+}

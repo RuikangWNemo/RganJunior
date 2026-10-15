@@ -15,7 +15,7 @@ export default function PublicProjectsDetails() {
           <p className="mt-5 text-base leading-8 text-muted-foreground">
             {t(
               '项目不先设定漂亮结论，而是从伙伴真实接触的生活问题出发，判断可以访问的场域、资料与相关人群，再共同建立研究路径。',
-              'The project does not begin with a polished conclusion. It starts with questions participants encounter, then considers accessible settings, evidence, and people before building a research path together.',
+              "Research starts with real-life questions participants encounter, without deciding the conclusions in advance. Together, we identify accessible places, information, and people, then develop a research plan.",
             )}
           </p>
         </div>
@@ -45,13 +45,13 @@ export default function PublicProjectsDetails() {
           <p className="text-base leading-8 text-muted-foreground">
             {t(
               '青少年和家庭伙伴可以从问题提出、访谈、问卷、田野记录、资料整理和文章写作中找到适合自己的角色。',
-              'Young people and family partners can contribute through questions, interviews, surveys, field records, evidence organisation, and writing.',
+              "Young people and family members can find suitable roles in developing research questions, conducting interviews and surveys, taking field notes, organizing information, and writing articles.",
             )}
           </p>
           <p className="text-base leading-8 text-muted-foreground">
             {t(
               '也欢迎能够提供议题经验、研究支持、场域连接或公共传播资源的机构与专业伙伴共同讨论合作方式。',
-              'Organisations and specialist partners who can contribute topic expertise, research support, field access, or public communication are welcome to discuss collaboration.',
+              'Organizations and specialist partners who can contribute topic expertise, research support, field access, or public communication are welcome to discuss collaboration.',
             )}
           </p>
         </div>

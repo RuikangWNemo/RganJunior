@@ -93,7 +93,7 @@ export default function Actions() {
               <p className="text-pretty">
                 {t(
                   '第一次接触可以先看看生活体验营；如果你已经准备好进入更长的共同生活，也可以直接了解生活共创营。',
-                  'For a first encounter, begin with the Life Discovery Camp. If you are ready for a longer period of shared life, explore the Life Co-creation Camp.',
+                  "For a first encounter, begin with the Life Immersion Camp. If you are ready for a longer period of shared life, explore the Life Co-creation Camp.",
                 )}
               </p>
             </div>

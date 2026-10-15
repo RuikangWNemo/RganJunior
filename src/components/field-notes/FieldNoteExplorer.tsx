@@ -4,6 +4,7 @@ import type { FieldNote, FieldNotePerson, FieldNoteTopic } from '@/types/field-n
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { FieldNoteCard } from './FieldNoteCard';
+import { AuthorPortrait } from './AuthorPortrait';
 
 export type ExplorerDimension = 'people' | 'topics';
 
@@ -102,7 +103,7 @@ export function FieldNoteExplorer({
           <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
             {dimension === 'people'
               ? t('选择一个人物，沿着他的观察继续阅读。', 'Choose a person and follow their observations across the archive.')
-              : t('从生活、共创与研究进入同一片真实现场。', 'Enter the same lived setting through reflection, co-creation, or research.')}
+              : t('从生活、共创与研究进入同一片真实现场。', "Explore the same real-world experiences through everyday life, co-creation, and research.")}
           </p>
         </div>
 
@@ -166,19 +167,16 @@ export function FieldNoteExplorer({
                     type="button"
                     aria-pressed={selected}
                     onClick={() => onPersonChange(selected ? '' : person.slug)}
-                    className={`grid min-h-20 w-48 grid-cols-[3.25rem_1fr] items-center gap-3 rounded-lg border px-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                    aria-label={pickLocalized(person.name, lang)}
+                    className={`grid min-h-20 ${person.portraitGroup ? 'w-64' : 'w-48'} grid-cols-[3.25rem_minmax(0,1fr)] items-center gap-3 rounded-lg border px-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                       selected
                         ? 'border-primary/45 bg-primary/[0.08] text-primary'
                         : 'border-border bg-card/45 text-foreground hover:border-primary/30'
                     }`}
                   >
-                    <img
-                      src={person.avatar}
-                      alt=""
-                      className="size-13 rounded-full bg-secondary object-cover"
-                    />
+                    <AuthorPortrait person={person} />
                     <span className="min-w-0">
-                      <span className="block truncate text-sm font-medium">{pickLocalized(person.name, lang)}</span>
+                      <span className="block text-sm font-medium leading-5">{pickLocalized(person.displayName ?? person.name, lang)}</span>
                       <span className="mt-1 block truncate text-xs text-muted-foreground">
                         {pickLocalized(person.identityLabel, lang)} {t(`${articleCount} 篇`, `${articleCount}`)}
                       </span>
@@ -229,7 +227,7 @@ export function FieldNoteExplorer({
 
       <div className="flex min-h-12 items-center justify-between gap-4 border-b border-border pb-4" aria-live="polite">
         <p className="text-sm text-muted-foreground">
-          {isLoading ? t('正在整理文章', 'Gathering articles') : t(`找到 ${notes.length} 篇文章`, `${notes.length} articles found`)}
+          {isLoading ? t('正在整理文章', 'Gathering articles') : t(`找到 ${notes.length} 篇文章`, `${notes.length} ${notes.length === 1 ? 'article' : 'articles'} found`)}
         </p>
         {hasFilters ? (
           <button
@@ -267,12 +265,12 @@ export function FieldNoteExplorer({
       ) : (
         <div className="py-20 text-center">
           <h3 className="font-serif text-2xl text-foreground">
-            {hasFilters ? t('暂时没有匹配的文章', 'No matching articles yet') : t('还没有正式发布的文章', 'No stories have been published yet')}
+            {hasFilters ? t('暂时没有匹配的文章', 'No matching articles yet') : t('还没有正式发布的文章', "No articles have been published yet")}
           </h3>
           <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted-foreground">
             {hasFilters
               ? t('换一个人物、题材或关键词，再看看这片档案。', 'Try another person, topic, or keyword to explore the archive again.')
-              : t('真实投稿经过审核并公开发布后，会出现在这里。', 'Real submissions will appear here after review and public publication.')}
+              : t('真实投稿经过审核并公开发布后，会出现在这里。', "Author submissions will appear here once they have been reviewed and published publicly.")}
           </p>
           {hasFilters ? (
             <button

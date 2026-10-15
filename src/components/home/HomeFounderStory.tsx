@@ -35,7 +35,7 @@ export default function HomeFounderStory() {
             className={`home-founder-story__title home-founder-story__title--${lang}`}
             aria-label={t(
               '一个少年的成长，慢慢长成一群人的行动',
-              "One young person's growth became a shared action.",
+              "What began as one young person's growth has gradually become collective action.",
             )}
           >
             {lang === 'zh' ? (
@@ -45,15 +45,15 @@ export default function HomeFounderStory() {
               </>
             ) : (
               <>
-                <span className="home-founder-story__title-line">One young person's growth</span>
-                <span className="home-founder-story__title-line">became a shared action.</span>
+                <span className="home-founder-story__title-line">What began as one young person's growth</span>{' '}
+                <span className="home-founder-story__title-line">has gradually become collective action.</span>
               </>
             )}
           </h2>
           <p>
             {t(
               '阿柑少年从 Nate 在铁牛村的成长经历中长出来。从一个在乡村感到孤独、想邀请朋友来玩的孩子，到组织同学调研生态农业、发起生活共创营，他逐渐把自己的成长，变成一个连接青少年、家庭、土地与真实世界的行动计划。',
-              "R-Gan Junior grew from Nate's own life in Tieniu Village. A lonely child who wanted friends to visit the village began organising ecological agriculture research and a life co-creation camp. His experience gradually became an action plan connecting young people, families, land, and the real world.",
+              "R-Gan Junior grew out of Nate's experiences in Tieniu Village. He began as a lonely child who wanted to invite friends to visit, then organized classmates to research ecological agriculture and launched the Life Co-creation Camp. His own growth gradually became a program connecting young people, families, the land, and the real world.",
             )}
           </p>
           <Link to="/story" className="home-text-link cursor-target">

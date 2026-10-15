@@ -53,7 +53,7 @@ const fitGroups: FitGroup[] = [
       { zh: '参与共同生活和小队协作', en: 'Share daily life and work in a small team' },
       {
         zh: '对食物、土地、生态农业和社会议题保持好奇',
-        en: 'Stay curious about food, land, regenerative agriculture, and social issues',
+        en: "Stay curious about food, land, ecological agriculture, and social issues",
       },
       {
         zh: '和家人、同伴、社区一起学习和成长',
@@ -65,10 +65,10 @@ const fitGroups: FitGroup[] = [
     label: { zh: '不太适合只期待', en: 'Probably not a fit if you only expect' },
     tone: 'boundary',
     items: [
-      { zh: '旅游打卡', en: 'A sightseeing checklist' },
-      { zh: '短期成果', en: 'Immediate, packaged outcomes' },
-      { zh: '升学包装', en: 'Admissions-oriented packaging' },
-      { zh: '完全舒适的城市化服务', en: 'Fully comfortable, city-style service' },
+      { zh: '旅游打卡', en: "Sightseeing just to check places off a list" },
+      { zh: '短期成果', en: "Short-term results" },
+      { zh: '升学包装', en: "Building an admissions profile" },
+      { zh: '完全舒适的城市化服务', en: "All the comforts and services of city life" },
       {
         zh: '只把孩子交给营地、家长不参与理解和支持',
         en: 'Dropping off a child without parental understanding or support',
@@ -80,7 +80,7 @@ const fitGroups: FitGroup[] = [
 const joinWays: JoinWay[] = [
   {
     index: '01',
-    title: { zh: '生活体验营', en: 'Life Discovery Camp' },
+    title: { zh: '生活体验营', en: "Life Immersion Camp" },
     status: { zh: '2天1夜', en: '2 days · 1 night' },
     fit: { zh: '适合第一次接触阿柑少年的家庭', en: 'For families meeting R-Gan Junior for the first time' },
     description: {
@@ -90,12 +90,12 @@ const joinWays: JoinWay[] = [
   },
   {
     index: '02',
-    title: { zh: '生活共创营', en: 'Co-created Living Camp' },
+    title: { zh: '生活共创营', en: "Life Co-creation Camp" },
     status: { zh: '5天4夜', en: '5 days · 4 nights' },
     fit: { zh: '通常在寒暑假或节假日开展', en: 'Usually offered during school breaks and holidays' },
     description: {
       zh: '深度进入共同生活、小队任务和社区共创，建立关系、兴趣和信任。',
-      en: 'Enter shared living, team missions, and community co-creation more deeply to build relationships, interests, and trust.',
+      en: "Build relationships, explore interests, and develop trust by living together, taking on team tasks, and creating together in the community.",
     },
   },
   {
@@ -110,12 +110,12 @@ const joinWays: JoinWay[] = [
   },
   {
     index: '04',
-    title: { zh: '青少年研究与公共议题项目', en: 'Youth Research & Public Issues Project' },
+    title: { zh: '青少年研究与公共议题项目', en: "R-Gan Junior Research Program" },
     status: { zh: '可申请加入', en: 'Application based' },
     fit: { zh: '面向有深入探索兴趣的高年级学生', en: 'For older students ready for deeper inquiry' },
     description: {
       zh: '围绕生态农业、家庭消费、可持续生活和公共政策开展观察、访谈、写作和表达。',
-      en: 'Explore regenerative agriculture, household consumption, sustainable living, and public policy through observation, interviews, writing, and public expression.',
+      en: "Explore ecological agriculture, household consumption, sustainable living, and public policy through observation, interviews, writing, and sharing ideas.",
     },
   },
 ];
@@ -126,15 +126,15 @@ const joinSteps: JoinStep[] = [
     title: { zh: '提交参与意向', en: 'Share your interest' },
     description: {
       zh: '告诉我们孩子的年龄、兴趣、家庭期待，以及想了解的项目方向。',
-      en: "Tell us the young person's age and interests, your family's hopes, and the project direction you want to explore.",
+      en: "Tell us your child's age and interests, your family's hopes, and which programs you would like to learn about.",
     },
   },
   {
     index: '02',
-    title: { zh: '等待合适活动通知', en: 'Wait for a fitting invitation' },
+    title: { zh: '等待合适活动通知', en: "Wait for updates on suitable activities" },
     description: {
       zh: '如果近期有生活体验营、生活共创营或线上活动，我们会优先通知已提交意向的家庭。',
-      en: 'When a discovery camp, co-created living camp, or online activity opens, families who have shared interest are contacted first.',
+      en: "When registration opens for a Life Immersion Camp, Life Co-creation Camp, or online activity, we notify families who have registered their interest first.",
     },
   },
   {
@@ -160,7 +160,7 @@ const faqs: JoinFaq[] = [
     question: { zh: '现在没有明确营期，还可以报名吗？', en: 'Can we register when no camp dates are published?' },
     answer: {
       zh: '可以。你可以先提交参与意向，我们会在合适活动开放时联系你。',
-      en: 'Yes. Share your interest first, and we will contact you when a fitting activity opens.',
+      en: "Yes. Register your interest first, and we will contact you when a suitable activity opens for registration.",
     },
   },
   {
@@ -181,21 +181,21 @@ const faqs: JoinFaq[] = [
     question: { zh: '家长需要参加吗？', en: 'Do parents need to participate?' },
     answer: {
       zh: '不同项目安排不同。部分活动亲子共参，部分环节以青少年为主。',
-      en: 'It depends on the project. Some activities include parents and young people together; others are primarily youth-led.',
+      en: "It depends on the program. Some activities involve parents and young people together; some mainly involve young participants.",
     },
   },
   {
     question: { zh: '安全如何保障？', en: 'How is safety supported?' },
     answer: {
       zh: '线下活动会提前说明保险、医疗资源、应急联系人和安全安排。',
-      en: 'Before every in-person activity, we explain insurance, medical resources, emergency contacts, and safety arrangements.',
+      en: "Before in-person activities, we explain insurance, available medical support, emergency contacts, and safety arrangements.",
     },
   },
   {
     question: { zh: '是否有升学帮助？', en: 'Does this help with school admissions?' },
     answer: {
       zh: '阿柑少年不是升学包装项目。但真实投入和持续反思，会自然成为孩子理解自己和社会的重要经历。',
-      en: 'R-Gan Junior is not an admissions-packaging program. Genuine commitment and continued reflection can naturally become meaningful experiences through which young people understand themselves and society.',
+      en: "R-Gan Junior is not designed merely to build an admissions profile. Genuine participation and ongoing reflection can become meaningful experiences that help young people understand themselves and society.",
     },
   },
 ];
@@ -221,7 +221,7 @@ const contacts: ContactItem[] = [
     label: { zh: '地点', en: 'Location' },
     value: {
       zh: '四川成都蒲江铁牛村麦昆塔社区',
-      en: 'Macunta Community, Tieniu Village, Pujiang, Chengdu, Sichuan',
+      en: "Mykunda Community, Tieniu Village, Pujiang, Chengdu, Sichuan",
     },
   },
 ];
@@ -290,7 +290,7 @@ export default function JoinWaysAccordion() {
 
         <div className="join-ways-directory">
           <div className="join-ways-directory__meta" aria-hidden="true">
-            <span>R-GAN JUNIOR</span>
+            <span>R-Gan Junior</span>
             <span>12—18 / CHENGDU</span>
           </div>
 
@@ -454,10 +454,10 @@ export default function JoinWaysAccordion() {
           <p>
             {t(
               '欢迎先提交参与意向。当合适的活动或项目开放时，我们会和你一起判断孩子是否适合加入。',
-              'You are welcome to share your interest first. When a fitting activity or project opens, we will decide together whether it is right for the young person.'
+              "You are welcome to register your interest first. When registration opens for a suitable activity or program, we will discuss with you whether it is right for your child."
             )}
           </p>
-          <span aria-hidden="true">R-GAN JUNIOR / WAYS TO JOIN</span>
+          <span aria-hidden="true">R-Gan Junior / WAYS TO JOIN</span>
         </div>
       </div>
     </section>

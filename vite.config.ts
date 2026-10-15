@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 import { communityDevelopmentApi } from "./scripts/vite-community-api";
+import { impactPublicApi } from "./scripts/vite-impact-api";
 
 const communityServerEnvironment = [
   'SUPABASE_URL',
@@ -29,7 +30,7 @@ export default defineConfig(({ mode }) => {
         overlay: false,
       },
     },
-    plugins: [communityDevelopmentApi(), react()],
+    plugins: [impactPublicApi(), communityDevelopmentApi(), react()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link } from 'react-router-dom';
 import TieniuRegenerationStory from '@/components/about/TieniuRegenerationStory';
 import TieniuStoryMap from '@/components/about/TieniuStoryMap';
@@ -14,7 +15,7 @@ const placeFacts = [
   },
   {
     value: { zh: '果园 · 鱼塘 · 林盘', en: 'Orchards · Ponds · Linpan' },
-    label: { zh: '共同组成生活生态', en: 'A living ecology held together' },
+    label: { zh: '共同组成生活生态', en: "Together, they sustain village life" },
   },
 ] as const;
 
@@ -27,7 +28,7 @@ export default function TieniuStory() {
         <div className="tieniu-story-shell">
           <Link className="tieniu-story-back-link" to="/about#places">
             <span aria-hidden="true">←</span>
-            <span>{t('返回真实场域', 'Back to Living Labs')}</span>
+            <span>{t('返回真实场域', "Back to Real-World Contexts")}</span>
           </Link>
 
           <div className="tieniu-story-hero__grid">
@@ -37,19 +38,19 @@ export default function TieniuStory() {
               <h2>
                 {t(
                   '阿柑少年从一片正在修复的土地中长出来。',
-                  "R-Gan Junior grew from a piece of land undergoing repair.",
+                  "R-Gan Junior grew out of the restoration of this land.",
                 )}
               </h2>
               <p>
                 {t(
                   '这里不是活动背景。果园、鱼塘、林盘、新老村民和城市家庭在这里相遇，青少年也从一颗柑橘开始，理解食物、劳动、消费、生态与社区之间真实的关系。',
-                  'This is not an activity backdrop. Orchards, ponds, Linpan landscapes, villagers, and urban families meet here. Beginning with one citrus fruit, young people encounter the real relationships among food, work, consumption, ecology, and community.',
+                  "Tieniu Village is a living community, with orchards, fishponds, and Linpan settlements shared by longtime residents, newcomers, and urban families. Starting with a single citrus fruit, young people learn how food, work, consumption, ecology, and community are connected.",
                 )}
               </p>
             </div>
 
             <figure className="tieniu-story-hero__figure">
-              <img
+              <OptimizedImage
                 src="/images/s06-linpan-aerial-overview.jpg"
                 alt={t('铁牛村林盘、果园、鱼塘和院落的航拍图', 'Aerial view of Tieniu Village, its Linpan landscape, orchards, ponds, and homes')}
                 width="2890"
@@ -71,7 +72,7 @@ export default function TieniuStory() {
                 <h2 id="tieniu-context-title">
                   {t(
                     '一颗柑橘背后，是一整个真实生活的系统。',
-                    'Behind one citrus fruit is an entire system of real life.',
+                    'A single citrus fruit connects food, land, and everyday community life.',
                   )}
                 </h2>
               </div>
@@ -79,13 +80,13 @@ export default function TieniuStory() {
                 <p>
                   {t(
                     '铁牛村位于成都蒲江县，是麦昆塔社区长期生活与产业实践的大本营，也是阿柑少年最初长出来的地方。柑橘是这里的主要农业产业，但一颗果实从来不只属于果园。',
-                    "Tieniu Village lies in Pujiang County, Chengdu. It is the home base of Maquinta's long-term community and livelihood practice, and the place where R-Gan Junior first took root. Citrus is the main agricultural livelihood, but one fruit never belongs only to the orchard.",
+                    "Tieniu Village is in Pujiang County, Chengdu. It is the home base of Mykunda Community’s years of shared living and work in local industries, and the birthplace of R-Gan Junior. Citrus farming is the main agricultural industry here, yet the story of a single fruit reaches far beyond the orchard.",
                   )}
                 </p>
                 <p>
                   {t(
                     '它连接土壤、水、劳动、农人的选择、家庭的消费，也连接一个社区如何面对生态农业与乡村生活的长期问题。青少年在这里做饭、劳作、观察和访谈，把抽象知识放回可以看见、触摸和回应的现场。',
-                    'It connects soil, water, work, farmers’ choices, household consumption, and the long-term questions of ecological agriculture and village life. Here, young people cook, work, observe, and interview, returning abstract knowledge to a place they can see, touch, and respond to.',
+                    "A citrus fruit connects soil, water, labor, farmers’ decisions, and household purchases. It also raises questions about how a community sustains ecological agriculture and rural life over time. By cooking, working, observing, and interviewing people here, young people connect abstract knowledge with situations they can experience and respond to firsthand.",
                   )}
                 </p>
               </div>
@@ -108,10 +109,10 @@ export default function TieniuStory() {
             <TieniuRegenerationStory />
 
             <div className="tieniu-story-return">
-              <p>{t('从铁牛村，继续认识阿柑少年的真实场域', "From Tieniu Village, continue through R-Gan Junior's living labs")}</p>
+              <p>{t('从铁牛村，继续认识阿柑少年的真实场域', "Explore R-Gan Junior’s other Real-World Contexts from Tieniu Village")}</p>
               <h2>{t('一座社区大本营，三片生态试验田。', 'One community home base and three ecological field sites.')}</h2>
               <Link to="/about#places">
-                <span>{t('返回查看四个真实场域', 'Return to all four living labs')}</span>
+                <span>{t('返回查看四个真实场域', "Return to all four Real-World Contexts")}</span>
                 <span aria-hidden="true">→</span>
               </Link>
             </div>

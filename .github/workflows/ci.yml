@@ -48,8 +48,8 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Build production bundle
-        run: npm run build
+      # Production artifacts are built and verified on the operator machine.
+      # GitHub checks source code only; it never builds or deploys this project.
 
       # Deliberately excluded: npm run supabase:test:remote.
       # That command uses the linked remote Supabase project and must only run

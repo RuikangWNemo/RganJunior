@@ -3,9 +3,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "git": {
-    "deploymentEnabled": {
-      "main": false
-    }
+    "deploymentEnabled": false
   },
   "functions": {
     "api/community/field-note-collaboration.ts": {
@@ -67,6 +65,18 @@
     {
       "source": "/(.*)",
       "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/field-notes",
+      "destination": "/community-stories",
+      "permanent": true
+    },
+    {
+      "source": "/field-notes/:path*",
+      "destination": "/community-stories/:path*",
+      "permanent": true
     }
   ]
 }

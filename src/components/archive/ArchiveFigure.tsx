@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { type ArchiveItem } from '@/content/archiveContent';
 import { cn } from '@/lib/utils';
@@ -32,7 +33,7 @@ export default function ArchiveFigure({
         )}
       >
         <div className={cn('relative', item.aspectClassName ?? 'aspect-[4/3]')}>
-          <img
+          <OptimizedImage
             src={item.src}
             alt={title}
             loading="lazy"

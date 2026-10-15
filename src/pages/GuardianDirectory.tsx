@@ -1,3 +1,5 @@
+import { getGuardianParticipant, participantPath } from '@/content/participants';
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link, useParams } from 'react-router-dom';
 import { guardianMembers, guardianProfilePath } from '@/content/guardians';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -8,6 +10,9 @@ export default function GuardianDirectory() {
   const { memberId } = useParams<{ memberId: string }>();
   const { t, lang } = useLanguage();
   const member = guardianMembers.find((entry) => entry.id === memberId || entry.aliases?.includes(memberId ?? ''));
+
+  const participant = member ? getGuardianParticipant(member.id) : undefined;
+  const biography = participant?.bio ?? member?.bio;
 
   return (
     <div className="about-v2-page px-6 pb-20 pt-28 sm:px-8 sm:pt-36">
@@ -22,9 +27,10 @@ export default function GuardianDirectory() {
         {memberId ? (
           member ? (
             <article className="mt-10 grid items-start gap-8 md:grid-cols-2 md:gap-16">
-              <img
+              <OptimizedImage
                 className={`w-full max-w-md rounded-2xl ${member.fullPhotoInProfile ? 'h-auto' : 'aspect-[4/5] object-cover'}`}
                 src={member.photo}
+                sizes="(max-width: 767px) calc(100vw - 3rem), 448px"
                 alt={member.name?.[lang] ?? t('守护团成员肖像', 'Guardian circle member portrait')}
                 width="1067" height="1600" decoding="async"
               />
@@ -33,8 +39,8 @@ export default function GuardianDirectory() {
                 <h1 className="text-balance text-4xl text-primary sm:text-5xl">
                   {member.name?.[lang] ?? t('守护团成员', 'Guardian Circle Member')}
                 </h1>
-                {member.bio ? (
-                  <p className="mt-8 whitespace-pre-line text-pretty text-lg leading-relaxed">{member.bio[lang]}</p>
+                {biography ? (
+                  <p className="mt-8 whitespace-pre-line text-pretty text-lg leading-relaxed">{biography[lang]}</p>
                 ) : (
                   <div className="mt-8 space-y-3">
                     <h2 className="text-2xl text-primary">{t('敬请期待', 'Coming soon')}</h2>
@@ -43,6 +49,7 @@ export default function GuardianDirectory() {
                     </p>
                   </div>
                 )}
+                {participant && <Link className={linkClass} to={participantPath(participant.id)}>{t('查看个人介绍', 'View personal introduction')} →</Link>}
                 <div className="mt-10">
                   <Link className={linkClass} to="/about/guardians">{t('认识更多守护团成员', 'Meet more members')} <span aria-hidden="true">→</span></Link>
                 </div>
@@ -71,9 +78,10 @@ export default function GuardianDirectory() {
                   aria-label={t(`查看守护团成员 ${index + 1} 资料`, `View guardian circle member ${index + 1} profile`)}
                 >
                   <div className="aspect-[4/5] overflow-hidden rounded-2xl">
-                  <img
+                  <OptimizedImage
                     className="h-full w-full object-cover"
                     src={entry.photo}
+                    sizes="(max-width: 639px) 45vw, (max-width: 1023px) 30vw, 260px"
                     style={{ objectPosition: entry.cardPosition, ...(entry.cardScale ? { transform: `scale(${entry.cardScale})`, transformOrigin: '50% 75%' } : {}) }}
                     alt={entry.name?.[lang] ?? t(`守护团成员 ${index + 1}`, `Guardian circle member ${index + 1}`)}
                     width="1067" height="1600" loading={index < 4 ? 'eager' : 'lazy'} decoding="async"

@@ -12,7 +12,7 @@ export default function WholeLifeGrowth() {
             <p>
               {t(
                 '在一个高度焦虑、不确定的时代，青少年应该回到自然、走进社区，在真实世界中重新认识自己与社会。',
-                'In an anxious and uncertain age, young people should return to nature, enter communities, and rediscover themselves and society in the real world.'
+                "In a time of widespread anxiety and uncertainty, young people need opportunities to reconnect with nature, take part in community life, and gain a fresh understanding of themselves and society through real-world experiences."
               )}
             </p>
             <p>

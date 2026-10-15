@@ -1,0 +1,63 @@
+{
+  "applicationCommit": "629614ca310e8c73b81152a9c21cf42de05c1093",
+  "deploymentId": "dpl_3rT93CBPYK8oQkSNvjdgFeQbqsET",
+  "deploymentUrl": "https://rgan-junior-roots-main-1h0xdkbyg-rganjuniors-projects.vercel.app",
+  "domain": "https://www.rganjunior.org",
+  "prebuilt": true,
+  "databaseWrites": false,
+  "pairedEnglishCorrections": 457,
+  "portraits": [
+    "Rosie Chen",
+    "Ruby Huang",
+    "Tianshi Zhang",
+    "Nate Shi",
+    "Orange"
+  ],
+  "remoteAssets": [
+    {
+      "path": "index.html",
+      "matchesLocal": true,
+      "sha256": "29b5414feb900d59e4437faa39651067b036e4f2bffa813a4efe00c5f362d0e9"
+    },
+    {
+      "path": "assets/index-bfceNPBd.js",
+      "matchesLocal": true,
+      "sha256": "f04f69e37c4781cc89f07a4cc15a81eb67264bea33eaa609ae0f4605759a0464"
+    },
+    {
+      "path": "assets/index-benpdINj.js",
+      "matchesLocal": true,
+      "sha256": "c22feed7df517ff9835298e8bc2fe9b4b613466a19ae4fcee2ed38ca3d70dffc"
+    },
+    {
+      "path": "assets/index-CtxA6CfK.js",
+      "matchesLocal": true,
+      "sha256": "21f05e201b66021d80859e08a57dd6f202fffa185eb4cb4d20665d3132fa0eac"
+    },
+    {
+      "path": "assets/index-BxD1Ti68.js",
+      "matchesLocal": true,
+      "sha256": "ea77679e1f6843a02807b791090abc6b6a3cd1f134b38ceca80468744f5c153d"
+    },
+    {
+      "path": "assets/FieldNotes-CljyhTDb.js",
+      "matchesLocal": true,
+      "sha256": "6596b5370caae7db6b247917a0d2ea2b5053b42fd94566eae93fcc2be10ef3e8"
+    },
+    {
+      "path": "assets/publicRepository-hmPCNhHP.js",
+      "matchesLocal": true,
+      "sha256": "71c0e02c4b9549260599f904cc801971236e0a32bdf66714ef147738f2dcd08e"
+    },
+    {
+      "path": "assets/publicRepository-BPqyXFaP.js",
+      "matchesLocal": true,
+      "sha256": "78ed949af657656b9ee0bf3d76829c6f783c92baaf7218f8119ca39a953f54f2"
+    },
+    {
+      "path": "assets/chengzi-BF46Ja8y.png",
+      "matchesLocal": true,
+      "sha256": "f96ca9c2398374da085e9b2605dcc3b692b5c46af91cea1b05c5b98b3b6aac38"
+    }
+  ]
+}

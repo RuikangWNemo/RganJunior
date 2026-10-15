@@ -125,7 +125,7 @@ var AUTH_EMAIL_COPY = {
     signIn: {
       subject: "Your R-Gan Junior sign-in code",
       preview: (token) => `Use ${token} to sign in to R-Gan Junior`,
-      title: "Your R-Gan Junior sign-in code",
+      title: "Welcome back",
       body: "Use this verification code to sign in:",
       button: "Sign in to R-Gan Junior"
     },
@@ -184,22 +184,22 @@ var AUTH_EMAIL_COPY = {
         body: "The phone number for your account was recently changed."
       },
       identity_linked: {
-        subject: "A sign-in method was added to R-Gan Junior",
+        subject: "A sign-in method was added to your R-Gan Junior account",
         title: "A sign-in method was added",
         body: "A new sign-in method was recently linked to your account."
       },
       identity_unlinked: {
-        subject: "A sign-in method was removed from R-Gan Junior",
+        subject: "A sign-in method was removed from your R-Gan Junior account",
         title: "A sign-in method was removed",
         body: "A sign-in method was recently removed from your account."
       },
       mfa_enrolled: {
-        subject: "A verification method was added to R-Gan Junior",
+        subject: "A verification method was added to your R-Gan Junior account",
         title: "A verification method was added",
         body: "A new security verification method was recently added to your account."
       },
       mfa_unenrolled: {
-        subject: "A verification method was removed from R-Gan Junior",
+        subject: "A verification method was removed from your R-Gan Junior account",
         title: "A verification method was removed",
         body: "A security verification method was recently removed from your account."
       },

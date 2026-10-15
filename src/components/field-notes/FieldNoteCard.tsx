@@ -1,12 +1,14 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { FieldNote } from '@/types/field-notes';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { cn } from '@/lib/utils';
+import { AuthorPortrait } from './AuthorPortrait';
 
 function formatDate(date: string, language: 'zh' | 'en') {
-  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-GB', {
+  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -28,11 +30,14 @@ export function FieldNoteCard({
 }: FieldNoteCardProps) {
   const { lang, t } = useLanguage();
   const authors = note.authors;
+  const jointAuthor = authors.find((author) => author.portraitGroup?.length);
+  const isInvitation = note.topicSlugs.includes('project-letter');
   const topics = note.topics;
   const title = pickLocalized(note.title, lang);
-  const href = `/field-notes/${note.slug}`;
+  const href = `/community-stories/${note.slug}`;
   const meta = (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-6 text-muted-foreground">
+      {jointAuthor ? <AuthorPortrait person={jointAuthor} /> : null}
       <span className="font-medium text-primary/80">
         {authors.map((person) => pickLocalized(person.name, lang)).join(', ')}
       </span>
@@ -52,7 +57,7 @@ export function FieldNoteCard({
           className="cursor-target block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         >
           <div className="overflow-hidden rounded-lg bg-secondary/50">
-            <img
+            <OptimizedImage
               src={note.cover}
               alt={pickLocalized(note.coverAlt, lang)}
               loading="eager"
@@ -97,7 +102,7 @@ export function FieldNoteCard({
             <div className="mt-4">{meta}</div>
           </div>
           <div className="overflow-hidden rounded-lg bg-secondary/50">
-            <img
+            <OptimizedImage
               src={note.cover}
               alt=""
               loading="lazy"
@@ -111,7 +116,7 @@ export function FieldNoteCard({
   }
 
   return (
-    <article className={cn('group', className)}>
+    <article className={cn('group', isInvitation && 'my-5 rounded-2xl border border-primary/15 bg-primary/[0.035] px-5 sm:px-7', className)}>
       <Link
         to={href}
         aria-label={t(`阅读：${title}`, `Read: ${title}`)}
@@ -130,12 +135,12 @@ export function FieldNoteCard({
           </p>
         </div>
         <div className="overflow-hidden rounded-lg bg-secondary/50 sm:order-none">
-          <img
+          <OptimizedImage
             src={note.cover}
             alt=""
             loading="lazy"
             decoding="async"
-            className="aspect-[16/9] w-full object-cover transition duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none sm:aspect-[4/3]"
+            className={cn("w-full transition duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none", isInvitation ? "aspect-[1280/545] object-contain" : "aspect-[16/9] object-cover sm:aspect-[4/3]")}
           />
         </div>
       </Link>

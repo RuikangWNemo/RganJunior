@@ -77,7 +77,7 @@ describe('Navbar mobile drawer', () => {
   it('uses 14px bold typography for every desktop primary menu item', () => {
     renderNavbar('/about');
 
-    for (const label of ['首页', '关于', '项目', '发起人故事', '田野笔记', '影响', '加入我们']) {
+    for (const label of ['首页', '关于', '项目', '发起人故事', '社区故事', '影响', '加入我们']) {
       expect(screen.getByRole('link', { name: label })).toHaveClass('text-sm', 'font-bold');
     }
   });
@@ -114,40 +114,66 @@ describe('Navbar mobile drawer', () => {
     expect(story).toHaveAttribute('aria-current', 'page');
   });
 
-  it('places Field Notes after the founder story and exposes both article views', async () => {
-    renderNavbar('/field-notes/all');
+  it('keeps only All Articles in the Community Stories menu', async () => {
+    renderNavbar('/community-stories/all');
 
     const story = screen.getByRole('link', { name: '发起人故事' });
-    const fieldNotes = screen.getByRole('link', { name: '田野笔记' });
+    const fieldNotes = screen.getByRole('link', { name: '社区故事' });
     expect(story.compareDocumentPosition(fieldNotes) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(fieldNotes).toHaveAttribute('aria-current', 'page');
 
-    const desktopMenu = screen.getByRole('menu', { name: '田野笔记次级菜单' });
-    expect(within(desktopMenu).getByRole('menuitem', { name: '精选文章' })).toHaveAttribute('href', '/field-notes');
+    const desktopMenu = screen.getByRole('menu', { name: '社区故事次级菜单' });
+    expect(within(desktopMenu).queryByRole('menuitem', { name: '精选文章' })).not.toBeInTheDocument();
+    expect(within(desktopMenu).getByRole('menuitem', { name: '全部文章' })).toHaveAttribute('href', '/community-stories');
     expect(within(desktopMenu).getByRole('menuitem', { name: '全部文章' })).toHaveAttribute('aria-current', 'location');
 
     fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
     const dialog = await screen.findByRole('dialog', { name: '网站导航' });
-    expect(within(dialog).getByRole('button', { name: '精选文章' })).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: '社区故事' }));
+    expect(within(dialog).queryByRole('button', { name: '精选文章' })).not.toBeInTheDocument();
     expect(within(dialog).getByRole('button', { name: '全部文章' })).toHaveAttribute('aria-current', 'location');
   });
 
-  it('places Impact after Field Notes and exposes impact and public records', async () => {
+  it('places Impact after Community Stories and exposes impact and public records', async () => {
     renderNavbar('/impact/awards');
 
-    const fieldNotes = screen.getByRole('link', { name: '田野笔记' });
+    const fieldNotes = screen.getByRole('link', { name: '社区故事' });
     const impact = screen.getByRole('link', { name: '影响' });
     expect(fieldNotes.compareDocumentPosition(impact) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(impact).toHaveAttribute('aria-current', 'page');
 
     const desktopMenu = screen.getByRole('menu', { name: '影响次级菜单' });
     expect(within(desktopMenu).getByRole('menuitem', { name: '影响与记录' })).toHaveAttribute('href', '/impact');
-    expect(within(desktopMenu).getByRole('menuitem', { name: '外部记录' })).toHaveAttribute('aria-current', 'location');
+    expect(within(desktopMenu).getByRole('menuitem', { name: '获奖与成果' })).toHaveAttribute('aria-current', 'location');
 
     fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
     const dialog = await screen.findByRole('dialog', { name: '网站导航' });
+    fireEvent.click(within(dialog).getByRole('button', { name: '影响' }));
     expect(within(dialog).getByRole('button', { name: '影响与记录' })).toBeInTheDocument();
-    expect(within(dialog).getByRole('button', { name: '外部记录' })).toHaveAttribute('aria-current', 'location');
+    expect(within(dialog).getByRole('button', { name: '获奖与成果' })).toHaveAttribute('aria-current', 'location');
+  });
+
+  it('keeps mobile groups collapsed, opens only the clicked group, and resets on reopening', async () => {
+    renderNavbar('/community-stories/all');
+    fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
+    let dialog = await screen.findByRole('dialog', { name: '网站导航' });
+    for (const name of ['关于', '项目', '社区故事', '影响']) {
+      expect(within(dialog).getByRole('button', { name })).toHaveAttribute('aria-expanded', 'false');
+    }
+    expect(within(dialog).queryByRole('button', { name: '全部文章' })).not.toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: '社区故事' }));
+    expect(within(dialog).getByRole('button', { name: '全部文章' })).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: '关于' }));
+    expect(within(dialog).queryByRole('button', { name: '全部文章' })).not.toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: '我们的团队' })).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: '关于' }));
+    expect(within(dialog).queryByRole('button', { name: '我们的团队' })).not.toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole('button', { name: '项目' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: '关闭导航抽屉' }));
+    fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
+    dialog = await screen.findByRole('dialog', { name: '网站导航' });
+    expect(within(dialog).getByRole('button', { name: '项目' })).toHaveAttribute('aria-expanded', 'false');
+    expect(within(dialog).queryByRole('button', { name: '生活共创营' })).not.toBeInTheDocument();
   });
 
   it('closes when Escape is pressed', async () => {
@@ -180,13 +206,13 @@ describe('Navbar mobile drawer', () => {
 
     fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
     await screen.findByRole('dialog', { name: '网站导航' });
-    fireEvent.click(screen.getByRole('button', { name: '项目' }));
+    fireEvent.click(screen.getByRole('button', { name: '发起人故事' }));
 
     expect(screen.queryByRole('dialog', { name: '网站导航' })).not.toBeInTheDocument();
     expect(screen.getByRole('status', { name: 'current path' })).toHaveTextContent('/');
 
     await waitFor(() => {
-      expect(screen.getByRole('status', { name: 'current path' })).toHaveTextContent('/programs');
+      expect(screen.getByRole('status', { name: 'current path' })).toHaveTextContent('/story');
     });
   });
 
@@ -208,6 +234,7 @@ describe('Navbar mobile drawer', () => {
     fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
     await screen.findByRole('dialog', { name: '网站导航' });
 
+    fireEvent.click(screen.getByRole('button', { name: '关于' }));
     expect(screen.getByRole('button', { name: '我们的团队' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '我们相信' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '我们的方法' })).toHaveAttribute('aria-current', 'location');
@@ -340,6 +367,7 @@ describe('Navbar mobile drawer', () => {
 
     fireEvent.click(screen.getByRole('button', { name: '打开导航菜单' }));
     const dialog = await screen.findByRole('dialog', { name: '网站导航' });
+    fireEvent.click(within(dialog).getByRole('button', { name: '项目' }));
     fireEvent.click(within(dialog).getByRole('button', { name: '生活共创营' }));
 
     await waitFor(() => {

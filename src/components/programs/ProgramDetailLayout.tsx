@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import type { ReactNode } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -45,7 +46,7 @@ export default function ProgramDetailLayout({ program, children }: ProgramDetail
             </div>
 
             <figure className="program-detail-hero__image">
-              <img
+              <OptimizedImage
                 src={program.image.src}
                 alt={pickLocalized(program.image.alt, lang)}
                 width={program.image.width}

@@ -71,43 +71,10 @@ export const impactSnapshot: ImpactSnapshot = {
       label: { zh: '名同学及家长参与', en: 'students and parents joined' },
       detail: {
         zh: '2023 年 10 月，为同龄人设计的可持续农业活动记录。',
-        en: 'Recorded in the sustainable agriculture activity designed for peers in October 2023.',
+        en: "A record of a sustainable agriculture activity designed for peers in October 2023.",
       },
       observedAt: '2023.10',
       sourceLabel: { zh: '阿柑少年 2.0 项目记录', en: "R-Gan Junior 2.0 project record" },
-    },
-    {
-      id: 'ctb-projects',
-      value: '2,000+',
-      label: { zh: '支 CTB 参赛队伍', en: 'CTB project teams' },
-      detail: {
-        zh: '研究成果从参赛项目中进入全国论坛。',
-        en: 'The research advanced from this project pool to the national forum.',
-      },
-      observedAt: '2023.11',
-      sourceLabel: { zh: 'CTB 参赛记录', en: 'CTB competition record' },
-    },
-    {
-      id: 'ctb-finalists',
-      value: '72',
-      label: { zh: '支队伍进入全球论坛', en: 'teams advanced to the global forum' },
-      detail: {
-        zh: '项目于 2024 年 2 月进入全球英文论坛。',
-        en: 'The project advanced to the global English forum in February 2024.',
-      },
-      observedAt: '2024.02',
-      sourceLabel: { zh: 'CTB 全球论坛记录', en: 'CTB global forum record' },
-    },
-    {
-      id: 'ctb-percentile',
-      value: '3.6%',
-      label: { zh: 'CTB 全球项目排位', en: 'global CTB project standing' },
-      detail: {
-        zh: '由前 72 名与 2,000+ 参赛项目的公开项目记录换算。',
-        en: 'Derived from the recorded top 72 standing among more than 2,000 projects.',
-      },
-      observedAt: '2024.02',
-      sourceLabel: { zh: '阿柑少年 2.0 成果记录', en: "R-Gan Junior 2.0 outcome record" },
     },
   ],
   relationships: [
@@ -165,7 +132,7 @@ export const impactSnapshot: ImpactSnapshot = {
       title: { zh: '家庭观察', en: 'Family observation' },
       intro: {
         zh: '记录家长看到的孩子变化，以及家庭愿意如何继续支持。这里呈现观察的方法，不公开未经授权的家庭细节。',
-        en: 'We record the changes families notice and how they are willing to keep supporting their child. This presents the observation method without exposing unapproved family details.',
+        en: "We record the changes parents notice in their child and how they hope to continue supporting them. Here, we explain how we gather those observations; family details are shared only with permission.",
       },
       observationFields: [
         { zh: '我看到孩子的一个变化是：', en: 'One change I have seen in my child is:' },
@@ -183,7 +150,7 @@ export const impactSnapshot: ImpactSnapshot = {
         en: 'Begin with land and labor, and see that food is more than an abstract product.',
       },
       image: '/archive/elements/photos/program-activities/s11-orchard-field-practice.jpg',
-      imageAlt: { zh: '少年在果园中进行田野劳动', en: 'A young participant doing fieldwork in an orchard' },
+      imageAlt: { zh: '少年在果园中进行田野劳动', en: "A young participant working in an orchard" },
       dateLabel: { zh: '阿柑少年 1.0 记录', en: "R-Gan Junior 1.0 record" },
     },
     {
@@ -191,7 +158,7 @@ export const impactSnapshot: ImpactSnapshot = {
       title: { zh: '参与社区清洁', en: 'Join community cleanup' },
       description: {
         zh: '让公共责任从讨论落到身边可以完成的具体事情。',
-        en: 'Move public responsibility from discussion into a concrete task nearby.',
+        en: "Put public responsibility into practice through small, concrete tasks close to home.",
       },
       image: '/archive/elements/photos/program-activities/s11-community-service-cleanup.jpg',
       imageAlt: { zh: '孩子与伙伴一起参与社区清洁', en: 'Young people and partners taking part in community cleanup' },
@@ -199,7 +166,7 @@ export const impactSnapshot: ImpactSnapshot = {
     },
     {
       id: 'research-presentation',
-      title: { zh: '把研究讲给别人听', en: 'Present research to others' },
+      title: { zh: '把研究讲给别人听', en: "Share research with others" },
       description: {
         zh: '把问卷、观察和实践整理成可以被提问的公开表达。',
         en: 'Turn surveys, observation, and practice into public work that others can question.',
@@ -216,8 +183,8 @@ export const impactSnapshot: ImpactSnapshot = {
         en: 'Keep practicing collaboration and responding to real needs through rural work and co-creation.',
       },
       image: '/archive/elements/photos/program-activities/s21-tieniu-youth-rural-practice-camp-group.jpg',
-      imageAlt: { zh: '铁牛青年乡建实践营参与者合影', en: 'Participants in the Tieniu youth rural practice camp' },
-      dateLabel: { zh: '铁牛青年乡建实践营，2025', en: 'Tieniu youth rural practice camp, 2025' },
+      imageAlt: { zh: '铁牛青年乡建实践营参与者合影', en: "Participants in the Tieniu Youth Rural Development Camp" },
+      dateLabel: { zh: '铁牛青年乡建实践营，2025', en: "Tieniu Youth Rural Development Camp, 2025" },
     },
   ],
   rhythm: [
@@ -231,7 +198,7 @@ export const impactSnapshot: ImpactSnapshot = {
     },
     {
       id: 'practice',
-      title: { zh: '个人与家庭实践', en: 'Personal and family practice' },
+      title: { zh: '个人与家庭实践', en: "Individual and family activities" },
       description: {
         zh: '把七日挑战、低碳生活或家庭小行动带回日常，并留下过程记录。',
         en: 'Bring a seven-day challenge, low-carbon habit, or family action into daily life and record the process.',
@@ -252,14 +219,13 @@ export const impactSnapshot: ImpactSnapshot = {
       category: 'competition',
       categoryLabel: { zh: '竞赛', en: 'Competition' },
       date: '2024.02',
-      title: { zh: 'CTB 全球青年研究创新论坛', en: 'CTB Global Youth Research Forum' },
+      title: { zh: 'CTB 全球青年研究创新论坛', en: "CTB Global Youth Research and Innovation Forum" },
       summary: {
         zh: '围绕青少年参与可持续农业的研究，从全国论坛继续进入全球英文论坛。',
-        en: 'Research on youth participation in sustainable agriculture advanced from the national forum to the global English forum.',
+        en: "The research project on youth participation in sustainable agriculture advanced from the national forum to the CTB global forum, held in English.",
       },
       facts: [
         { zh: '从 2,000+ 支参赛队伍中进入前 72 名', en: 'Advanced to the top 72 among more than 2,000 teams' },
-        { zh: '全球项目排位前 3.6%', en: 'Top 3.6% global project standing' },
         { zh: '留有 Most Popular Project 奖牌实物记录', en: 'Physical record of a Most Popular Project medal' },
       ],
       image: '/archive/elements/photos/academic-forum/s16-ctb-forum-team-booth.jpg',
@@ -276,7 +242,7 @@ export const impactSnapshot: ImpactSnapshot = {
       title: { zh: 'YSA Journal 论文发表', en: 'YSA Journal publication' },
       summary: {
         zh: '研究成果整理为中英文论文，讨论青少年如何参与可持续农业与乡村发展。',
-        en: 'The research was developed into a bilingual paper on youth participation in sustainable agriculture and rural development.',
+        en: "The research was written up as a paper on youth participation in sustainable agriculture and rural development, with Chinese and English abstracts.",
       },
       facts: [
         { zh: '论文包含中英文摘要', en: 'The paper includes Chinese and English abstracts' },
@@ -291,19 +257,19 @@ export const impactSnapshot: ImpactSnapshot = {
       category: 'forum',
       categoryLabel: { zh: '论坛', en: 'Forum' },
       date: '2024.05',
-      title: { zh: '克莱蒙生态文明国际论坛', en: 'Claremont Eco Forum' },
+      title: { zh: '克莱蒙生态文明国际论坛', en: "Claremont International Forum on Ecological Civilization" },
       summary: {
         zh: '阿柑少年团队在线分享青少年参与可持续农业的研究与实践。',
         en: "The R-Gan Junior team shared research and practice on youth participation in sustainable agriculture online.",
       },
       facts: [
-        { zh: '第 17 届克莱蒙生态文明国际论坛青少年线上特别活动', en: 'Youth online special event of the 17th Claremont Eco Forum' },
+        { zh: '第 17 届克莱蒙生态文明国际论坛青少年线上特别活动', en: "Youth online special event of the 17th Claremont International Forum on Ecological Civilization" },
         { zh: '活动海报列出 Tianli Agan Youth Team', en: 'The event poster lists the Tianli Agan Youth Team' },
       ],
       image: '/archive/elements/graphics/publications/s18-claremont-forum-poster.png',
-      imageAlt: { zh: '2024 克莱蒙生态文明国际论坛青少年活动海报', en: 'Poster for the 2024 Claremont Eco Forum youth event' },
+      imageAlt: { zh: '2024 克莱蒙生态文明国际论坛青少年活动海报', en: "Poster for the 2024 Claremont International Forum on Ecological Civilization youth event" },
       secondaryImage: '/archive/elements/graphics/publications/s18-claremont-online-forum-screenshot.png',
-      secondaryImageAlt: { zh: '克莱蒙生态文明国际论坛线上分享截图', en: 'Screenshot from the Claremont Eco Forum online session' },
+      secondaryImageAlt: { zh: '克莱蒙生态文明国际论坛线上分享截图', en: "Screenshot from the Claremont International Forum on Ecological Civilization online session" },
       sourceLabel: { zh: '论坛海报与线上活动记录', en: 'Forum poster and online event record' },
     },
   ],

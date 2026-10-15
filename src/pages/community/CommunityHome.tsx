@@ -15,9 +15,9 @@ export default function CommunityHome() {
   const [error, setError] = useState<string | null>(null);
 
   const destinations = [
-    { to: '/community/stories/new', title: t('写一篇文章', 'Write a story'), body: t('记录观察、行动与成长，让经验成为彼此的路标。', 'Turn observations, action, and growth into a marker for others.'), icon: BookOpenText, index: '01' },
+    { to: '/community/stories/new', title: t('写一篇文章', "Write a article"), body: t('记录观察、行动与成长，让经验成为彼此的路标。', 'Turn observations, action, and growth into a marker for others.'), icon: BookOpenText, index: '01' },
     { to: '/community/people', title: t('认识伙伴', 'Meet people'), body: t('找到愿意被看见、也愿意彼此支持的正式成员。', 'Find members who are open to being seen and supporting one another.'), icon: Users, index: '02' },
-    { to: '/community/practice', title: t('参加共练', 'Join a practice'), body: t('在固定的时间里一起练习、交流与复盘。', 'Practice, exchange, and reflect together at a shared time.'), icon: Sparkles, index: '03' },
+    { to: '/community/practice', title: t('参加共练', "Join a Shared Practice session"), body: t('在固定的时间里一起练习、交流与复盘。', 'Practice, exchange, and reflect together at a shared time.'), icon: Sparkles, index: '03' },
     { to: '/community/messages', title: t('查看消息', 'Open messages'), body: t('在正式社群边界内，继续一段真诚的对话。', 'Continue a thoughtful conversation within the member community.'), icon: MessageCircle, index: '04' },
   ];
 

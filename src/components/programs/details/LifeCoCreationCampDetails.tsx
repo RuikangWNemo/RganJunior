@@ -16,7 +16,7 @@ export default function LifeCoCreationCampDetails() {
           <p className="text-pretty">
             {t(
               '连续相处让关系不只停留在一次活动。伙伴要一起面对节奏、分工、意见和冲突，也在真实生活里练习信任、表达与回应。',
-              'Sustained time together takes relationships beyond an activity. Participants face rhythm, roles, differences, and conflict while practising trust, expression, and response.',
+              "Spending several days together allows relationships to develop beyond a single activity. Participants work through daily routines, shared responsibilities, differences of opinion, and conflicts, while learning to trust, express their needs, and respond to one another.",
             )}
           </p>
         </div>
@@ -55,13 +55,13 @@ export default function LifeCoCreationCampDetails() {
         <div>
           <p>{t('安全、照护与继续', 'Safety, care, and what follows')}</p>
           <h2 id="co-creation-care-title" className="text-balance">
-            {t('让每个人放心地进入共同生活', 'Making shared life safe to enter')}
+            {t('让每个人放心地进入共同生活', "Helping everyone feel safe and supported as they live together")}
           </h2>
         </div>
         <p className="text-pretty">
           {t(
             '每期会根据场域与路线制定人员照护、住宿管理、医疗支持、保险和紧急联系方案，并完整公布费用与家庭参与方式。营地结束后，伙伴可以选择进入行动小组或下一次共创，不需要完成固定路径。',
-            'Each session sets out staffing, accommodation care, medical support, insurance, emergency contacts, fees, and family participation. After camp, participants may choose an Action Group or another co-creation without following a fixed pathway.',
+            "Each camp develops plans for staffing and participant care, accommodation management, medical support, insurance, and emergency contacts based on the location and route. Fees and family participation arrangements are published in full. After camp, participants can choose an Action Group or another co-creation activity without having to follow a fixed pathway.",
           )}
         </p>
       </section>

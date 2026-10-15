@@ -39,7 +39,7 @@ export const homeBeliefs: HomeBelief[] = [
     title: text('自然是最好的老师', 'Nature is the best teacher'),
     body: text(
       '走进森林、茶山和田野，重新打开身体、观察和感受。',
-      'Forests, tea mountains, and fields reopen the body, helping young people understand the world through attention and feeling.',
+      "Step into forests, tea-growing hills, and fields to reconnect with your body and renew your ability to observe and feel.",
     ),
     image: {
       src: '/images/home/belief-nature-teacher.webp',
@@ -51,10 +51,10 @@ export const homeBeliefs: HomeBelief[] = [
   },
   {
     number: '02',
-    title: text('真实世界是最深刻的课堂', 'The real world is the deepest classroom'),
+    title: text('真实世界是最深刻的课堂', "The real world is life’s most profound classroom."),
     body: text(
       '在食物、茶、运动、劳动和社区中，让知识回到真实生活里。',
-      'Food, tea, movement, work, and community turn knowledge toward questions that matter in everyday life.',
+      "Through food, tea, physical activity, hands-on work, and community life, we connect knowledge with everyday experience.",
     ),
     image: {
       src: '/images/home/belief-real-world-classroom.webp',
@@ -69,7 +69,7 @@ export const homeBeliefs: HomeBelief[] = [
     title: text('青少年是当下正在发生的力量', 'Young people are a force already in motion'),
     body: text(
       '通过小队、任务和议题共创，从观察者成为表达者和行动者。',
-      'Through teams, shared tasks, and real issues, young people grow from observers into voices and actors.',
+      "Through teamwork, shared tasks, and collaborative exploration of real-world issues, young people move from observing to expressing their ideas and taking action.",
     ),
     image: {
       src: '/images/home/belief-young-people-now.webp',
@@ -93,11 +93,11 @@ export const homeBeliefFeatureImage: HomeImage = {
 
 export const homePrograms: HomeProgram[] = [
   {
-    title: text('生活体验营', 'Life Discovery Camp'),
+    title: text('生活体验营', "Life Immersion Camp"),
     duration: text('2 天 1 夜', '2 days, 1 night'),
     body: text(
       '面向初次接触的家庭与孩子，轻量体验真实生活里的松弛、连接与力量。',
-      'A gentle first experience for young people and families to find ease, connection, and strength in real daily life.',
+      'A gentle introduction for families and young people new to the program, offering a sense of ease, connection, and strength through everyday life.',
     ),
     href: '/programs/life-experience-camp',
     image: {
@@ -115,7 +115,7 @@ export const homePrograms: HomeProgram[] = [
     duration: text('5 天 4 夜', '5 days, 4 nights'),
     body: text(
       '假期 5 天 4 夜，通过小队任务、议题共创和低碳生活实践，建立情感与信任，为后续持续行动打下基础。',
-      'Team tasks, co-created questions, and low-carbon living build the trust needed for action that continues beyond camp.',
+      "Over five days and four nights during school breaks, team tasks, collaborative exploration of real-world issues, and low-carbon living build relationships and trust as a foundation for continued action.",
     ),
     href: '/programs/life-co-creation-camp',
     image: {
@@ -132,7 +132,7 @@ export const homePrograms: HomeProgram[] = [
     title: text('行动小组', 'Action Group'),
     body: text(
       '营后持续跟进与陪伴，支持青少年把兴趣和感受延续到城市日常生活中。',
-      'Camp is a beginning. Young people carry their interests home and continue observing, trying, and acting in daily life.',
+      "Ongoing support after camp helps young people carry their interests and experiences into everyday city life.",
     ),
     href: '/programs/action-group',
     image: {
@@ -146,10 +146,10 @@ export const homePrograms: HomeProgram[] = [
     },
   },
   {
-    title: text('青少年研究计划', 'Youth Research Programme'),
+    title: text('青少年研究计划', "R-Gan Junior Research Program"),
     body: text(
       '面对感兴趣的青少年，围绕社区的各类真实议题，用田野观察、访谈和写作，学习理解真实问题，形成自己的公共思考。',
-      'Field observation, interviews, and writing help older students understand community questions and form a public point of view.',
+      "Young people interested in research explore real community issues through field observation, interviews, and writing, learning to understand those issues and develop their own perspectives on public life.",
     ),
     href: '/programs/public-projects',
     image: {
@@ -158,7 +158,7 @@ export const homePrograms: HomeProgram[] = [
       sizes: '(max-width: 767px) calc(100vw - 4rem), 56vw',
       width: 3168,
       height: 2113,
-      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', 'Youth Research Programme team presenting their work at the CTB Research and Innovation Forum'),
+      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', "R-Gan Junior Research Program team presenting their work at the CTB Research and Innovation Forum"),
       position: 'center 46%',
     },
   },
@@ -169,7 +169,7 @@ export const homeSceneImages: HomeImage[] = [
     ...responsiveHomeScene('/images/home/life-camp-01-arrival-road.webp'),
     width: 1920,
     height: 1440,
-    alt: text('车队沿着林间小路驶入南宝山', 'A small convoy arriving in Nanbaoshan along a forest road'),
+    alt: text('车队沿着林间小路驶入南宝山', "A convoy arriving at Nanbao Mountain along a forest road"),
     position: 'center 50%',
   },
   {
@@ -190,7 +190,7 @@ export const homeSceneImages: HomeImage[] = [
     ...responsiveHomeScene('/images/home/life-camp-04-forest-tea.webp'),
     width: 1920,
     height: 1280,
-    alt: text('小队徒步后坐在林间喝茶休息', 'The group resting and sharing tea during a forest hike'),
+    alt: text('小队徒步后坐在林间喝茶休息', "The group resting and drinking tea in the forest after a hike"),
     position: 'center 52%',
   },
   {
@@ -211,21 +211,21 @@ export const homeSceneImages: HomeImage[] = [
     ...responsiveHomeScene('/images/home/life-camp-07-tea-field.webp'),
     width: 1920,
     height: 1280,
-    alt: text('青少年与陪伴者在茶山上观察茶树', 'A young person and mentor observing tea plants on the mountain'),
+    alt: text('青少年与陪伴者在茶山上观察茶树', "Young people and their companions observing tea plants on a hillside"),
     position: 'center 51%',
   },
   {
     ...responsiveHomeScene('/images/home/life-camp-08-tea-harvest.webp'),
     width: 1920,
     height: 1280,
-    alt: text('青少年完成采茶后在茶厂合影', 'Young people posing together with their tea harvest'),
+    alt: text('青少年完成采茶后在茶厂合影', "Young people posing for a group photograph at the tea factory after picking tea"),
     position: 'center 53%',
   },
   {
     ...responsiveHomeScene('/images/home/life-camp-09-closing-gathering.webp'),
     width: 1920,
     height: 1280,
-    alt: text('生活共创营的青少年与家庭在收官时合影', 'Young people and families gathering for a closing photograph'),
+    alt: text('生活共创营的青少年与家庭在收官时合影', 'Young people and families at the closing of the Life Co-creation Camp'),
     position: 'center 52%',
   },
 ];

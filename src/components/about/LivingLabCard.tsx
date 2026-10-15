@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { Link } from 'react-router-dom';
 
 type LivingLabCardProps = {
@@ -40,7 +41,7 @@ export default function LivingLabCard({
       className={`about-v2-lab-card ${variant === 'featured' ? 'about-v2-lab-feature' : 'about-v2-lab-card--standard'}`}
     >
       <figure className="about-v2-lab-card__media">
-        <img
+        <OptimizedImage
           src={image.src}
           alt={image.alt}
           width={image.width}

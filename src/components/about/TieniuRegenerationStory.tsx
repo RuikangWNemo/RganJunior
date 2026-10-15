@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized } from '@/lib/brand';
 
@@ -5,27 +6,27 @@ const repairPractices = [
   {
     title: {
       zh: '停止除草剂，让草重新长出来',
-      en: 'Stop herbicide and let ground cover return',
+      en: "Stop using herbicides and let ground cover return",
     },
     body: {
       zh: '地被植物重新覆盖土壤，减少裸地，也为昆虫、根系和微生物恢复创造条件。',
-      en: 'Ground cover protects exposed soil and creates conditions for insects, roots, and microorganisms to return.',
+      en: "Ground-cover plants cover the soil again, reducing bare ground and creating conditions for insects, roots, and microorganisms to recover.",
     },
   },
   {
     title: {
       zh: '从单一种植回到多层生态',
-      en: 'Move from monoculture back to layered ecology',
+      en: "Move from monoculture back to a multi-layered ecosystem",
     },
     body: {
       zh: '乔木、果树、地被、水体和动物重新建立关系，让林盘不只是一片果园。',
-      en: 'Trees, orchards, ground cover, water, and animals rebuild relationships, so Linpan becomes more than an orchard.',
+      en: "Trees, fruit trees, ground-cover plants, water, and animals become connected again, making the Linpan landscape more than an orchard.",
     },
   },
   {
     title: {
       zh: '把修复变成真实的生活经验',
-      en: 'Turn repair into lived experience',
+      en: "Make ecological restoration part of everyday life",
     },
     body: {
       zh: '少年在劳动和观察中理解食物从哪里来，也理解土地、家庭消费与社区行动如何彼此影响。',
@@ -38,17 +39,17 @@ const landScales = [
   {
     value: '9',
     unit: { zh: '亩', en: 'mu' },
-    label: { zh: '一个林盘修复样本', en: 'one Linpan repair site' },
+    label: { zh: '一个林盘修复样本', en: "a Linpan restoration site (0.6 hectares)" },
   },
   {
     value: '40',
     unit: { zh: '亩', en: 'mu' },
-    label: { zh: '正在发生的生态实践', en: 'ecological practice in progress' },
+    label: { zh: '正在发生的生态实践', en: 'ecological practice in progress (about 2.67 hectares)' },
   },
   {
     value: '9900',
     unit: { zh: '亩', en: 'mu' },
-    label: { zh: '一个村庄的生态家园想象', en: 'a village imagined as an ecological home' },
+    label: { zh: '一个村庄的生态家园想象', en: 'a village imagined as an ecological home (660 hectares)' },
   },
 ];
 
@@ -63,14 +64,14 @@ export default function TieniuRegenerationStory() {
         <p>
           {t(
             '土地修复不是一张需要跟随滚动阅读的地图，而是一段仍在持续的实践。先看清问题，再理解每一个改变。',
-            'Land repair is not a map to decode while scrolling. It is an ongoing practice: first understand the problem, then see each change clearly.',
+            "Land restoration is an ongoing practice. Begin by understanding the problems, then look at each change in turn.",
           )}
         </p>
       </header>
 
       <div className="about-land-repair__problem">
         <figure>
-          <img
+          <OptimizedImage
             src="/archive/elements/photos/site-ecology/s04-soil-root-damage.jpg"
             alt={t('板结土壤与受损根系的现场照片', 'Compacted soil and damaged roots on site')}
             loading="lazy"
@@ -79,12 +80,12 @@ export default function TieniuRegenerationStory() {
         </figure>
 
         <div className="about-land-repair__problem-copy">
-          <p>{t('土地曾经面对什么', 'What the land was facing')}</p>
-          <h4>{t('当土地只剩一种作物，生态系统也开始失去层次。', 'When the land kept only one crop, the ecosystem began to lose its layers.')}</h4>
+          <p>{t('土地曾经面对什么', "The challenges the land faced")}</p>
+          <h4>{t('当土地只剩一种作物，生态系统也开始失去层次。', "When only one crop was grown, the ecosystem began to lose its diversity and structure.")}</h4>
           <p>
             {t(
               '单一种植、化肥、除草剂和高强度管理，让大树、鸟类、昆虫和地被植物逐渐退场。土壤失去孔隙后，根系、微生物和水分也很难重新形成健康关系。',
-              'Monoculture, fertilizer, herbicide, and intensive management pushed trees, birds, insects, and ground cover away. As soil lost pore space, roots, microorganisms, and water struggled to form healthy relationships.',
+              "Monoculture, fertilizers, herbicides, and intensive management gradually displaced large trees, birds, insects, and ground-cover plants. As the soil lost pore space, it became harder for roots, microorganisms, and water to interact in a healthy ecosystem.",
             )}
           </p>
           <div className="about-land-repair__soil-number">
@@ -92,7 +93,7 @@ export default function TieniuRegenerationStory() {
             <span>
               {t(
                 '刚来到这里时的土壤有机质含量。健康且有营养的土壤通常需要达到 4% - 5%。',
-                'Soil organic matter when the work began. Fertile soil commonly needs to reach 4% to 5%.',
+                "The soil organic matter content when we first arrived. The stated reference level for healthy, nutrient-rich soil is 4%–5%.",
               )}
             </span>
           </div>
@@ -101,7 +102,7 @@ export default function TieniuRegenerationStory() {
 
       <div className="about-land-repair__practice">
         <div className="about-land-repair__practice-copy">
-          <h4>{t('修复从可持续的小事开始', 'Repair begins with sustainable daily choices')}</h4>
+          <h4>{t('修复从可持续的小事开始', "Restoration begins with small, sustainable steps")}</h4>
           <div className="about-land-repair__practice-list">
             {repairPractices.map((practice) => (
               <article key={practice.title.zh}>
@@ -113,7 +114,7 @@ export default function TieniuRegenerationStory() {
         </div>
 
         <figure className="about-land-repair__diagram">
-          <img
+          <OptimizedImage
             src="/archive/elements/graphics/infographics/s05-linpan-biodiversity-restoration-diagram.png"
             alt={t('林盘生物多样性修复前后示意图', 'Diagram comparing Linpan biodiversity before and after restoration')}
             loading="lazy"
@@ -121,7 +122,7 @@ export default function TieniuRegenerationStory() {
           <figcaption>
             {t(
               '修复不是增加装饰性的绿色，而是让乔木、地被、水体、作物和动物重新形成结构。',
-              'Repair is not decorative greening. It rebuilds relationships among trees, ground cover, water, crops, and animals.',
+              "Restoration means rebuilding an ecosystem of trees, ground-cover plants, water, crops, and animals, rather than simply adding greenery.",
             )}
           </figcaption>
         </figure>
@@ -136,7 +137,7 @@ export default function TieniuRegenerationStory() {
           <span>1.7%</span>
           <i aria-hidden="true" />
           <strong>2.5%</strong>
-          <small>{t('土壤有机质的阶段性变化', 'A measured change in soil organic matter')}</small>
+          <small>{t('土壤有机质的阶段性变化', "Changes in soil organic matter over this period")}</small>
         </div>
       </div>
 
@@ -155,7 +156,7 @@ export default function TieniuRegenerationStory() {
       <blockquote className="about-land-repair__closing">
         {lang === 'zh'
           ? `${brandName}不是来到铁牛村做活动，而是从这片土地的修复中长出来。`
-          : `${brandName} did not simply come to Tieniu for activities. It grew out of this land's repair.`}
+          : `${brandName} did not simply come to Tieniu Village to run activities. It grew out of the work of restoring this land.`}
       </blockquote>
     </section>
   );

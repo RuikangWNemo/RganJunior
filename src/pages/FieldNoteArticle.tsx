@@ -1,3 +1,6 @@
+import { useMemo } from 'react';
+import { optimizeStaticImageHtml } from '@/lib/staticImages';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, Clock } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
@@ -6,9 +9,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
 import { fieldNotesRepository } from '@/services/field-notes/publicRepository';
 import NotFound from './NotFound';
+import { AuthorPortrait } from '@/components/field-notes/AuthorPortrait';
 
 function formatDate(date: string, language: 'zh' | 'en') {
-  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-GB', {
+  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -17,7 +21,7 @@ function formatDate(date: string, language: 'zh' | 'en') {
 
 export default function FieldNoteArticle() {
   const { slug } = useParams<{ slug: string }>();
-  const { lang, t } = useLanguage();
+  const { lang, t, setLang } = useLanguage();
   const noteQuery = useQuery({
     queryKey: ['field-notes', 'article', slug],
     queryFn: () => fieldNotesRepository.getPublishedNoteBySlug(slug ?? ''),
@@ -26,6 +30,11 @@ export default function FieldNoteArticle() {
     queryKey: ['field-notes', 'related', slug, lang],
     queryFn: () => fieldNotesRepository.listPublishedNotes({ language: lang }),
   });
+
+  const rawContentHtml = lang === 'en' && noteQuery.data?.contentHtmlEn
+    ? noteQuery.data.contentHtmlEn
+    : noteQuery.data?.contentHtml;
+  const contentHtml = useMemo(() => optimizeStaticImageHtml(rawContentHtml ?? ''), [rawContentHtml]);
 
   if (noteQuery.isPending) {
     return (
@@ -73,11 +82,11 @@ export default function FieldNoteArticle() {
         <header className="pb-12 pt-14 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24">
           <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <Link
-              to="/field-notes"
+              to="/community-stories"
               className="cursor-target inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-              {t('返回田野笔记', 'Back to Field Notes')}
+              {t('返回社区故事', 'Back to Community Stories')}
             </Link>
 
             <div className="mt-11 max-w-5xl">
@@ -100,13 +109,17 @@ export default function FieldNoteArticle() {
               >
                 {pickLocalized(note.title, lang)}
               </h1>
+              {note.contentHtmlEn ? <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label={t('文章语言', 'Article language')}>
+                <button type="button" aria-pressed={lang === 'zh'} onClick={() => setLang('zh')} className="min-h-11 rounded-full border border-border px-4 text-sm aria-pressed:border-primary aria-pressed:text-primary">中文原文</button>
+                <button type="button" aria-pressed={lang === 'en'} onClick={() => setLang('en')} className="min-h-11 rounded-full border border-border px-4 text-sm aria-pressed:border-primary aria-pressed:text-primary">English</button>
+              </div> : null}
               <p className="mt-7 max-w-3xl text-base leading-8 text-muted-foreground md:text-lg md:leading-9">
                 {pickLocalized(note.excerpt, lang)}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <div className="flex -space-x-2" aria-hidden="true">
                   {authors.map((author) => (
-                    <img key={author.slug} src={author.avatar} alt="" className="size-10 rounded-full border-2 border-background object-cover" />
+                    <AuthorPortrait key={author.slug} person={author} />
                   ))}
                 </div>
                 <p className="text-sm text-foreground/75">
@@ -119,24 +132,24 @@ export default function FieldNoteArticle() {
 
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <figure className="overflow-hidden rounded-lg bg-secondary/50">
-            <img
+            <OptimizedImage
               src={note.cover}
               alt={pickLocalized(note.coverAlt, lang)}
-              className="aspect-[16/8] w-full object-cover"
+              className={note.topicSlugs.includes('project-letter') ? 'h-auto w-full' : 'aspect-[16/8] w-full object-cover'}
             />
           </figure>
         </div>
 
         <div className="container mx-auto max-w-[46rem] px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          {note.contentHtml ? (
-            <div className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: note.contentHtml }} />
+          {contentHtml ? (
+            <div lang={lang === 'en' && note.contentHtmlEn ? 'en' : 'zh'} className="field-note-prose field-note-rich-content text-[1.0625rem] leading-[2.05] text-foreground/85" dangerouslySetInnerHTML={{ __html: contentHtml }} />
           ) : (
             <div className="field-note-prose whitespace-pre-wrap text-[1.0625rem] leading-[2.05] text-foreground/85">{note.plainContent}</div>
           )}
 
           <div className="mt-16 border-t border-border pt-8">
             <Link
-              to="/field-notes/all"
+              to="/community-stories/all"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary transition hover:text-primary/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {t('查看文章档案', 'View the article archive')}
@@ -144,6 +157,9 @@ export default function FieldNoteArticle() {
             </Link>
           </div>
         </div>
+        {note.originalUrl ? <div className="container mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
+          <a href={note.originalUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-primary underline underline-offset-4">{t('阅读微信原文', 'Read the original on WeChat')}</a>
+        </div> : null}
       </article>
 
       {related.length ? (

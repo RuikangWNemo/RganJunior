@@ -1596,6 +1596,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      list_published_field_note_authors: {
+        Args: { target_note_ids: number[] }
+        Returns: { field_note_id: number; person_id: number; slug: string; display_name: string; nature_name: string | null; author_order: number }[]
+      }
+
       archive_growth_record: {
         Args: { target_growth_record_id: number }
         Returns: undefined
@@ -1911,6 +1916,13 @@ export type Database = {
           verification_method: string
         }[]
       }
+      get_my_authorization_context: {
+        Args: never
+        Returns: {
+          is_super_admin: boolean
+          role_slugs: string[]
+        }[]
+      }
       get_my_community_application: {
         Args: never
         Returns: {
@@ -1927,13 +1939,6 @@ export type Database = {
           status: string
           submitted_at: string
           updated_at: string
-        }[]
-      }
-      get_my_authorization_context: {
-        Args: never
-        Returns: {
-          is_super_admin: boolean
-          role_slugs: string[]
         }[]
       }
       get_my_community_profile: {
@@ -2005,6 +2010,10 @@ export type Database = {
           meeting_url: string
         }[]
       }
+      get_public_website_visit_totals: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       get_website_analytics_dashboard: {
         Args: { target_range?: string }
         Returns: Json
@@ -2014,6 +2023,10 @@ export type Database = {
         Returns: Json
       }
       has_permission: { Args: { permission_key: string }; Returns: boolean }
+      import_author_article: {
+        Args: { article: Json; author_person_id?: number }
+        Returns: number
+      }
       initialize_field_note_collab_document_server: {
         Args: {
           candidate_schema_version: number
@@ -2037,6 +2050,21 @@ export type Database = {
       join_practice_session: {
         Args: { target_session_id: number }
         Returns: string
+      }
+      link_pending_article_author: {
+        Args: { source_person_id: number; target_person_id: number }
+        Returns: number
+      }
+      list_article_authors_admin: {
+        Args: never
+        Returns: {
+          display_name: string
+          has_account: boolean
+          nature_name: string
+          person_id: number
+          slug: string
+          username: string
+        }[]
       }
       list_community_access_roles: {
         Args: never
@@ -2237,6 +2265,12 @@ export type Database = {
           updated_at: string
           user_id: string
           username: string
+        }[]
+      }
+      list_my_field_note_ids: {
+        Args: never
+        Returns: {
+          id: number
         }[]
       }
       list_practice_sessions: {
@@ -2604,12 +2638,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2633,11 +2667,11 @@ export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2658,11 +2692,11 @@ export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2683,11 +2717,11 @@ export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -2700,11 +2734,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }

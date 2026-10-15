@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ProgramInvitation() {
@@ -42,7 +43,7 @@ export default function ProgramInvitation() {
           </div>
 
           <figure className="programs-editorial-intro__photo">
-            <img
+            <OptimizedImage
               src="/images/s06-linpan-aerial-overview.jpg"
               alt={t(
                 '铁牛村林盘、果园、鱼塘与院落的航拍图',
@@ -71,7 +72,7 @@ export default function ProgramInvitation() {
               <p className="text-pretty">
                 {t(
                   '阿柑少年希望邀请更多同龄人来到这里：先生活，先感受，先和人、土地、食物建立连接。也许一开始我们还不知道能做什么，但只要愿意进入现场，问题和行动就会慢慢长出来。',
-                  "R-Gan Junior hopes to invite more young people here: to live first, feel first, and begin by building connections with people, land, and food. We may not know what we can do at the beginning, but when we are willing to step into the field, questions and actions begin to grow.",
+                  "R-Gan Junior invites more young people here to experience everyday life, notice how they feel, and build connections with people, the land, and food. We may not know what we can do at first, but as we spend time in these places, we gradually discover questions to explore and actions to take.",
                 )}
               </p>
             </div>

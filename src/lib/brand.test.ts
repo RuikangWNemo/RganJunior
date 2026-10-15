@@ -19,7 +19,7 @@ describe('program route metadata', () => {
 
   it('provides metadata for both public Impact pages', () => {
     expect(getDocumentTitle('/impact', 'zh')).toBe('影响与记录 | 阿柑少年');
-    expect(getDocumentTitle('/impact/awards', 'en')).toBe("Recognition | R-Gan Junior");
+    expect(getDocumentTitle('/impact/awards', 'en')).toBe("Awards & Achievements | R-Gan Junior");
     expect(getRouteDescription('/impact/awards', 'zh')).toContain('论文发表');
   });
 

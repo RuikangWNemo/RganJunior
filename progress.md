@@ -1,5 +1,12 @@
 # Progress
 
+## 2026-10-13 English translation audit
+- Latest follow-up: completed bounded public entity research and recorded confirmed roles/camp names; distinct proposed brand wording remains pending. An English case-study PDF timed out and was not treated as verified naming evidence.
+- Follow-up: recovered index reference from its persistent WeChat copy, saved three confirmed language/name rules and a staged question list. No translations or workbook final wording auto-approved while awaiting answers.
+- Started source inventory and Excel correction workbook. Read Spreadsheets and planning-with-files skills.
+- Completed five-sheet XLSX using bundled Artifact Tool. Verified all referenced sources exist; issue-to-inventory IDs resolve; visually inspected every sheet; changed then restored a status to confirm the summary formula recalculates; no formula errors found.
+- Verified saved XLSX ZIP integrity, five native filter tables, three dropdown validation ranges and expected row counts. No source translation, deployment, database or private content changes performed.
+
 ## 2026-08-16 — Cold-load production rollout
 
 - User authorized final PR confirmation, migration-first deployment, and production verification.
@@ -740,3 +747,33 @@
 - Verified the confirmed identity source and its existing privacy/validity rules. The planned note projection can safely expose only a derived recorder group with public stories.
 - Reviewed the current archive explorer and article cards. Identified a clear UI simplification: categories first, recorder groups second, names/topics as lightweight metadata and search.
 - Audited available photos and evidence links. Confirmed the redesign can use authentic project assets while treating missing requested PDFs/URLs as optional resource slots.
+
+## 2026-10-13 美式英文与简表交付
+已统一本地网站英式拼写与日期区域设置，更新首页旧拼写测试断言。类型检查、本地构建、9个测试文件43项测试通过。翻译确认简表.xlsx 已导出并视觉检查，单页四列、24项待确认与12项已确认。磁盘空间曾导致审批锁与测试缓存失败，清理本次生成的预览文件后按正常审批重试成功。没有部署或写入生产数据。
+
+## 2026-10-14 英文语境复核交付
+按填回表及用户最新指示修订本地英文，R-Gan Junior、Life Immersion Camp、Mykunda、Rosie Chen等均统一。复核修改前2,849条双语文案与四篇英文正文，包含断句、修饰对象、语境隐喻、增减义、限制条件与操作后果。动态标签通过精确中文词条统一展示，保留用户自定义内容和监护流程语义。公开数据库查询当前公开已发布文章0条。314项测试、类型检查、本地构建通过；lint无错误。37项四列候选表已导出与检查，未部署。
+
+2026-10-14 首页基准补充：用户提供《01_首页_Home_revision 20260907.docx》作为最低质量案例，已纳入翻译原则。保留课堂意象、逐步成长的过程和公共思考的语义，改善首次参与介绍与加入入口按钮。案例中的拼写、时态及重复候选不照搬。新版简表保持37项四列；首页4项测试及本地构建通过，未部署。
+
+2026-10-14 第二轮继续复核：新增修正80处英文，涉及22个文件，包括参与资格误译、主语错位、活动名前缀重复、家庭实践和茶叙事歧义、人工监护同意对象。314项测试、应用类型检查、本地构建与相关源码lint通过；无英式拼写残留命中。详见 docs/translation-context-audit-2026-10-13/support/round2/README.md。没有发布或生产数据写入；37项简表保持简洁。
+
+2026-10-14 第三轮复核：补齐营地邀请信整篇英文（122个含中文片段与21张图片替代文本），修正原文回退提示判断和语言标记。调整天时故事中的时间范围、指代及增义；明确成员可见范围、社区角色与身份核验，统一编辑器和审核中的动态名称。315项测试（86文件）、应用类型检查、本地构建及相关lint通过；图片结构与顺序不变，未部署。详细记录：docs/translation-context-audit-2026-10-13/support/round3/README.md。
+
+2026-10-14 第四轮严格翻译验收：重新读取用户填回表D列与首页Word接受修订文本；修复26处/17文件，包括旧清单REV-026、REV-034、REV-046、REV-062、REV-063残留、角色混称及语境偏差。16组旧译检索无残留，311文件美式拼写扫描无命中；317项测试/86文件、应用类型检查、lint、本地构建通过。首页主句补and建议已询问尚未答复，保留原句。原文事实、专名与覆盖问题仍未关闭，不能宣布专业定稿。未部署。详见docs/translation-context-audit-2026-10-13/严格复核结果-2026-10-14.md。
+
+2026-10-14 用户确认首页主句补 and：已更新 HeroCopy、翻译原则、复核结果与简表对应行；其余待确认事项不变。
+首页主句确认后的验证：4项首页测试、本地构建、diff空白检查通过；简表仅更新B6:D6，后续36行保持原值，变更区域预览已核查。尚未部署。
+
+2026-10-14 英文响应式排版修复：启动本地5173服务，通过浏览器确认首页强制单行与横移、故事页收尾标题、加入页固定提示宽度、田野笔记侧栏短句溢出。已按英文单独允许自然换行，中文断行保留；修正首页可见主句漏and（此前仅aria-label更新）。49项相关测试及本地构建通过。浏览器已恢复默认尺寸并保留英文首页。详见docs/translation-context-audit-2026-10-13/support/layout/README.md。
+
+## 2026-10-14 文章合并发布完成
+
+用户要求的六篇文章已审核公开，与原有邀请信共 7 篇；旧发起人链接转向统一文章页，Nate 关联两篇，待注册作者保留署名。线上基线 307a37d 加文章功能，在本机构建并以 prebuilt 部署 dpl_ubWZJydKxZoR2JjsnwNw382R4X9Y 后提升到正式域名。42 项相关测试及本机 SQL 授权测试通过；浏览器核验公开列表、署名、旧链接与原有英文正文，100 个图片引用均返回图片资源。测试数据库已停止。发布记录和源码包位于 docs/article-author-accounts-2026-10-13/publication-2026-10-14.md。未在共享 ECS 上构建或操作 Lholho/OSS。
+
+## 2026-10-14 19时 布局与美式拼写联合发布准备
+与守护团thread 01a12f03-0947-7de0-b84c-c3e04d37a427 对齐：统一2aafeeb基线，本文章任务是唯一最终发布者，对方暂停promote并负责线上守护团验收。补丁20个源码文件已冻结，64组中英文多尺寸布局检查、18组本机生产构建页面检查均通过，48项相关测试及应用类型检查通过；Node24完整Vercel本机构建成功。程序文案program/programs已正确出现，旧图片文件名未更改。保留其他未发布语义翻译与主工作区修改。发布证据与补丁见docs/layout-overflow-2026-10-14。
+
+2026-10-14 精选与全文章英文：用户确定单篇展示＋可切换目录；17文件统一提交0ae0b4c，1061源码与构建副本一致。7篇完整英文含标题摘要正文与121图替代文本；保留原中文与作者关联。24测试、类型、lint、本机Node24 prebuilt通过，云端四个关键资源逐字节核对；dpl_NVzonfJkCY6KNWhyXfF2NVuJzNNV已promote且正式域名一致，浏览器继续验收。详见docs/featured-bilingual-2026-10-14。
+
+精选英文正式站最终验收：7/7完整英文正文、121图、均无中文回退与页面横向溢出；中文/English往返切换与精选切换成功。发布标签已保存，另一个协作线程已通知统一提交与部署，预览已停止。

@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/OptimizedImage';
 import { useEffect, useRef, useState } from 'react';
 import { LocateFixed, MapPin } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -55,7 +56,7 @@ const stages: MapStage[] = [
     title: { zh: '从成都平原向西南，进入蒲江的林盘乡村。', en: 'Southwest of Chengdu, the landscape opens into Pujiang\'s Linpan villages.' },
     body: {
       zh: '铁牛村位于成都蒲江县西来镇。这里的院落、林地、水体和果园，共同组成川西林盘的生活生态。',
-      en: 'Tieniu Village sits in Xilai Town, Pujiang County. Courtyards, woods, water, and orchards form the living ecology of western Sichuan Linpan.',
+      en: "Tieniu Village is in Xilai Town, Pujiang County, Chengdu. Its courtyards, woodlands, water, and orchards form a Linpan landscape—a traditional rural settlement landscape of western Sichuan.",
     },
     center: [103.72, 30.42],
     zoom: 8.8,
@@ -64,10 +65,10 @@ const stages: MapStage[] = [
     id: 'xilai',
     label: { zh: '蒲江西来', en: 'Xilai, Pujiang' },
     place: { zh: '西来镇 · 铁牛村', en: 'Xilai Town · Tieniu Village' },
-    title: { zh: '离西来站约 5.8 公里，村庄与城市保持真实而日常的连接。', en: 'About 5.8 km from Xilai Station, the village stays connected to the city through everyday movement.' },
+    title: { zh: '离西来站约 5.8 公里，村庄与城市保持真实而日常的连接。', en: "About 5.8 km from Xilai Station, the village maintains everyday connections with the city." },
     body: {
       zh: '从西来站到铁牛村，车行约 12 分钟。这里不是遥远的活动背景，而是一处可以长期进入、观察和共同生活的真实社区。',
-      en: 'The drive from Xilai Station takes about 12 minutes. This is not a distant activity backdrop, but a real community that young people can enter, observe, and live alongside over time.',
+      en: "Tieniu Village is about a 12-minute drive from Xilai Station. It is a real community where people can return over time to observe and share everyday life.",
     },
     center: [103.454, 30.202],
     zoom: 13.3,
@@ -75,11 +76,11 @@ const stages: MapStage[] = [
   {
     id: 'tieniu',
     label: { zh: '铁牛村', en: 'Tieniu Village' },
-    place: { zh: '故事发生地', en: 'The story site' },
-    title: { zh: '阿柑少年从一片正在修复的土地中生长出来。', en: 'R\'gan Junior grew from a piece of land undergoing repair.' },
+    place: { zh: '故事发生地', en: "Where the story began" },
+    title: { zh: '阿柑少年从一片正在修复的土地中生长出来。', en: "R-Gan Junior grew out of the restoration of this land." },
     body: {
       zh: '果园、鱼塘、林盘、新老村民和城市家庭在这里相遇。少年由此理解食物、劳动、生态与社区之间真实的关系。',
-      en: 'Orchards, ponds, Linpan landscapes, villagers, and urban families meet here. Young people encounter the real relationships among food, labor, ecology, and community.',
+      en: "Here, orchards, fishponds, and Linpan landscapes are part of the lives of longtime villagers, newcomers, and urban families. Young people learn how food, work, ecology, and community are connected.",
     },
     center: TIENIU_CENTER,
     zoom: 17.1,
@@ -291,7 +292,7 @@ export default function TieniuStoryMap() {
           <div ref={mapContainerRef} className="tieniu-place-story__live-map" aria-hidden={!showLiveMap} />
           {!showLiveMap && (
             <div className="tieniu-place-story__fallback">
-              <img
+              <OptimizedImage
                 src="/archive/elements/graphics/infographics/s01-xilai-town-site-map.png"
                 alt={t('西来镇、铁牛村与西来站的位置地图', 'Map showing Xilai Town, Tieniu Village, and Xilai Station')}
               />

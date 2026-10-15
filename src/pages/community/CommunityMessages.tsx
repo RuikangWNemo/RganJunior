@@ -122,7 +122,7 @@ export default function CommunityMessages() {
   const canSend = Boolean(selected && !blocked && selected.conversation_status === 'active');
 
   return (
-    <CommunitySurface eyebrow="Messages" title={t('留下一段真诚的对话。', 'Continue a thoughtful conversation.')} description={t('消息只发生在正式成员之间。你可以随时停止联系、拉黑或举报不安全内容。', 'Messages stay within the active member community. You can stop contact, block, or report unsafe content at any time.')} width="wide">
+    <CommunitySurface eyebrow="Messages" title={t('留下一段真诚的对话。', 'Continue a thoughtful conversation.')} description={t('消息只发生在正式成员之间。你可以随时停止联系、拉黑或举报不安全内容。', "Messages are exchanged only between Members. You can stop contact, block someone, or report unsafe content at any time.")} width="wide">
       {notice ? <p className="mb-4 rounded-2xl bg-[hsl(var(--community-forest)/0.07)] p-4 text-sm font-medium" role="status">{notice}</p> : null}
       {error ? <div className="mb-4"><CommunityErrorState message={error} onRetry={() => void (selectedId ? loadMessages(selectedId) : loadConversations())} /></div> : null}
 
@@ -148,7 +148,7 @@ export default function CommunityMessages() {
                   <button type="button" className="community-icon-button md:hidden" onClick={() => setSearchParams({})} aria-label={t('返回会话列表', 'Back to conversations')}><ArrowLeft className="size-4" /></button>
                   <div className="min-w-0"><p className="truncate font-semibold text-[hsl(var(--community-forest))]">{conversationName(selected)}</p><p className="text-xs text-[hsl(var(--community-forest)/0.5)]">{status(selected.conversation_status)}</p></div>
                 </div>
-                <button type="button" className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-3 text-xs font-semibold ${blocked ? 'border-[hsl(var(--community-forest)/0.2)] text-[hsl(var(--community-forest))]' : 'border-destructive/25 text-destructive'}`} onClick={() => void toggleBlock()}><Ban className="size-4" />{blocked ? t('解除拉黑', 'Unblock') : blockConfirm ? t('再次点击确认', 'Confirm block') : t('拉黑', 'Block')}</button>
+                <button type="button" className={`inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full border px-3 text-xs font-semibold ${blocked ? 'border-[hsl(var(--community-forest)/0.2)] text-[hsl(var(--community-forest))]' : 'border-destructive/25 text-destructive'}`} onClick={() => void toggleBlock()}><Ban className="size-4" />{blocked ? t('解除拉黑', 'Unblock') : blockConfirm ? t('再次点击确认', "Click again to confirm blocking") : t('拉黑', 'Block')}</button>
               </header>
 
               <div className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5">

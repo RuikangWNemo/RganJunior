@@ -8,7 +8,7 @@ type CommunityApiRequest = ApiRequest & {
   url?: string;
 };
 
-function apiResponse(response: ServerResponse): ApiResponse {
+export function apiResponse(response: ServerResponse): ApiResponse {
   const adapter: ApiResponse = {
     setHeader(name, value) {
       response.setHeader(name, value);

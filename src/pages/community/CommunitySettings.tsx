@@ -136,7 +136,7 @@ export default function CommunitySettings() {
   const fieldLabelClass = 'block space-y-2 text-sm font-semibold text-[hsl(var(--community-forest))]';
 
   return (
-    <CommunitySurface eyebrow="Settings" title={t('决定如何被看见。', 'Choose how you are seen.')} description={t('管理个人主页、隐私边界和登录账号。你的监护与审核资料不会在这里公开。', 'Manage your profile, privacy boundaries, and sign-in account. Guardian and review information is never public here.')} width="wide">
+    <CommunitySurface eyebrow="Settings" title={t('决定如何被看见。', 'Choose how you are seen.')} description={t('管理个人主页、隐私边界和登录账号。你的监护与审核资料不会在这里公开。', 'Manage your profile, privacy settings, and sign-in account. Your guardian and application review details are not shown publicly here.')} width="wide">
       {loading ? <CommunityLoadingState label={t('正在读取设置…', 'Loading settings…')} variant="form" /> : (
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_24rem]">
           <form className="space-y-6" onSubmit={saveProfile}>
@@ -146,12 +146,12 @@ export default function CommunitySettings() {
               <label className={fieldLabelClass}><span>{t('私密全名', 'Private full name')}</span><input className={communityInputClass} value={form.fullNamePrivate} onChange={(event) => setForm({ ...form, fullNamePrivate: event.target.value })} /></label>
               <label className={fieldLabelClass}><span>{t('中文名', 'Chinese name')}</span><input className={communityInputClass} value={form.nameZh} onChange={(event) => setForm({ ...form, nameZh: event.target.value })} /></label>
               <label className={fieldLabelClass}><span>{t('英文名', 'English name')}</span><input className={communityInputClass} value={form.nameEn} onChange={(event) => setForm({ ...form, nameEn: event.target.value })} /></label>
-              <label className={fieldLabelClass}><span>{t('自然名', 'Nature name')}</span><input className={communityInputClass} value={form.natureName} onChange={(event) => setForm({ ...form, natureName: event.target.value })} /></label>
-              <label className={fieldLabelClass}><span>{t('主页可见范围', 'Profile visibility')}</span><select className={communityInputClass} value={form.profileVisibility} onChange={(event) => setForm({ ...form, profileVisibility: event.target.value as ProfileVisibility })}><option value="private">{t('仅自己', 'Only me')}</option><option value="members">{t('正式成员', 'Members')}</option><option value="public">{t('公开', 'Public')}</option></select></label>
+              <label className={fieldLabelClass}><span>{t('自然名', "Nature name (a nickname inspired by nature)")}</span><input className={communityInputClass} value={form.natureName} onChange={(event) => setForm({ ...form, natureName: event.target.value })} /></label>
+              <label className={fieldLabelClass}><span>{t('主页可见范围', 'Profile visibility')}</span><select className={communityInputClass} value={form.profileVisibility} onChange={(event) => setForm({ ...form, profileVisibility: event.target.value as ProfileVisibility })}><option value="private">{t('仅自己', 'Only me')}</option><option value="members">{t('仅正式成员', 'Members only')}</option><option value="public">{t('公开', 'Public')}</option></select></label>
               <label className={`${fieldLabelClass} sm:col-span-2`}><span>{t('简介', 'Bio')}</span><textarea className={communityTextareaClass} value={form.bio} onChange={(event) => setForm({ ...form, bio: event.target.value })} /></label>
               <label className={fieldLabelClass}><span>{t('城市', 'City')}</span><input className={communityInputClass} value={form.city} onChange={(event) => setForm({ ...form, city: event.target.value })} /></label>
               <label className={fieldLabelClass}><span>{t('地区', 'Region')}</span><input className={communityInputClass} value={form.region} onChange={(event) => setForm({ ...form, region: event.target.value })} /></label>
-              <label className={fieldLabelClass}><span>{t('国家 / 地区', 'Country / area')}</span><input className={communityInputClass} value={form.country} onChange={(event) => setForm({ ...form, country: event.target.value })} /></label>
+              <label className={fieldLabelClass}><span>{t('国家 / 地区', "Country / region")}</span><input className={communityInputClass} value={form.country} onChange={(event) => setForm({ ...form, country: event.target.value })} /></label>
             </div>
             <div className="grid gap-3 rounded-2xl bg-[hsl(var(--community-forest)/0.055)] p-4 text-sm">
               <label className="flex min-h-11 items-center gap-3"><input className="size-4 accent-[hsl(var(--community-orange))]" type="checkbox" checked={form.showRealName} onChange={(event) => setForm({ ...form, showRealName: event.target.checked })} />{t('展示中文名 / 英文名', 'Show Chinese / English name')}</label>

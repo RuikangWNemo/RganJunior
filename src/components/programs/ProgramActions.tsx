@@ -8,7 +8,7 @@ import { getActionInquiryPath } from '@/content/actionPrograms';
 export default function ProgramActions({ program }: { program: ActionProgramOption }) {
   const { lang, t } = useLanguage();
   const subject = encodeURIComponent(
-    lang === 'zh' ? `咨询：${program.title.zh}` : `Enquiry: ${program.title.en}`,
+    lang === 'zh' ? `咨询：${program.title.zh}` : `Inquiry: ${program.title.en}`,
   );
   const directContactHref = PUBLIC_CONTACT.phone
     ? getPhoneHref(PUBLIC_CONTACT.phone)

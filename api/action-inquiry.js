@@ -3,11 +3,11 @@ import joinHandler from './_lib/join-handler.js';
 const CONTACT_EMAIL = 'contact@rganjunior.org';
 
 const PROGRAM_LABELS = {
-  'life-experience-camp': '生活体验营 / Life Discovery Camp',
+  'life-experience-camp': "生活体验营 / Life Immersion Camp",
   'life-co-creation-camp': '生活共创营 / Life Co-creation Camp',
   'life-camp': '生活共创营 / Life Co-creation Camp',
-  'action-group': "阿柑少年行动小组 / R'gan Junior Action Group",
-  'public-projects': '青少年研究计划 / Youth Research Programme',
+  'action-group': "阿柑少年行动小组 / R-Gan Junior Action Group",
+  'public-projects': "青少年研究计划 / R-Gan Junior Research Program",
 };
 
 const FIELD_ENV = {
@@ -230,14 +230,14 @@ export default async function handler(request, response) {
       return sendJson(response, 500, {
         ok: false,
         code: error.code,
-        message: 'Action enquiry form is not configured yet.',
+        message: 'Action inquiry form is not configured yet.',
       });
     }
 
     return sendJson(response, 502, {
       ok: false,
       code: error.code || 'SUBMISSION_FAILED',
-      message: 'Action enquiry submission failed.',
+      message: 'Action inquiry submission failed.',
     });
   }
 }

@@ -79,14 +79,15 @@ function editorErrorCopy(
       'The collaborative editor is missing its server key. Complete the local server configuration and try again.',
     );
   }
-  return message || t('文章编辑器暂时不可用。', 'The story editor is temporarily unavailable.');
+  return message || t('文章编辑器暂时不可用。', "The article editor is temporarily unavailable.");
 }
 
 export default function CommunityStoryEditor() {
   const { noteId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const { session, permissions } = useAuth();
+  const canEditAny = permissions.includes('field_notes.edit_any');
   const { t, status: statusLabel, formatDateTime } = useCommunityUi();
   const numericNoteId = noteId ? Number(noteId) : null;
   const existingId = numericNoteId && Number.isSafeInteger(numericNoteId) ? numericNoteId : null;
@@ -121,7 +122,7 @@ export default function CommunityStoryEditor() {
     setLoading(true);
     createFieldNote({
       slug: slugForDraft(),
-      title: t('未命名文章', 'Untitled story'),
+      title: t('未命名文章', "Untitled article"),
       excerpt: '',
       content: '',
       status: 'draft',
@@ -130,7 +131,7 @@ export default function CommunityStoryEditor() {
     })
       .then((created) => navigate(`/community/stories/${created.id}/edit`, { replace: true }))
       .catch((createError) => {
-        setError(createError instanceof Error ? createError.message : t('无法创建文章。', 'Could not create the story.'));
+        setError(createError instanceof Error ? createError.message : t('无法创建文章。', "Could not create the article."));
         setLoading(false);
       });
   }, [accessToken, existingId, navigate, t]);
@@ -213,7 +214,7 @@ export default function CommunityStoryEditor() {
       setNotice(null);
     }
     try {
-      if (bundle.access.isOwner && (metadataDirtyRef.current || mode === 'submit')) {
+      if ((bundle.access.isOwner || canEditAny) && (metadataDirtyRef.current || mode === 'submit')) {
         await saveFieldNoteMetadata(existingId, metadataRef.current);
         metadataDirtyRef.current = false;
       }
@@ -236,7 +237,7 @@ export default function CommunityStoryEditor() {
         } : current);
         setNotice(t('已提交审核，正文现在为只读状态。', 'Submitted for review. The document is now read-only.'));
       } else if (mode === 'manual') {
-        setNotice(t('已创建一个可追溯的版本。', 'A restorable version was saved.'));
+        setNotice(t('已创建一个可追溯的版本。', "A version was saved to the history."));
         await refreshBundle();
       }
     } catch (saveError) {
@@ -247,7 +248,7 @@ export default function CommunityStoryEditor() {
     } finally {
       if (mode !== 'automatic') setBusy(false);
     }
-  }, [accessToken, bundle?.access.canWrite, bundle?.access.isOwner, existingId, refreshBundle, shareToken, t]);
+  }, [accessToken, bundle?.access.canWrite, bundle?.access.isOwner, canEditAny, existingId, refreshBundle, shareToken, t]);
 
   const scheduleAutoSave = useCallback(() => {
     markDirty();
@@ -320,18 +321,18 @@ export default function CommunityStoryEditor() {
   const stateCopy = saveStateCopy(saveState, t);
   const SaveIcon = stateCopy.icon;
   const editable = bundle.access.canWrite;
-  const canSubmit = bundle.access.isOwner && ['draft', 'changes_requested'].includes(bundle.access.status);
-  const metadataEditable = editable && bundle.access.isOwner;
+  const canSubmit = (bundle.access.isOwner || (canEditAny && permissions.includes('field_notes.submit'))) && ['draft', 'changes_requested'].includes(bundle.access.status);
+  const metadataEditable = editable && (bundle.access.isOwner || canEditAny);
 
   return (
-    <section className="community-story-editor" aria-label={t('文章协作编辑器', 'Collaborative story editor')}>
+    <section className="community-story-editor" aria-label={t('文章协作编辑器', "Collaborative article editor")}>
       <header className="community-story-editor__topbar">
         <div className="flex min-w-0 items-center gap-3">
-          <Link to="/community/stories" className="community-icon-button" aria-label={t('返回文章列表', 'Back to stories')}>
+          <Link to="/community/stories" className="community-icon-button" aria-label={t('返回文章列表', "Back to articles")}>
             <ArrowLeft className="size-4" />
           </Link>
           <div className="min-w-0">
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[hsl(var(--community-orange))]">Story workspace</p>
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[hsl(var(--community-orange))]">Article workspace</p>
             <div className="mt-0.5 flex items-center gap-2 text-xs text-[hsl(var(--community-forest)/0.56)]">
               <span>{statusLabel(bundle.access.status)}</span>
               <span aria-hidden="true">·</span>
@@ -364,8 +365,8 @@ export default function CommunityStoryEditor() {
             className="community-story-editor__title"
             value={title}
             onChange={(event) => handleTitleChange(event.target.value)}
-            placeholder={t('未命名文章', 'Untitled story')}
-            aria-label={t('文章标题', 'Story title')}
+            placeholder={t('未命名文章', "Untitled article")}
+            aria-label={t('文章标题', "Article title")}
             disabled={!editable}
             maxLength={240}
           />
@@ -391,7 +392,7 @@ export default function CommunityStoryEditor() {
 
         <aside className="community-story-editor__sidebar">
           <section>
-            <p className="community-story-editor__section-label">{t('文章说明', 'Story details')}</p>
+            <p className="community-story-editor__section-label">{t('文章说明', "Article details")}</p>
             <textarea
               className="community-field mt-3 min-h-28 w-full resize-y px-3 py-3 text-sm leading-6"
               value={excerpt}
@@ -425,9 +426,9 @@ export default function CommunityStoryEditor() {
                 onCreateTag={handleCreateTag}
               />
             </div>
-            {editable && !bundle.access.isOwner ? (
+            {editable && !bundle.access.isOwner && !canEditAny ? (
               <p className="mt-3 flex items-start gap-2 rounded-xl bg-[hsl(var(--community-forest)/0.055)] p-3 text-xs leading-5 text-[hsl(var(--community-forest)/0.62)]">
-                <LockKeyhole className="mt-0.5 size-3.5 shrink-0" />{t('协作者可以编辑正文；分类、标签和可见范围由文章作者管理。', 'Collaborators can edit the body; the owner manages category, tags, and visibility.')}
+                <LockKeyhole className="mt-0.5 size-3.5 shrink-0" />{t('协作者可以编辑正文；分类、标签和可见范围由文章作者管理。', "Collaborators can edit the article body; the author manages its category, tags, and visibility.")}
               </p>
             ) : null}
           </section>

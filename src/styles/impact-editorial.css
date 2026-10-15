@@ -1,0 +1,349 @@
+/* Impact shares About's hero/chapter markup, shell, typography and color variables. */
+.impact-editorial .about-v2-hero__lead strong {
+  display: block;
+  color: inherit;
+  font-weight: 600;
+}
+.impact-editorial .about-v2-hero__lead p {
+  margin-top: 1rem;
+}
+.impact-section {
+  border-bottom: 1px solid hsl(var(--programs-forest) / 0.14);
+}
+.impact-section--warm {
+  background: hsl(var(--about-v2-paper-deep-hsl));
+}
+.impact-section--sage {
+  background: hsl(var(--about-v2-sage-hsl));
+}
+.impact-section-content {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.impact-editorial :is(p, blockquote) {
+  text-wrap: pretty;
+}
+.impact-editorial :is(h3, .impact-subtitle) {
+  color: var(--about-v2-forest);
+  font-family: var(--about-v2-body-font);
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.6;
+}
+.impact-editorial :is(a, button):focus-visible {
+  outline: 2px solid hsl(var(--programs-forest));
+  outline-offset: 4px;
+}
+.impact-record-heading p {
+  max-width: 46rem;
+  margin-top: 0.75rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+.impact-number-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-block: 2rem;
+  border-block: 1px solid hsl(var(--programs-forest) / 0.16);
+}
+.impact-number-row > div {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 2rem;
+}
+.impact-number-row > div + div {
+  border-left: 1px solid hsl(var(--programs-forest) / 0.16);
+}
+.impact-number-row > div:first-child {
+  padding-left: 0;
+}
+.impact-number-row dd {
+  color: var(--about-v2-forest);
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+.impact-number-row dt {
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 1rem;
+}
+.impact-number-row--totals {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.impact-editorial .impact-meta,
+.impact-source {
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.impact-source {
+  margin-top: 1.5rem;
+  max-width: 54rem;
+}
+.impact-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  color: hsl(var(--programs-forest));
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6;
+  text-underline-offset: 5px;
+}
+.impact-text-link:hover {
+  text-decoration: underline;
+}
+.impact-text-link svg {
+  flex: none;
+}
+.impact-history-row {
+  display: grid;
+  grid-template-columns: 12rem minmax(12rem, 0.8fr) minmax(0, 1.2fr);
+  gap: 2rem;
+  align-items: start;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid hsl(var(--programs-forest) / 0.16);
+}
+.impact-history-row strong {
+  color: var(--about-v2-forest);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.impact-history-row > div {
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  line-height: 1.9;
+}
+.impact-story-grid,
+.impact-step-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+.impact-story-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+.impact-story-card figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: var(--about-v2-radius);
+}
+.impact-story-card figcaption {
+  margin-top: 0.65rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+.impact-story-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 1.5rem;
+}
+.impact-story-copy h3 {
+  margin-top: 0.75rem;
+}
+.impact-story-copy h3 a {
+  display: inline-block;
+  min-height: 44px;
+}
+.impact-story-copy > p:not(.impact-meta) {
+  margin-block: 1rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.impact-story-copy .impact-text-link {
+  margin-top: auto;
+}
+.impact-voice {
+  max-width: 54rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid hsl(var(--programs-forest) / 0.16);
+}
+.impact-voice blockquote {
+  color: var(--about-v2-forest);
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+.impact-voice figcaption {
+  margin-top: 1rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 0.875rem;
+}
+.impact-family-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+}
+.impact-family-voice {
+  padding-top: 1.5rem;
+  border-top: 1px solid hsl(var(--programs-forest) / 0.16);
+}
+.impact-family-voice figcaption {
+  margin-bottom: 1rem;
+  color: var(--about-v2-forest);
+  font-weight: 600;
+}
+.impact-family-voice blockquote {
+  color: hsl(var(--programs-forest-deep) / 0.8);
+  font-size: 1.125rem;
+  line-height: 2;
+}
+.impact-step-grid {
+  margin-block: 1.5rem 2rem;
+}
+.impact-step-grid li {
+  border-top: 1px solid hsl(var(--programs-forest) / 0.16);
+  padding-top: 1.5rem;
+}
+.impact-step-grid h3 {
+  margin-block: 0.5rem;
+}
+.impact-step-grid p {
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.impact-action-ideas {
+  margin-bottom: 1rem;
+  color: hsl(var(--programs-forest));
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.impact-achievement-list article {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr);
+  gap: 2rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid hsl(var(--programs-forest) / 0.16);
+}
+.impact-achievement-list h3 a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.impact-achievement-list article > div > p {
+  margin-top: 0.6rem;
+  max-width: 44rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  line-height: 1.9;
+}
+.impact-section-link {
+  margin-top: 1.5rem;
+}
+.impact-recording-principles {
+  padding-block: 4rem;
+}
+.impact-recording-principles h2 {
+  color: var(--about-v2-forest);
+  font-size: 1.5rem;
+  font-family: var(--about-v2-body-font);
+  font-weight: 600;
+}
+.impact-recording-principles p {
+  max-width: 54rem;
+  margin-top: 1rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+.impact-data-status {
+  min-height: 10rem;
+  padding-block: 2rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  line-height: 1.9;
+}
+.impact-archive-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.impact-archive-photos {
+  display: grid;
+  gap: 1rem;
+}
+.impact-archive-photos img {
+  width: 100%;
+  max-height: 34rem;
+  object-fit: contain;
+  border-radius: var(--about-v2-radius);
+  background: hsl(var(--programs-paper-deep));
+}
+.impact-archive-copy h2 {
+  color: var(--about-v2-orange);
+  font-family: var(--font-handwriting-serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+.impact-archive-copy > p,
+.impact-archive-copy ul {
+  margin-top: 1.25rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+.impact-archive-copy li + li {
+  margin-top: 0.5rem;
+}
+.impact-archive-section {
+  scroll-margin-top: 10rem;
+}
+@media (max-width: 1023px) {
+  .impact-story-grid {
+    gap: 1.5rem;
+  }
+  .impact-history-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .impact-history-row > div {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 767px) {
+  .impact-story-grid,
+  .impact-family-grid,
+  .impact-step-grid,
+  .impact-archive-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .impact-history-row,
+  .impact-achievement-list article {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+  .impact-number-row > div {
+    padding: 1.5rem 0.75rem;
+  }
+  .impact-number-row dd {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+  .impact-number-row--totals {
+    grid-template-columns: 1fr;
+  }
+  .impact-number-row--totals > div + div {
+    border-left: 0;
+    border-top: 1px solid hsl(var(--programs-forest) / 0.16);
+    padding-left: 0;
+  }
+  .impact-number-row dt {
+    font-size: 0.875rem;
+  }
+  .impact-recording-principles {
+    padding-block: 3rem;
+  }
+}

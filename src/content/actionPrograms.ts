@@ -33,12 +33,12 @@ export const actionPrograms: ActionProgramOption[] = [
     id: 'life-experience-camp',
     path: '/programs#life-experience-camp',
     detailPath: '/programs/life-experience-camp',
-    navTitle: text('生活体验营', 'Life Discovery Camp'),
-    title: text('阿柑少年生活体验营', "R-Gan Junior Life Discovery Camp"),
+    navTitle: text('生活体验营', "Life Immersion Camp"),
+    title: text('阿柑少年生活体验营', "R-Gan Junior Life Immersion Camp"),
     subtitle: text('先住进生活，再认识彼此', 'Step into daily life and begin to connect'),
     summary: text(
       '用两天一夜走进铁牛村的自然、劳动与日常。为第一次接触阿柑少年的青少年和家庭，提供一个轻盈、真实而被好好照护的生活入口。',
-      "A two-day, one-night introduction to nature, work, and everyday life in Tieniu Village for young people and families meeting R-Gan Junior for the first time.",
+      "A two-day, one-night introduction to nature, hands-on work, and everyday life in Tieniu Village. It gives young people and families new to R-Gan Junior a relaxed, authentic experience with attentive care.",
     ),
     image: {
       src: '/images/programs/life-experience-camp-feet.png',
@@ -48,7 +48,7 @@ export const actionPrograms: ActionProgramOption[] = [
     },
     seoDescription: text(
       '了解阿柑少年两天一夜生活体验营的自然体验、真实劳动、家庭参与、安全照护、费用和常见问题。',
-      "Learn about R-Gan Junior's two-day Life Discovery Camp, including nature, real work, family participation, safety, fees, and frequently asked questions.",
+      "Learn about R-Gan Junior's two-day, one-night Life Immersion Camp, including nature experiences, hands-on work, family participation, safety and care, fees, and frequently asked questions.",
     ),
     meta: text('2 天 1 夜', '2 days, 1 night'),
   },
@@ -61,7 +61,7 @@ export const actionPrograms: ActionProgramOption[] = [
     subtitle: text('共同生活，也共同承担', 'Live together and share responsibility'),
     summary: text(
       '在五天四夜的连续相处中，青少年和家庭通过小队任务、低碳生活与议题共创建立信任，把“共同”变成一次真实、有责任的生活实践。',
-      'Across five days and four nights, young people and families build trust through team tasks, low-carbon living, and co-creation, turning shared life into real responsibility.',
+      "Over five days and four nights, young people and families build trust through team tasks, low-carbon living, and collaborative exploration of real-world issues. Living together becomes a practice of shared responsibility.",
     ),
     image: {
       src: '/images/programs/life-co-creation-camp.jpg',
@@ -71,7 +71,7 @@ export const actionPrograms: ActionProgramOption[] = [
     },
     seoDescription: text(
       '了解阿柑少年五天四夜生活共创营的共同生活、小队任务、议题共创、安全照护、费用和常见问题。',
-      "Learn about R-Gan Junior's five-day Life Co-creation Camp, including shared living, team tasks, co-creation, safety, fees, and frequently asked questions.",
+      "Learn about R-Gan Junior's five-day, four-night Life Co-creation Camp, including living together, team tasks, collaborative exploration of real-world issues, safety and care, fees, and frequently asked questions.",
     ),
     meta: text('5 天 4 夜', '5 days, 4 nights'),
   },
@@ -84,7 +84,7 @@ export const actionPrograms: ActionProgramOption[] = [
     subtitle: text('共同探索，耕耘社群', 'Explore together and cultivate community'),
     summary: text(
       '在一定时长的周期内，把营地中的相遇带回日常。伙伴通过共学、家庭实践、主题行动和分享，持续耕耘彼此支持的社群。',
-      'Over a three-month cycle, participants carry camp relationships into daily life through shared learning, family practice, themed action, and reflection.',
+      "Over an agreed period, participants carry the connections made at camp into daily life. By learning together, doing activities with their families, exploring shared themes, and sharing experiences, they build a community of mutual support.",
     ),
     image: {
       src: '/images/programs/action-group.jpg',
@@ -94,7 +94,7 @@ export const actionPrograms: ActionProgramOption[] = [
     },
     seoDescription: text(
       '了解阿柑少年行动小组三个月的持续行动路径、线上共学、家庭实践、线下共创和常见问题。',
-      "Learn about the R-Gan Junior Action Group's three-month pathway, online learning, family practice, in-person co-creation, and frequently asked questions.",
+      "Learn about the R-Gan Junior Action Group's three-month program, online learning, activities with family, in-person co-creation, and frequently asked questions.",
     ),
     meta: text('营后持续', 'Continues after camp'),
   },
@@ -102,22 +102,22 @@ export const actionPrograms: ActionProgramOption[] = [
     id: 'public-projects',
     path: '/programs#public-projects',
     detailPath: '/programs/public-projects',
-    navTitle: text('青少年研究计划', 'Youth Research Programme'),
-    title: text('青少年研究计划', 'Youth Research Programme'),
+    navTitle: text('青少年研究计划', "R-Gan Junior Research Program"),
+    title: text('青少年研究计划', "R-Gan Junior Research Program"),
     subtitle: text('齐心协力，回馈社会', 'Work together and give back'),
     summary: text(
       '面对感兴趣的青少年，围绕土地、家庭和公共生活中的真实议题开展访谈、问卷、田野记录与写作，形成自己的公共思考。',
-      'For older students, the programme explores real questions about land, family, and public life through interviews, surveys, field notes, and writing.',
+      "For young people interested in research, the program explores real-world issues involving land, family, and public life through interviews, surveys, field notes, and writing, helping participants develop their own perspectives on public issues.",
     ),
     image: {
       src: '/images/programs/youth-research-programme.jpg',
       width: 3168,
       height: 2113,
-      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', 'Youth Research Programme team presenting their work at the CTB Research and Innovation Forum'),
+      alt: text('青少年研究计划团队在 CTB 研究创新论坛展示研究成果', "R-Gan Junior Research Program team presenting their work at the CTB Research and Innovation Forum"),
     },
     seoDescription: text(
       '了解阿柑少年青少年研究计划的议题方向、研究方法、田野实践、公共成果、合作方式和常见问题。',
-      "Learn about R-Gan Junior's Youth Research Programme, including topics, methods, fieldwork, public outcomes, collaboration, and frequently asked questions.",
+      "Learn about the R-Gan Junior Research Program, including research topics, methods, fieldwork, publicly shared findings, collaboration, and frequently asked questions.",
     ),
     meta: text('面对感兴趣的同学', 'For interested students'),
   },

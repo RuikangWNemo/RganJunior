@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 .vercel
+outputs/
 *.local
 __pycache__/
 *.py[cod]

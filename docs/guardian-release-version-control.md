@@ -1,6 +1,6 @@
 # 团队资料临时发布与本地整理版本
 
-更新：2026-10-14（守护团、文章与英文布局统一发布完成）
+更新：2026-10-14（英文校正与五位作者头像已发布）
 
 ## 本地整理版
 
@@ -12,7 +12,7 @@
 ## 临时发布版
 
 - 分支：`codex/guardian-coming-soon-2026-10-12`
-- 当前正式应用提交：`706729a`（包含 `2aafeeb`、 `a4b8a9a`、`307a37d`、 `a86ad2a`、 `57586a8`、`fcfac79`、`a68d255`、`082a48a`）
+- 当前正式应用提交：`629614c`（基于 `0ae0b4c`，补齐457条可配对英文修正及五位作者头像）；历史统一提交：`706729a`（包含 `2aafeeb`、 `a4b8a9a`、`307a37d`、 `a86ad2a`、 `57586a8`、`fcfac79`、`a68d255`、`082a48a`）
 - 目录：`/Users/hw/.codex/worktrees/rgan-guardian-release/rgan-junior-roots-main`
 - 基线：原生产提交 `1f3857091baf9169e1106a61c14cb6e3fd1553b3`。
 - 支持团队、家长守护团已统一为“守护团 / Guardian Circle”，保留贺超超，卓霏替换原 `guardian-08` 而非新增重复项，共 15 张照片使用同一份名单，统一轮播、不分组；移除该区域的“麦昆塔教育”表述，未完善资料继续显示敬请期待 / Coming soon。
@@ -20,7 +20,7 @@
 - 青少年共创伙伴：保留真实姓名、照片和故事入口，移除问号和未填写的身份、标题，显示资料整理说明。
 - 守护团单独预构建部署（已被并行文章发布覆盖，非最终正式版本）：`https://rgan-junior-roots-main-n1afu92i1-rganjuniors-projects.vercel.app`
 - 守护团与文章合并预部署（尚未切换正式）：`dpl_6LXsvcN2iiNDsiTD5dcRkzuwF5MS`，`https://rgan-junior-roots-main-dbnrs9x5m-rganjuniors-projects.vercel.app`
-- 当前正式部署：`dpl_Aq7DqdV4YfcMF2fGxafFZ6BDKhQn`，`https://rgan-junior-roots-main-n6br35ant-rganjuniors-projects.vercel.app`。已包含卓霏去重、文章功能及英文布局修正。
+- 历史统一部署：`dpl_Aq7DqdV4YfcMF2fGxafFZ6BDKhQn`，`https://rgan-junior-roots-main-n6br35ant-rganjuniors-projects.vercel.app`。已包含卓霏去重、文章功能及英文布局修正。
 - 最终发布标签：`release/2026-10-14-guardian-layout-unified`（指向 `706729a`）。
 - 正式域名：`https://www.rganjunior.org`
 - 上一生产部署：`dpl_ubWZJydKxZoR2JjsnwNw382R4X9Y`（文章发布版）；此前部署：`dpl_5jDmAtpdSTSACncjGZNGS9fnWjgC`（标签 `release/2026-10-14-guardian-roster`）；此前部署：`dpl_qmzkkvryLsvxrkjhmChyE9j5p7rm`（标签 `release/2026-10-13-guardian-portraits`）；此前部署：`dpl_4xr2Ymeg1dxW6mGe13BvkCjH6TKB`（标签 `release/2026-10-12-guardian-directory`）；此前部署：`dpl_9W3EqeyckdQHmY4PtaYz1QuNrJAp`（标签 `release/2026-10-12-guardian-circle`）；更早生产部署：`dpl_D6kgRk4otDLDWymfun7i9wXngCAX`、`dpl_FrK8HjnV7jNPHQ7AMvjwYciJq5az`。旧发布标签仍保留。
@@ -80,3 +80,24 @@
 所有构建在本机完成，只上传已验证的 `.vercel/output` 成品，使用 `vercel deploy --prebuilt --prod --skip-domain`，检查后再 `vercel promote`。不在共享 ECS 或 GitHub 上构建或部署。此次没有操作共享 ECS、数据库或 OSS。
 
 这两条分支目前只保存在本机。仓库仍保留旧的 GitHub 构建与 Deploy Hook 配置；任何未来 Git 推送前，必须先将 CI 限制为代码检查、关闭远程构建与自动部署，并在本机完成该版本构建验证。不得直接触发旧 Deploy Hook。
+
+## 10 月 14 日英文校正与田野笔记头像
+
+- 当前正式部署：`dpl_3rT93CBPYK8oQkSNvjdgFeQbqsET`，应用提交 `629614c`，标签 `release/2026-10-14-English-author-portraits`。
+- 正式域名已核验：英文主句及Life Immersion Camp更新、五位作者本人照片成功加载，橙子筛选正确，七篇文章保留。
+- 上一正式部署：`dpl_NVzonfJkCY6KNWhyXfF2NVuJzNNV`，提交 `0ae0b4c`；可回退。
+- 源码清单与验证见 `docs/translation-avatar-release-2026-10-14/`。本地整理版继续保留未发布页面优化，发布不运行远端构建或数据库写入。
+
+## 10 月 14 日三类入口与联合邀请信
+
+- 最新正式版应用提交 `a8cb91b`，部署 `dpl_J7j8K4td3nu8YKMumUddHqVqFyZg`，标签 `release/2026-10-14-join-roles-invitation`。
+- 首页和加入页统一三类及小橘子；联合邀请信增加双头像、短人物入口名和专属列表卡片，正文保留完整署名和封面。
+- 上一版本 `629614c` / `dpl_3rT93CBPYK8oQkSNvjdgFeQbqsET` 可用于回退。验证记录见 `docs/join-invitation-release-2026-10-14/`。
+- 与图片优化任务协调后，仅本任务发布；主目录已精确合并本次增量并保留其未发布的图片优化。后续发布必须基于a8cb91b或更新版。
+
+## 10 月 15 日社区故事路径与导航修复
+
+- 应用提交 `f7a1ff0` 基于已发布WebP版本；正式部署 `dpl_pQgBAicRoRRq9knbZ27knfihdZKD`。
+- 公开故事链接统一 `/community-stories`，旧 `/field-notes` 保留308及客户端后备跳转；语言切换重新定位悬停框，手机菜单默认折叠并按栏目展开。
+- 335项测试、本机类型检查、lint（0错误）、本机预构建通过；发布核验记录见 `docs/navigation-release-2026-10-15/`。主目录精确合并并保留未发布整理，类型检查通过。
+- 上一正式版 `836cd70` / `dpl_8pctJRcZpLFNGrRjCjyHVo3sA6Vx` 可回退。本次无远程构建、Git推送、ECS、OSS或数据库写入。

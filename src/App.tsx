@@ -7,9 +7,11 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { getLegacyProgramsRedirect } from '@/lib/programRoutes';
 import Layout from '@/components/Layout';
+import LegacyCommunityStoriesRedirect from '@/components/LegacyCommunityStoriesRedirect';
 import Index from './pages/Index';
 
 const About = lazy(() => import('./pages/About'));
+const ParticipantDirectory = lazy(() => import('./pages/ParticipantDirectory'));
 const GuardianDirectory = lazy(() => import('./pages/GuardianDirectory'));
 const TieniuStory = lazy(() => import('./pages/TieniuStory'));
 const Actions = lazy(() => import('./pages/Actions'));
@@ -53,11 +55,13 @@ function LegacyProgramsRedirect({ inquiry = false }: { inquiry?: boolean }) {
   );
 }
 
-function PublicRoutes() {
+function PublicRoutes({ location }: { location: ReturnType<typeof useLocation> }) {
   return (
-    <Routes>
+    <Routes location={location}>
       <Route path="/" element={<Index />} />
       <Route path="/about" element={<About />} />
+      <Route path="/about/participants" element={<ParticipantDirectory />} />
+      <Route path="/about/participants/:participantId" element={<ParticipantDirectory />} />
       <Route path="/about/guardians" element={<GuardianDirectory />} />
       <Route path="/about/guardians/:memberId" element={<GuardianDirectory />} />
       <Route path="/about/tieniu" element={<TieniuStory />} />
@@ -69,9 +73,10 @@ function PublicRoutes() {
       <Route path="/actions/inquiry" element={<LegacyProgramsRedirect inquiry />} />
       <Route path="/actions" element={<LegacyProgramsRedirect />} />
       <Route path="/story" element={<FounderStory />} />
-      <Route path="/field-notes" element={<FieldNotes />} />
-      <Route path="/field-notes/all" element={<FieldNotes />} />
-      <Route path="/field-notes/:slug" element={<FieldNoteArticle />} />
+      <Route path="/field-notes/*" element={<LegacyCommunityStoriesRedirect />} />
+      <Route path="/community-stories" element={<FieldNotes />} />
+      <Route path="/community-stories/all" element={<FieldNotes />} />
+      <Route path="/community-stories/:slug" element={<FieldNoteArticle />} />
       <Route path="/impact" element={<Impact />} />
       <Route path="/impact/awards" element={<ImpactAwards />} />
       <Route path="/voices" element={<Navigate to="/about#team" replace />} />
@@ -98,7 +103,7 @@ function AppRoutes() {
   return (
     <Layout>
       <Suspense fallback={<RouteLoading />}>
-        <PublicRoutes />
+        <PublicRoutes location={location} />
       </Suspense>
     </Layout>
   );

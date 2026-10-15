@@ -8,6 +8,7 @@
   },
   "scripts": {
     "assets:performance": "node scripts/build-performance-assets.mjs",
+    "assets:webp": "node scripts/build-static-webp.mjs",
     "dev": "vite",
     "dev:collab": "tsx scripts/community-collaboration-server.ts",
     "prebuild": "npm run build:auth-email-runtime",

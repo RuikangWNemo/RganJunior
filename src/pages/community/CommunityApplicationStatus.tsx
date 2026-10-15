@@ -36,7 +36,7 @@ export default function CommunityApplicationStatus() {
   const stateCopy = {
     pending_guardian: { title: t('等待监护人确认', 'Waiting for guardian confirmation'), body: isManualGuardianFlow
       ? t('请先登记监护人联系方式。工作人员会与监护人沟通并留档确认，完成后申请才进入审核队列。', 'Provide a guardian contact first. Staff will contact them and record confirmation before the application enters review.')
-      : t('监护人完成知情说明与手机验证后，申请才会进入审核队列。', 'Your application enters review after guardian confirmation and phone verification.'), icon: ShieldAlert },
+      : t('监护人完成知情说明与手机验证后，申请才会进入审核队列。', "Your application enters the review queue after your guardian has reviewed the notice and completed phone verification."), icon: ShieldAlert },
     submitted: { title: t('申请已提交', 'Application submitted'), body: t('工作人员会认真阅读你的申请。账号和公开内容浏览不受影响。', 'Our team will read your application. Your account and public browsing remain available.'), icon: Clock3 },
     under_review: { title: t('正在审核', 'Under review'), body: t('申请已经由工作人员接手。', 'A team member is reviewing your application.'), icon: Clock3 },
     more_info_requested: { title: t('需要补充资料', 'More information needed'), body: t('请根据审核说明补充申请内容。', 'Please add the information requested in the review note.'), icon: FilePenLine },

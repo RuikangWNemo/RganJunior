@@ -1,5 +1,7 @@
 # RganJunior 完整生产发布手册
 
+> **2026-10-15 发布方式更新（覆盖下文旧 CI/Hook 流程）**：用户要求所有应用构建在本机完成。GitHub 仅运行 lint、类型检查和测试；不执行应用构建、部署或 Deploy Hook。`vercel.json` 已禁用所有 Git 自动部署。发布者先在本机验证并执行 `vercel build --prod`，再上传 `vercel deploy --prebuilt --prod --skip-domain`；检查同一份暂存生产成品后 `vercel promote`。禁止在 ECS 或 GitHub 构建/部署。必须保留应用提交、源码/产物哈希、部署 ID、验证结果及上一可回退部署。下文关于远端构建、Preview 自动生成和 CI 触发生产 Hook 的内容仅为历史记录，不再适用。
+
 本手册是 RganJunior 发布流程的唯一事实来源，适用于 `@RuikangWNemo` 和 `@gps-china`。任何影响发布方式的 GitHub、Vercel、Supabase 或环境变量变更，都必须在同一个 Pull Request 中更新本文件。
 
 > 本文件只记录 Secret 的名称和维护位置。不要把 Deploy Hook URL、Token、密码、数据库连接串或真实用户数据写入仓库、Issue、PR、日志或截图。

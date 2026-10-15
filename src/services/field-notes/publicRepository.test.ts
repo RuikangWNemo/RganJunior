@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { fieldNotesRepository } from './publicRepository';
+import { fieldNotesRepository, mergePublishedArticles } from './publicRepository';
+import type { FieldNote } from '@/types/field-notes';
+import { articleAuthorPortraits } from '@/content/articleAuthorPortraits';
 
 const { listPublished } = vi.hoisted(() => ({ listPublished: vi.fn() }));
 
@@ -12,12 +14,30 @@ vi.mock('@/services/field-notes', () => ({
 describe('public Field Notes repository', () => {
   beforeEach(() => listPublished.mockReset());
 
+  it.each(Object.keys(articleAuthorPortraits))('uses the existing portrait for published author %s', async (slug) => {
+    listPublished.mockResolvedValue([{
+      id: 10, slug: 'portrait-check', title: 'Portrait check', status: 'published', visibility: 'public',
+      field_note_authors: [{ people: { slug, display_name: 'Author' } }],
+    }]);
+    const notes = await fieldNotesRepository.listPublishedNotes({ language: 'zh' });
+    expect(notes.find((note) => note.slug === 'portrait-check')?.authors[0].avatar)
+      .toBe(articleAuthorPortraits[slug]);
+  });
+
+  it('deduplicates the original and managed article by stable slug', () => {
+    const old = { slug: 'same-story', title: { zh: 'Old', en: 'Old' } } as FieldNote;
+    const managed = { slug: 'same-story', title: { zh: 'Edited', en: 'Edited' } } as FieldNote;
+    expect(mergePublishedArticles([old], [managed])).toEqual([managed]);
+  });
+
   it('returns no synthetic samples when records are not both published and public', async () => {
     listPublished.mockResolvedValue([
       { id: 1, slug: 'draft', title: '草稿', status: 'draft', visibility: 'private' },
       { id: 2, slug: 'members-only', title: '成员文章', status: 'published', visibility: 'members' },
     ]);
 
-    await expect(fieldNotesRepository.listPublishedNotes({ language: 'zh' })).resolves.toEqual([]);
+    const notes = await fieldNotesRepository.listPublishedNotes({ language: 'zh' });
+    expect(notes.map((note) => note.slug)).toEqual(['summer-co-creation-camp-invitation']);
+    expect(notes.some((note) => ['draft', 'members-only'].includes(note.slug))).toBe(false);
   });
 });

@@ -1,37 +1,33 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
+import EditorialSectionNav from "@/components/ui/EditorialSectionNav";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { impactChapters, type ImpactChapterId } from "@/lib/impactNavigation";
 
-const items = [
-  { path: '/impact', zh: '影响与记录', en: 'Impact & Records' },
-  { path: '/impact/awards', zh: '外部记录', en: 'Public Records' },
-];
-
-export function ImpactSectionNav() {
+export function ImpactSectionNav({
+  activeId,
+  onSelect,
+  archive = false,
+}: {
+  activeId: ImpactChapterId;
+  onSelect: (id: ImpactChapterId) => void;
+  archive?: boolean;
+}) {
   const { lang, t } = useLanguage();
-  const location = useLocation();
-
   return (
-    <nav
-      aria-label={t('Impact 栏目', 'Impact sections')}
-      className="flex flex-wrap items-center gap-x-7 gap-y-2 text-lg"
-    >
-      {items.map((item) => {
-        const isActive = location.pathname === item.path;
-        return (
-          <Link
-            key={item.path}
-            to={item.path}
-            aria-current={isActive ? 'page' : undefined}
-            className={`inline-flex min-h-11 items-center border-b transition-colors ${
-              isActive
-                ? 'border-primary font-medium text-primary'
-                : 'border-transparent text-muted-foreground hover:border-primary/30 hover:text-foreground'
-            }`}
-          >
-            {lang === 'zh' ? item.zh : item.en}
-          </Link>
-        );
-      })}
-    </nav>
+    <EditorialSectionNav
+      activeId={activeId}
+      ariaLabel={t("影响页面章节", "Impact page sections")}
+      indicatorLayoutId={
+        archive ? "impact-archive-section-active" : "impact-section-active"
+      }
+      items={impactChapters.map((chapter) => ({
+        id: chapter.id,
+        href:
+          archive && chapter.id === "public-records"
+            ? "/impact/awards"
+            : `/impact#${chapter.id}`,
+        label: lang === "zh" ? chapter.zh : chapter.en,
+      }))}
+      onSelect={onSelect}
+    />
   );
 }

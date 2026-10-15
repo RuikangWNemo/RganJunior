@@ -41,7 +41,7 @@ describe('JoinUs', () => {
     expect(screen.queryByText('ISSUE 01—03')).not.toBeInTheDocument();
     expect(screen.getByRole('group', { name: '加入身份选择' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '了解成为阿柑少年' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '了解成为阿柑家长' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '了解加入守护团' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '了解成为合作伙伴' })).toBeInTheDocument();
     expect(container.querySelector('.join-editorial-cover__thread')).toHaveAttribute('aria-hidden', 'true');
     expect(container.querySelectorAll('.join-editorial-path')).toHaveLength(2);
@@ -62,7 +62,7 @@ describe('JoinUs', () => {
 
   it('reveals a restrained role hint during pointer preview', () => {
     renderJoinUs();
-    const parents = screen.getByRole('button', { name: '了解成为阿柑家长' });
+    const parents = screen.getByRole('button', { name: '了解加入守护团' });
 
     expect(parents).toHaveAttribute('data-previewed', 'false');
     fireEvent.pointerEnter(parents);
@@ -144,10 +144,10 @@ describe('JoinUs', () => {
     fireEvent.click(screen.getByRole('button', { name: '向阿柑提问' }));
     expect(screen.getByText('此刻的你，更像——')).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: /我正在陪伴一个孩子/ }));
+    fireEvent.click(screen.getByRole('button', { name: /我愿意陪伴与支持青少年/ }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: '成为阿柑家长' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: '加入守护团' })).toBeInTheDocument();
     expect(screen.getByText('真实社区、小规模同行和清晰边界。')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: '填写表单，预约进一步沟通。' })).toHaveAttribute(
       'href',

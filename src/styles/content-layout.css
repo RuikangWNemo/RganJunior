@@ -1,0 +1,106 @@
+/* Long translations stay within their content columns at every breakpoint. */
+html:lang(en) .home-editorial .home-hero-subtitle--en {
+  max-width: min(100%, 36ch);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+html:lang(en) .home-editorial .home-hero-subtitle--en .home-hero-subtitle__line {
+  display: inline;
+  white-space: normal;
+}
+
+html:lang(en) .home-editorial #seed-community .seed-community__headline-stack .seed-community__title {
+  max-width: min(100%, 22ch);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+html:lang(en) .home-editorial #seed-community .seed-community__headline-stack .seed-community__lead {
+  max-width: min(100%, 44ch);
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+html:lang(en) .home-editorial .home-field-scene__stats {
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+html:lang(en) .home-field-scene__stats-program {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+html:lang(en) .impact-page header h1 {
+  max-width: min(100%, 14ch);
+  overflow-wrap: anywhere;
+}
+
+html:lang(en) .impact-page p {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+html:lang(en) .join-editorial-role__title {
+  white-space: normal;
+  text-wrap: balance;
+}
+
+html:lang(en) .join-editorial-role__hint {
+  width: auto;
+  max-width: min(100%, 14rem);
+  text-wrap: pretty;
+}
+
+@media (max-width: 767px) {
+  html:lang(en) .home-field-scene__stats-program {
+    flex-basis: 100%;
+  }
+
+  html:lang(en) .home-field-scene__stats-separator {
+    display: none;
+  }
+}
+
+html:lang(en) .home-founder-story__title--en .home-founder-story__title-line {
+  display: inline;
+  white-space: normal;
+}
+
+/* Editorial line breaks may wrap again when the column becomes narrower. */
+.founder-story-page .founder-story-hero__title-line,
+.founder-story-page .founder-story-community__title-line,
+.home-founder-story__title-line,
+.programs-editorial-title-line {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.impact-page header h1,
+.programs-editorial-intro__copy h1 {
+  max-width: 100%;
+}
+
+.impact-page header h1 span {
+  white-space: normal;
+}
+
+html:lang(zh) .home-editorial .home-field-scene__body {
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+.join-editorial-role__hint {
+  width: auto;
+  max-width: min(100%, 14rem);
+  text-wrap: pretty;
+}
+
+@media (max-width: 767px) {
+  .founder-story-page .founder-story-hero__title {
+    max-width: 100%;
+  }
+}

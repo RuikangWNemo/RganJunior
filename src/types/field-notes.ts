@@ -6,6 +6,8 @@ export interface FieldNotePerson {
   identityLabel: LocalizedText;
   introduction: LocalizedText;
   avatar: string;
+  portraitGroup?: string[];
+  displayName?: LocalizedText;
 }
 
 export interface FieldNoteTopic {
@@ -27,6 +29,8 @@ export interface FieldNote {
   cover: string;
   coverAlt: LocalizedText;
   contentHtml?: string;
+  contentHtmlEn?: string;
+  originalUrl?: string;
   plainContent?: string;
   authors: FieldNotePerson[];
   topics: FieldNoteTopic[];

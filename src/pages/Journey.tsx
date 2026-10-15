@@ -30,7 +30,7 @@ const phases = [
     },
     en: {
       title: 'Exploration & Connection',
-      subtitle: 'A Co-learning Journey for Gen-Z',
+      subtitle: "A Shared Learning Journey for People Born in the 2000s and 2010s",
       tagline: 'Learn · Give · Connect · Travel · Play',
       description: 'Leaving the classroom, reconnecting with nature and society. We believe true learning happens in the real world.',
       pillars: [
@@ -74,21 +74,21 @@ const phases = [
     },
     en: {
       title: 'Research into Action',
-      subtitle: 'From an Eco-Citrus to a Sustainable Future',
+      subtitle: "From an Ecologically Grown Citrus Fruit to a Sustainable Future",
       tagline: 'Research into Action',
-      description: 'Youth-led research using data and practice to understand the world. Standing out from 2,000+ projects, heading to Harvard.',
+      description: "Research with young people at its center, using data and practical experience to understand the world. Selected from more than 2,000 projects to attend the CTB Global Forum at Harvard.",
       milestones: [
         { date: '2023.09', text: 'Conducted surveys on middle school students participating in sustainable agriculture activities' },
         { date: '2023.10', text: 'Designed tailored agricultural activities for peers, with 28 students and parents participating' },
         { date: '2023.11', text: 'Summarized findings into a paper, selected from 2,000+ teams for CTB National Forum' },
-        { date: '2024.02', text: 'Advanced to top 72, traveled to Harvard for CTB Global English Forum' },
-        { date: '2024.05', text: 'Participated in Claremont Eco-Forum, sharing ecological civilization experiences with peers from China, US, and Canada' },
+        { date: '2024.02', text: "Advanced to the top 72 and traveled to Harvard for the CTB global forum, held in English" },
+        { date: '2024.05', text: "Participated in the Claremont International Forum on Ecological Civilization, sharing experiences of building an ecological civilization with peers from China, the United States, and Canada" },
       ],
       achievements: [
         'CTB Global Top 3.6%',
-        'Harvard Finals',
+        "CTB Global Forum at Harvard",
         'YSA Journal Publication',
-        'Claremont Eco-Forum',
+        "Claremont International Forum on Ecological Civilization",
       ],
     },
     color: 'primary',
@@ -110,13 +110,13 @@ const phases = [
     },
     en: {
       title: 'Field Immersion',
-      subtitle: 'McQuinta Future Rural Institute Practicum',
+      subtitle: "Off-campus internship at Mykunda Future Rural Research Institute",
       tagline: 'Immersive Field Experience',
       description: 'Moving from academic research to field practice, deepening understanding and accumulating experience in real rural settings.',
       practices: [
-        { date: '2024.05', title: 'Regenerative Design Eco-Camp', desc: 'Learning regenerative design concepts and practices' },
+        { date: '2024.05', title: "International Regenerative Design Eco Camp", desc: 'Learning regenerative design concepts and practices' },
         { date: '2025.04', title: 'Yale Faculty Visit', desc: 'Facilitating international academic exchange' },
-        { date: '2025.07', title: 'Youth Rural Building Camp', desc: 'Participating in youth rural construction practice' },
+        { date: '2025.07', title: "Tieniu Youth Rural Development Camp", desc: "Participating in rural development activities with other young people" },
         { date: '2025.09', title: 'Aesthetic Education Delegation', desc: 'Hosting Zhongshan Qiji Art Center, exploring rural aesthetics' },
       ],
     },
@@ -147,9 +147,9 @@ const phases = [
     },
     en: {
       title: 'Campus Experiment',
-      subtitle: 'Tianli × R\'gan Junior Campus CSA',
+      subtitle: "Tianli × R-Gan Junior Campus CSA",
       tagline: 'Campus CSA & Behavioral Economics Lab',
-      description: 'Selling eco-boxes on the surface, a "behavioral economics field lab" at the core. Real market, real cash flow, real social change.',
+      description: "A CSA surprise-box project that also serves as a behavioral economics field experiment, involving real markets, real cash flow, and social change.",
       research: {
         question: 'Can youth participation in ecology reshape their parents\' consumption preferences and environmental discount rates?',
         targets: [
@@ -567,7 +567,7 @@ export default function Journey() {
           <p data-page-motion="lead" className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             {lang === 'zh'
               ? `${brandName}不是一次活动，而是一条持续演化的成长路径。从成都乡村的一颗生态柑橘出发，我们正在书写一个关于青少年、土地与未来的故事。`
-              : `${brandName} is not a one-time program — it is an evolving learning journey. Starting from an eco-citrus in Chengdu's countryside, we are writing a story about youth, land, and the future.`}
+              : `${brandName} is an evolving path of growth. Beginning with an ecologically grown citrus fruit in rural Chengdu, we are creating a story about young people, the land, and the future.`}
           </p>
         </div>
       </section>
@@ -661,7 +661,7 @@ export default function Journey() {
               <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
-                    {t('CTB 全球青年研究创新论坛', 'CTB Global Youth Research Forum')}
+                    {t('CTB 全球青年研究创新论坛', "CTB Global Youth Research and Innovation Forum")}
                   </span>
                 </div>
                 <h3 className="font-serif text-xl text-foreground mb-3">
@@ -670,7 +670,7 @@ export default function Journey() {
                 <p className="text-sm text-muted-foreground mb-4">
                   {t(
                     '从全球2000+项目中入选前72名，在哈佛大学展示研究成果，探索青少年如何通过参与可持续农业活动建立环境意识。',
-                    'Selected among top 72 from 2,000+ global projects, presented research at Harvard University on how youth can build environmental awareness through sustainable agriculture participation.'
+                    "Selected as one of the top 72 teams from more than 2,000 projects worldwide, the team presented its research at Harvard University on how participating in sustainable agriculture can help young people develop environmental awareness."
                   )}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -700,7 +700,7 @@ export default function Journey() {
                 <p className="text-sm text-muted-foreground mb-4">
                   {t(
                     '在天立国高建立行为经济学实地实验室，通过真实的CSA运营，研究青少年生态参与能否重塑父母的消费偏好与环境折现率。',
-                    'Established a behavioral economics field lab at Tianli International High School, studying whether youth ecological participation can reshape parental consumption preferences through real CSA operations.'
+                    "A behavioral economics field lab at Tianli International High School uses real community-supported agriculture (CSA) operations to study whether young people’s ecological participation can influence their parents’ consumption preferences and environmental discount rates."
                   )}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -733,10 +733,10 @@ export default function Journey() {
             {/* Timeline items */}
             <div className="space-y-12">
               {[
-                { date: '2023.02', event: t('阿柑少年计划1.0启动', 'R\'gan Junior 1.0 Launch') },
+                { date: '2023.02', event: t('阿柑少年计划1.0启动', "R-Gan Junior 1.0 Launch") },
                 { date: '2023.09', event: t('2.0研究阶段开始', 'Phase 2.0 Research Begins') },
                 { date: '2024.02', event: t('哈佛CTB全球论坛', 'Harvard CTB Global Forum') },
-                { date: '2024.05', event: t('克莱蒙生态文明论坛', 'Claremont Eco-Forum') },
+                { date: '2024.05', event: t('克莱蒙生态文明论坛', "Claremont International Forum on Ecological Civilization") },
                 { date: '2025.04', event: t('接待耶鲁大学教授', 'Yale Faculty Visit') },
                 { date: '2025.12', event: t('3.0校园CSA启动', 'Phase 3.0 Campus CSA Launch') },
               ].map((item, i) => (

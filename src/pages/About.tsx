@@ -1,3 +1,5 @@
+import ParticipantRoster from '@/components/participants/ParticipantRoster';
+import OptimizedImage from '@/components/OptimizedImage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
@@ -8,6 +10,8 @@ import ParentGuardianReel from '@/components/about/ParentGuardianReel';
 import { guardianMembers } from '@/content/guardians';
 import BrandWordmark from '@/components/BrandWordmark';
 import EditorialSectionNav from '@/components/ui/EditorialSectionNav';
+import ChapterHeader from '@/components/ui/EditorialChapterHeader';
+import EditorialHero from '@/components/ui/EditorialHero';
 import { aboutMethodPhotoGroups } from '@/content/aboutMethodPhotos';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BRAND, pickLocalized } from '@/lib/brand';
@@ -18,125 +22,18 @@ import {
   readAboutChapterHash,
   type AboutChapterId,
 } from '@/lib/aboutNavigation';
-import aboutTeamPhoto from '@/assets/about-team-photo.jpg';
+import aboutTeamPhoto from '@/assets/about-team-photo-1280.webp';
+import aboutTeamPhotoSmall from '@/assets/about-team-photo-640.webp';
 import nateFounderPhoto from '@/assets/about-team/nate-shi.webp';
-import rossiePortrait from '@/assets/about-team/rossie-chen.webp';
-import rubyPortrait from '@/assets/about-team/ruby-huang.webp';
-import tianshiPortrait from '@/assets/about-team/zhang-tianshi.webp';
-
-type LocalizedText = {
-  zh: string;
-  en: string;
-};
-
-type YouthPartner = {
-  key: string;
-  name: LocalizedText;
-  identity: LocalizedText;
-  headline: LocalizedText;
-  bio: LocalizedText;
-  portrait: {
-    src: string;
-    alt: LocalizedText;
-    width: number;
-    height: number;
-  };
-  storyPath: string;
-};
 
 const aboutChapters = [
   { id: 'team', zh: '我们的团队', en: 'Our Team' },
   { id: 'belief', zh: '我们相信', en: 'What We Believe' },
   { id: 'method', zh: '我们如何做', en: 'How We Work' },
-  { id: 'places', zh: '真实场域', en: 'Living Labs' },
+  { id: 'places', zh: '真实场域', en: "Real-World Contexts" },
 ] as const;
 
 const CHAPTER_SELECTION_LOCK_MS = 900;
-
-const placeholderText = { zh: '？？？', en: '？？？' } as const;
-
-const youthPartners: readonly YouthPartner[] = [
-  {
-    key: 'tianshi',
-    name: { zh: '张天时', en: 'ZHANG Tianshi' },
-    identity: placeholderText,
-    headline: placeholderText,
-    bio: placeholderText,
-    portrait: {
-      src: tianshiPortrait,
-      alt: { zh: '张天时在室内茶席旁安静坐着', en: 'ZHANG Tianshi sitting quietly beside an indoor tea table' },
-      width: 1350,
-      height: 1800,
-    },
-    storyPath: '/voices/technology-ecology-stars',
-  },
-  {
-    key: 'ruorong',
-    name: { zh: '陈若容', en: 'Rossie Chen' },
-    identity: placeholderText,
-    headline: placeholderText,
-    bio: placeholderText,
-    portrait: {
-      src: rossiePortrait,
-      alt: { zh: '陈若容在雨中捧着茶杯', en: 'Rossie Chen holding a teacup in the rain' },
-      width: 947,
-      height: 1262,
-    },
-    storyPath: '/voices/tea-connects-an-american-girl',
-  },
-  {
-    key: 'ruoyin',
-    name: { zh: '黄若音', en: 'Ruby Huang' },
-    identity: placeholderText,
-    headline: placeholderText,
-    bio: placeholderText,
-    portrait: {
-      src: rubyPortrait,
-      alt: { zh: '黄若音在书房里拿着绣球花', en: 'Ruby Huang holding a hydrangea in a library' },
-      width: 1157,
-      height: 1543,
-    },
-    storyPath: '/voices/tea-kitchen-and-summer',
-  },
-];
-
-const coCreationDirections = [
-  {
-    title: { zh: '项目与活动共创', en: 'Projects and Activities' },
-    body: {
-      zh: '参与生活体验营、生活共创营和小队任务的设计与现场支持。',
-      en: 'Co-design life experience camps, co-creation camps, and team missions, and support them on site.',
-    },
-  },
-  {
-    title: { zh: '社群连接', en: 'Community Connection' },
-    body: {
-      zh: '维系营后伙伴关系，发起分享、打卡和同伴支持。',
-      en: 'Sustain relationships after each camp through sharing, check-ins, and peer support.',
-    },
-  },
-  {
-    title: { zh: '记录与传播', en: 'Documentation and Communication' },
-    body: {
-      zh: '用文字、影像、绘画和社交媒体，记录阿柑少年真实发生的故事。',
-      en: "Use writing, film, drawing, and social media to document the stories unfolding within R-Gan Junior.",
-    },
-  },
-  {
-    title: { zh: '田野研究', en: 'Field Research' },
-    body: {
-      zh: '围绕生态农业、家庭消费、可持续生活和公共议题开展观察、访谈与写作。',
-      en: 'Observe, interview, and write about ecological agriculture, household consumption, sustainable living, and public issues.',
-    },
-  },
-  {
-    title: { zh: '生活体验设计', en: 'Life Experience Design' },
-    body: {
-      zh: '参与食物、茶、运动、空间、低碳生活和游戏化任务设计，让真实生活更有秩序、更有美感，也更容易参与。',
-      en: 'Design experiences around food, tea, movement, space, low-carbon living, and playful missions so everyday life becomes more ordered, beautiful, and inviting.',
-    },
-  },
-] as const;
 
 const beliefs = [
   {
@@ -150,14 +47,14 @@ const beliefs = [
         '在自然中慢下来，身体会先知道答案。很多被城市节奏遮住的安静力量，也会慢慢回来。',
       ],
       en: [
-        'Forests, tea mountains, and fields teach in their own way. The texture of a leaf, the growth of a tree, tea moving from harvest to cup, and the breath and fatigue of a mountain path reopen attention, feeling, and awe.',
-        'When we slow down in nature, the body often knows first. Quiet strengths hidden by the pace of the city can gradually return.',
+        "Forests, tea-growing hills, and fields teach children in their own way. Noticing a leaf’s texture, watching a tree grow, following tea from picking to drinking, and feeling their breathing and fatigue on a mountain walk can renew their observation, sensory awareness, and sense of awe.",
+        "As we slow down in nature, we often notice the change in our bodies first. A quiet inner strength, obscured by the pace of city life, can gradually return.",
       ],
     },
   },
   {
     number: '02',
-    title: { zh: '真实世界是最深刻的课堂', en: 'The Real World Is the Deepest Classroom' },
+    title: { zh: '真实世界是最深刻的课堂', en: "The Real World Teaches Us the Most" },
     imageSrc: '/images/about/belief-real-world-tea-harvest.webp',
     imageAlt: { zh: '青少年完成采茶实践后在茶厂合影', en: 'Young people gathering at a tea factory after harvesting tea' },
     prompt: {
@@ -188,8 +85,8 @@ const beliefs = [
       ],
       en: [
         'Young people can already observe, question, express themselves, and take part in real action. Through teams, missions, and shared inquiry, they learn to collaborate, articulate an idea, and decide what they can take responsibility for.',
-        'They do not need to be fully mature at the beginning or make an enormous change immediately. Entering the scene, paying attention, asking a question, and doing one small thing are already the beginning of agency.',
-        "R-Gan Junior accompanies them as they grow from observers into communicators, researchers, and actors.",
+        "They do not need to be mature from the start or make a big change immediately. Their strength begins to develop as they engage with real life, pay attention to their experiences, ask questions, and take small actions.",
+        "R-Gan Junior supports them as they gradually move from observing to expressing their ideas, conducting research, and taking action.",
       ],
     },
   },
@@ -202,14 +99,14 @@ const methods = [
     examples: { zh: '做饭、喝茶、运动、自然观察、共同生活', en: 'Cooking, tea, movement, nature observation, and living together' },
     body: {
       zh: '从日常小事开始，重新感受身体、节奏、关系和照顾自己的能力。',
-      en: 'Start with ordinary moments and rediscover the body, rhythm, relationships, and the ability to care for oneself.',
+      en: "Begin with everyday activities and reconnect with your body, daily routines, relationships, and ability to care for yourself.",
     },
     photos: aboutMethodPhotoGroups[0],
   },
   {
     number: '02',
     title: { zh: '真实社区', en: 'Real Community' },
-    examples: { zh: '铁牛村、麦昆塔社区、生态阿柑与社区伙伴', en: 'Tieniu Village, Maquinta, Ecological Rgan, and community partners' },
+    examples: { zh: '铁牛村、麦昆塔社区、生态阿柑与社区伙伴', en: "Tieniu Village, Mykunda Community, ecological tangerine, and community members" },
     body: {
       zh: '孩子走进正在发生的乡村生活，看见食物、土地、产业和人之间的真实连接。',
       en: 'Young people enter village life as it unfolds and see the real connections among food, land, livelihoods, and people.',
@@ -222,14 +119,14 @@ const methods = [
     examples: { zh: '低碳生活、生态农业、家庭消费、公共责任', en: 'Low-carbon living, ecological agriculture, household consumption, and public responsibility' },
     body: {
       zh: '问题来自真实现场，也回到真实生活中被讨论、观察和回应。',
-      en: 'Questions come from real places and return to everyday life to be discussed, observed, and answered.',
+      en: "Questions arise from real-world experiences and are explored through discussion, observation, and action in daily life.",
     },
     photos: aboutMethodPhotoGroups[2],
   },
   {
     number: '04',
     title: { zh: '青少年主理', en: 'Youth-Led' },
-    examples: { zh: '参与者、记录者、共创者', en: 'Participants, documentarians, and co-creators' },
+    examples: { zh: '参与者、记录者、共创者', en: "Participants, recorders, and Co-creators" },
     body: {
       zh: '他们在小队、任务和分享中提出问题、表达想法，也学习把一点点想法变成行动。',
       en: 'In teams, missions, and sharing, they raise questions, express ideas, and learn to turn a small thought into action.',
@@ -244,18 +141,18 @@ const places = [
     key: 'tieniu',
     name: { zh: '铁牛村', en: 'Tieniu Village' },
     role: { zh: '社区大本营', en: 'Community Home Base' },
-    subtitle: { zh: '从一颗柑橘，读懂真实生活的系统', en: 'Read the system of everyday life through one citrus fruit' },
+    subtitle: { zh: '从一颗柑橘，读懂真实生活的系统', en: "Discover how everyday life is connected through a single citrus fruit" },
     location: {
       zh: '成都蒲江县 · 阿柑少年最初长出来的地方',
       en: "Pujiang County, Chengdu · Where R-Gan Junior first took root",
     },
     body: {
       zh: '这里是丘陵乡村，柑橘是主要农业产业。孩子们走进果园、农场、厨房、书房和社区日常，理解食物、土地、家庭消费、生态农业和真实生活之间的关系。',
-      en: 'In this hilly village, citrus is the main agricultural livelihood. Young people enter orchards, farms, kitchens, studies, and community life to understand the relationships among food, land, household consumption, ecological agriculture, and everyday living.',
+      en: "Citrus farming is the main agricultural industry in this hilly village. Young people spend time in orchards, farms, kitchens, reading rooms, and community life to understand how food, land, household consumption, ecological agriculture, and everyday life are connected.",
     },
     keywords: {
       zh: ['社区生活', '生态柑橘', '共同做饭', '田野观察', '公共议题'],
-      en: ['Community life', 'Ecological citrus', 'Cooking together', 'Field observation', 'Public issues'],
+      en: ['Community life', "Ecologically grown citrus", 'Cooking together', 'Field observation', 'Public issues'],
     },
     image: {
       src: '/images/s06-linpan-aerial-overview.jpg',
@@ -270,26 +167,26 @@ const places = [
   {
     number: '02',
     key: 'nanbaoshan',
-    name: { zh: '南宝山', en: 'Nanbaoshan' },
+    name: { zh: '南宝山', en: "Nanbao Mountain" },
     role: { zh: '森林与有机茶基地', en: 'Forest and Organic Tea Base' },
-    subtitle: { zh: '在森林和茶山中，重新打开身体与感受', en: 'Reopen the body and senses among forests and tea mountains' },
+    subtitle: { zh: '在森林和茶山中，重新打开身体与感受', en: "Reconnect with your body and senses in forests and tea-growing hills" },
     location: {
       zh: '龙门山脉 · 距离铁牛村约 1.5 小时车程',
       en: 'Longmen Mountains · About 1.5 hours from Tieniu Village',
     },
     body: {
       zh: '这是离社区最近的森林生态场域，也是麦昆塔社区的有机茶种植与生产基地之一。孩子们在这里徒步、采茶、制茶、夜茶，在山野中慢下来，重新感受空气、植物、身体和土地。',
-      en: "This is the community's nearest forest ecology site and one of Maquinta's organic tea-growing and production bases. Young people hike, harvest and make tea, and gather for tea at night, slowing down to rediscover air, plants, body, and land.",
+      en: "Nanbao Mountain is the forest setting closest to the community and one of Mykunda Community’s organic tea-growing and production bases. Young people hike, pick and process tea, and gather for tea at night. Slowing down in nature helps them reconnect with the air, plants, their bodies, and the land.",
     },
     keywords: {
       zh: ['森林徒步', '有机茶', '采茶制茶', '自然观察', '身体打开'],
-      en: ['Forest hiking', 'Organic tea', 'Tea making', 'Nature observation', 'Embodied awareness'],
+      en: ['Forest hiking', 'Organic tea', "Tea picking and processing", 'Nature observation', 'Embodied awareness'],
     },
     image: {
       src: '/images/about/nanbaoshan-cloud-forest.webp',
       alt: {
         zh: '云雾在南宝山层叠的森林山脊间流动',
-        en: 'Clouds drifting through the layered forest ridges of Nanbaoshan',
+        en: "Clouds drifting through the layered forest ridges of Nanbao Mountain",
       },
       width: 1800,
       height: 1200,
@@ -307,11 +204,11 @@ const places = [
     },
     body: {
       zh: '周边连接黄荆老林自然保护区，也是麦昆塔社区的有机茶生产基地之一。这里提供更深入的山地生态与茶生活体验，让孩子看见一片茶园如何与森林、村落、自然保护和日常生活发生关系。',
-      en: "Connected to the Huangjing Laolin Nature Reserve, this is also one of Maquinta's organic tea bases. It offers a deeper encounter with mountain ecology and tea life, showing how a tea garden relates to forest, village, conservation, and daily living.",
+      en: "Near Huangjing Laolin Nature Reserve, this is also one of Mykunda Community’s organic tea production bases. Young people explore mountain ecology and life around tea, learning how tea gardens connect with forests, villages, conservation, and everyday living.",
     },
     keywords: {
       zh: ['茶森活', '有机茶', '山地社区', '自然保护', '生活连接'],
-      en: ['Tea–forest life', 'Organic tea', 'Mountain community', 'Conservation', 'Living connections'],
+      en: ["Tea–Forest–Life Community", 'Organic tea', 'Mountain community', 'Conservation', 'Living connections'],
     },
     image: {
       src: '/images/about/jinyuxi-forest-valley.webp',
@@ -331,15 +228,15 @@ const places = [
     subtitle: { zh: '在更辽阔的山地世界里，理解长期实践', en: 'Understand long-term practice in a wider mountain world' },
     location: {
       zh: '甘孜州泸定县德威镇 · 海拔约 2100 米',
-      en: 'Dewei, Luding County, Garzê · About 2,100 metres above sea level',
+      en: 'Dewei, Luding County, Garzê · About 2,100 meters above sea level',
     },
     body: {
       zh: '这里靠近贡嘎雪山，正在进行高原有机农业种植示范。孩子们可以在雪山、村落、黑茶和高原农业之间，理解土地修复、地方产业和长期实践的不易。',
-      en: 'Near Mount Gongga, this site is developing a highland organic agriculture demonstration. Among snow mountains, villages, dark tea, and plateau farming, young people encounter the difficulty and value of land repair, local livelihoods, and long-term practice.',
+      en: "Near Mount Gongga, this site demonstrates organic agriculture on the plateau. Through snow-covered mountains, village life, dark tea, and highland farming, young people learn about the challenges of land restoration, local livelihoods, and sustained practice.",
     },
     keywords: {
       zh: ['贡嘎雪山', '藏地文化', '高原农业', '土地修复', '长期实践'],
-      en: ['Mount Gongga', 'Tibetan culture', 'Highland agriculture', 'Land repair', 'Long-term practice'],
+      en: ['Mount Gongga', 'Tibetan culture', 'Highland agriculture', "Land restoration", 'Long-term practice'],
     },
     image: {
       src: '/images/about/libo-highland.webp',
@@ -352,29 +249,6 @@ const places = [
     },
   },
 ] as const;
-
-function ChapterHeader({
-  index,
-  eyebrow,
-  title,
-  intro,
-}: {
-  index: string;
-  eyebrow: string;
-  title: string;
-  intro?: string;
-}) {
-  return (
-    <header className="about-v2-section__header">
-      <div className="about-v2-section__meta">
-        <span>{index}</span>
-        <p>{eyebrow}</p>
-      </div>
-      <h2>{title}</h2>
-      {intro && <p>{intro}</p>}
-    </header>
-  );
-}
 
 export default function About() {
   const { lang, t } = useLanguage();
@@ -450,40 +324,21 @@ export default function About() {
 
   return (
     <div className="about-v2-page pt-20">
-      <header className="about-v2-hero about-v2-hero--full-bleed">
-        <div className="about-v2-shell about-v2-hero__grid">
-          <div className="about-v2-hero__copy">
-            <p>{t('把成长放回真实生活里', 'Put growth back into real life')}</p>
-            <h1 aria-label={t('关于阿柑少年', `About ${brandName}`)}>
-              <span className="about-v2-hero__title-about">{t('关于', 'About')}</span>
-              <span className="about-v2-hero__title-brand">
-                <BrandWordmark
-                  language={lang}
-                  aria-hidden="true"
-                  className="about-v2-hero__title-wordmark"
-                />
-              </span>
-            </h1>
-            <div className="about-v2-hero__lead">
-              {t(
-                '真正的成长发生在很多地方。在森林、茶山、饭桌、厨房、果园和运动场上，也在人与人的真实相处中。',
-                'Real growth happens in many places: forests, tea mountains, dining tables, kitchens, orchards, sports fields, and honest relationships.',
-              )}
-            </div>
-          </div>
-
-          <figure className="about-v2-hero__figure">
-            <img
-              src="/images/s06-linpan-aerial-overview.jpg"
-              alt={t('铁牛村林盘、果园、鱼塘与院落的航拍图', 'Aerial view of Tieniu Village, orchards, ponds, and homes')}
-              width="2890"
-              height="2218"
-              loading="eager"
-            />
-            <figcaption>{t('铁牛村 · 阿柑少年的社区大本营', "Tieniu Village · R-Gan Junior's community home base")}</figcaption>
-          </figure>
-        </div>
-      </header>
+      <EditorialHero
+        kicker={t('把成长放回真实生活里', 'Put growth back into real life')}
+        titleLabel={t('关于阿柑少年', `About ${brandName}`)}
+        title={<>
+          <span className="about-v2-hero__title-about">{t('关于', 'About')}</span>
+          <span className="about-v2-hero__title-brand"><BrandWordmark language={lang} aria-hidden="true" className="about-v2-hero__title-wordmark" /></span>
+        </>}
+        lead={t('真正的成长发生在很多地方。在森林、茶山、饭桌、厨房、果园和运动场上，也在人与人的真实相处中。', 'Growth happens in forests, tea-growing hills, kitchens, orchards, and sports fields, around the dinner table, and through real relationships with others.')}
+        image={{
+          src: '/images/s06-linpan-aerial-overview.jpg',
+          alt: t('铁牛村林盘、果园、鱼塘与院落的航拍图', 'Aerial view of Tieniu Village, orchards, ponds, and homes'),
+          width: 2890, height: 2218,
+          caption: t('铁牛村 · 阿柑少年的社区大本营', "Tieniu Village · R-Gan Junior's community home base"),
+        }}
+      />
 
       <EditorialSectionNav
         activeId={activeChapter}
@@ -503,18 +358,20 @@ export default function About() {
             <div className="about-v2-team__intro">
               <ChapterHeader
                 index="2.1"
-                eyebrow={t('发起人与青年共创伙伴', 'Initiator & Youth Co-Creation Partners')}
+                eyebrow={t('发起人、营地伙伴与守护团', 'Founder, Camp Companions and Guardian Circle')}
                 title={t('我们的团队', 'Our Team')}
                 intro={t(
                   '阿柑少年由 Nate 发起，在麦昆塔社区的支持下，和一群来自不同城市、拥有不同兴趣的青少年伙伴共同生长。我们希望青少年不只是活动的参与者，也能在真实项目中学习设计、组织、记录、表达和行动。',
-                  "Initiated by Nate and supported by the Maquinta community, R-Gan Junior grows together with young partners from different cities and with different interests. Young people are not only participants; through real projects, they learn to design, organize, document, communicate, and act.",
+                  "Founded by Nate with support from Mykunda Community, R-Gan Junior develops together with young people from different cities and with different interests. They learn to design, organize, document, express ideas, and take action through real projects, as well as participating in activities.",
                 )}
               />
 
               <figure className="about-v2-team__intro-figure">
-                <img
+                <OptimizedImage
                   src={aboutTeamPhoto}
-                  alt={t('阿柑少年青少年共创伙伴围坐桌边', 'R-Gan Junior youth co-creation partners gathered around a table')}
+                  srcSet={`${aboutTeamPhotoSmall} 640w, ${aboutTeamPhoto} 1280w`}
+                  sizes="(max-width: 767px) calc(100vw - 2rem), 50vw"
+                  alt={t('阿柑少年青少年共创伙伴围坐桌边', "R-Gan Junior Co-creators gathered around a table")}
                   width="1536"
                   height="1024"
                   loading="lazy"
@@ -527,21 +384,21 @@ export default function About() {
               <section className="about-v2-team-group" aria-labelledby="team-initiator-title">
                 <header className="about-v2-team-group__header">
                   <span aria-hidden="true">01</span>
-                  <h3 id="team-initiator-title">{t('发起人', 'Initiator')}</h3>
+                  <h3 id="team-initiator-title">{t('发起人', "Founder")}</h3>
                 </header>
 
                 <article className="about-v2-founder">
                   <figure>
-                    <img
+                    <OptimizedImage
                       src={nateFounderPhoto}
-                      alt={t('阿柑少年发起人 Nate 在书房里静坐', "R-Gan Junior initiator Nate Shi sitting quietly in a library")}
+                      alt={t('阿柑少年发起人 Nate 在书房里静坐', "Nate, Founder of R-Gan Junior, sitting quietly in a reading room")}
                       width="1350"
                       height="1800"
                       loading="eager"
                     />
                   </figure>
                   <div>
-                    <p className="about-v2-role">{t('Nate｜发起人', 'Nate Shi | Initiator')}</p>
+                    <p className="about-v2-role">{t('Nate｜发起人', "Nate | Founder")}</p>
                     <h4>{t('从个人成长，走向一群人的真实行动。', 'From personal growth to shared action in the real world.')}</h4>
                     <p>
                       {t(
@@ -552,7 +409,7 @@ export default function About() {
                     <p className="about-v2-founder__story">
                       {t(
                         '从邀请朋友来村里玩，到组织同学调研生态农业、参与公共议题，再到发起生活共创营，他逐渐把自己的个人成长，发展成一个连接青少年、家庭、土地和真实世界的行动计划。',
-                        'From inviting friends to the village, to organizing ecological-agriculture research and engaging with public issues, and then initiating life co-creation camps, he gradually developed his personal growth into an action plan connecting young people, families, land, and the real world.',
+                        "Nate began by inviting friends to the village. He then organized classmates to research ecological agriculture, engage with public issues, and launch the Life Co-creation Camp. His personal growth gradually developed into a program connecting young people, families, the land, and the real world.",
                       )}
                     </p>
                     <Link to="/story">
@@ -563,82 +420,15 @@ export default function About() {
                 </article>
               </section>
 
-              <section className="about-v2-team-group" aria-labelledby="team-youth-title">
+              <section id="participants" className="about-v2-team-group scroll-mt-28" aria-labelledby="team-youth-title">
                 <header className="about-v2-team-group__header">
                   <span aria-hidden="true">02</span>
-                  <h3 id="team-youth-title">{t('青少年共创伙伴', 'Youth Co-Creation Partners')}</h3>
+                  <h3 id="team-youth-title">{lang === 'zh' ? '营地伙伴' : 'Camp Companions'}</h3>
                 </header>
-
-                <article className="about-v2-youth-partners">
-                  <div className="about-v2-youth-partners__copy">
-                    <h4>{t('一起继续往前走的青少年伙伴。', 'Young partners who keep moving forward together.')}</h4>
-                    <p>
-                      {t(
-                        '他们来自不同城市，有人关注科技，有人喜欢艺术、运动、人文、传播或社会议题。他们在各自感兴趣的方向上参与项目设计、活动支持、内容记录、社群连接和后续行动。',
-                        'They come from different cities. Some care about technology; others are drawn to art, sport, the humanities, communication, or social issues. They contribute to project design, activity support, documentation, community connection, and follow-through in the directions that matter to them.',
-                      )}
-                    </p>
-                    <p className="about-v2-youth-partners__note">
-                      {t(
-                        '伙伴档案将在身份与公开信息确认后持续补充。',
-                        'Partner profiles will grow as identities and public information are confirmed.',
-                      )}
-                    </p>
-                  </div>
-                </article>
-
-                <div className="about-v2-partner-roster" aria-label={t('青少年共创伙伴名录', 'Youth co-creation partner directory')}>
-                  {youthPartners.map((partner) => (
-                    <article key={partner.key} aria-labelledby={`about-partner-${partner.key}`}>
-                      <figure>
-                        <img
-                          src={partner.portrait.src}
-                          alt={pickLocalized(partner.portrait.alt, lang)}
-                          width={partner.portrait.width}
-                          height={partner.portrait.height}
-                          loading="lazy"
-                        />
-                      </figure>
-                      <div className="about-v2-partner-roster__copy">
-                        <p className="about-v2-partner-roster__identity">{pickLocalized(partner.identity, lang)}</p>
-                        <h4 id={`about-partner-${partner.key}`}>{pickLocalized(partner.name, lang)}</h4>
-                        <h5>{pickLocalized(partner.headline, lang)}</h5>
-                        <p className="about-v2-partner-roster__bio">{pickLocalized(partner.bio, lang)}</p>
-                        <Link to={partner.storyPath}>
-                          <span>{t('阅读伙伴故事', 'Read partner story')}</span>
-                          <span aria-hidden="true">→</span>
-                        </Link>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section className="about-v2-directions" aria-labelledby="co-creation-directions-title">
-                <header>
-                  <p>{t('从兴趣进入真实项目', 'Enter real projects through genuine interests')}</p>
-                  <h3 id="co-creation-directions-title">{t('青少年共创方向', 'Youth Co-Creation Directions')}</h3>
-                </header>
-                <AboutManualCarousel
-                  items={coCreationDirections}
-                  className="about-v2-directions__carousel"
-                  ariaLabel={t('青少年共创方向轮播', 'Youth co-creation directions carousel')}
-                  navigationLabel={t('选择共创方向', 'Choose a co-creation direction')}
-                  previousLabel={t('上一个共创方向', 'Previous co-creation direction')}
-                  nextLabel={t('下一个共创方向', 'Next co-creation direction')}
-                  getItemLabel={(direction) => pickLocalized(direction.title, lang)}
-                  getSelectLabel={(direction) => t(
-                    `查看${direction.title.zh}`,
-                    `View ${direction.title.en}`,
-                  )}
-                  renderSlide={(direction, index) => (
-                    <article key={direction.title.zh}>
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <h4>{pickLocalized(direction.title, lang)}</h4>
-                      <p>{pickLocalized(direction.body, lang)}</p>
-                    </article>
-                  )}
-                />
+                <p className="mb-8 max-w-3xl text-base leading-8 text-muted-foreground">
+                  {t('在森林、茶席、厨房与球场相遇。认识这些真实参与的伙伴，听听他们如何介绍自己。', 'We met in forests, over tea, in kitchens, and on sports courts. Meet our camp companions through their own introductions.')}
+                </p>
+                <ParticipantRoster />
               </section>
 
               <section className="about-v2-team-group" aria-labelledby="team-guardian-title">
@@ -649,11 +439,11 @@ export default function About() {
 
                 <article className="about-v2-adult-support">
                   <div>
-                    <h4>{t('让青少年站到前面，我们把真实世界托稳。', 'Young people step forward while we hold the real-world foundation steady.')}</h4>
+                    <h4>{t('让青少年站到前面，我们把真实世界托稳。', "We provide steady support so young people can step forward in the real world.")}</h4>
                     <p>
                       {t(
                         '守护团汇聚认同阿柑少年理念的伙伴与家长，参与项目与内容共创，并在活动筹备、现场支持、家庭连接和安全陪伴中贡献经验与力量，支持青少年在真实世界中学习、表达与承担。',
-                        "The Guardian Circle brings together partners and parents who share the values of R-Gan Junior. Through co-creation, activity preparation, on-site support, family connections, and safe companionship, they help young people learn, express themselves, and take responsibility in the real world.",
+                        "The Guardian Circle brings together parents and community members who share R-Gan Junior’s values. They help co-create programs and content, prepare activities, provide on-site support, connect with families, and care for young people, supporting them as they learn, express themselves, and take responsibility in the real world.",
                       )}
                     </p>
                   </div>
@@ -690,7 +480,7 @@ export default function About() {
               renderSlide={(belief) => (
                 <article key={belief.number}>
                   <figure>
-                    <img
+                    <OptimizedImage
                       src={belief.imageSrc}
                       alt={pickLocalized(belief.imageAlt, lang)}
                       width="560"
@@ -718,7 +508,7 @@ export default function About() {
               title={t('我们如何做', 'How We Work')}
               intro={t(
                 '阿柑少年把成长放回真实生活中。孩子们在生活里感受，在社区里观察，在议题中思考，也在行动中学习承担。',
-                "R-Gan Junior puts growth back into real life. Young people feel through daily living, observe within communities, think through real issues, and learn responsibility through action.",
+                "R-Gan Junior connects growth with everyday life. Young people become aware of their experiences, observe communities, think about real-world issues, and learn to take responsibility through action.",
               )}
             />
 
@@ -763,10 +553,10 @@ export default function About() {
             <ChapterHeader
               index="2.4"
               eyebrow={t('一座社区大本营，三片生态试验田', 'One Community Home Base, Three Ecological Field Sites')}
-              title={t('我们的真实场域', 'Our Living Labs')}
+              title={t('我们的真实场域', "Our Real-World Contexts")}
               intro={t(
                 '阿柑少年的成长，扎根于麦昆塔社区长期生活与产业实践形成的真实场域。',
-                "R-Gan Junior is rooted in real places shaped by Maquinta's long-term community life and livelihood practices.",
+                "R-Gan Junior’s growth is rooted in the Real-World Contexts shaped by Mykunda Community’s years of shared living and work in local industries.",
               )}
             />
 

@@ -153,10 +153,10 @@ export default function StoryCollaborationPanel({
       <DialogContent className="max-h-[86vh] overflow-y-auto rounded-[1.6rem] border-[hsl(var(--community-forest)/0.12)] bg-[#fffdf8] sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl text-[hsl(var(--community-forest))]">
-            {t('一起完成这篇文章', 'Shape this story together')}
+            {t('一起完成这篇文章', "Shape this article together")}
           </DialogTitle>
           <DialogDescription>
-            {t('邀请正式成员编辑或评论。分享链接仍要求登录并拥有有效成员身份。', 'Invite active members to edit or comment. Share links still require sign-in and active membership.')}
+            {t('邀请正式成员编辑或评论。分享链接仍要求登录并拥有有效成员身份。', 'Invite members to edit or comment. Anyone using a share link must sign in and have a valid membership.')}
           </DialogDescription>
         </DialogHeader>
 
@@ -202,7 +202,7 @@ export default function StoryCollaborationPanel({
           {bundle.access.canManageCollaboration ? (
             <section className="border-t border-[hsl(var(--community-forest)/0.1)] pt-5">
               <p className="community-story-editor__section-label"><Link2 className="size-4" />{t('成员分享链接', 'Member share link')}</p>
-              <p className="mt-2 text-xs leading-5 text-[hsl(var(--community-forest)/0.58)]">{t('获得链接的正式成员可以编辑。撤销后，已打开的协作连接也会立即断开。', 'Active members with the link can edit. Revoking it also disconnects open collaboration sessions.')}</p>
+              <p className="mt-2 text-xs leading-5 text-[hsl(var(--community-forest)/0.58)]">{t('获得链接的正式成员可以编辑。撤销后，已打开的协作连接也会立即断开。', 'Members with the link can edit. Revoking the link immediately disconnects any open collaboration sessions.')}</p>
               {shareUrl ? (
                 <div className="mt-3 flex gap-2">
                   <input className="community-field h-11 min-w-0 flex-1 px-3 text-xs" readOnly value={shareUrl} />

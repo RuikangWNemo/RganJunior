@@ -1,0 +1,39 @@
+{
+  "articleLinks": [
+    "/field-notes/chengzi-camp-letter"
+  ],
+  "overflow": false,
+  "portraits": [
+    {
+      "label": "Rosie ChenCommunity author 1",
+      "loaded": true,
+      "src": "/assets/rossie-chen-BRYAEJF3.webp"
+    },
+    {
+      "label": "OrangeCommunity author 1",
+      "loaded": true,
+      "src": "/assets/chengzi-BF46Ja8y.png"
+    },
+    {
+      "label": "Ruby HuangCommunity author 1",
+      "loaded": true,
+      "src": "/assets/ruby-huang-DlnIZm6F.webp"
+    },
+    {
+      "label": "Nate ShiCommunity author 2",
+      "loaded": true,
+      "src": "/assets/nate-shi-vMZpY6UN.webp"
+    },
+    {
+      "label": "Tianshi ZhangCommunity author 1",
+      "loaded": true,
+      "src": "/assets/zhang-tianshi-DCuCtt5E.webp"
+    },
+    {
+      "label": "Nate, Tianshi Zhang, and the R-Gan Junior founding teamA Letter of Invitation 1",
+      "loaded": true,
+      "src": "/assets/mascot-wide-BPgN7YsX.png"
+    }
+  ],
+  "url": "https://www.rganjunior.org/field-notes/all?person=article-author-chengzi"
+}

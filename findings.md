@@ -1,5 +1,20 @@
 # Findings
 
+## 2026-10-13 English translation audit
+- Latest user answers confirm Founder for Nate, Co-creator for Tianshi/Ruorong/Ruoyin, Participant for camp participants, Member for formal community members, Partner for external organizations, Community Stories for partner stories, no Fellow for now, Life Discovery Camp and Life Co-creation Camp. Updated docs/translation-principles.md; no live website changes.
+- Public research distinguishes 阿柑青年 as new-villager/community group identity and 丑美阿柑 as local ecological-agriculture/products brand. 生态阿柑 appears in product/orchard/practice wording; no verified independent institutional identity or authoritative English brand naming found. Lifeweek organizer article read; CDEIC and China.com.cn search excerpts support taxonomy but full-page fetches failed. Partner product page uses Agan Bubble Juice, insufficient to standardize all R-Gan brand spellings.
+- Second-round questions ask provisional entity wording, Chinese definitions of whole-life growth/body-mind recovery/inner ecology, and guardian/support-group boundaries. Pending answers do not approve proposed translations.
+- User follow-up confirms American English throughout, Mykunda for 麦昆塔, and R-Gan Junior for 阿柑少年. Recorded in docs/translation-principles.md as the decision authority; prior workbook suggestions are not final terms.
+- Attached WeChat temp path had expired; located and read the same-named 20260907 revision in WeChat msg/file/2026-10. It lists public pages and includes proposed Founder/Co-creator/Fellow/Member/Participant/Partner distinctions and Community Stories; these are reference proposals, not user authorization or finalized terminology.
+- Asked a first batch of three questions about roles/story labels, related R-Gan entities, and camp names. Core concepts, guardian-group boundaries, ecology terms and factual eligibility/cycle questions are queued separately.
+- Local baseline f406aa4; pre-existing untracked author-import work is outside this audit.
+- Translation sources include t(zh,en), text(zh,en), localized zh/en objects, language conditionals, four paired English HTML stories and authentication email copy.
+- Public routes use src/App.tsx; canonical site is https://www.rganjunior.org. Web extraction returns no SPA body, so local source is the review baseline, not a claim of exact production parity.
+- Key issues: Maquinta/Quinta/McQuinta/Macunta/Maikunta inconsistency; 阿柑青年 translated as R-Gan Junior; co-creation camp name variants; added older-student restrictions and fixed three-month cycles; youth-focused vs youth-led meaning; destructive-operation warning omissions; account subjects missing from email titles.
+- Distinguish confirmed wording differences from candidate mistranslations and user-owned official-name decisions. 13 P1, 81 P2 and 17 P3 entries, including coverage gaps. Legacy unused pages identified by import reachability and field-specific checks.
+- English public homepage text was observed and matches core local content. English /field-notes/all reached an explicit “The articles could not be loaded” alert; retry did not establish a complete public content inventory. Do not infer no articles from its 0-article counter.
+- Reference checks: FAO AGROVOC for community-supported agriculture; Center for Process Studies 2024 retrospective for International Forum on Ecological Civilization; CTB official Chinese name. Specific CTB annual English naming still requires original materials.
+
 ## 2026-08-16 — Cold-load production rollout
 
 - The approved atomic order is database migration and verification first, then merge/deploy the matching application commit, then production smoke/cache/runtime checks.
@@ -809,3 +824,29 @@
 - The repository contains enough real imagery for all three category panels: co-creation camp life, youth practice/research, CTB forum and academic discussion assets. These can be reused without introducing fabricated visuals.
 - A real WeChat URL and locally archived camp invitation article are available, along with multiple public story assets. The exact camp “复盘” URL requested is not clearly identifiable from the current repository, so the design should support optional editorial resource links and use a verified existing internal/external link until a more precise URL is supplied.
 - CTB visual evidence and internal content are present; the repository references John Locke writing but no clearly named Nate essay PDF was found in the asset list. External/resource links should therefore be data-driven and gracefully omit unavailable entries rather than render dead placeholders.
+
+## 2026-10-13 简表与美式拼写
+英式拼写／英文日期区域设置共44处、19个源码文件已调整；资源文件名中的 programme 保留以避免破坏路径。建议译法不等于已确认译名。简单填写入口为 docs/translation-audit-2026-10-13/翻译确认简表.xlsx，原完整审查表仅作历史对照。
+
+## 2026-10-14 新术语与语境问题
+填写返回的表把 Life Discovery Camp改为Life Immersion Camp，并确定R-Gan Youth专指阿柑青年、Or-Life R-Gan专指丑美阿柑。固定阿柑少年为R-Gan Junior，不能用Youth。首屏标语按用户要求保留逗号；developed明确修饰program，不限定青少年在铁牛村成长。发现并修正reopen the body、actors、sensory repair、生态农业被译为再生农业、older students无中文依据及温杯/bowl、田野里/in the fields等问题。事实未明的问题放进候选表，不能擅自定稿。
+
+2026-10-14 首页基准补充：用户提供《01_首页_Home_revision 20260907.docx》作为最低质量案例，已纳入翻译原则。保留课堂意象、逐步成长的过程和公共思考的语义，改善首次参与介绍与加入入口按钮。案例中的拼写、时态及重复候选不照搬。新版简表保持37项四列；首页4项测试及本地构建通过，未部署。
+
+2026-10-14 第二轮继续复核：新增修正80处英文，涉及22个文件，包括参与资格误译、主语错位、活动名前缀重复、家庭实践和茶叙事歧义、人工监护同意对象。314项测试、应用类型检查、本地构建与相关源码lint通过；无英式拼写残留命中。详见 docs/translation-context-audit-2026-10-13/support/round2/README.md。没有发布或生产数据写入；37项简表保持简洁。
+
+2026-10-14 第三轮复核：补齐营地邀请信整篇英文（122个含中文片段与21张图片替代文本），修正原文回退提示判断和语言标记。调整天时故事中的时间范围、指代及增义；明确成员可见范围、社区角色与身份核验，统一编辑器和审核中的动态名称。315项测试（86文件）、应用类型检查、本地构建及相关lint通过；图片结构与顺序不变，未部署。详细记录：docs/translation-context-audit-2026-10-13/support/round3/README.md。
+
+2026-10-14 第四轮严格翻译验收：重新读取用户填回表D列与首页Word接受修订文本；修复26处/17文件，包括旧清单REV-026、REV-034、REV-046、REV-062、REV-063残留、角色混称及语境偏差。16组旧译检索无残留，311文件美式拼写扫描无命中；317项测试/86文件、应用类型检查、lint、本地构建通过。首页主句补and建议已询问尚未答复，保留原句。原文事实、专名与覆盖问题仍未关闭，不能宣布专业定稿。未部署。详见docs/translation-context-audit-2026-10-13/严格复核结果-2026-10-14.md。
+
+2026-10-14 英文响应式排版修复：启动本地5173服务，通过浏览器确认首页强制单行与横移、故事页收尾标题、加入页固定提示宽度、田野笔记侧栏短句溢出。已按英文单独允许自然换行，中文断行保留；修正首页可见主句漏and（此前仅aria-label更新）。49项相关测试及本地构建通过。浏览器已恢复默认尺寸并保留英文首页。详见docs/translation-context-audit-2026-10-13/support/layout/README.md。
+
+## 2026-10-14 布局诊断
+Story 1280px：标题 nowrap，实际文本宽931px，所在列557px，侵入按钮列。正式域名当前仍指向文章部署 dpl_ubWZJydKxZoR2JjsnwNw382R4X9Y；守护人发布目录已准备 a4b8a9a 与文章59文件合并，须保持并行更新。UI Skills npm wrapper 缺失 runtime lib，改用 NVM npx。
+
+布局检查已完成：8公开页面×中英文×1440/1024/768/390px，共64组无检测到的文本越界/Story按钮交叠；生产构建另18组英文页面检查通过。修复范围包括Story、Field Notes、首页、Impact、Join、Programs中文标题；不以overflow:hidden掩盖问题。程序术语及剩余organising/practise等可见拼写已统一美式，并改为en-US日期，资产路径保留。48测试及类型检查通过；最终本机构建使用Node24.19。第一次Node20构建已替换，不用于发布。UI Skills CLI因npm runtime prefix路径不可用及网络等待未完成，直接使用已读取baseline-ui规则；不影响页面验证。
+
+## 精选与英文对照范围
+线上精选将第2至6篇全部堆在右栏，造成高度失衡。6条公开数据库文章加1篇静态邀请信为当前7篇范围。四篇成长故事已有英文稿，邀请信主工作区已有完整译稿；营地回顾3322字、橙子来信1125字需补译。计划复用同一slug的本地双语版本映射，保持作者帐号与中文管理正文不变，不创建重复英文文章记录。
+
+2026-10-14：旧精选一主五副结构导致两列高度失衡，改为单面板＋六项目录，手机目录内部横滚；390/768/1024/1440中英文无页面横向溢出。英文原缺2篇且邀请信回退中文，现补全7篇，正文/图片结构测试防止中文回退和漏图。正式版本源码0ae0b4c位于统一release worktree，不包含主工作区其余未发布修改。
