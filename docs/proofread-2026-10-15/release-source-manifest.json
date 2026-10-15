@@ -5000,5 +5000,6 @@
       "path": "vitest.config.ts",
       "sha256": "1df2d3b06a0128114fdd449026dbd25871de7e68a76ee477cf5295eeecc5870d"
     }
-  ]
+  ],
+  "commit": "67b73e1d7f5c88218ee908550bf3ace80046ec9a"
 }

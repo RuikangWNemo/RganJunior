@@ -1,0 +1,8 @@
+{
+  "commit": "67b73e1d7f5c88218ee908550bf3ace80046ec9a",
+  "outputFileCount": 6112,
+  "outputManifestSha256": "07ae5e31407cebc99386519543c93c525799e5c46860ee74421cba7807fb2e43",
+  "functionCount": 12,
+  "build": "local vercel build --prod",
+  "previousDeployment": "dpl_577vj5qWeCfEeTiKa8RaiZLBu3zM"
+}

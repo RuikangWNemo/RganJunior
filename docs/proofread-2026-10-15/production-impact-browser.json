@@ -1,0 +1,56 @@
+[
+  {
+    "width": 1440,
+    "lang": "zh",
+    "pageViews": 633,
+    "displayed": 633,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "pageViews": 633,
+    "displayed": 633,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 768,
+    "lang": "zh",
+    "pageViews": 633,
+    "displayed": 633,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 768,
+    "lang": "en",
+    "pageViews": 633,
+    "displayed": 633,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 390,
+    "lang": "zh",
+    "pageViews": 633,
+    "displayed": 633,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  },
+  {
+    "width": 390,
+    "lang": "en",
+    "pageViews": 633,
+    "displayed": 633,
+    "singleMetric": true,
+    "noOverflow": true,
+    "pageErrors": 0
+  }
+]
