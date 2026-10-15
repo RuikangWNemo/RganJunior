@@ -30,15 +30,13 @@ function show(lang: "zh" | "en" = "zh") {
 
 describe("public lifetime visit figures", () => {
   beforeEach(() => vi.mocked(getWebsiteVisitTotals).mockReset());
-  it("renders one lifetime PV total with the collection date, without session counts or range controls", async () => {
+  it("renders one total without dates, metric explanations, session counts or range controls", async () => {
     vi.mocked(getWebsiteVisitTotals).mockResolvedValue(totals);
     show();
     expect(await screen.findByText("594")).toBeInTheDocument();
     expect(screen.queryByText("132")).not.toBeInTheDocument();
     expect(screen.getAllByRole("definition")).toHaveLength(1);
-    expect(screen.getByText(/累计页面浏览量（PV）/)).toBeInTheDocument();
-    expect(screen.getByText(/2026\/08\/16/)).toHaveTextContent("开始记录");
-    expect(screen.getByText(/不代表去重访客人数/)).toBeInTheDocument();
+    expect(screen.queryByText(/PV|开始记录|更新于|去重访客|2026/)).not.toBeInTheDocument();
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
     expect(screen.queryByText("近 30 天")).not.toBeInTheDocument();
   });
@@ -71,9 +69,6 @@ describe("public lifetime visit figures", () => {
     expect(await screen.findByText("Total visits")).toBeInTheDocument();
     expect(await screen.findByText("594")).toBeInTheDocument();
     expect(screen.queryByText("132")).not.toBeInTheDocument();
-    expect(screen.getByText(/Counted as cumulative page views/)).toBeInTheDocument();
-    expect(
-      screen.getByText(/visits do not represent unique people/),
-    ).toBeInTheDocument();
+    expect(screen.queryByText(/PV|Recorded since|Updated|unique people|2026/)).not.toBeInTheDocument();
   });
 });

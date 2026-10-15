@@ -11,21 +11,11 @@ export default function WebsiteVisitTotals() {
     retry: 1,
   });
   const locale = lang === "zh" ? "zh-CN" : "en-US";
-  const formatDate = (value: string, withTime = false) =>
-    new Intl.DateTimeFormat(locale, {
-      timeZone: "Asia/Shanghai",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      ...(withTime
-        ? ({ hour: "2-digit", minute: "2-digit", hour12: false } as const)
-        : {}),
-    }).format(new Date(value));
 
   if (!query.data) {
     return (
       <div
-        className="impact-data-status"
+        className="impact-data-status impact-visit-status"
         role={query.isPending ? "status" : "alert"}
         aria-live="polite"
       >
@@ -49,44 +39,25 @@ export default function WebsiteVisitTotals() {
       </div>
     );
   }
-  const totals = query.data;
-  const number = new Intl.NumberFormat(locale);
+  const formattedTotal = new Intl.NumberFormat(locale).format(query.data.totalPageViews);
   return (
     <div>
-      <dl className="impact-number-row impact-number-row--totals">
+      <dl className="impact-visit-card">
         <div>
           <dt>{t("累计访问", "Total visits")}</dt>
-          <dd>{number.format(totals.totalPageViews)}</dd>
+          <dd className={formattedTotal.length > 9 ? "impact-visit-card__value--compact" : undefined}>
+            {formattedTotal}
+          </dd>
         </div>
       </dl>
-      <div className="impact-source">
-        <p>
+      {query.isError && (
+        <p className="impact-visit-refresh" role="status">
           {t(
-            `自 ${formatDate(totals.recordedSince)} 开始记录 · 更新于 ${formatDate(totals.updatedAt, true)}（北京时间）`,
-            `Recorded since ${formatDate(totals.recordedSince)} · Updated ${formatDate(totals.updatedAt, true)} (China Standard Time)`,
+            "刷新暂未成功，当前保留上一次成功读取的记录。",
+            "Refresh failed. The last successfully loaded figures remain visible.",
           )}
         </p>
-        <p>
-          {t(
-            "按有记录以来的累计页面浏览量（PV）统计，包含同一次访问中的多页浏览。",
-            "Counted as cumulative page views (PV) since records began, including multiple pages viewed during one visit.",
-          )}
-        </p>
-        <p>
-          {t(
-            "数据来源：本站访问记录。仅展示汇总数据，不代表去重访客人数。",
-            "Source: this website’s visit records. Only aggregate figures are shown; visits do not represent unique people.",
-          )}
-        </p>
-        {query.isError && (
-          <p role="status">
-            {t(
-              "刷新暂未成功，当前保留上一次成功读取的记录。",
-              "Refresh failed. The last successfully loaded figures remain visible.",
-            )}
-          </p>
-        )}
-      </div>
+      )}
     </div>
   );
 }

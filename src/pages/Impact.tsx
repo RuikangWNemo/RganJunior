@@ -344,10 +344,6 @@ export default function Impact() {
             eyebrow={t("网站的连接与传播", "Connections through the website")}
             title={t("网站访问", "Website Visits")}
             id="website-visits-title"
-            intro={t(
-              "从开始记录的那一天起，记录网站被访问和阅读的情况。",
-              "A record of visits and page views since website analytics began.",
-            )}
           />
           <div className="impact-section-content">
             <WebsiteVisitTotals />

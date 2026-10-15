@@ -70,8 +70,72 @@
   color: hsl(var(--programs-forest-deep) / 0.75);
   font-size: 1rem;
 }
-.impact-number-row--totals {
-  grid-template-columns: 1fr;
+.impact-visit-card {
+  margin: 0;
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: var(--about-v2-radius);
+  background: var(--about-v2-forest);
+  color: var(--about-v2-paper);
+}
+.impact-visit-card > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.impact-visit-card dt {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 500;
+}
+.impact-visit-card dt::before {
+  content: "";
+  width: 2rem;
+  height: 0.25rem;
+  border-radius: 1rem;
+  background: var(--about-v2-paper);
+  opacity: 0.6;
+}
+.impact-visit-card dd {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  color: inherit;
+  font-family: var(--about-v2-body-font);
+  font-size: clamp(3rem, 11vw, 8rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+.impact-visit-card dd.impact-visit-card__value--compact {
+  font-size: clamp(1.75rem, 6vw, 4rem);
+}
+.impact-visit-status {
+  min-height: 13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid hsl(var(--programs-forest) / 0.16);
+  border-radius: var(--about-v2-radius);
+}
+.impact-visit-refresh {
+  margin-top: 1rem;
+  color: hsl(var(--programs-forest-deep) / 0.75);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+@media (max-width: 639px) {
+  .impact-visit-card > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 .impact-editorial .impact-meta,
 .impact-source {
