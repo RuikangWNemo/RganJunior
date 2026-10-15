@@ -55,11 +55,7 @@ export default function WebsiteVisitTotals() {
     <div>
       <dl className="impact-number-row impact-number-row--totals">
         <div>
-          <dt>{t("累计访问次数", "Total visits")}</dt>
-          <dd>{number.format(totals.totalSessions)}</dd>
-        </div>
-        <div>
-          <dt>{t("累计浏览量 PV", "Total page views (PV)")}</dt>
+          <dt>{t("累计访问", "Total visits")}</dt>
           <dd>{number.format(totals.totalPageViews)}</dd>
         </div>
       </dl>
@@ -72,8 +68,8 @@ export default function WebsiteVisitTotals() {
         </p>
         <p>
           {t(
-            "访问次数按匿名访问会话统计；浏览量记录公开页面被浏览的次数，包含同一次访问中的多页浏览。",
-            "Visits count anonymous browsing sessions. Page views count views of public pages, including multiple pages during one visit.",
+            "按有记录以来的累计页面浏览量（PV）统计，包含同一次访问中的多页浏览。",
+            "Counted as cumulative page views (PV) since records began, including multiple pages viewed during one visit.",
           )}
         </p>
         <p>

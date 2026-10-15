@@ -71,7 +71,7 @@
   font-size: 1rem;
 }
 .impact-number-row--totals {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 .impact-editorial .impact-meta,
 .impact-source {
@@ -331,14 +331,6 @@
   }
   .impact-number-row dd {
     font-size: clamp(2rem, 9vw, 3rem);
-  }
-  .impact-number-row--totals {
-    grid-template-columns: 1fr;
-  }
-  .impact-number-row--totals > div + div {
-    border-left: 0;
-    border-top: 1px solid hsl(var(--programs-forest) / 0.16);
-    padding-left: 0;
   }
   .impact-number-row dt {
     font-size: 0.875rem;
