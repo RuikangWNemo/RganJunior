@@ -94,3 +94,10 @@
 - 首页和加入页统一三类及小橘子；联合邀请信增加双头像、短人物入口名和专属列表卡片，正文保留完整署名和封面。
 - 上一版本 `629614c` / `dpl_3rT93CBPYK8oQkSNvjdgFeQbqsET` 可用于回退。验证记录见 `docs/join-invitation-release-2026-10-14/`。
 - 与图片优化任务协调后，仅本任务发布；主目录已精确合并本次增量并保留其未发布的图片优化。后续发布必须基于a8cb91b或更新版。
+
+## 10 月 15 日社区故事路径与导航修复
+
+- 应用提交 `f7a1ff0` 基于已发布WebP版本；正式部署 `dpl_pQgBAicRoRRq9knbZ27knfihdZKD`。
+- 公开故事链接统一 `/community-stories`，旧 `/field-notes` 保留308及客户端后备跳转；语言切换重新定位悬停框，手机菜单默认折叠并按栏目展开。
+- 335项测试、本机类型检查、lint（0错误）、本机预构建通过；发布核验记录见 `docs/navigation-release-2026-10-15/`。主目录精确合并并保留未发布整理，类型检查通过。
+- 上一正式版 `836cd70` / `dpl_8pctJRcZpLFNGrRjCjyHVo3sA6Vx` 可回退。本次无远程构建、Git推送、ECS、OSS或数据库写入。
