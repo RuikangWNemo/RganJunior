@@ -13,7 +13,8 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 function detectLanguage(): Language {
-  const saved = localStorage.getItem('rgan-lang');
+  let saved: string | null = null;
+  try { saved = localStorage.getItem('rgan-lang'); } catch { /* Storage may be blocked. */ }
   if (saved === 'zh' || saved === 'en') return saved;
   const browserLang = navigator.language || '';
   return browserLang.startsWith('zh') ? 'zh' : 'en';
@@ -21,29 +22,20 @@ function detectLanguage(): Language {
 
 export function LanguageProvider({ children, initialLanguage }: { children: React.ReactNode; initialLanguage?: Language }) {
   const [lang, setLangState] = useState<Language>(() => initialLanguage ?? detectLanguage());
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const isTransitioning = false;
 
   const setLang = useCallback((l: Language) => {
     if (l === lang) return;
-    setIsTransitioning(true);
-    // Fade out, swap, fade in
-    setTimeout(() => {
-      setLangState(l);
-      localStorage.setItem('rgan-lang', l);
-      setTimeout(() => setIsTransitioning(false), 50);
-    }, 250);
+    // Language changes must never hide the application or depend on storage.
+    setLangState(l);
+    try { localStorage.setItem('rgan-lang', l); } catch { /* Keep the in-memory choice. */ }
   }, [lang]);
 
   const t = useCallback((zh: string, en: string) => confirmedTranslation(zh, en, lang), [lang]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t, isTransitioning }}>
-      <div
-        className="transition-opacity duration-300 ease-out"
-        style={{ opacity: isTransitioning ? 0 : 1 }}
-      >
-        {children}
-      </div>
+      {children}
     </LanguageContext.Provider>
   );
 }

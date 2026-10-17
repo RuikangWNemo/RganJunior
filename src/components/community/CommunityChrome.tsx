@@ -115,6 +115,7 @@ export default function CommunityChrome({ children }: { children: ReactNode }) {
                       <ShieldCheck className="mr-2 size-4" />{copy('reports')}
                     </DropdownMenuItem>
                   ) : null}
+                  {permissions.includes('programs.manage') && <DropdownMenuItem className="rounded-xl px-3 py-2.5" onSelect={() => navigate('/community/admin/programs')}>{t('营期管理', 'Manage sessions')}</DropdownMenuItem>}
                   {canReadAnalytics ? (
                     <DropdownMenuItem className="rounded-xl px-3 py-2.5" onSelect={() => navigate('/community/admin/analytics')}>
                       <ChartLine className="mr-2 size-4" />{copy('websiteAnalytics')}

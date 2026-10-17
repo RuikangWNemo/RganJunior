@@ -122,7 +122,7 @@ function Reveal({ children, className = '', delay = 0 }: { children: ReactNode; 
   return (
     <motion.div
       className={className}
-      initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+      initial={reducedMotion ? false : { opacity: 1, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.16 }}
       transition={{ duration: reducedMotion ? 0 : 0.56, delay: reducedMotion ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
@@ -142,7 +142,7 @@ export default function FounderStory() {
         <div className="founder-story-shell founder-story-hero__layout">
           <motion.div
             className="founder-story-hero__copy"
-            initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+            initial={reducedMotion ? false : { opacity: 1, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -178,7 +178,7 @@ export default function FounderStory() {
 
           <motion.figure
             className="founder-story-hero__portrait"
-            initial={reducedMotion ? false : { opacity: 0, scale: 0.98 }}
+            initial={reducedMotion ? false : { opacity: 1, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: reducedMotion ? 0 : 0.72, delay: reducedMotion ? 0 : 0.08 }}
           >

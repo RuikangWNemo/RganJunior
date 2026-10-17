@@ -1,8 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Actions from './Actions';
+
+vi.mock('@/components/programs/ProgramSessions', () => ({ default: () => null }));
 
 function renderActions(initialEntry = '/programs') {
   return render(

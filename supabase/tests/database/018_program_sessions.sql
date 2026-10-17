@@ -1,0 +1,62 @@
+begin;
+create function pg_temp.assert_true(ok boolean, label text) returns void language plpgsql as $$ begin
+if not coalesce(ok,false) then raise exception 'TEST_FAILED: %',label; end if; end $$;
+create function pg_temp.expect_error(stmt text, label text) returns void language plpgsql as $$ begin
+begin execute stmt; exception when others then return; end; raise exception 'TEST_FAILED: %',label; end $$;
+insert into auth.users(id, email, raw_user_meta_data) values
+('18000000-0000-4000-8000-000000000001','program-editor@test.invalid','{"display_name":"Editor","age_band":"adult_18_plus"}'),
+('18000000-0000-4000-8000-000000000002','program-member@test.invalid','{"display_name":"Member","age_band":"adult_18_plus"}');
+insert into public.user_roles(user_id,role_id) select '18000000-0000-4000-8000-000000000001',id from public.roles where slug='program_editor';
+set local role authenticated;
+select set_config('request.jwt.claim.sub','18000000-0000-4000-8000-000000000001',true);
+insert into public.program_sessions(id,product_id,slug,title_zh,photos) values
+('18000000-0000-4000-8000-000000000003','91000000-0000-4000-8000-000000000002','permission-test','权限测试','[{"src":"18000000-0000-4000-8000-000000000001/test.jpg","alt_zh":"测试"}]');
+insert into storage.objects(bucket_id,name) values('program-media','18000000-0000-4000-8000-000000000001/test.jpg');
+select pg_temp.assert_true((select count(*)=1 from public.program_sessions where slug='permission-test'),'editor can see draft');
+select pg_temp.assert_true((select count(*)=1 from storage.objects where bucket_id='program-media'),'editor can read draft photo');
+select pg_temp.expect_error($s$update public.program_sessions set slug='renamed' where slug='permission-test'$s$,'stable slug');
+select pg_temp.expect_error($s$update public.program_sessions set status='published' where slug='permission-test'$s$,'publish requires time and place');
+select pg_temp.expect_error($s$update public.program_sessions set links='[{"kind":"reference","label_zh":"bad","href":"javascript:alert(1)"}]' where slug='permission-test'$s$,'unsafe links rejected');
+reset role;
+set local role anon;
+select set_config('request.jwt.claim.sub','',true);
+select pg_temp.assert_true((select count(*)=0 from public.program_sessions where slug='permission-test'),'anonymous draft hidden');
+select pg_temp.assert_true((select count(*)=0 from storage.objects where bucket_id='program-media'),'anonymous draft photo hidden');
+select pg_temp.expect_error($s$insert into public.program_products(program_id,name_zh) values('action-group','forbidden')$s$,'anonymous cannot write');
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','18000000-0000-4000-8000-000000000002',true);
+select pg_temp.assert_true(not private.has_permission('programs.manage'),'member has no editorial permission');
+select pg_temp.expect_error($s$insert into public.program_sessions(product_id,slug,title_zh) values('91000000-0000-4000-8000-000000000002','forbidden','forbidden')$s$,'member cannot write');
+select pg_temp.expect_error($s$insert into storage.objects(bucket_id,name) values('program-media','forbidden.jpg')$s$,'member cannot upload');
+select pg_temp.assert_true((select count(*)=0 from public.program_sessions where slug='permission-test'),'member cannot read draft');
+select set_config('request.jwt.claim.sub','18000000-0000-4000-8000-000000000001',true);
+update public.program_sessions set status='published',date_label_zh='待定',location_zh='铁牛村' where slug='permission-test';
+select pg_temp.expect_error($s$update public.program_sessions set registration_state='open' where slug='permission-test'$s$,'open registration requires link');
+reset role;
+set local role anon;
+select set_config('request.jwt.claim.sub','',true);
+select pg_temp.assert_true((select count(*)=1 from public.program_sessions where slug='permission-test'),'published session visible');
+select pg_temp.assert_true((select count(*)=1 from storage.objects where bucket_id='program-media'),'published photo visible');
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','18000000-0000-4000-8000-000000000001',true);
+update public.program_products set is_active=false where id='91000000-0000-4000-8000-000000000002';
+reset role;
+set local role anon;
+select set_config('request.jwt.claim.sub','',true);
+select pg_temp.assert_true((select count(*)=0 from public.program_sessions where slug='permission-test'),'inactive category hides sessions');
+select pg_temp.assert_true((select count(*)=0 from storage.objects where bucket_id='program-media'),'inactive category hides photos');
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.sub','18000000-0000-4000-8000-000000000001',true);
+update public.program_products set is_active=true where id='91000000-0000-4000-8000-000000000002';
+update public.program_sessions set status='draft' where slug='permission-test';
+reset role;
+set local role anon;
+select set_config('request.jwt.claim.sub','',true);
+select pg_temp.assert_true((select count(*)=0 from public.program_sessions where slug='permission-test'),'unpublished session hidden');
+select pg_temp.assert_true((select count(*)=0 from storage.objects where bucket_id='program-media'),'unpublished photo hidden');
+reset role;
+select pg_temp.assert_true((select count(*)>=3 from private.audit_logs where entity_type='program_session' and entity_id='18000000-0000-4000-8000-000000000003'),'session edits audited');
+rollback;

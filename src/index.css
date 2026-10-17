@@ -3158,7 +3158,6 @@
 
   .route-page-shell {
     width: 100%;
-    will-change: opacity;
   }
 
   @keyframes route-text-in {

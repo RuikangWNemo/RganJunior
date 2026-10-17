@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import type { ActionProgramOption } from '@/content/actionPrograms';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
+import ProgramSessions from './ProgramSessions';
 import ProgramActions from './ProgramActions';
 import ProgramFaq from './ProgramFaq';
 import ProgramFaqSchema from './ProgramFaqSchema';
@@ -62,6 +63,7 @@ export default function ProgramDetailLayout({ program, children }: ProgramDetail
 
       <main className="programs-editorial-shell program-detail-main">
         {children}
+        <ProgramSessions key={program.id} programId={program.id} />
         <ProgramFaq program={program} />
 
         <section aria-labelledby="program-contact-title" className="program-detail-cta">

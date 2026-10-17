@@ -20,7 +20,7 @@ export default function SeedCommunity() {
   return (
     <SeedCommunityStage id="seed-community" lang={lang}>
           <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+            initial={prefersReducedMotion ? false : { opacity: 1, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.65, ease: 'easeOut' }}
@@ -55,7 +55,7 @@ export default function SeedCommunity() {
                 {communityRoles.map((role, index) => (
                   <motion.li
                     key={role.en}
-                    initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                    initial={prefersReducedMotion ? false : { opacity: 1, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{

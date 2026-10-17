@@ -1,3 +1,11 @@
+## 2026-10-17 Windows 白屏反馈修复
+- 完成加载／失败恢复、语言切换透明层移除、可见正文动画和滚动复位修复；33 项回归测试、本机构建、延迟／失败模块下载浏览器验证通过。
+- 本地 Chromium 验证不等于 Windows 实机验收；未部署。详见 docs/white-screen-fix-2026-10-17/verification.md。
+
+## 2026-10-17 Community 营期管理
+- 用户确认管理员维护方式后完成分类、营期、照片、发布与公开展示；本机 RLS 和 44 项测试通过，构建通过。
+- 未应用远程迁移或部署本次营期功能，详见 docs/website-feedback-2026-10-17/verification.md 与 operations.md。
+
 # Progress
 
 ## 2026-10-15 Unified production release

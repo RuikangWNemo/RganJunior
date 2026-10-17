@@ -134,6 +134,7 @@ export default function SmoothScrollDamping() {
     const animate = () => {
       const maxScroll = getMaxScroll();
       targetScroll = clamp(targetScroll, 0, maxScroll);
+      currentScroll = clamp(currentScroll, 0, maxScroll);
       const distance = targetScroll - currentScroll;
 
       if (Math.abs(distance) <= STOP_DISTANCE) {
@@ -164,7 +165,9 @@ export default function SmoothScrollDamping() {
     };
 
     const syncToNativeScroll = () => {
-      if (!frameId) {
+      if (frameId && Math.abs(window.scrollY - currentScroll) > 2) {
+        cancelAnimation();
+      } else if (!frameId) {
         currentScroll = window.scrollY;
         targetScroll = currentScroll;
       }
@@ -222,6 +225,9 @@ export default function SmoothScrollDamping() {
     window.addEventListener('scroll', syncToNativeScroll, { passive: true });
     window.addEventListener('resize', forceSync, { passive: true });
     window.addEventListener(SCROLL_SYNC_EVENT, forceSync);
+    window.addEventListener('pageshow', forceSync);
+    window.addEventListener('pointerdown', forceSync, { passive: true });
+    window.addEventListener('keydown', forceSync);
     desktopMedia?.addEventListener('change', syncEnabled);
     reducedMotionMedia?.addEventListener('change', syncEnabled);
 
@@ -230,6 +236,9 @@ export default function SmoothScrollDamping() {
       window.removeEventListener('scroll', syncToNativeScroll);
       window.removeEventListener('resize', forceSync);
       window.removeEventListener(SCROLL_SYNC_EVENT, forceSync);
+      window.removeEventListener('pageshow', forceSync);
+      window.removeEventListener('pointerdown', forceSync);
+      window.removeEventListener('keydown', forceSync);
       desktopMedia?.removeEventListener('change', syncEnabled);
       reducedMotionMedia?.removeEventListener('change', syncEnabled);
       cancelAnimation();

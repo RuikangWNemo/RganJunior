@@ -31,6 +31,7 @@ import CommunityAdminIdentities from './CommunityAdminIdentities';
 import CommunityAdminReports from './CommunityAdminReports';
 import CommunityAdminFieldNotes from './CommunityAdminFieldNotes';
 import CommunityAdminAnalytics from './CommunityAdminAnalytics';
+import CommunityAdminPrograms from './CommunityAdminPrograms';
 import CommunityAdminAccess from './CommunityAdminAccess';
 
 export default function CommunityRoutes() {
@@ -67,6 +68,7 @@ export default function CommunityRoutes() {
                 <Route element={<CommunityRequireAnyPermission permissions={['field_notes.review', 'field_notes.approve', 'field_notes.publish']} />}>
                   <Route path="/community/admin/field-notes" element={<div className="community-page-frame"><CommunityAdminFieldNotes /></div>} />
                 </Route>
+                <Route element={<CommunityRequirePermission permission="programs.manage" />}><Route path="/community/admin/programs" element={<div className="community-page-frame"><CommunityAdminPrograms /></div>} /></Route>
                 <Route element={<CommunityRequirePermission permission="analytics.read" />}>
                   <Route path="/community/admin/analytics" element={<div className="community-page-frame"><CommunityAdminAnalytics /></div>} />
                 </Route>

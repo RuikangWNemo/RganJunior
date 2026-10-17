@@ -26,6 +26,7 @@ export default function CommunityShell() {
   const { permissions } = useAuth();
   const { t, copy } = useCommunityUi();
   const adminLinks = [
+    permissions.includes('programs.manage') ? { to: '/community/admin/programs', label: t('营期管理', 'Manage sessions'), icon: BookOpenText } : null,
     permissions.some((permission) => ['users.read', 'users.manage', 'memberships.manage', 'roles.read', 'role_assignments.manage'].includes(permission)) ? { to: '/community/admin/access', label: copy('accessControl'), icon: KeyRound } : null,
     permissions.some((permission) => ['field_notes.review', 'field_notes.approve', 'field_notes.publish'].includes(permission)) ? { to: '/community/admin/field-notes', label: copy('editorialDesk'), icon: FileCheck2 } : null,
     permissions.includes('memberships.review') ? { to: '/community/admin/applications', label: copy('applications'), icon: ClipboardCheck } : null,

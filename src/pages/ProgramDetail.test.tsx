@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import ProgramDetail from './ProgramDetail';
 
+vi.mock('@/components/programs/ProgramSessions', () => ({ default: () => null }));
+
 function renderProgramDetail(path: string) {
   return render(
     <MemoryRouter initialEntries={[path]}>

@@ -1,8 +1,8 @@
 # Task Plan
 
 ## 2026-10-17 Website feedback (active)
-- [ ] 01 Reproduce Chinese home → programs → browser back blank screen, repair and verify.
-- [ ] 02–03 Inspect current program records; prepare next/past session and product-category design using real content only.
+- [x] 01 Repair empty lazy-loading fallback, missing page error recovery, app-wide language opacity, observer-dependent hidden content, and stale scroll inertia. 33 tests + local build + delayed/failed chunk browser checks passed; Windows hardware validation and deployment remain pending.
+- [x] 02–03 Implement approved Community session/category management, published program cards, fixed detail URLs and the first real co-creation camp seed; local UI/SQL/build checks passed. Remote migration and activation pending.
 - [ ] 04 Trace inquiry storage/notifications and document staff access, distinguish configured from verified.
 - [ ] 05 Show copyable contact email; await confirmed WeChat ID/QR.
 - [ ] 06 Select authentic camp photos and document maintenance path/owner decision.

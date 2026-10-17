@@ -6,6 +6,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { getLegacyProgramsRedirect } from '@/lib/programRoutes';
+import RouteErrorBoundary, { RouteFeedback } from '@/components/RouteFeedback';
+import RouteViewport from '@/components/RouteViewport';
 import Layout from '@/components/Layout';
 import LegacyCommunityStoriesRedirect from '@/components/LegacyCommunityStoriesRedirect';
 import Index from './pages/Index';
@@ -16,6 +18,7 @@ const GuardianDirectory = lazy(() => import('./pages/GuardianDirectory'));
 const TieniuStory = lazy(() => import('./pages/TieniuStory'));
 const Actions = lazy(() => import('./pages/Actions'));
 const ActionInquiry = lazy(() => import('./pages/ActionInquiry'));
+const ProgramSession = lazy(() => import('./pages/ProgramSession'));
 const ProgramDetail = lazy(() => import('./pages/ProgramDetail'));
 const FounderStory = lazy(() => import('./pages/FounderStory'));
 const JoinUs = lazy(() => import('./pages/JoinUs'));
@@ -29,16 +32,6 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const CommunityRoutes = lazy(() => import('./pages/community/CommunityRoutes'));
 
 const queryClient = new QueryClient();
-
-function RouteLoading({ community = false }: { community?: boolean }) {
-  return (
-    <div
-      className={community ? 'community-route-shell min-h-svh' : 'min-h-[70svh] bg-background'}
-      role="status"
-      aria-label="Loading page"
-    />
-  );
-}
 
 function LegacyProgramsRedirect({ inquiry = false }: { inquiry?: boolean }) {
   const location = useLocation();
@@ -69,6 +62,7 @@ function PublicRoutes({ location }: { location: ReturnType<typeof useLocation> }
       <Route path="/field-research" element={<Navigate to="/programs" replace />} />
       <Route path="/programs" element={<Actions />} />
       <Route path="/programs/inquiry" element={<ActionInquiry />} />
+      <Route path="/programs/sessions/:slug" element={<ProgramSession />} />
       <Route path="/programs/:programId" element={<ProgramDetail />} />
       <Route path="/actions/inquiry" element={<LegacyProgramsRedirect inquiry />} />
       <Route path="/actions" element={<LegacyProgramsRedirect />} />
@@ -94,18 +88,24 @@ function AppRoutes() {
 
   if (isCommunityRoute) {
     return (
-      <Suspense fallback={<RouteLoading community />}>
-        <CommunityRoutes />
-      </Suspense>
+      <RouteErrorBoundary resetKey={location.pathname}>
+        <Suspense fallback={<RouteFeedback />}>
+          <RouteViewport><CommunityRoutes /></RouteViewport>
+        </Suspense>
+      </RouteErrorBoundary>
     );
   }
 
   return (
-    <Layout>
-      <Suspense fallback={<RouteLoading />}>
-        <PublicRoutes location={location} />
-      </Suspense>
-    </Layout>
+    <RouteErrorBoundary resetKey={location.pathname}>
+      <Layout>
+        <RouteErrorBoundary resetKey={location.pathname}>
+          <Suspense fallback={<RouteFeedback />}>
+            <RouteViewport><PublicRoutes location={location} /></RouteViewport>
+          </Suspense>
+        </RouteErrorBoundary>
+      </Layout>
+    </RouteErrorBoundary>
   );
 }
 

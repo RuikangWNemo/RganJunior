@@ -1,3 +1,4 @@
+import ProgramSessions from './ProgramSessions';
 import OptimizedImage from '@/components/OptimizedImage';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -76,6 +77,7 @@ export default function ProgramOverviewEntry({
           />
         </figure>
       </div>
+      <div className="programs-editorial-shell"><ProgramSessions programId={program.id} /></div>
     </section>
   );
 }
