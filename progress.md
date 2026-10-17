@@ -784,3 +784,5 @@ Published application `bee96c4` from verified local prebuilt artifacts. GitHub `
 # 2026-10-17 Website feedback
 
 Started source inspection for 11 requested changes. Read brainstorming/planning skills; preserved prior guardian edits. User is supplying missing source material. No production writes or deployments.
+
+2026-10-17：按用户要求新增三张 WebP 精彩瞬间照片，保留航拍首图，共 10 张；整理现有网站反馈修改并提交 93fe448。完成本机生产预构建，GitHub 仅检查代码。暂存与正式站各 26 项资源哈希一致，部署 dpl_1jzaJt4xNuuHoX7g9bDryjGpnniF 已提升至正式域名。发布与回退证据见 docs/home-highlights-2026-10-17/release.json。未执行数据库迁移、ECS 或 OSS 操作；待确认的微信和项目排期内容仍待后续补充。

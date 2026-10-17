@@ -1,0 +1,597 @@
+{
+  "date": "2026-10-17",
+  "timezone": "Asia/Shanghai",
+  "applicationCommit": "93fe4485760b60dcc3a61302cafd08d4bff593fb",
+  "repository": "https://github.com/RuikangWNemo/RganJunior",
+  "projectId": "prj_nGgGhvcbTdwv64yYh7LKn7tfNH0p",
+  "deployment": {
+    "id": "dpl_1jzaJt4xNuuHoX7g9bDryjGpnniF",
+    "url": "https://rgan-junior-roots-main-i0ratkr7q-rganjuniors-projects.vercel.app",
+    "target": "production",
+    "status": "READY"
+  },
+  "productionUrl": "https://www.rganjunior.org/#home-field-scene",
+  "previousDeployment": "dpl_Ggb2LbovkezdNfWrTcqjVzzJfXzP",
+  "build": {
+    "location": "local operator machine",
+    "node": "24.19.0",
+    "vercelCli": "54.12.2",
+    "prebuilt": true,
+    "functions": 12,
+    "githubBuild": false,
+    "ecsOperations": false,
+    "databaseChanges": false
+  },
+  "scope": [
+    "Taller homepage photographs and localized Recent Highlights heading; remove camp description below photos.",
+    "Retain arrival-road aerial photograph first and all seven previously selected photographs.",
+    "Add misty mountains, tea basket and night walk photographs as 640px/1280px WebP variants, yielding ten slides.",
+    "Consolidate existing website feedback fixes for route navigation, contact display, participant labels and typography, guardian roster and publication evidence."
+  ],
+  "images": {
+    "format": "WebP",
+    "quality": 80,
+    "metadata": "removed",
+    "originalTotalBytes": 503318,
+    "default1280TotalBytes": 191378,
+    "mobile640TotalBytes": 69440
+  },
+  "validation": {
+    "localLint": {
+      "errors": 0,
+      "warnings": 9
+    },
+    "localTypeChecks": "backend, API and app passed",
+    "localTests": "376/377 initially passed; remaining About test used an obsolete label, corrected and all 9 About tests passed on rerun.",
+    "githubChecks": {
+      "status": "success",
+      "url": "https://github.com/RuikangWNemo/RganJunior/actions/runs/39003405596"
+    },
+    "browser": [
+      "Local actual CSS widths 390 and 1440: no horizontal overflow; new images loaded.",
+      "Local home → programs → back returned to visible homepage.",
+      "Production 1280px: aerial first slide, ten slide controls, all three new WebP images loaded, Chinese and English heading present."
+    ],
+    "stagedStaticResources": 26,
+    "productionStaticResources": 26,
+    "runtimeObservation": "One url.parse deprecation warning logged for analytics; associated response was 202, not a failed request. This is not a full authentication, messaging, or business-write audit."
+  },
+  "sourceManifest": [
+    {
+      "path": "findings.md",
+      "sha256": "a4e6e4eda3b45e5e079fa8822d059d2a9264ad8e51f8729514faa6ecd306f652"
+    },
+    {
+      "path": "progress.md",
+      "sha256": "1c84df4f3eccbd706f787de209dfe55b9db6c5497b59269850e35dd5fd8561c7"
+    },
+    {
+      "path": "src/components/Layout.test.tsx",
+      "sha256": "d87c444dc645a96207577a60c3d8636c20660ab29cd9cbd109898cfc772d3e12"
+    },
+    {
+      "path": "src/components/Layout.tsx",
+      "sha256": "7e660bea3d10e2a6924a5c16e0afbcf9fc22b6762d8f259c254f43bf8da6222c"
+    },
+    {
+      "path": "src/components/home/HomeFieldScene.tsx",
+      "sha256": "1bee669fa30f45825dbce469fdc6fa0534ddba763c0139ecbad91a30f6eb1c42"
+    },
+    {
+      "path": "src/components/participants/ParticipantRoster.tsx",
+      "sha256": "07436b19aa40b451c67b89a443d169302902419f222bb7f2afb673136516d2e8"
+    },
+    {
+      "path": "src/components/participants/participants.css",
+      "sha256": "017d62e87dfa3c3454a7fdea98fffc58c86a72194f02be306af9ccb02020fbf8"
+    },
+    {
+      "path": "src/components/programs/ProgramDetailLayout.tsx",
+      "sha256": "8744e30ce88e2f919bbac29f88923dd5dbbf9039b2f25706da66a47a82ef8849"
+    },
+    {
+      "path": "src/content/guardians.ts",
+      "sha256": "b24f04f524d4a3b2ec1cbe4fb8de3d6dfbecdcbf72e98079f066a46dd8181ad2"
+    },
+    {
+      "path": "src/content/homepage.ts",
+      "sha256": "0aa3cdbe068e3922c6acf4422216b5e68ee29625c859c10f81549287a6433671"
+    },
+    {
+      "path": "src/content/impact.ts",
+      "sha256": "cd0433636c949d14cd85911bb64246746a9a3e6c3028336ffc10715167470c77"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "1de88d3e9e0aebaea21f434518885fedf9bf8bf179434d49c8c24cf449d5f285"
+    },
+    {
+      "path": "src/lib/brand.ts",
+      "sha256": "49b18d90f6823d24b148d75fdce641af9b10edfa454fa7c23d41c7bc21fa6564"
+    },
+    {
+      "path": "src/pages/About.test.tsx",
+      "sha256": "fc95474a4ea229997818e42a6bbe71f9ab31125b1208ed618177e236ae575e3c"
+    },
+    {
+      "path": "src/pages/About.tsx",
+      "sha256": "bab000e3386cb234fb6ca312910d4c947e9d5318a9bb73a762eb926e30250dd5"
+    },
+    {
+      "path": "src/pages/ActionInquiry.tsx",
+      "sha256": "e6680a610c6360cf5a865ab2c691e0d66b9452f5086b65a1ebc83cca4d70c302"
+    },
+    {
+      "path": "src/pages/FieldNoteArticle.tsx",
+      "sha256": "f133060a967e99ee9be99007904cd298aef90a3eec5e896ece2c2dcfc5819b15"
+    },
+    {
+      "path": "src/pages/GuardianDirectory.test.tsx",
+      "sha256": "34751b74d77910dbdede197c332fc67f2c745e8d83c7a7b3a206b33a6fee19bb"
+    },
+    {
+      "path": "src/pages/ImpactAwards.tsx",
+      "sha256": "982856077a49771fbea2efecbf557b6c2a855919a7f7437cf3904566c429d884"
+    },
+    {
+      "path": "src/pages/Index.test.tsx",
+      "sha256": "6c8e1c8c407053bf4b85146ddeed405e06d4b00c3926a5f64805172cc4664ed7"
+    },
+    {
+      "path": "src/pages/ParticipantDirectory.tsx",
+      "sha256": "7c5af553c2c76ee49d2341d249c8320d3312b4eda095f15f9ee75b7254ce8069"
+    },
+    {
+      "path": "task_plan.md",
+      "sha256": "23f5b499dee5b157d83939a01513b9b92ad59e2952e3cc3b241f9bc29f325c0b"
+    },
+    {
+      "path": "public/archive/elements/graphics/publications/ctb-chinese-record-20261017.png",
+      "sha256": "bf2d06afd205611a733aa265a29f6abf2d618a87835e29b6cf3974988c6c23be"
+    },
+    {
+      "path": "public/archive/elements/graphics/publications/ysa-english-record-20261017.png",
+      "sha256": "e9807ad8738eab1271276866888ad80df91152efdfff0153618fe7f3f61544e2"
+    },
+    {
+      "path": "public/archive/elements/graphics/publications/ysa-volume-3-directory-20261017.png",
+      "sha256": "947dfc5b77b3ca7b3af784b1ca12ad87851099975355e2896c1c815f07762c19"
+    },
+    {
+      "path": "public/images/about/guardians/huang-zhengchun-20261017.jpg",
+      "sha256": "333841cf1079c3c5ec1a34e151498b6c62502cd4e237477da06db42f2df87d13"
+    },
+    {
+      "path": "public/images/home/life-camp-misty-mountains-20261017-1280.webp",
+      "sha256": "53c7e51bd3dd6199e14b4dda9de3ff2c34043c4cd46f926f6b5b4ebe8d34b54f"
+    },
+    {
+      "path": "public/images/home/life-camp-misty-mountains-20261017-640.webp",
+      "sha256": "c35ecbe07062ee7925cc5af502686304b912415fd4980b2575480fd17732153b"
+    },
+    {
+      "path": "public/images/home/life-camp-night-walk-20261017-1280.webp",
+      "sha256": "f94470fe216404eaed323cdd15441a0aaa764e099931f1d39b7b5d6f5bdc4835"
+    },
+    {
+      "path": "public/images/home/life-camp-night-walk-20261017-640.webp",
+      "sha256": "0595ee861d618bde7199d3cf276ebc7a13eccfd6a883447f2fda27a21118319f"
+    },
+    {
+      "path": "public/images/home/life-camp-tea-basket-20261017-1280.webp",
+      "sha256": "0665928d6b3849edaac0bf8759d2d6b01a432c8926e74499aad79b72d853c517"
+    },
+    {
+      "path": "public/images/home/life-camp-tea-basket-20261017-640.webp",
+      "sha256": "249f2db4d575106f112536e09c0d5fdc26ddf7deb9ca96ea038e37b351c71f94"
+    },
+    {
+      "path": "src/components/ContactChannels.tsx",
+      "sha256": "60a5ee410a294d49203e22e9c4baac5b4671711b9842f48b46b963eeabf07847"
+    }
+  ],
+  "artifactManifest": [
+    {
+      "path": "index.html",
+      "bytes": 2969,
+      "sha256": "6896e03e71c14f42213145b0838addb09b46699a339924ff02746e006560aa6f"
+    },
+    {
+      "path": "assets/About-DPI653Ru.js",
+      "bytes": 39395,
+      "sha256": "046edcf0f9297102ff9da2ea586c394f0734c3f46fe90323d7ea7b7c4e66e817"
+    },
+    {
+      "path": "assets/ActionInquiry-h1anyVdH.js",
+      "bytes": 10222,
+      "sha256": "0d34afb6fdbe95b187ffb0b450e439ff4a884c4f827848a8ed35cfe3e4d70610"
+    },
+    {
+      "path": "assets/ContactChannels-GuOSWkpQ.js",
+      "bytes": 1416,
+      "sha256": "5f857a1846842a34506a16f7b24f79d76ed9e34de789c018eafa2dfc61017656"
+    },
+    {
+      "path": "assets/FieldNoteArticle-Dd0uSFCM.js",
+      "bytes": 7164,
+      "sha256": "1ef9f8aee1d6967725e08e8d6ef56ffdbe2c40fa76e053ae87929232d14def4e"
+    },
+    {
+      "path": "assets/GuardianDirectory-C8AYc35y.js",
+      "bytes": 4700,
+      "sha256": "b03df23c662a85f7d475082c08641427c2bd7ee8ac3664d58410f6869036bda0"
+    },
+    {
+      "path": "assets/ImpactAwards-BjHyC_Zg.js",
+      "bytes": 3934,
+      "sha256": "d461ffc4e9358bc620f86ecbc3ba362851348b579f96ab66e2bbd5275d88233a"
+    },
+    {
+      "path": "assets/ParticipantDirectory-BrGLpDAO.js",
+      "bytes": 2883,
+      "sha256": "cbd1914b69fc5afa83aab5365b20c427a6952af8d5193c55a4d90b9bcad3925c"
+    },
+    {
+      "path": "assets/ParticipantRoster-BF_mj4u5.js",
+      "bytes": 3162,
+      "sha256": "fc594c0458708f3ee8940e51a7374a67311b18b4b8e6fa8f1ff461c8bde0a4e0"
+    },
+    {
+      "path": "assets/ParticipantRoster-CEhxAAub.css",
+      "bytes": 4232,
+      "sha256": "528ac6cfa1c5836c18b60830ccd456cbe0983845e6322f0419a927e3e20992bc"
+    },
+    {
+      "path": "assets/ProgramDetail-Dd84iGHe.js",
+      "bytes": 36366,
+      "sha256": "7c810ce991437d22f2faaa89f8daff054aea9ee4d605fbf8446050083251223e"
+    },
+    {
+      "path": "assets/ProgramDetail-Du0D-iEr.css",
+      "bytes": 1554,
+      "sha256": "ed3db86b35bc448a21524c12ed83dff934a9e77997d5258bcbbab91fe86bdb18"
+    },
+    {
+      "path": "assets/index-C-t22Bq5.js",
+      "bytes": 143,
+      "sha256": "b930a72537b0e2a14c689331313d052440834e4326ccb6b17f45313612b2e60a"
+    },
+    {
+      "path": "assets/index-DCaSC9r3.js",
+      "bytes": 734835,
+      "sha256": "1954a303a67cbd684b96873092c13168998388469c8d23c65675f0e4946e0817"
+    },
+    {
+      "path": "assets/index-Q0s2Mutj.js",
+      "bytes": 227663,
+      "sha256": "c377aaa3ea1d38812ca6307e81f384266446191e3f7054c3e63a9254b5b1c751"
+    },
+    {
+      "path": "assets/index-v5BXfEWM.css",
+      "bytes": 426358,
+      "sha256": "9cdf7aab598a4f18cf9487537c507963584c43bbb7041fe748126d39a852c0b2"
+    },
+    {
+      "path": "archive/elements/graphics/publications/ctb-chinese-record-20261017.png",
+      "bytes": 333065,
+      "sha256": "bf2d06afd205611a733aa265a29f6abf2d618a87835e29b6cf3974988c6c23be"
+    },
+    {
+      "path": "archive/elements/graphics/publications/ysa-english-record-20261017.png",
+      "bytes": 354881,
+      "sha256": "e9807ad8738eab1271276866888ad80df91152efdfff0153618fe7f3f61544e2"
+    },
+    {
+      "path": "archive/elements/graphics/publications/ysa-volume-3-directory-20261017.png",
+      "bytes": 187052,
+      "sha256": "947dfc5b77b3ca7b3af784b1ca12ad87851099975355e2896c1c815f07762c19"
+    },
+    {
+      "path": "images/about/guardians/huang-zhengchun-20261017.jpg",
+      "bytes": 82229,
+      "sha256": "333841cf1079c3c5ec1a34e151498b6c62502cd4e237477da06db42f2df87d13"
+    },
+    {
+      "path": "images/home/life-camp-misty-mountains-20261017-1280.webp",
+      "bytes": 104944,
+      "sha256": "53c7e51bd3dd6199e14b4dda9de3ff2c34043c4cd46f926f6b5b4ebe8d34b54f"
+    },
+    {
+      "path": "images/home/life-camp-misty-mountains-20261017-640.webp",
+      "bytes": 35338,
+      "sha256": "c35ecbe07062ee7925cc5af502686304b912415fd4980b2575480fd17732153b"
+    },
+    {
+      "path": "images/home/life-camp-night-walk-20261017-1280.webp",
+      "bytes": 15402,
+      "sha256": "f94470fe216404eaed323cdd15441a0aaa764e099931f1d39b7b5d6f5bdc4835"
+    },
+    {
+      "path": "images/home/life-camp-night-walk-20261017-640.webp",
+      "bytes": 4554,
+      "sha256": "0595ee861d618bde7199d3cf276ebc7a13eccfd6a883447f2fda27a21118319f"
+    },
+    {
+      "path": "images/home/life-camp-tea-basket-20261017-1280.webp",
+      "bytes": 71032,
+      "sha256": "0665928d6b3849edaac0bf8759d2d6b01a432c8926e74499aad79b72d853c517"
+    },
+    {
+      "path": "images/home/life-camp-tea-basket-20261017-640.webp",
+      "bytes": 29548,
+      "sha256": "249f2db4d575106f112536e09c0d5fdc26ddf7deb9ca96ea038e37b351c71f94"
+    }
+  ],
+  "stagedVerification": {
+    "base": "https://rgan-junior-roots-main-i0ratkr7q-rganjuniors-projects.vercel.app",
+    "authenticated": true,
+    "results": [
+      {
+        "path": "index.html",
+        "sha256": "6896e03e71c14f42213145b0838addb09b46699a339924ff02746e006560aa6f",
+        "matches": true
+      },
+      {
+        "path": "assets/About-DPI653Ru.js",
+        "sha256": "046edcf0f9297102ff9da2ea586c394f0734c3f46fe90323d7ea7b7c4e66e817",
+        "matches": true
+      },
+      {
+        "path": "assets/ActionInquiry-h1anyVdH.js",
+        "sha256": "0d34afb6fdbe95b187ffb0b450e439ff4a884c4f827848a8ed35cfe3e4d70610",
+        "matches": true
+      },
+      {
+        "path": "assets/ContactChannels-GuOSWkpQ.js",
+        "sha256": "5f857a1846842a34506a16f7b24f79d76ed9e34de789c018eafa2dfc61017656",
+        "matches": true
+      },
+      {
+        "path": "assets/FieldNoteArticle-Dd0uSFCM.js",
+        "sha256": "1ef9f8aee1d6967725e08e8d6ef56ffdbe2c40fa76e053ae87929232d14def4e",
+        "matches": true
+      },
+      {
+        "path": "assets/GuardianDirectory-C8AYc35y.js",
+        "sha256": "b03df23c662a85f7d475082c08641427c2bd7ee8ac3664d58410f6869036bda0",
+        "matches": true
+      },
+      {
+        "path": "assets/ImpactAwards-BjHyC_Zg.js",
+        "sha256": "d461ffc4e9358bc620f86ecbc3ba362851348b579f96ab66e2bbd5275d88233a",
+        "matches": true
+      },
+      {
+        "path": "assets/ParticipantDirectory-BrGLpDAO.js",
+        "sha256": "cbd1914b69fc5afa83aab5365b20c427a6952af8d5193c55a4d90b9bcad3925c",
+        "matches": true
+      },
+      {
+        "path": "assets/ParticipantRoster-BF_mj4u5.js",
+        "sha256": "fc594c0458708f3ee8940e51a7374a67311b18b4b8e6fa8f1ff461c8bde0a4e0",
+        "matches": true
+      },
+      {
+        "path": "assets/ParticipantRoster-CEhxAAub.css",
+        "sha256": "528ac6cfa1c5836c18b60830ccd456cbe0983845e6322f0419a927e3e20992bc",
+        "matches": true
+      },
+      {
+        "path": "assets/ProgramDetail-Dd84iGHe.js",
+        "sha256": "7c810ce991437d22f2faaa89f8daff054aea9ee4d605fbf8446050083251223e",
+        "matches": true
+      },
+      {
+        "path": "assets/ProgramDetail-Du0D-iEr.css",
+        "sha256": "ed3db86b35bc448a21524c12ed83dff934a9e77997d5258bcbbab91fe86bdb18",
+        "matches": true
+      },
+      {
+        "path": "assets/index-C-t22Bq5.js",
+        "sha256": "b930a72537b0e2a14c689331313d052440834e4326ccb6b17f45313612b2e60a",
+        "matches": true
+      },
+      {
+        "path": "assets/index-DCaSC9r3.js",
+        "sha256": "1954a303a67cbd684b96873092c13168998388469c8d23c65675f0e4946e0817",
+        "matches": true
+      },
+      {
+        "path": "assets/index-Q0s2Mutj.js",
+        "sha256": "c377aaa3ea1d38812ca6307e81f384266446191e3f7054c3e63a9254b5b1c751",
+        "matches": true
+      },
+      {
+        "path": "assets/index-v5BXfEWM.css",
+        "sha256": "9cdf7aab598a4f18cf9487537c507963584c43bbb7041fe748126d39a852c0b2",
+        "matches": true
+      },
+      {
+        "path": "archive/elements/graphics/publications/ctb-chinese-record-20261017.png",
+        "sha256": "bf2d06afd205611a733aa265a29f6abf2d618a87835e29b6cf3974988c6c23be",
+        "matches": true
+      },
+      {
+        "path": "archive/elements/graphics/publications/ysa-english-record-20261017.png",
+        "sha256": "e9807ad8738eab1271276866888ad80df91152efdfff0153618fe7f3f61544e2",
+        "matches": true
+      },
+      {
+        "path": "archive/elements/graphics/publications/ysa-volume-3-directory-20261017.png",
+        "sha256": "947dfc5b77b3ca7b3af784b1ca12ad87851099975355e2896c1c815f07762c19",
+        "matches": true
+      },
+      {
+        "path": "images/about/guardians/huang-zhengchun-20261017.jpg",
+        "sha256": "333841cf1079c3c5ec1a34e151498b6c62502cd4e237477da06db42f2df87d13",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-misty-mountains-20261017-1280.webp",
+        "sha256": "53c7e51bd3dd6199e14b4dda9de3ff2c34043c4cd46f926f6b5b4ebe8d34b54f",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-misty-mountains-20261017-640.webp",
+        "sha256": "c35ecbe07062ee7925cc5af502686304b912415fd4980b2575480fd17732153b",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-night-walk-20261017-1280.webp",
+        "sha256": "f94470fe216404eaed323cdd15441a0aaa764e099931f1d39b7b5d6f5bdc4835",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-night-walk-20261017-640.webp",
+        "sha256": "0595ee861d618bde7199d3cf276ebc7a13eccfd6a883447f2fda27a21118319f",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-tea-basket-20261017-1280.webp",
+        "sha256": "0665928d6b3849edaac0bf8759d2d6b01a432c8926e74499aad79b72d853c517",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-tea-basket-20261017-640.webp",
+        "sha256": "249f2db4d575106f112536e09c0d5fdc26ddf7deb9ca96ea038e37b351c71f94",
+        "matches": true
+      }
+    ]
+  },
+  "productionVerification": {
+    "base": "https://www.rganjunior.org",
+    "authenticated": false,
+    "results": [
+      {
+        "path": "index.html",
+        "sha256": "6896e03e71c14f42213145b0838addb09b46699a339924ff02746e006560aa6f",
+        "matches": true
+      },
+      {
+        "path": "assets/About-DPI653Ru.js",
+        "sha256": "046edcf0f9297102ff9da2ea586c394f0734c3f46fe90323d7ea7b7c4e66e817",
+        "matches": true
+      },
+      {
+        "path": "assets/ActionInquiry-h1anyVdH.js",
+        "sha256": "0d34afb6fdbe95b187ffb0b450e439ff4a884c4f827848a8ed35cfe3e4d70610",
+        "matches": true
+      },
+      {
+        "path": "assets/ContactChannels-GuOSWkpQ.js",
+        "sha256": "5f857a1846842a34506a16f7b24f79d76ed9e34de789c018eafa2dfc61017656",
+        "matches": true
+      },
+      {
+        "path": "assets/FieldNoteArticle-Dd0uSFCM.js",
+        "sha256": "1ef9f8aee1d6967725e08e8d6ef56ffdbe2c40fa76e053ae87929232d14def4e",
+        "matches": true
+      },
+      {
+        "path": "assets/GuardianDirectory-C8AYc35y.js",
+        "sha256": "b03df23c662a85f7d475082c08641427c2bd7ee8ac3664d58410f6869036bda0",
+        "matches": true
+      },
+      {
+        "path": "assets/ImpactAwards-BjHyC_Zg.js",
+        "sha256": "d461ffc4e9358bc620f86ecbc3ba362851348b579f96ab66e2bbd5275d88233a",
+        "matches": true
+      },
+      {
+        "path": "assets/ParticipantDirectory-BrGLpDAO.js",
+        "sha256": "cbd1914b69fc5afa83aab5365b20c427a6952af8d5193c55a4d90b9bcad3925c",
+        "matches": true
+      },
+      {
+        "path": "assets/ParticipantRoster-BF_mj4u5.js",
+        "sha256": "fc594c0458708f3ee8940e51a7374a67311b18b4b8e6fa8f1ff461c8bde0a4e0",
+        "matches": true
+      },
+      {
+        "path": "assets/ParticipantRoster-CEhxAAub.css",
+        "sha256": "528ac6cfa1c5836c18b60830ccd456cbe0983845e6322f0419a927e3e20992bc",
+        "matches": true
+      },
+      {
+        "path": "assets/ProgramDetail-Dd84iGHe.js",
+        "sha256": "7c810ce991437d22f2faaa89f8daff054aea9ee4d605fbf8446050083251223e",
+        "matches": true
+      },
+      {
+        "path": "assets/ProgramDetail-Du0D-iEr.css",
+        "sha256": "ed3db86b35bc448a21524c12ed83dff934a9e77997d5258bcbbab91fe86bdb18",
+        "matches": true
+      },
+      {
+        "path": "assets/index-C-t22Bq5.js",
+        "sha256": "b930a72537b0e2a14c689331313d052440834e4326ccb6b17f45313612b2e60a",
+        "matches": true
+      },
+      {
+        "path": "assets/index-DCaSC9r3.js",
+        "sha256": "1954a303a67cbd684b96873092c13168998388469c8d23c65675f0e4946e0817",
+        "matches": true
+      },
+      {
+        "path": "assets/index-Q0s2Mutj.js",
+        "sha256": "c377aaa3ea1d38812ca6307e81f384266446191e3f7054c3e63a9254b5b1c751",
+        "matches": true
+      },
+      {
+        "path": "assets/index-v5BXfEWM.css",
+        "sha256": "9cdf7aab598a4f18cf9487537c507963584c43bbb7041fe748126d39a852c0b2",
+        "matches": true
+      },
+      {
+        "path": "archive/elements/graphics/publications/ctb-chinese-record-20261017.png",
+        "sha256": "bf2d06afd205611a733aa265a29f6abf2d618a87835e29b6cf3974988c6c23be",
+        "matches": true
+      },
+      {
+        "path": "archive/elements/graphics/publications/ysa-english-record-20261017.png",
+        "sha256": "e9807ad8738eab1271276866888ad80df91152efdfff0153618fe7f3f61544e2",
+        "matches": true
+      },
+      {
+        "path": "archive/elements/graphics/publications/ysa-volume-3-directory-20261017.png",
+        "sha256": "947dfc5b77b3ca7b3af784b1ca12ad87851099975355e2896c1c815f07762c19",
+        "matches": true
+      },
+      {
+        "path": "images/about/guardians/huang-zhengchun-20261017.jpg",
+        "sha256": "333841cf1079c3c5ec1a34e151498b6c62502cd4e237477da06db42f2df87d13",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-misty-mountains-20261017-1280.webp",
+        "sha256": "53c7e51bd3dd6199e14b4dda9de3ff2c34043c4cd46f926f6b5b4ebe8d34b54f",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-misty-mountains-20261017-640.webp",
+        "sha256": "c35ecbe07062ee7925cc5af502686304b912415fd4980b2575480fd17732153b",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-night-walk-20261017-1280.webp",
+        "sha256": "f94470fe216404eaed323cdd15441a0aaa764e099931f1d39b7b5d6f5bdc4835",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-night-walk-20261017-640.webp",
+        "sha256": "0595ee861d618bde7199d3cf276ebc7a13eccfd6a883447f2fda27a21118319f",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-tea-basket-20261017-1280.webp",
+        "sha256": "0665928d6b3849edaac0bf8759d2d6b01a432c8926e74499aad79b72d853c517",
+        "matches": true
+      },
+      {
+        "path": "images/home/life-camp-tea-basket-20261017-640.webp",
+        "sha256": "249f2db4d575106f112536e09c0d5fdc26ddf7deb9ca96ea038e37b351c71f94",
+        "matches": true
+      }
+    ]
+  }
+}
