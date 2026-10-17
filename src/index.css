@@ -2183,6 +2183,7 @@
 }
 
 .community-story-editor {
+  font-family: var(--font-body);
   overflow: clip;
   border: 1px solid hsl(var(--community-forest) / 0.12);
   border-radius: 1.65rem 1.65rem 1.65rem 0.6rem;
@@ -2290,13 +2291,14 @@
   --bn-colors-hovered-background: hsl(var(--community-forest) / 0.06);
   --bn-colors-selected-background: hsl(var(--community-orange) / 0.12);
   color: hsl(var(--community-forest));
-  font-family: var(--community-body);
+  font-family: var(--font-body);
 }
 
 .community-blocknote .bn-editor {
   min-height: 34rem;
   padding: 1rem 3rem 4rem;
   background: transparent;
+  font-family: var(--font-body);
   font-size: 1.03rem;
   line-height: 1.82;
 }
@@ -2444,12 +2446,20 @@
   font-weight: 650;
 }
 
+/* Story body and excerpts use reading type; headings retain their display face. */
+.field-notes-page,
+.field-note-article,
+.field-note-prose,
+.field-note-rich-content {
+  font-family: var(--font-body);
+}
+
 .field-note-rich-content h1,
 .field-note-rich-content h2,
 .field-note-rich-content h3 {
   margin-top: 2.8rem;
   color: hsl(var(--foreground));
-  font-family: var(--font-serif);
+  font-family: var(--font-handwriting-serif);
   font-weight: 500;
   line-height: 1.25;
 }
@@ -2471,7 +2481,7 @@
   padding-left: 1.4rem;
   border-left: 2px solid hsl(var(--primary) / 0.45);
   color: hsl(var(--foreground) / 0.76);
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   font-size: 1.3rem;
   line-height: 1.7;
 }
@@ -2598,6 +2608,7 @@
 
 @layer base {
   :root {
+    --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
     --font-handwriting-sans: 'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Critical', 'Qiaoqiaohua Handwriting Full', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
     --font-handwriting-serif: 'TanukiMagic Web', 'Rgan Han Glyph Patch', 'Qiaoqiaohua Critical', 'Qiaoqiaohua Handwriting Full', 'Songti SC', 'STSong', 'Georgia', serif;
     --home-hero-orange: 20 82% 54%;
@@ -18478,7 +18489,7 @@ html[lang='en'] .programs-editorial-intro h1 {
     --founder-forest: 157 68% 20%;
     --founder-forest-deep: 158 72% 14%;
     --founder-orange: 20 82% 54%;
-    --founder-body-font: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    --founder-body-font: var(--font-body);
     overflow: hidden;
     padding-top: 5rem;
     background: hsl(var(--founder-paper));
