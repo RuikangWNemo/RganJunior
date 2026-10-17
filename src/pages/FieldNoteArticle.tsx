@@ -77,7 +77,7 @@ export default function FieldNoteArticle() {
     .slice(0, 2);
 
   return (
-    <div className="field-note-article pt-20">
+    <div className="field-note-article pt-20" data-article-slug={note.slug}>
       <article>
         <header className="pb-12 pt-14 sm:pb-16 sm:pt-20 md:pb-20 md:pt-24">
           <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

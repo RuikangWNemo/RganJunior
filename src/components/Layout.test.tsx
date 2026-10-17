@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter, Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Layout from './Layout';
@@ -36,14 +37,37 @@ describe('Layout route transitions', () => {
     expect(document.querySelector('[data-route-transition="animated"]')).not.toBeInTheDocument();
   });
 
-  it('preserves the existing animated shell outside Community', () => {
+  it('keeps the public page visible without a pathname exit animation', () => {
     render(
       <MemoryRouter initialEntries={['/about']}>
         <Layout><p>About</p></Layout>
       </MemoryRouter>,
     );
 
-    expect(document.querySelector('[data-route-transition="animated"]')).toBeInTheDocument();
-    expect(document.querySelector('[data-route-transition="stable"]')).not.toBeInTheDocument();
+    expect(document.querySelector('[data-route-transition="stable"]')).toBeVisible();
+    expect(document.querySelector('[data-route-transition="animated"]')).not.toBeInTheDocument();
+  });
+
+  it('returns home immediately when going back while the project route is still loading', () => {
+    const PendingProgram = lazy(() => new Promise<{ default: () => JSX.Element }>(() => {}));
+    function Navigation() {
+      const navigate = useNavigate();
+      return <button onClick={() => navigate(-1)}>浏览器后退</button>;
+    }
+    const { container } = render(<MemoryRouter>
+      <Navigation />
+      <Layout><Suspense fallback={<p role="status">正在加载项目</p>}><Routes>
+        <Route path="/" element={<><h1>阿柑少年首页</h1><Link to="/programs">了解项目</Link></>} />
+        <Route path="/programs" element={<PendingProgram />} />
+      </Routes></Suspense></Layout>
+    </MemoryRouter>);
+    const shell = container.querySelector('main');
+    fireEvent.click(screen.getByRole('link', { name: '了解项目' }));
+    expect(screen.getByRole('status')).toBeVisible();
+    fireEvent.click(screen.getByRole('button', { name: '浏览器后退' }));
+    expect(screen.getByRole('heading', { name: '阿柑少年首页' })).toBeVisible();
+    expect(container.querySelector('main')).toBe(shell);
+    expect(container.querySelectorAll('main')).toHaveLength(1);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 });

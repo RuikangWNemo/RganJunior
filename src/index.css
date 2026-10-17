@@ -16772,7 +16772,7 @@ html[lang='en'] .programs-editorial-intro h1 {
   }
 }
 
-/* Home field scene: one-screen photograph and story composition. */
+/* Home highlights: taller photographs beneath the section heading. */
 .home-editorial .home-field-scene {
   min-height: calc(100svh - 5rem);
   gap: clamp(0.8rem, 1.75vh, 1.1rem);
@@ -16790,7 +16790,7 @@ html[lang='en'] .programs-editorial-intro h1 {
 
 .home-editorial .home-scene-reel__slide figure {
   width: min(calc(100% - 3rem), 78rem);
-  height: clamp(19.6rem, 47.6svh, 28rem);
+  height: clamp(26rem, 64svh, 38rem);
   margin-inline: auto;
 }
 
@@ -16915,7 +16915,7 @@ html[lang='en'] .programs-editorial-intro h1 {
 
   .home-editorial .home-scene-reel__slide figure {
     width: calc(100% - 2rem);
-    height: clamp(18.2rem, 72.8vw, 23.8rem);
+    height: clamp(24rem, 96vw, 31rem);
   }
 
   .home-editorial .home-field-scene__headline {
@@ -19586,4 +19586,22 @@ html:lang(en) .join-editorial-role__hint {
 html:lang(en) .join-editorial-role__title {
   white-space: normal;
   text-wrap: balance;
+}
+
+/* Nate’s self-narrative: one reading weight, color for emphasis. Applies to
+   managed Chinese content and its English translation without rewriting either. */
+.field-note-article[data-article-slug="it-takes-a-village"] .field-note-prose {
+  font-weight: 400;
+}
+.field-note-article[data-article-slug="it-takes-a-village"] .field-note-prose :is(p, li, span, strong, b) {
+  font-weight: inherit;
+}
+.field-note-article[data-article-slug="it-takes-a-village"] .field-note-prose :is(strong, b) {
+  color: hsl(var(--primary));
+}
+.field-note-article[data-article-slug="it-takes-a-village"] .article-section-heading {
+  margin-top: 2.5rem;
+  font-size: 1.35em;
+  line-height: 1.6;
+  color: hsl(var(--primary));
 }

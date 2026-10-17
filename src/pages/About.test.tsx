@@ -99,9 +99,9 @@ describe('About editorial content system', () => {
 
     const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
     const reel = within(guardianGroup).getByRole('region', { name: '守护团成员照片' });
-    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(15);
-    expect(within(reel).getAllByRole('img')).toHaveLength(15);
-    expect(within(reel).getAllByRole('link')).toHaveLength(15);
+    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(16);
+    expect(within(reel).getAllByRole('img')).toHaveLength(16);
+    expect(within(reel).getAllByRole('link')).toHaveLength(16);
     expect(within(reel).getByText('赵璟')).toBeInTheDocument();
     expect(within(reel).getByText('知予')).toBeInTheDocument();
     expect(guardianGroup).not.toHaveTextContent(/麦昆塔教育/);
@@ -109,9 +109,9 @@ describe('About editorial content system', () => {
     expect(guardianGroup.querySelector('.about-v2-adult-roster')).toBeNull();
     expect(within(guardianGroup).getByRole('link', { name: /查看全部成员/ })).toHaveAttribute('href', '/about/guardians');
     expect(within(reel).getByRole('link', { name: '查看守护团成员 1 资料' })).toHaveAttribute('href', '/about/guardians/zhao-jing');
-    expect(within(reel).getByRole('link', { name: '查看守护团成员 14 资料' })).toHaveAttribute('href', '/about/guardians/zhuo-fei');
-    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 15' }));
-    expect(screen.getByRole('button', { name: '切换到守护团成员 15' })).toHaveAttribute('aria-pressed', 'true');
+    expect(within(reel).getByRole('link', { name: '查看守护团成员 15 资料' })).toHaveAttribute('href', '/about/guardians/zhuo-fei');
+    fireEvent.click(screen.getByRole('button', { name: '切换到守护团成员 16' }));
+    expect(screen.getByRole('button', { name: '切换到守护团成员 16' })).toHaveAttribute('aria-pressed', 'true');
 
   });
 
@@ -136,7 +136,7 @@ describe('About editorial content system', () => {
     expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Tianshi Zhang' })).toBeInTheDocument();
     expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Rosie Chen' })).toBeInTheDocument();
     expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
-    expect(within(screen.getByLabelText('Camp companion directory')).getAllByRole('article')).toHaveLength(campCompanions.length);
+    expect(within(screen.getByLabelText('Camp participant directory')).getAllByRole('article')).toHaveLength(campCompanions.length);
   });
 
   it('keeps the team focused on people and moves co-creation directions to programs', () => {

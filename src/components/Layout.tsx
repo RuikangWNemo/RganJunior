@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import BrandHead from './BrandHead';
 import Navbar from './Navbar';
@@ -8,32 +8,6 @@ import MascotCompanion from './MascotCompanion';
 import SmoothScrollDamping from './SmoothScrollDamping';
 import TargetCursor from './ui/TargetCursor';
 import WebsiteAnalyticsTracker from './WebsiteAnalyticsTracker';
-
-const routeShellVariants = {
-  initial: (isHome: boolean) => ({
-    opacity: 0,
-    y: isHome ? 8 : 14,
-    x: 0,
-  }),
-  animate: {
-    opacity: 1,
-    y: 0,
-    x: 0,
-    transition: {
-      duration: 0.44,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
-  },
-  exit: (isHome: boolean) => ({
-    opacity: 0,
-    y: isHome ? -4 : -8,
-    x: isHome ? 0 : -6,
-    transition: {
-      duration: 0.24,
-      ease: [0.4, 0, 1, 1] as const,
-    },
-  }),
-};
 
 function syncSmoothScrollDamping() {
   window.dispatchEvent(new Event('rgan:smooth-scroll-sync'));
@@ -75,27 +49,12 @@ export default function Layout({ children }: { children: ReactNode }) {
     return () => window.clearTimeout(timeoutId);
   }, [location.pathname, location.hash, reducedMotion]);
 
-  const routeContent = reducedMotion ? (
+  // Keep one visible shell across PUSH/POP and lazy-route resolution. An exiting
+  // pathname-keyed shell could hide the returning page during rapid history changes.
+  const routeContent = (
     <main className="route-stage flex-1" data-route-transition="stable">
       {children}
     </main>
-  ) : (
-    <div className="route-stage flex-1">
-      <AnimatePresence initial={false} mode="popLayout">
-        <motion.main
-          key={location.pathname}
-          custom={isHome}
-          variants={routeShellVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="route-page-shell flex-1"
-          data-route-transition="animated"
-        >
-          {children}
-        </motion.main>
-      </AnimatePresence>
-    </div>
   );
 
   return (

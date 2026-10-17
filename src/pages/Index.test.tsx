@@ -39,7 +39,7 @@ describe('homepage editorial refresh', () => {
       '回归自然、生活与真实世界，',
     );
     expect(heroSubtitle?.querySelectorAll('.home-hero-subtitle__line')[1]).toHaveTextContent('长出内在的力量');
-    expect(screen.getByRole('heading', { level: 2, name: '最近，我们一起生活了5天4夜' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: '精彩瞬间' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: '我们相信什么' })).toBeInTheDocument();
     expect(screen.queryByText('身体力行')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: '我们的项目' })).toBeInTheDocument();
@@ -86,28 +86,23 @@ describe('homepage editorial refresh', () => {
     expect(screen.getByRole('link', { name: '进入加入入口' })).toHaveAttribute('href', '/join');
   });
 
-  it('uses descriptive real-scene imagery and the supplied participation data', () => {
+  it('uses descriptive real-scene imagery without the former camp description', () => {
     const { container } = renderIndex();
 
     expect(screen.getByRole('img', { name: '车队沿着林间小路驶入南宝山' })).toBeInTheDocument();
     const firstScene = screen.getByRole('img', { name: '车队沿着林间小路驶入南宝山' });
     expect(firstScene).toHaveAttribute('loading', 'lazy');
     expect(firstScene).toHaveAttribute('srcset', expect.stringContaining('life-camp-01-arrival-road-640.webp 640w'));
-    expect(container.querySelectorAll('.home-scene-reel__image-placeholder')).toHaveLength(6);
-    const rightPreview = screen.getByAltText('青少年在森林里围坐交流');
+    expect(container.querySelectorAll('.home-scene-reel__image-placeholder')).toHaveLength(7);
+    const rightPreview = screen.getByAltText('云雾环绕山林与层叠的山峦');
     fireEvent.click(rightPreview);
     expect(rightPreview.closest('.home-scene-reel__slide')).toHaveAttribute('data-active', 'true');
-    fireEvent.click(screen.getByRole('button', { name: '查看第 3 张照片' }));
+    fireEvent.click(screen.getByRole('button', { name: '查看第 5 张照片' }));
     expect(screen.getByRole('img', { name: '青少年在山林球场上一起打篮球' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '查看第 9 张照片' })).toBeInTheDocument();
-    expect(screen.getByText('阿柑少年生活共创营')).toBeInTheDocument();
-    expect(screen.getByText('11')).toBeInTheDocument();
-    expect(screen.getByText('10')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '查看第 10 张照片' })).toBeInTheDocument();
+    expect(screen.queryByText('阿柑少年生活共创营')).not.toBeInTheDocument();
     expect(screen.getByText('5 天 4 夜')).toBeInTheDocument();
-    const fieldStats = container.querySelector('.home-field-scene__stats');
-    expect(fieldStats).toHaveTextContent('阿柑少年生活共创营|11个孩子10个家庭');
-    expect(fieldStats).not.toHaveTextContent('共同生活');
-    expect(fieldStats).not.toHaveTextContent('5天4夜');
+    expect(container.querySelector('.home-field-scene__story')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: '点击照片左侧查看上一张' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '点击照片右侧查看下一张' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '上一张照片' })).not.toBeInTheDocument();
@@ -123,7 +118,7 @@ describe('homepage editorial refresh', () => {
     expect(activeProgramImage).toHaveAttribute('srcset', expect.stringContaining('image-004-640.webp 640w'));
   });
 
-  it('keeps the English field headline and camp data localized', () => {
+  it('keeps the English highlights heading localized', () => {
     window.localStorage.setItem('rgan-lang', 'en');
     const { container } = renderIndex();
 
@@ -138,7 +133,7 @@ describe('homepage editorial refresh', () => {
     expect(heroSubtitle).toHaveAttribute('aria-label', approvedSubtitle);
 
     expect(
-      screen.getByRole('heading', { level: 2, name: 'Recently, we lived together for 5 days and 4 nights' }),
+      screen.getByRole('heading', { level: 2, name: 'Recent Highlights' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: 'What we believe' })).toBeInTheDocument();
     expect(screen.queryByText('Learning by living')).not.toBeInTheDocument();
@@ -150,8 +145,6 @@ describe('homepage editorial refresh', () => {
     });
     expect(founderHeading.querySelectorAll('.home-founder-story__title-line')).toHaveLength(2);
     expect(container.querySelector('.home-field-scene__headline')).toHaveClass('home-field-scene__headline--en');
-    expect(container.querySelector('.home-field-scene__stats')).toHaveTextContent(
-      "R-Gan Junior Life Co-creation Camp|11young people10families",
-    );
+    expect(container.querySelector('.home-field-scene__story')).not.toBeInTheDocument();
   });
 });

@@ -82,6 +82,7 @@ export default function ImpactAwards() {
         >
           <div className="about-v2-shell impact-archive-row">
             <div className="impact-archive-photos">
+              <a href={item.image} target="_blank" rel="noreferrer" aria-label={t('查看完整图片：', 'View full image: ') + pickLocalized(item.imageAlt, lang)}>
               <OptimizedImage
                 src={item.image}
                 alt={pickLocalized(item.imageAlt, lang)}
@@ -89,7 +90,9 @@ export default function ImpactAwards() {
                 height={853}
                 loading="lazy"
               />
+              </a>
               {item.secondaryImage && item.secondaryImageAlt && (
+                <a href={item.secondaryImage} target="_blank" rel="noreferrer" aria-label={t('查看完整图片：', 'View full image: ') + pickLocalized(item.secondaryImageAlt, lang)}>
                 <OptimizedImage
                   src={item.secondaryImage}
                   alt={pickLocalized(item.secondaryImageAlt, lang)}
@@ -97,6 +100,7 @@ export default function ImpactAwards() {
                   height={707}
                   loading="lazy"
                 />
+                </a>
               )}
             </div>
             <div className="impact-archive-copy">
@@ -118,6 +122,11 @@ export default function ImpactAwards() {
                   </a>
                 ) : pickLocalized(item.sourceLabel, lang)}
               </p>
+              {item.resources && <ul aria-label={t('相关资料', 'Related resources')}>
+                {item.resources.map(resource => <li key={resource.href}>
+                  <a className="underline underline-offset-4" href={resource.href} target="_blank" rel="noreferrer">{pickLocalized(resource.label, lang)}</a>
+                </li>)}
+              </ul>}
             </div>
           </div>
         </section>

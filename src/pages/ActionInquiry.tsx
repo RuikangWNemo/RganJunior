@@ -1,11 +1,10 @@
-import OptimizedImage from '@/components/OptimizedImage';
-import { ArrowLeft, Mail, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
+import ContactChannels from '@/components/ContactChannels';
+import { ArrowLeft, MessageCircle, ShieldCheck } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import ActionInquiryForm from '@/components/actions/ActionInquiryForm';
 import { getActionProgram } from '@/content/actionPrograms';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { pickLocalized } from '@/lib/brand';
-import { getPhoneHref, PUBLIC_CONTACT } from '@/lib/contact';
 
 export default function ActionInquiry() {
   const { lang, t } = useLanguage();
@@ -59,38 +58,7 @@ export default function ActionInquiry() {
               'If you want to confirm timing, safety, fees, or participation options first, email us directly.',
             )}
           </p>
-          <a
-            href={`mailto:${PUBLIC_CONTACT.email}`}
-            className="mt-5 inline-flex items-start gap-2 break-all text-sm text-primary-foreground underline decoration-primary-foreground/35 underline-offset-4 hover:decoration-primary-foreground"
-          >
-            <Mail className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-            {PUBLIC_CONTACT.email}
-          </a>
-          {PUBLIC_CONTACT.phone && (
-            <a
-              href={getPhoneHref(PUBLIC_CONTACT.phone)}
-              className="mt-3 inline-flex items-center gap-2 text-sm text-primary-foreground underline decoration-primary-foreground/35 underline-offset-4 hover:decoration-primary-foreground"
-            >
-              <Phone className="size-4 shrink-0" aria-hidden="true" />
-              {PUBLIC_CONTACT.phone}
-            </a>
-          )}
-          {PUBLIC_CONTACT.wechatId && (
-            <p className="mt-3 inline-flex items-center gap-2 text-sm text-primary-foreground">
-              <MessageCircle className="size-4 shrink-0" aria-hidden="true" />
-              {t('微信', 'WeChat')} {PUBLIC_CONTACT.wechatId}
-            </p>
-          )}
-          {PUBLIC_CONTACT.wechatQrImage && (
-            <OptimizedImage
-              src={PUBLIC_CONTACT.wechatQrImage}
-              alt={t('阿柑少年项目咨询微信二维码', "R-Gan Junior program inquiry WeChat QR code")}
-              width="240"
-              height="240"
-              loading="lazy"
-              className="mt-5 w-40 rounded-lg bg-primary-foreground p-2"
-            />
-          )}
+          <ContactChannels />
 
           <div className="mt-8 border-t border-primary-foreground/20 pt-7">
             <div className="flex items-center gap-3">
@@ -99,8 +67,8 @@ export default function ActionInquiry() {
             </div>
             <p className="mt-3 text-xs leading-6 text-primary-foreground/68">
               {t(
-                '仅用于项目咨询、匹配合适的参与方式和后续联系。',
-                'Only for program inquiries, matching suitable participation options, and follow-up.',
+                '提交的信息保存在阿柑少年的项目意向 Google 表单中，由项目工作人员查看你的留言和联系方式，仅用于项目咨询与后续联系。如需更正或删除，请联系上方邮箱。',
+                'Your submission is stored in R-Gan Junior’s program interest Google Form. Program staff review your message and contact details only for inquiries and follow-up. To correct or delete your information, contact the email above.',
               )}
             </p>
           </div>

@@ -361,7 +361,7 @@ export default function About() {
             <div className="about-v2-team__intro">
               <ChapterHeader
                 index="2.1"
-                eyebrow={t('发起人、共同发起人、营地伙伴与守护团', 'Founder, Co-founders, Camp Companions and Guardian Circle')}
+                eyebrow={t('发起人、共同发起人、营地伙伴与守护团', 'Founder, Co-founders, Camp Participants and Guardian Circle')}
                 title={t('我们的团队', 'Our Team')}
                 intro={t(
                   '阿柑少年由 Nate 发起，在麦昆塔社区的支持下，和一群来自不同城市、拥有不同兴趣的青少年伙伴共同生长。我们希望青少年不只是活动的参与者，也能在真实项目中学习设计、组织、记录、表达和行动。',
@@ -448,10 +448,10 @@ export default function About() {
               <section id="participants" className="about-v2-team-group scroll-mt-28" aria-labelledby="team-youth-title">
                 <header className="about-v2-team-group__header">
                   <span aria-hidden="true">03</span>
-                  <h3 id="team-youth-title">{lang === 'zh' ? '营地伙伴' : 'Camp Companions'}</h3>
+                  <h3 id="team-youth-title">{lang === 'zh' ? '营地伙伴' : 'Camp Participants'}</h3>
                 </header>
                 <p className="mb-8 max-w-3xl text-base leading-8 text-muted-foreground">
-                  {t('在森林、茶席、厨房与球场相遇。认识这些真实参与的伙伴，听听他们如何介绍自己。', 'We met in forests, over tea, in kitchens, and on sports courts. Meet our camp companions through their own introductions.')}
+                  {t('在森林、茶席、厨房与球场相遇。认识这些真实参与的伙伴，听听他们如何介绍自己。', 'We met in forests, over tea, in kitchens, and on sports courts. Meet our camp participants through their own introductions.')}
                 </p>
                 <ParticipantRoster />
               </section>

@@ -1,5 +1,18 @@
 # Task Plan
 
+## 2026-10-17 Website feedback (active)
+- [ ] 01 Reproduce Chinese home → programs → browser back blank screen, repair and verify.
+- [ ] 02–03 Inspect current program records; prepare next/past session and product-category design using real content only.
+- [ ] 04 Trace inquiry storage/notifications and document staff access, distinguish configured from verified.
+- [ ] 05 Show copyable contact email; await confirmed WeChat ID/QR.
+- [ ] 06 Select authentic camp photos and document maintenance path/owner decision.
+- [ ] 07 Record questions for Nate; await agreed schedule/owner before changing the three-month plan.
+- [ ] 08 Normalize Nate article weights and use color emphasis.
+- [ ] 09–10 Match participant names to body font; rename Camp Participants throughout public labels.
+- [ ] 11 Replace publication screenshot using provided source images and link.
+- [ ] Verify locally with focused regression tests, browser checks and production build. Deployment authorized on 2026-10-17 after adding three WebP highlights.
+- Preserve preceding guardian additions and unrelated changes. New feature design follows brainstorming; explicit content fixes are already specified by the user.
+
 ## 2026-10-15 Unified production release completed
 
 - Local updates and published histories consolidated into `main`; application `bee96c4` is on GitHub and Vercel production.

@@ -64,8 +64,8 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     },
   },
   "/about/participants": {
-    title: { zh: "营地伙伴名录", en: "Camp Companions" },
-    description: { zh: "认识阿柑少年的营地伙伴，阅读他们的自我介绍、兴趣和社区故事。", en: "Meet R-Gan Junior camp companions through their introductions, interests, and community stories." },
+    title: { zh: "营地伙伴名录", en: "Camp Participants" },
+    description: { zh: "认识阿柑少年的营地伙伴，阅读他们的自我介绍、兴趣和社区故事。", en: "Meet R-Gan Junior camp participants through their introductions, interests, and community stories." },
   },
   "/about/guardians": {
     title: { zh: "守护团", en: "Guardian Circle" },

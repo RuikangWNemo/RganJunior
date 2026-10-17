@@ -781,3 +781,6 @@ Published application `bee96c4` from verified local prebuilt artifacts. GitHub `
 2026-10-14 精选与全文章英文：用户确定单篇展示＋可切换目录；17文件统一提交0ae0b4c，1061源码与构建副本一致。7篇完整英文含标题摘要正文与121图替代文本；保留原中文与作者关联。24测试、类型、lint、本机Node24 prebuilt通过，云端四个关键资源逐字节核对；dpl_NVzonfJkCY6KNWhyXfF2NVuJzNNV已promote且正式域名一致，浏览器继续验收。详见docs/featured-bilingual-2026-10-14。
 
 精选英文正式站最终验收：7/7完整英文正文、121图、均无中文回退与页面横向溢出；中文/English往返切换与精选切换成功。发布标签已保存，另一个协作线程已通知统一提交与部署，预览已停止。
+# 2026-10-17 Website feedback
+
+Started source inspection for 11 requested changes. Read brainstorming/planning skills; preserved prior guardian edits. User is supplying missing source material. No production writes or deployments.

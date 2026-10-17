@@ -211,53 +211,13 @@ export default function HomeFieldScene() {
       <div className="home-editorial-shell home-field-scene__topline">
         <h2
           className={`home-field-scene__headline home-field-scene__headline--${lang}`}
-          aria-label={t('最近，我们一起生活了5天4夜', 'Recently, we lived together for 5 days and 4 nights')}
         >
-          {lang === 'zh' ? (
-            <>
-              最近，我们一起生活了<span className="home-field-scene__headline-number">5</span>天4夜
-            </>
-          ) : (
-            <>
-              Recently, we lived together for <span className="home-field-scene__headline-number">5</span> days and 4 nights
-            </>
-          )}
+          {t('精彩瞬间', 'Recent Highlights')}
         </h2>
       </div>
 
       <HomeSceneReel />
 
-      <div className="home-editorial-shell home-field-scene__story">
-        <p
-          className="home-field-scene__stats"
-          aria-label={t(
-            '阿柑少年生活共创营，11个孩子，10个家庭',
-            "R-Gan Junior Life Co-creation Camp, 11 young people, 10 families",
-          )}
-        >
-          <span className="home-field-scene__stats-program">
-            {t('阿柑少年生活共创营', "R-Gan Junior Life Co-creation Camp")}
-          </span>
-          <span className="home-field-scene__stats-separator" aria-hidden="true">
-            |
-          </span>
-          <span className="home-field-scene__stats-item">
-            <strong>11</strong>
-            <span>{t('个孩子', 'young people')}</span>
-          </span>
-          <span className="home-field-scene__stats-item">
-            <strong>10</strong>
-            <span>{t('个家庭', 'families')}</span>
-          </span>
-        </p>
-
-        <p className="home-field-scene__body">
-          {t(
-            '他们在南宝山和铁牛村一起徒步、喝茶、运动、做饭、共创、告别，也带走了自己的三个月小行动。',
-            "At Nanbao Mountain and in Tieniu Village, they hiked, shared tea, played sports, cooked, created together, and said goodbye. Each took home a small action plan for the next three months.",
-          )}
-        </p>
-      </div>
     </section>
   );
 }

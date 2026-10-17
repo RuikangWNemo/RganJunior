@@ -854,3 +854,10 @@ Story 1280px：标题 nowrap，实际文本宽931px，所在列557px，侵入按
 线上精选将第2至6篇全部堆在右栏，造成高度失衡。6条公开数据库文章加1篇静态邀请信为当前7篇范围。四篇成长故事已有英文稿，邀请信主工作区已有完整译稿；营地回顾3322字、橙子来信1125字需补译。计划复用同一slug的本地双语版本映射，保持作者帐号与中文管理正文不变，不创建重复英文文章记录。
 
 2026-10-14：旧精选一主五副结构导致两列高度失衡，改为单面板＋六项目录，手机目录内部横滚；390/768/1024/1440中英文无页面横向溢出。英文原缺2篇且邀请信回退中文，现补全7篇，正文/图片结构测试防止中文回退和漏图。正式版本源码0ae0b4c位于统一release worktree，不包含主工作区其余未发布修改。
+# 2026-10-17 feedback findings
+
+- Layout uses pathname-keyed AnimatePresence popLayout around Suspense/public routes; investigate history navigation and page reveal behavior before choosing fix.
+- Program intent POST /api/action-inquiry saves to configured Google Form. Notification webhook is optional and targets contact@rganjunior.org; source alone does not prove production notification delivery.
+- Public contact model already supports wechatId/wechatQrImage but currently contains only email.
+- Guardian edits from prior request remain uncommitted and must be preserved.
+- User supplied English YSA record, journal directory and Chinese record screenshots, and Chinese record https://www.chinathinksbig.com/digital-library/project-info/10001744. Exact WeChat and program schedules still awaited.

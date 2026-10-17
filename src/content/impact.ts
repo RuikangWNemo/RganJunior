@@ -51,6 +51,7 @@ export type ImpactEvidence = {
   secondaryImageAlt?: LocalizedText;
   sourceLabel: LocalizedText;
   sourceHref?: string;
+  resources?: { label: LocalizedText; href: string }[];
 };
 
 export type ImpactSnapshot = {
@@ -248,13 +249,19 @@ export const impactSnapshot: ImpactSnapshot = {
       facts: [
         { zh: '正式英文题名：Agan Junior Project: Research and Practice on How Adolescents can Participate in Sustainable Agriculture', en: 'Published title: Agan Junior Project: Research and Practice on How Adolescents can Participate in Sustainable Agriculture' },
         { zh: '论文及当时的 CTB 项目使用 Agan Junior，项目现统一使用 R-Gan Junior。', en: 'The paper and the CTB project used the name Agan Junior. The project is now known as R-Gan Junior.' },
-        { zh: '本站保留论文中英文摘要内页资料', en: 'The archive includes a spread with Chinese and English abstracts' },
+        { zh: '保留英文论文收录页、期刊目录和中文论文收录页截图', en: 'The archive includes screenshots of the English publication record, journal contents, and Chinese publication record' },
         { zh: '初步调研关注 11-15 岁青少年', en: 'Initial research focused on young people aged 11-15' },
       ],
-      image: '/archive/elements/graphics/publications/s17-ysa-journal-spread.png',
-      imageAlt: { zh: 'YSA Journal 论文中英文摘要内页', en: 'Chinese and English abstract spread from the YSA Journal paper' },
-      sourceLabel: { zh: 'YSA Journal 论文资料', en: 'YSA Journal paper material' },
+      image: '/archive/elements/graphics/publications/ysa-english-record-20261017.png',
+      imageAlt: { zh: 'CTB 数字图书馆的 YSA 英文论文收录页截图', en: 'English YSA publication record in the CTB digital library' },
+      secondaryImage: '/archive/elements/graphics/publications/ctb-chinese-record-20261017.png',
+      secondaryImageAlt: { zh: 'CTB 数字图书馆的中文论文收录页截图', en: 'Chinese publication record in the CTB digital library' },
+      sourceLabel: { zh: '英文论文收录页', en: 'English publication record' },
       sourceHref: 'https://www.chinathinksbig.com/digital-library/project-info/10002107',
+      resources: [
+        { label: { zh: '中文论文收录页', en: 'Chinese publication record' }, href: 'https://www.chinathinksbig.com/digital-library/project-info/10001744' },
+        { label: { zh: '查看期刊目录截图', en: 'View journal contents screenshot' }, href: '/archive/elements/graphics/publications/ysa-volume-3-directory-20261017.png' },
+      ],
     },
     {
       id: 'claremont-eco-forum',

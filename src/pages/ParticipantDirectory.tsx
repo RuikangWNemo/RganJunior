@@ -10,10 +10,10 @@ export default function ParticipantDirectory() {
   const person = participantId ? getParticipant(participantId) : undefined;
   if (participantId && !person) return <div className="participant-page">
     <h1>{t('没有找到这位伙伴', 'Companion not found')}</h1>
-    <Link className="participant-link" to="/about/participants">{t('返回营地伙伴名录', 'Back to camp companions')}</Link>
+    <Link className="participant-link" to="/about/participants">{t('返回营地伙伴名录', 'Back to camp participants')}</Link>
   </div>;
   return <div className="participant-page" lang={lang}>
-    <Link className="participant-link" to={person ? '/about/participants' : '/about#participants'}>← {person ? t('全部营地伙伴', 'All camp companions') : t('我们的团队', 'Our team')}</Link>
+    <Link className="participant-link" to={person ? '/about/participants' : '/about#participants'}>← {person ? t('全部营地伙伴', 'All camp participants') : t('我们的团队', 'Our team')}</Link>
     {person ? <article className="participant-profile">
       <figure className="participant-profile__photo"><ParticipantPortrait person={person} eager /></figure>
       <div>
@@ -35,7 +35,7 @@ export default function ParticipantDirectory() {
     </article> : <>
       <header className="participant-page__heading">
         <p className="participant-card__nature">{t('真实相遇 · 一起参与', 'Real encounters · Shared experiences')}</p>
-        <h1>{lang === 'zh' ? '营地伙伴' : 'Camp Companions'}</h1>
+        <h1>{lang === 'zh' ? '营地伙伴' : 'Camp Participants'}</h1>
         <p>{t('从一张手写的自我介绍开始，认识一起走进森林、做茶、做饭与共创的伙伴。这里保留每个人自己的兴趣和表达。', 'Meet the people who walked into forests, made tea, cooked, and created together. These profiles draw on their handwritten introductions and personal interests.')}</p>
       </header>
       <ParticipantRoster complete />

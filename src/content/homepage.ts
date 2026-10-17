@@ -164,13 +164,29 @@ export const homePrograms: HomeProgram[] = [
   },
 ];
 
+// Keep the arrival-road aerial photograph first. New photos use locally encoded
+// 640px and 1280px WebP variants in public/images/home.
 export const homeSceneImages: HomeImage[] = [
   {
     ...responsiveHomeScene('/images/home/life-camp-01-arrival-road.webp'),
     width: 1920,
     height: 1440,
-    alt: text('车队沿着林间小路驶入南宝山', "A convoy arriving at Nanbao Mountain along a forest road"),
+    alt: text('车队沿着林间小路驶入南宝山', 'A convoy arriving at Nanbao Mountain along a forest road'),
     position: 'center 50%',
+  },
+  {
+    ...responsiveHomeScene('/images/home/life-camp-misty-mountains-20261017.webp'),
+    width: 1920,
+    height: 1280,
+    alt: text('云雾环绕山林与层叠的山峦', 'Mist drifting through forested mountain ridges'),
+    position: 'center 55%',
+  },
+  {
+    ...responsiveHomeScene('/images/programs/life-co-creation-camp.webp'),
+    width: 5552,
+    height: 3701,
+    alt: text('营地伙伴围着共同完成的森林画卷合影', 'Camp participants gathered around the forest artwork they created together'),
+    position: 'center 45%',
   },
   {
     ...responsiveHomeScene('/images/home/life-camp-02-forest-circle.webp'),
@@ -187,39 +203,32 @@ export const homeSceneImages: HomeImage[] = [
     position: 'center 47%',
   },
   {
-    ...responsiveHomeScene('/images/home/life-camp-04-forest-tea.webp'),
-    width: 1920,
-    height: 1280,
-    alt: text('小队徒步后坐在林间喝茶休息', "The group resting and drinking tea in the forest after a hike"),
-    position: 'center 52%',
-  },
-  {
-    ...responsiveHomeScene('/images/home/life-camp-05-tea-craft.webp'),
-    width: 1920,
-    height: 1441,
-    alt: text('青少年在茶厂里一起学习制茶', 'Young people learning to make tea together at the tea workshop'),
-    position: 'center 50%',
-  },
-  {
-    ...responsiveHomeScene('/images/home/life-camp-06-indoor-co-creation.webp'),
-    width: 1920,
-    height: 1280,
-    alt: text('青少年在室内聆听分享并共同创作', 'Young people listening and creating together indoors'),
-    position: 'center 52%',
-  },
-  {
     ...responsiveHomeScene('/images/home/life-camp-07-tea-field.webp'),
     width: 1920,
     height: 1280,
-    alt: text('青少年与陪伴者在茶山上观察茶树', "Young people and their companions observing tea plants on a hillside"),
+    alt: text('青少年与陪伴者在茶山上观察茶树', 'Young people and their companions observing tea plants on a hillside'),
     position: 'center 51%',
   },
   {
-    ...responsiveHomeScene('/images/home/life-camp-08-tea-harvest.webp'),
+    ...responsiveHomeScene('/images/home/life-camp-tea-basket-20261017.webp'),
+    width: 1440,
+    height: 960,
+    alt: text('手提竹篮里的新鲜茶叶与一朵淡紫色小花', 'Fresh tea leaves and a pale purple flower in a hand-held bamboo basket'),
+    position: 'center 50%',
+  },
+  {
+    src: '/images/about/methods/01/03-cooking-together.webp',
     width: 1920,
     height: 1280,
-    alt: text('青少年完成采茶后在茶厂合影', "Young people posing for a group photograph at the tea factory after picking tea"),
-    position: 'center 53%',
+    alt: text('伙伴们在乡村厨房一起生火做饭', 'Camp participants tending the fire and cooking together in the village kitchen'),
+    position: 'center 60%',
+  },
+  {
+    ...responsiveHomeScene('/images/home/life-camp-night-walk-20261017.webp'),
+    width: 1440,
+    height: 960,
+    alt: text('伙伴们在路灯下结伴走过夜晚的山路', 'Companions walking together along a mountain road under streetlights at night'),
+    position: 'center 50%',
   },
   {
     ...responsiveHomeScene('/images/home/life-camp-09-closing-gathering.webp'),

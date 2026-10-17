@@ -8,6 +8,7 @@ import { pickLocalized } from '@/lib/brand';
 import ProgramActions from './ProgramActions';
 import ProgramFaq from './ProgramFaq';
 import ProgramFaqSchema from './ProgramFaqSchema';
+import ContactChannels from '@/components/ContactChannels';
 
 interface ProgramDetailLayoutProps {
   program: ActionProgramOption;
@@ -76,6 +77,7 @@ export default function ProgramDetailLayout({ program, children }: ProgramDetail
               )}
             </p>
             <ProgramActions program={program} />
+            <ContactChannels />
           </div>
         </section>
       </main>

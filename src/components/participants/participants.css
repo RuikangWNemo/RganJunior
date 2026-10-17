@@ -7,7 +7,7 @@
 .participant-card__portrait img { width: 100%; height: 100%; object-fit: cover; }
 .participant-card__copy { padding: 1.25rem .25rem 0; }
 .participant-card__nature { margin: 0 0 .5rem; color: hsl(var(--primary)); font-size: .8125rem; line-height: 1.6; }
-.participant-card h4 { margin: 0; font-family: var(--font-serif,serif); font-size: 1.625rem; line-height: 1.4; text-wrap: balance; }
+.participant-card h4 { margin: 0; font-family: inherit; font-weight: 400; font-size: 1.625rem; line-height: 1.4; text-wrap: balance; }
 .participant-card__bio { margin: .75rem 0 1rem; font-size: .9375rem; line-height: 1.85; color: hsl(var(--muted-foreground)); text-wrap: pretty; }
 .participant-link { display: inline-flex; align-items: center; gap: .75rem; color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: .3em; padding-block: .5rem; font-size: .9375rem; font-weight: 600; }
 .participant-link:hover { color: hsl(var(--foreground)); }
@@ -20,7 +20,7 @@
 .participant-profile { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 4rem; align-items: start; margin-top: 2rem; }
 .participant-profile__photo { overflow: hidden; border-radius: 1rem; background: hsl(var(--muted)); }
 .participant-profile__photo img { display: block; width: 100%; height: auto; }
-.participant-profile h1 { font-size: clamp(2.5rem,5vw,4rem); font-family: var(--font-serif,serif); line-height: 1.2; }
+.participant-profile h1 { font-size: clamp(2.5rem,5vw,4rem); font-family: inherit; font-weight: 400; line-height: 1.2; }
 .participant-profile__bio { margin: 2rem 0; font-size: 1.125rem; line-height: 1.9; text-wrap: pretty; }
 .participant-profile dl { margin: 2rem 0; }
 .participant-profile dl div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding: 1rem 0; border-top: 1px solid hsl(var(--border)); line-height: 1.8; }
