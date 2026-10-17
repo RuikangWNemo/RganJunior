@@ -18712,9 +18712,9 @@ html[lang='en'] .programs-editorial-intro h1 {
   }
 
   .founder-story-page--en .founder-story-moment__copy h3 {
-    font-family: var(--founder-body-font);
+    font-family: var(--font-handwriting-serif);
     font-size: clamp(2rem, 3vw, 3rem);
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1.12;
   }
