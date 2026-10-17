@@ -794,3 +794,5 @@ Published application `bee96c4` from verified local prebuilt artifacts. GitHub `
 Started source inspection for 11 requested changes. Read brainstorming/planning skills; preserved prior guardian edits. User is supplying missing source material. No production writes or deployments.
 
 2026-10-17：按用户要求新增三张 WebP 精彩瞬间照片，保留航拍首图，共 10 张；整理现有网站反馈修改并提交 93fe448。完成本机生产预构建，GitHub 仅检查代码。暂存与正式站各 26 项资源哈希一致，部署 dpl_1jzaJt4xNuuHoX7g9bDryjGpnniF 已提升至正式域名。发布与回退证据见 docs/home-highlights-2026-10-17/release.json。未执行数据库迁移、ECS 或 OSS 操作；待确认的微信和项目排期内容仍待后续补充。
+
+2026-10-17：白屏修复与 Community 营期管理已联合上线。迁移 20261017085040 已应用，最终应用提交 49aeb4f、部署 dpl_A6ivCPYYoBKzAKmhgBUkgaHB6ZBL。406 测试、类型检查、CI 通过；正式浏览器验证真实营期、照片、招募链接、中英切换、390px 和前进后退。首次公开配置缺失发布已回退修正，并增加 prebuild 门禁。完整证据和未覆盖的 Windows 实机／登录管理员上传流程见 docs/programs-release-2026-10-17/verification.md。

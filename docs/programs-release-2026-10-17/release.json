@@ -1,0 +1,26 @@
+{
+  "applicationCommit": "49aeb4f42df9ea85a111ccb1338b3bf667d55e9d",
+  "outputSha256": "16f61559cc703c7ab297c34f125e6f516221bdf5cfe6ae50d8f9539ec29af8f8",
+  "files": 6124,
+  "date": "2026-10-17",
+  "production": "https://www.rganjunior.org",
+  "deploymentId": "dpl_A6ivCPYYoBKzAKmhgBUkgaHB6ZBL",
+  "deploymentUrl": "https://rgan-junior-roots-main-j386hwqu0-rganjuniors-projects.vercel.app",
+  "prebuilt": true,
+  "previousStableDeployment": "dpl_1jzaJt4xNuuHoX7g9bDryjGpnniF",
+  "migration": "20261017085040_program_sessions",
+  "migrationSha256": "5fe8549bdd2e54487e0489c4299e9f34c11b8b814d7a99b828869fd188fe084a",
+  "tests": {
+    "files": 105,
+    "passed": 406,
+    "typecheck": "passed (app, API, backend)",
+    "lint": "0 errors, 11 Fast Refresh warnings",
+    "ci": "https://github.com/RuikangWNemo/RganJunior/actions/runs/39019943267"
+  },
+  "initialDeploymentRolledBack": "dpl_BNqRAK7zEaovd3G62cwaAC82oiDR",
+  "initialDeploymentIssue": "Public Supabase build configuration omitted by Vercel pull; restored stable deployment, supplied verified public configuration, added production prebuild guard and rebuilt locally.",
+  "limitations": [
+    "No physical Windows device available.",
+    "No signed-in production administrator browser session; actual admin SQL write and draft/public RLS were verified in a rolled-back transaction. Browser photo upload/publish workflow verified locally with fixtures, not end-to-end as a signed-in production user."
+  ]
+}
