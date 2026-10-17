@@ -1,0 +1,17 @@
+{
+  "applicationCommit": "4036e486d253f63e674bc7a5b475e3fd86e7ea6b",
+  "outputSha256": "c14d25bd24f13a5b01bef0120fa49cd9c00c5c7883f1abb4854fe12114471090",
+  "files": 6124,
+  "deploymentId": "dpl_627soWAmWD68GVeRbu1ADTLFoNJs",
+  "production": "https://www.rganjunior.org/community-stories",
+  "prebuilt": true,
+  "rollback": "dpl_A6ivCPYYoBKzAKmhgBUkgaHB6ZBL",
+  "scope": "Story body, excerpts, quotations, and editor body use reading fonts; titles keep display fonts.",
+  "verification": [
+    "Local Vercel production build passed with public configuration guard",
+    "Local and production Chinese/English article paragraphs use Noto Sans SC/PingFang SC/Microsoft YaHei/system sans-serif; article title still TanukiMagic/Qiaoqiaohua display family",
+    "Staged and production HTML/CSS byte-identical to local build",
+    "Actual article API content loaded; no fixture data used"
+  ],
+  "databaseMigration": false
+}
