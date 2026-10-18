@@ -25,10 +25,10 @@ const confirmedEnglish: Readonly<Record<string, string>> = {
   '张天时': 'Tianshi Zhang',
   '发起人': 'Founder',
   '阿柑少年发起人': 'Founder of R-Gan Junior',
-  '共创伙伴': 'Partner',
+  '共创伙伴': 'Co-creators',
   '青年共创伙伴': 'Youth Co-creator',
   '少年共创者': 'Youth Co-creator',
-  '合作伙伴': 'Partner',
+  '合作伙伴': 'Partners',
   '青少年共创伙伴': 'Co-creators',
   '参与者': 'Participant',
   '正式成员': 'Member',
@@ -70,7 +70,6 @@ const confirmedEnglish: Readonly<Record<string, string>> = {
 export function confirmedTranslation(zh: string, en: string, language: 'zh' | 'en'): string {
   if (language === 'zh') {
     if (zh === '青年共创伙伴') return '少年共创者';
-    if (zh === '共创伙伴') return '合作伙伴';
     if (zh === '家长守护团') return '守护团';
     if (zh === '成人支持团队') return '社群支持';
     return zh;

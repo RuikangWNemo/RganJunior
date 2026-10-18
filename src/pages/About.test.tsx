@@ -67,7 +67,7 @@ describe('About editorial content system', () => {
       [...(team?.querySelectorAll('.about-v2-team-group__header h3') ?? [])].map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(['发起人', '共同发起人', '营地伙伴', '守护团']);
+    ).toEqual(['发起人', '共创伙伴', '营地伙伴', '守护团']);
     expect(
       [...(team?.querySelector('.about-v2-team-groups')?.children ?? [])].map(
         (section) => section.getAttribute('aria-labelledby'),
@@ -83,7 +83,10 @@ describe('About editorial content system', () => {
       'href',
       '/story',
     );
-    const founders = screen.getByRole('region', { name: '共同发起人' });
+    const founders = screen.getByRole('region', { name: '共创伙伴' });
+    expect(team).not.toHaveTextContent('共同发起人');
+    expect(founders).not.toHaveTextContent('合作伙伴');
+    expect(within(founders).getAllByText(/^共创伙伴 ·/)).toHaveLength(3);
     expect(within(founders).getAllByRole('heading', { level: 4 }).map(heading => heading.textContent)).toEqual(['张天时', '陈若容', '黄若音']);
     expect(within(founders).getAllByRole('link').map(link => link.getAttribute('href'))).toEqual(['/about/participants/tianshi', '/about/participants/rosie', '/about/participants/ruby']);
     const roster = screen.getByLabelText('营地伙伴名录');
@@ -99,9 +102,9 @@ describe('About editorial content system', () => {
 
     const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
     const reel = within(guardianGroup).getByRole('region', { name: '守护团成员照片' });
-    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(16);
-    expect(within(reel).getAllByRole('img')).toHaveLength(16);
-    expect(within(reel).getAllByRole('link')).toHaveLength(16);
+    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(19);
+    expect(within(reel).getAllByRole('img')).toHaveLength(19);
+    expect(within(reel).getAllByRole('link')).toHaveLength(19);
     expect(within(reel).getByText('赵璟')).toBeInTheDocument();
     expect(within(reel).getByText('知予')).toBeInTheDocument();
     expect(guardianGroup).not.toHaveTextContent(/麦昆塔教育/);
@@ -133,9 +136,11 @@ describe('About editorial content system', () => {
     renderAbout();
 
     expect(screen.getByText('Nate | Founder')).toBeInTheDocument();
-    expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Tianshi Zhang' })).toBeInTheDocument();
-    expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Rosie Chen' })).toBeInTheDocument();
-    expect(within(screen.getByRole('region', { name: 'Co-founders' })).getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
+    expect(screen.queryByText(/Co-founders?/)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/^Co-creators ·/)).toHaveLength(3);
+    expect(within(screen.getByRole('region', { name: 'Co-creators' })).getByRole('heading', { level: 4, name: 'Tianshi Zhang' })).toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Co-creators' })).getByRole('heading', { level: 4, name: 'Rosie Chen' })).toBeInTheDocument();
+    expect(within(screen.getByRole('region', { name: 'Co-creators' })).getByRole('heading', { level: 4, name: 'Ruby Huang' })).toBeInTheDocument();
     expect(within(screen.getByLabelText('Camp participant directory')).getAllByRole('article')).toHaveLength(campCompanions.length);
   });
 

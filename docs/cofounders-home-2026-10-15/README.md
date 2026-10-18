@@ -1,5 +1,7 @@
 # 共同发起人及首页文案更新 · 2026-10-15
 
+> 历史发布记录：2026-10-18 用户确认该团队称“共创伙伴 / Co-creators”，本页中的 Co-founders 不再是当前约定。见 [版本排查](../version-audit-2026-10-18.md)。
+
 - 关于页顺序：发起人 → 共同发起人（张天时、Rosie Chen、Ruby Huang）→ 营地伙伴 → 守护团。
 - 恢复三人独立卡片，复用已公开的照片、简介与资料链接；在营地伙伴区域不重复展示。
 - Home 页 Nate 照片旁英文标题及无障碍名称统一为 “What began as one young person's growth has gradually become collective actions.”。

@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { confirmedTranslation } from './confirmedTranslations';
 
 describe('confirmed translations', () => {
+  it('keeps co-creators and partners distinct in both languages', () => {
+    expect(confirmedTranslation('共创伙伴', 'Partner', 'en')).toBe('Co-creators');
+    expect(confirmedTranslation('共创伙伴', 'Co-creators', 'zh')).toBe('共创伙伴');
+    expect(confirmedTranslation('合作伙伴', 'Partner', 'en')).toBe('Partners');
+    expect(confirmedTranslation('合作伙伴', 'Partners', 'zh')).toBe('合作伙伴');
+  });
   it('keeps the two R-Gan entities distinct even when stored English is wrong', () => {
     expect(confirmedTranslation('阿柑少年', 'Youth', 'en')).toBe('R-Gan Junior');
     expect(confirmedTranslation('阿柑青年', 'R-Gan Junior', 'en')).toBe('R-Gan Youth');
