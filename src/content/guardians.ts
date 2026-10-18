@@ -33,6 +33,7 @@ export const guardianMembers: readonly GuardianMember[] = [
   { id: 'qu-zi', photo: '/images/about/guardians/qu-zi-20261018.jpg', name: { zh: '渠自', en: 'Qu Zi' }, cardPosition: '8% 45%', fullPhotoInProfile: true },
   { id: 'guardian-10', photo: '/images/about/guardians/guardian-coming-soon-20261018.jpg', cardPosition: '55% 45%', fullPhotoInProfile: true },
   { id: 'zhi-hua', photo: '/images/about/guardians/zhi-hua-20261018.jpg', name: { zh: '智華', en: 'Zhihua' }, cardPosition: '35% 40%', fullPhotoInProfile: true },
+  { id: 'la-jiao', photo: '/images/about/guardians/la-jiao-20261018.png', name: { zh: '辣椒', en: 'La Jiao' }, cardPosition: '50% 38%', fullPhotoInProfile: true },
 ];
 
 export function guardianProfilePath(member: GuardianMember) {

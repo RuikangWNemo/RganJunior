@@ -102,9 +102,9 @@ describe('About editorial content system', () => {
 
     const guardianGroup = screen.getByRole('region', { name: /^守护团$/ });
     const reel = within(guardianGroup).getByRole('region', { name: '守护团成员照片' });
-    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(19);
-    expect(within(reel).getAllByRole('img')).toHaveLength(19);
-    expect(within(reel).getAllByRole('link')).toHaveLength(19);
+    expect(reel.querySelectorAll('.about-v2-parent-guardian-reel__slide')).toHaveLength(20);
+    expect(within(reel).getAllByRole('img')).toHaveLength(20);
+    expect(within(reel).getAllByRole('link')).toHaveLength(20);
     expect(within(reel).getByText('赵璟')).toBeInTheDocument();
     expect(within(reel).getByText('知予')).toBeInTheDocument();
     expect(guardianGroup).not.toHaveTextContent(/麦昆塔教育/);
