@@ -29,7 +29,7 @@ type AuthMode = 'signin' | 'signup' | 'signupVerify' | 'magic' | 'otp' | 'reset'
 type SignupStage = 'identity' | 'age' | 'account';
 
 const authInputClass =
-  'community-field h-12 w-full px-4 text-base';
+  'community-field community-account-input h-12 w-full px-4 text-base';
 
 const primaryButtonClass =
   'community-button community-button--primary w-full gap-2';
@@ -470,7 +470,7 @@ export default function CommunityAuth() {
                       pattern={REGEXP_ONLY_DIGITS}
                       value={otp}
                       onChange={setOtp}
-                      containerClassName="justify-center"
+                      containerClassName="community-account-input justify-center"
                     >
                       <InputOTPGroup>
                         {Array.from({ length: EMAIL_OTP_LENGTH }, (_, index) => (

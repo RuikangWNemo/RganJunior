@@ -474,10 +474,12 @@
   color: hsl(var(--community-forest) / 0.4);
 }
 
-/* Handwriting fonts can contain blank password-mask glyphs. Keep both hidden
-   and revealed passwords in a system font with a readable foreground. */
+/* Account identifiers, email codes, and passwords use ordinary text fonts.
+   System fonts also provide the password-mask glyphs missing from handwriting fonts. */
+.community-account-input,
 .community-password-input {
   font-family: system-ui, sans-serif;
+  font-weight: 400;
   color: hsl(var(--community-forest));
   -webkit-text-fill-color: hsl(var(--community-forest));
 }
