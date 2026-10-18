@@ -12,6 +12,25 @@ const fontFaceFor = (family: string) => {
 };
 
 describe('handwriting glyph routing', () => {
+  it('lets fallback fonts render marks whose Tanuki glyphs are blank', () => {
+    const declaration = fontFaceFor('TanukiMagic Web').match(/unicode-range:([\s\S]*?);/)?.[1] ?? '';
+    const ranges = [...declaration.matchAll(/U\+([0-9A-F]+)(?:-([0-9A-F]+))?/g)]
+      .map(([, start, end]) => [parseInt(start, 16), parseInt(end ?? start, 16)]);
+    const routesToTanuki = (character: string) => ranges.some(([start, end]) => {
+      const codePoint = character.codePointAt(0)!;
+      return codePoint >= start && codePoint <= end;
+    });
+
+    // Confirmed empty outlines in the shipped font, including the age-range
+    // dash, browser password bullet, copyright mark and accented Latin letters.
+    for (const character of '–—•·©êéü¥€↔↗') {
+      expect(routesToTanuki(character), character).toBe(false);
+    }
+    for (const character of 'Aa09-!?…“”‘’×÷→←一心') {
+      expect(routesToTanuki(character), character).toBe(true);
+    }
+  });
+
   it('routes every audited Tanuki-compatible pictogram code point away from Qiaoqiaohua', () => {
     const tanukiFontFace = fontFaceFor('TanukiMagic Web');
     const patchedCodePoints = [

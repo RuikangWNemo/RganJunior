@@ -2,6 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useCommunityUi } from '@/lib/communityUi';
+import { CommunityErrorState } from '@/components/community/CommunitySurface';
 
 function CommunityLoading() {
   const { t } = useCommunityUi();
@@ -15,20 +16,35 @@ function CommunityLoading() {
   );
 }
 
+function CommunityAccessError() {
+  const { refreshCommunity } = useAuth();
+  const { t } = useCommunityUi();
+  return (
+    <div className="community-page-frame mx-auto max-w-lg py-12">
+      <CommunityErrorState
+        message={t('账号已登录，但社群资料暂时未能加载，请重试。', 'You are signed in, but your community details could not load. Please retry.')}
+        onRetry={() => { void refreshCommunity().catch(() => {}); }}
+      />
+    </div>
+  );
+}
+
 export function CommunitySmartEntry() {
-  const { user, communityState, loading } = useAuth();
+  const { user, communityState, loading, error } = useAuth();
   if (loading) return <CommunityLoading />;
   if (!user) return <Navigate to="/community/auth" replace />;
-  return <Navigate to={communityState?.destination || '/community/auth'} replace />;
+  if (!communityState) return error ? <CommunityAccessError /> : <CommunityLoading />;
+  return <Navigate to={communityState.destination} replace />;
 }
 
 export function CommunityRequireAuth() {
-  const { user, loading } = useAuth();
+  const { user, communityState, loading, error } = useAuth();
   const location = useLocation();
   if (loading) return <CommunityLoading />;
   if (!user) {
     return <Navigate to="/community/auth" replace state={{ from: location.pathname }} />;
   }
+  if (!communityState) return error ? <CommunityAccessError /> : <CommunityLoading />;
   return <Outlet />;
 }
 

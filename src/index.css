@@ -4,14 +4,37 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
+  /* Audited against the font outlines: its cmap also claims hundreds of blank
+     glyphs (including – — • · © ê ↔ ↗). Only route drawable glyphs and spaces
+     here so the following handwriting/system fonts can supply missing marks. */
   unicode-range:
-    U+0000-024F,
-    U+1E00-1EFF,
-    U+2000-206F,
-    U+20A0-20CF,
-    U+2100-214F,
-    U+2190-21FF,
-    U+2460-24FF,
+    U+0020-007E,
+    U+00A0,
+    U+00A7-00A8,
+    U+00B0-00B1,
+    U+00B4,
+    U+00B6,
+    U+00D7,
+    U+00F7,
+    U+2000-200A,
+    U+2010,
+    U+2015,
+    U+2018-2019,
+    U+201C-201D,
+    U+2020-2021,
+    U+2025-2026,
+    U+2028-2029,
+    U+2030,
+    U+2032-2033,
+    U+203B,
+    U+2103,
+    U+2116,
+    U+2121,
+    U+212B,
+    U+2190-2193,
+    U+21D2,
+    U+21D4,
+    U+2460-2473,
     /* Replace Qiaoqiaohua's pictograms with normal handwritten Han glyphs. */
     U+4E00,
     U+4E91,
@@ -449,6 +472,14 @@
 
 .community-field::placeholder {
   color: hsl(var(--community-forest) / 0.4);
+}
+
+/* Handwriting fonts can contain blank password-mask glyphs. Keep both hidden
+   and revealed passwords in a system font with a readable foreground. */
+.community-password-input {
+  font-family: system-ui, sans-serif;
+  color: hsl(var(--community-forest));
+  -webkit-text-fill-color: hsl(var(--community-forest));
 }
 
 .community-button {
