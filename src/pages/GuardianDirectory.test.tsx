@@ -19,10 +19,10 @@ function renderDirectory(path = '/about/guardians', language: 'zh' | 'en' = 'zh'
 }
 
 describe('Guardian directory navigation', () => {
-  it('shows sixteen unique entries, includes He Chaochao, and opens a profile then returns to the directory', () => {
+  it('shows nineteen unique entries, includes He Chaochao, and opens a profile then returns to the directory', () => {
     renderDirectory();
     const list = screen.getByLabelText('全部守护团成员');
-    expect(within(list).getAllByRole('link')).toHaveLength(16);
+    expect(within(list).getAllByRole('link')).toHaveLength(19);
     expect(within(list).getAllByRole('img').map((img) => img.getAttribute('src'))).toContain('/images/about/adult-support/adult-support-02.webp');
     expect(screen.getByText('贺超超')).toBeInTheDocument();
     expect(within(list).getAllByRole('img', { name: '卓霏' })).toHaveLength(1);

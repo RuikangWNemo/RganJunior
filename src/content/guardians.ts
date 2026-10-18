@@ -26,10 +26,13 @@ export const guardianMembers: readonly GuardianMember[] = [
   { id: 'guardian-04', photo: '/images/about/parent-guardian/parent-guardian-04.webp', name: { zh: '陈斌', en: 'Charles Chen' } },
   { id: 'huang-zhengchun', photo: '/images/about/guardians/huang-zhengchun-20261017.jpg', name: { zh: '黄争春', en: 'Shell Huang' }, fullPhotoInProfile: true },
   { id: 'guardian-05', photo: '/images/about/guardians/mulan-20261013.jpg', name: { zh: '木兰', en: 'Mulan' }, cardScale: 1.25, fullPhotoInProfile: true },
-  { id: 'guardian-06', photo: '/images/about/parent-guardian/parent-guardian-06.webp' },
+  { id: 'guardian-06', photo: '/images/about/guardians/qiang-wei-20261018.jpg', name: { zh: '蔷薇', en: 'Qiang Wei' }, cardPosition: '45% 35%', fullPhotoInProfile: true },
   { id: 'guardian-07', photo: '/images/about/parent-guardian/parent-guardian-07.webp' },
   { id: 'zhuo-fei', aliases: ['guardian-08'], photo: '/images/about/guardians/zhuo-fei-20261014-upright.png', name: { zh: '卓霏', en: 'Fei Zhuo' }, cardPosition: '50% 50%', fullPhotoInProfile: true },
   { id: 'guardian-09', photo: '/images/about/parent-guardian/parent-guardian-09.webp' },
+  { id: 'qu-zi', photo: '/images/about/guardians/qu-zi-20261018.jpg', name: { zh: '渠自', en: 'Qu Zi' }, cardPosition: '8% 45%', fullPhotoInProfile: true },
+  { id: 'guardian-10', photo: '/images/about/guardians/guardian-coming-soon-20261018.jpg', cardPosition: '55% 45%', fullPhotoInProfile: true },
+  { id: 'zhi-hua', photo: '/images/about/guardians/zhi-hua-20261018.jpg', name: { zh: '智華', en: 'Zhihua' }, cardPosition: '35% 40%', fullPhotoInProfile: true },
 ];
 
 export function guardianProfilePath(member: GuardianMember) {
