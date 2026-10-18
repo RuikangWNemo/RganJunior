@@ -1,0 +1,28 @@
+{
+  "applicationCommit": "f1f8d73718e46e39d5cfd2cfcf67d8a38b6fe153",
+  "files": 6128,
+  "outputSha256": "12a0a73a31cb8447c730745f3730807e4a46540a25060b54c71dda19afb8b101",
+  "prebuilt": true,
+  "databaseMigration": false,
+  "rollback": "dpl_627soWAmWD68GVeRbu1ADTLFoNJs",
+  "deploymentId": "dpl_Bg9qxHHYBPMu6XRFuGK3ZMUEQQqV",
+  "productionUrl": "https://www.rganjunior.org",
+  "deploymentUrl": "https://rgan-junior-roots-main-18or0tfcg-rganjuniors-projects.vercel.app",
+  "status": "Ready",
+  "sourceVerification": {
+    "trackedFilesChecked": 1611,
+    "mismatches": 0
+  },
+  "verification": {
+    "testFiles": 105,
+    "testsPassed": 407,
+    "types": "passed",
+    "lintErrors": 0,
+    "lintExistingWarnings": 11,
+    "stagedAssetsMatched": 7,
+    "githubChecks": "success",
+    "productionBrowserErrorsObserved": 0
+  },
+  "githubCheckUrl": "https://github.com/RuikangWNemo/RganJunior/actions/runs/39098951084",
+  "excluded": "Concurrent uncommitted authentication/password changes in the main worktree."
+}

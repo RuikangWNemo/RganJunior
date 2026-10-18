@@ -1,0 +1,37 @@
+[
+  {
+    "path": "index.html",
+    "sha256": "e3c02f3699c4c83ad33581e3a6597fc8e6fda12a8b47a80db1080c68ce978347",
+    "matches": true
+  },
+  {
+    "path": "assets/guardians-BruPzHdo.js",
+    "sha256": "d716fa171bbf9a06dd27f592f742c1f18f7dcf76d42557c2ff4003e9b0fcbb65",
+    "matches": true
+  },
+  {
+    "path": "assets/About-R8lA0M4W.js",
+    "sha256": "b6bc4fadb174c05c812d47899a2d8356cc47b116f1976750e7f3aa5fd48dc967",
+    "matches": true
+  },
+  {
+    "path": "images/about/guardians/qu-zi-20261018.jpg",
+    "sha256": "9fb4dec914d99ebb523073a91dd8f91d0443b4855311a9b58f7180fc3d0642fa",
+    "matches": true
+  },
+  {
+    "path": "images/about/guardians/guardian-coming-soon-20261018.jpg",
+    "sha256": "f927a1daaf70ff0aed99acea8a22073e16f9cf960c7be62b44885944cbf8084d",
+    "matches": true
+  },
+  {
+    "path": "images/about/guardians/qiang-wei-20261018.jpg",
+    "sha256": "da05854b903244515d51fae80e836babc7d082975aeb6a24e0750bc82bb7b82a",
+    "matches": true
+  },
+  {
+    "path": "images/about/guardians/zhi-hua-20261018.jpg",
+    "sha256": "39af68545f0f29e0e919899afb847baebf8b019d21c2c29eccaa14454449e60e",
+    "matches": true
+  }
+]
