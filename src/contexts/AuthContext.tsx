@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -31,62 +32,102 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+const AUTH_LOAD_TIMEOUT_MS = 15_000;
+
+async function withAuthTimeout<T>(request: Promise<T>): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error('Account loading timed out. Please retry.')), AUTH_LOAD_TIMEOUT_MS);
+  });
+  try {
+    return await Promise.race([request, timeout]);
+  } finally {
+    clearTimeout(timer!);
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [communityState, setCommunityState] = useState<CommunityState | null>(null);
   const [permissions, setPermissions] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const loadVersion = useRef(0);
+  const activeSessionRef = useRef<Session | null>(null);
+  const loadedUserId = useRef<string | null>(null);
 
   const loadCommunity = useCallback(async (activeSession: Session | null) => {
+    const version = ++loadVersion.current;
+    setError(null);
     if (!activeSession?.user) {
+      loadedUserId.current = null;
       setCommunityState(null);
       setPermissions([]);
+      setLoading(false);
       return;
     }
 
-    const [nextState, nextPermissions] = await Promise.all([
-      getMyCommunityState(),
-      getMyPermissions(),
-    ]);
-    setCommunityState(nextState);
-    setPermissions(nextPermissions);
+    if (loadedUserId.current !== activeSession.user.id) setLoading(true);
+    try {
+      const [nextState, nextPermissions] = await withAuthTimeout(Promise.all([
+        getMyCommunityState(),
+        getMyPermissions(),
+      ]));
+      if (version !== loadVersion.current) return;
+      loadedUserId.current = activeSession.user.id;
+      setCommunityState(nextState);
+      setPermissions(nextPermissions);
+    } catch (loadError) {
+      if (version !== loadVersion.current) return;
+      setError(loadError instanceof Error ? loadError.message : 'Community state is unavailable.');
+      throw loadError;
+    } finally {
+      if (version === loadVersion.current) setLoading(false);
+    }
   }, []);
 
   const refreshCommunity = useCallback(async () => {
-    setError(null);
-    try {
-      await loadCommunity(session);
-    } catch (refreshError) {
-      setError(refreshError instanceof Error ? refreshError.message : 'Community state is unavailable.');
-      throw refreshError;
-    }
-  }, [loadCommunity, session]);
+    await loadCommunity(activeSessionRef.current);
+  }, [loadCommunity]);
 
   useEffect(() => {
     let mounted = true;
-    Promise.resolve()
-      .then(getCurrentSession)
+    let authEventReceived = false;
+    let refreshTimer: number | undefined;
+    withAuthTimeout(Promise.resolve().then(getCurrentSession))
       .then(async (initialSession) => {
-        if (!mounted) return;
+        if (!mounted || authEventReceived) return;
+        activeSessionRef.current = initialSession;
         setSession(initialSession);
         await loadCommunity(initialSession);
       })
       .catch((initialError) => {
-        if (mounted) setError(initialError instanceof Error ? initialError.message : 'Authentication is unavailable.');
-      })
-      .finally(() => {
-        if (mounted) setLoading(false);
+        if (mounted && !authEventReceived) {
+          setError(initialError instanceof Error ? initialError.message : 'Authentication is unavailable.');
+          setLoading(false);
+        }
       });
 
     let subscription: ReturnType<typeof subscribeToAuthChanges> | null = null;
     try {
       subscription = subscribeToAuthChanges((_event, nextSession) => {
         if (!mounted) return;
+        authEventReceived = true;
+        // Invalidate in-flight data before publishing a new account/session.
+        ++loadVersion.current;
+        activeSessionRef.current = nextSession;
         setSession(nextSession);
-        window.setTimeout(() => {
-          loadCommunity(nextSession).catch((authError) => {
-            if (mounted) setError(authError instanceof Error ? authError.message : 'Community state is unavailable.');
+        if (loadedUserId.current !== (nextSession?.user.id ?? null)) {
+          loadedUserId.current = null;
+          setCommunityState(null);
+          setPermissions([]);
+        }
+        if (nextSession?.user && !loadedUserId.current) setLoading(true);
+        window.clearTimeout(refreshTimer);
+        refreshTimer = window.setTimeout(() => {
+          if (!mounted) return;
+          void loadCommunity(nextSession).catch(() => {
+            // loadCommunity exposes the failure for the retry UI.
           });
         }, 0);
       });
@@ -97,6 +138,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => {
       mounted = false;
+      // This mutable counter invalidates every outstanding request at cleanup.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      ++loadVersion.current;
+      window.clearTimeout(refreshTimer);
       subscription?.unsubscribe();
     };
   }, [loadCommunity]);
@@ -122,9 +167,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     await signOutService();
+    ++loadVersion.current;
+    activeSessionRef.current = null;
+    loadedUserId.current = null;
     setSession(null);
     setCommunityState(null);
     setPermissions([]);
+    setLoading(false);
+    setError(null);
   }, []);
 
   const value = useMemo<AuthContextValue>(() => ({

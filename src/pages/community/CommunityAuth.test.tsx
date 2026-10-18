@@ -1,6 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import CommunityAuth from './CommunityAuth';
@@ -78,6 +78,13 @@ function renderAuth() {
 }
 
 describe('CommunityAuth', () => {
+  afterEach(async () => {
+    cleanup();
+    // input-otp schedules selection updates at 0/10/50ms without cancelling
+    // them on unmount. Drain them before Vitest tears down the browser globals.
+    await new Promise((resolve) => setTimeout(resolve, 60));
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
     authState.user = null;
@@ -101,6 +108,19 @@ describe('CommunityAuth', () => {
     expect(screen.getByLabelText('用户名或邮箱')).toBeInTheDocument();
     expect(screen.getByLabelText('密码')).toHaveAttribute('autocomplete', 'current-password');
     expect(screen.getByRole('button', { name: '进入社群' })).toBeInTheDocument();
+  });
+
+  it('reveals and hides the password without submitting or changing its value', () => {
+    renderAuth();
+    const password = screen.getByLabelText('密码');
+    fireEvent.change(password, { target: { value: 'Example-pass123' } });
+    expect(password).toHaveAttribute('type', 'password');
+    fireEvent.click(screen.getByRole('button', { name: '显示密码' }));
+    expect(password).toHaveAttribute('type', 'text');
+    expect(password).toHaveValue('Example-pass123');
+    fireEvent.click(screen.getByRole('button', { name: '隐藏密码' }));
+    expect(password).toHaveAttribute('type', 'password');
+    expect(authMocks.signInWithIdentifier).not.toHaveBeenCalled();
   });
 
   it('sends a newly authenticated user to the smart entry while community state loads', async () => {

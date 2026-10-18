@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import mascotFull from '@/assets/mascot-full.png';
 import CommunityPasswordFields from '@/components/community/CommunityPasswordFields';
+import CommunityPasswordInput from '@/components/community/CommunityPasswordInput';
 import CommunityProcessSteps from '@/components/community/CommunityProcessSteps';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useAuth } from '@/contexts/AuthContext';
@@ -411,19 +412,18 @@ export default function CommunityAuth() {
                       required
                     />
                   </label>
-                  <label className="block space-y-2 text-sm font-medium text-foreground" htmlFor="community-password">
-                    <span>{lang === 'zh' ? '密码' : 'Password'}</span>
-                    <input
+                  <div className="block space-y-2 text-sm font-medium text-foreground">
+                    <label htmlFor="community-password">{lang === 'zh' ? '密码' : 'Password'}</label>
+                    <CommunityPasswordInput
                       id="community-password"
                       className={authInputClass}
-                      type="password"
                       minLength={8}
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                       autoComplete="current-password"
                       required
                     />
-                  </label>
+                  </div>
                 </>
               ) : null}
 

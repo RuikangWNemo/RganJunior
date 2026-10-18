@@ -1,6 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import CommunitySettings from './CommunitySettings';
@@ -42,6 +42,13 @@ function renderSettings() {
 }
 
 describe('CommunitySettings password security', () => {
+  afterEach(async () => {
+    cleanup();
+    // Let input-otp's uncancelled 0/10/50ms selection timers finish before
+    // Vitest removes window, just as in the sign-in/registration tests.
+    await new Promise((resolve) => setTimeout(resolve, 60));
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
     window.localStorage.clear();
